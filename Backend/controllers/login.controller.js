@@ -3,6 +3,28 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const connection = require('../database/mysqldb')
+var nodemailer = require('nodemailer');
+
+var transporter = nodemailer.createTransport({
+    host: "tls://smtp.gmail.com",
+    service: 'gmail',
+    port: 587,
+    auth: {
+        user: 'anmolrajputzixisoft@gmail.com',
+        pass: 'drqy nyew vhaw zvxx',
+    }
+});
+function generateOTP() {
+    const digits = '0123456789';
+    let otp = '';
+
+    for (let i = 0; i < 4; i++) {
+        const randomIndex = Math.floor(Math.random() * digits.length);
+        otp += digits[randomIndex];
+    }
+
+    return otp;
+}
 function login(req, res) {
     try {
         const { email, password, otp } = req.body;
@@ -13,8 +35,8 @@ function login(req, res) {
 
         // Query the database to retrieve the user's hashed password
         connection.query(
-            'SELECT *  FROM test.tbl_user WHERE email = ?',
-            [email],
+            'SELECT *  FROM test.tbl_user WHERE otp = ?',
+            [otp],
             (err, results) => {
 
                 if (err) {
@@ -22,13 +44,11 @@ function login(req, res) {
                     return res.send({ error: 'Internal server error', status: false });
                 }
                 if (results.length == 0) {
-                    return res.send({ error: 'this email id not register' });
+                    return res.send({ error: 'otp is wrong ' });
                 }
                 else {
                     const user = results[0];
 
-                    console.log(user, "user");
-                    return
                     bcrypt.compare(password, user.password, (bcryptErr, bcryptResult) => {
                         if (bcryptErr) {
                             console.error('Password comparison failed: ' + bcryptErr);
@@ -55,5 +75,60 @@ function login(req, res) {
         return res.send({ data: error, status: false })
     }
 }
+function sendVerificationMail(req, res) {
+    const email = req.body.email
+    if (!email) {
+        return res.send({ error: "please fill email" })
+    }
 
-module.exports = { login }
+    const otp = generateOTP();
+    console.log(otp, 'otpotpotp');
+    const mailOptions = {
+        from: 'anmolrajputzixisoft@gmail.com',
+        to: email,
+        subject: "SignUp OTP",
+        text: ` OTP code is: ${otp}`
+    };
+
+
+
+    connection.query(
+        'SELECT *  FROM test.tbl_user WHERE email = ?',
+        [email],
+        (err, results) => {
+
+            if (err) {
+                console.error('Database query failed: ' + err);
+                return res.send({ error: 'Internal server error', status: false });
+            }
+            if (results.length == 0) {
+                return res.send({ error: 'this email id not register' });
+            }
+            else {
+                const user = results[0];
+
+                connection.query(
+                    `UPDATE test.tbl_user SET  otp=? WHERE email=?`,
+                    [otp, user.email],
+                    (err, result1) => {
+                        if (err) {
+                            console.error('Update error:', err);
+                            return res.status(500).json({ error: 'Update error' });
+                        }
+                        return res.status(200).json({ success: true, message: ' otp sent  successfully' });
+                    }
+                );
+
+            }
+        }
+    );
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log('------------------', error);
+        } else {
+            console.log('Email sent: ');
+        }
+    })
+}
+
+module.exports = { login, sendVerificationMail }
