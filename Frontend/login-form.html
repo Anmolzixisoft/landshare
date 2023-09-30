@@ -315,25 +315,51 @@
         });
     </script>
     <script>
-        function handleCredentialResponse(response) {
-            console.log("Encoded JWT ID token: " + response.credential);
-            var tokens = response.credential.split(".");
-            var payload = JSON.parse(atob(tokens[1]));
-            console.log(`user id ${payload.sub}`)
-            console.log(`user name ${payload.name}`)
-            console.log(`user picture ${payload.picture}`)
+        // Function to handle the login API request
+        function loginUser() {
+            const email = document.getElementById('emailInput').value;
+            const password = document.getElementById('password').value;
+            // Create an object with user credentials
+            const userCredentials = {
+                email: email,
+                password: password
+            };
+
+            // Make a POST request to the login API endpoint
+            fetch('http://localhost:5000/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userCredentials)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Handle the API response here
+                    if (data.success) {
+                        // Login successful, you can redirect the user or perform other actions
+                        alert('Login successful!');
+                    } else {
+                        // Login failed, handle the error (e.g., display an error message)
+                        alert('Login failed. Please check your credentials.');
+                    }
+                })
+                .catch(error => {
+                    // Handle any errors that occurred during the fetch.
+                    console.error('Error:', error);
+                    // Display an error message to the user
+                    alert('An error occurred while logging in. Please try again later.');
+                });
         }
-        window.onload = function () {
-            google.accounts.id.initialize({
-                client_id: "[REDACTED]",
-                callback: handleCredentialResponse
-            });
-            google.accounts.id.renderButton(
-                document.getElementById("buttonDiv"),
-                { theme: "outline", size: "large" }  // customization attributes
-            );
-            google.accounts.id.prompt(); // also display the One Tap dialog
-        }
+
+        // Attach the loginUser function to the form's submit event
+        document.getElementById('login').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent the default form submission
+            loginUser(); // Call the loginUser function
+        });
+
+    </script>
+
     </script>
 </body>
 

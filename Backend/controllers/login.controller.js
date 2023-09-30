@@ -1,5 +1,4 @@
 const express = require('express');
-const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const connection = require('../database/mysqldb')
@@ -25,41 +24,45 @@ function generateOTP() {
 
     return otp;
 }
-function login(req, res) {
-    try {
-        const { email, password, otp } = req.body;
 
-        if (!email || !password || !otp) {
+function verifyByOtp(req, res) {
+    try {
+        const { email, otp } = req.body;
+
+        if (!otp) {
             return res.status(400).json({ error: 'Missing required fields', status: false });
         }
+
         connection.query(
-            'SELECT *  FROM test.tbl_user WHERE otp = ? AND email = ? ',
-            [otp, email],
+            'SELECT *  FROM test.tbl_user WHERE otp = ? ',
+            [otp],
             (err, results) => {
+
                 if (err) {
                     console.error('Database query failed: ' + err);
                     return res.send({ error: 'Internal server error', status: false });
                 }
+
                 if (results.length == 0) {
-                    return res.send({ error: 'please inter right ' });
+                    return res.send({ error: 'Otp Not Match', status: false });
                 }
-                else {
-                    const user = results[0];
-                    bcrypt.compare(password, user.password, (bcryptErr, bcryptResult) => {
-                        if (bcryptErr) {
-                            console.error('Password comparison failed: ' + bcryptErr);
-                            return res.send({ error: 'Password wrong', status: false });
-                        }
-                        if (!bcryptResult) {
-                            return res.send({ error: 'Authentication failed' });
-                        }
-                        const token = jwt.sign({ userId: user.id, email: user.email }, 'secret_key', {
-                            expiresIn: '10h',
-                        });
-                        const userId = user.id
-                        res.send({ msg: "login successfully", token, userId });
-                    });
+
+                if (results[0].otp != otp) {
+                    return res.send({ error: 'Otp Not Match', status: false });
                 }
+
+
+                const user = results[0];
+
+                const token = jwt.sign({ userId: user.id, email: user.email }, 'secret_key', {
+                    expiresIn: '10h',
+                });
+                const userId = user.id
+
+
+                res.send({ msg: "Otp Verify successfully", token: token, userId: userId });
+
+
             }
         );
     }
@@ -68,8 +71,10 @@ function login(req, res) {
         return res.send({ data: error, status: false })
     }
 }
-function sendVerificationMail(req, res) {
+
+function login(req, res) {
     const email = req.body.email
+    const password = req.body.password
     if (!email) {
         return res.send({ error: "please fill email" })
     }
@@ -82,8 +87,6 @@ function sendVerificationMail(req, res) {
         subject: "SignUp OTP",
         text: ` OTP code is: ${otp}`
     };
-
-
 
     connection.query(
         'SELECT *  FROM test.tbl_user WHERE email = ?',
@@ -100,17 +103,30 @@ function sendVerificationMail(req, res) {
             else {
                 const user = results[0];
 
-                connection.query(
-                    `UPDATE test.tbl_user SET  otp=? WHERE email=?`,
-                    [otp, user.email],
-                    (err, result1) => {
-                        if (err) {
-                            console.error('Update error:', err);
-                            return res.status(500).json({ error: 'Update error' });
-                        }
-                        return res.status(200).json({ success: true, message: ' otp sent  successfully' });
+
+                bcrypt.compare(password, user.password, (bcryptErr, bcryptResult) => {
+                    if (bcryptErr) {
+                        console.error('Password comparison failed: ' + bcryptErr);
+                        return res.send({ error: 'Password wrong', status: false });
                     }
-                );
+                    if (!bcryptResult) {
+                        return res.send({ error: 'Authentication failed' });
+                    } else {
+                        connection.query(
+                            `UPDATE test.tbl_user SET  otp=? WHERE email=?`,
+                            [otp, user.email],
+                            (err, result1) => {
+                                if (err) {
+                                    console.error('Update error:', err);
+                                    return res.status(500).json({ error: 'Update error' });
+                                }
+                                return res.status(200).json({ success: true, message: ' otp sent  successfully' });
+                            }
+                        );
+                    }
+
+                });
+
 
             }
         }
@@ -124,4 +140,4 @@ function sendVerificationMail(req, res) {
     })
 }
 
-module.exports = { login, sendVerificationMail }
+module.exports = { login, verifyByOtp }

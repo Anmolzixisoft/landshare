@@ -1,7 +1,7 @@
 var express = require('express')
 const loginRouter = express.Router();
-const { login,sendVerificationMail } = require('../../controllers/login.controller');
+const { login, verifyByOtp } = require('../../controllers/login.controller');
 loginRouter.post('/login', login);
-loginRouter.post('/loginOtpsent',sendVerificationMail)
+loginRouter.post('/verifybyotp', verifyByOtp)
 
 module.exports = loginRouter;
