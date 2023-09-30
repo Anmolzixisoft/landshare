@@ -123,7 +123,7 @@
                                     href="https://www.agrocorp.co.in/privacy-policy" target="_blank">Privacy Policy</a>.
                             </div>
                         </div>
-                        <a href="otp.html" class="btn btn-login">Login</a>
+                        <button class="btn btn-login">Login</button>
                         <p>Don't have an account? <a onclick="changeToRegister()" id="changeToRegister">Sign up</a></p>
                         <p class="or">or</p>
                         <button class="btn btn-gogle-auth"><i class="google ri-google-fill"></i>Authorize with
@@ -154,12 +154,6 @@
                         <div class="pass-reset" onclick="activeInput(this)">
                             <input type="password" class="password" name="re-password" id="re-password"
                                 placeholder="**********">
-                        </div>
-                        <label for="">OTP</label>
-                        <div class="pass-reset" >
-                            <input type="text" class="password" name="" id=""
-                                placeholder="" required>
-                            <a href="#" class="reset-password">Send OTP</a>
                         </div>
                         <button class="btn btn-login">Register</button>
                         <p>Do you have an account? <a onclick="changeToLogin()" id="chnageToLogin">Sign in</a></p>
@@ -341,10 +335,11 @@
                 .then(data => {
 
                     if (data.success) {
-
-                        alert('Login successful!');
+                        console.log(data);
+                        window.location.href = 'otp.html';
+                        alert(`Login successful!`);
                     } else {
-                        alert('Login failed. Please check your credentials.');
+                        alert(`${data.error}`);
                     }
                 })
                 .catch(error => {
@@ -397,7 +392,7 @@
                     alert('An error occurred during registration. Please try again later.');
                 });
         }
-   
+
         document.getElementById('register').addEventListener('submit', function (e) {
             e.preventDefault();
             registerUser();

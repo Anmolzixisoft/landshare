@@ -103,15 +103,14 @@
                         <h2>OTP </h2>
                         <label for="email">Enter OTP </label>
                         <div class="pass-reset" onclick="activeInput(this)">
-                            <input type="text" name="" class="email" id="" placeholder=""
-                                required>
+                            <input type="text" name="" class="email" id="otp" placeholder="" required>
                         </div>
-                       
-                      
+
+
                         <button class="btn btn-login">Submit</button>
-                        
+
                     </form>
-                   
+
                 </div>
 
 
@@ -266,49 +265,43 @@
         });
     </script>
     <script>
-        // Function to handle the login API request
-        function loginUser() {
-            const email = document.getElementById('emailInput').value;
-            const password = document.getElementById('password').value;
-            // Create an object with user credentials
-            const userCredentials = {
-                email: email,
-                password: password
+        function validateOTP() {
+            const otp = document.getElementById('otp').value;
+
+            const otpData = {
+                otp: otp
             };
 
-            // Make a POST request to the login API endpoint
-            fetch('http://localhost:5000/api/login', {
+            fetch('http://localhost:5000/api/verifybyotp', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(userCredentials)
+                body: JSON.stringify(otpData)
             })
                 .then(response => response.json())
                 .then(data => {
-                    // Handle the API response here
-                    if (data.success) {
-                        // Login successful, you can redirect the user or perform other actions
+                    if (data.msg == "Otp Verify successfully") {
                         console.log(data, '------');
-                        alert('Login successful!');
+                        const token = data.token
+                        localStorage.setItem('token', token);
+
+                        alert('OTP validation successful!');
                     } else {
-                        // Login failed, handle the error (e.g., display an error message)
-                        alert('Login failed. Please check your credentials.');
+                        alert(`${data.error}`);
                     }
                 })
                 .catch(error => {
-                    // Handle any errors that occurred during the fetch.
                     console.error('Error:', error);
-                    // Display an error message to the user
-                    alert('An error occurred while logging in. Please try again later.');
+                    alert('An error occurred during OTP validation. Please try again later.');
                 });
         }
 
-        // Attach the loginUser function to the form's submit event
         document.getElementById('login').addEventListener('submit', function (e) {
-            e.preventDefault(); // Prevent the default form submission
-            loginUser(); // Call the loginUser function
+            e.preventDefault();
+            validateOTP();
         });
+
         function validation() {
 
         }
