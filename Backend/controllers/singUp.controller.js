@@ -44,7 +44,6 @@ function signUp(req, res) {
             return res.status(400).json({ error: 'Invalid email format', status: false });
         }
 
-
         if (!isValidMobileNumber(mobile_number)) {
             return res.status(400).json({ error: 'Invalid mobile number format', status: false });
         }

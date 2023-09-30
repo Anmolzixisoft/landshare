@@ -114,6 +114,9 @@ input {
     font-size: 15px;
     padding-right: 10px;
 }
+.reset-password:hover {
+    color: #008cff !important;
+  }
 
 .remember-box {
     border: none;

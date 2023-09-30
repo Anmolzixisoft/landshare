@@ -10,7 +10,6 @@ var transporter = nodemailer.createTransport({
     }
 });
 
-
 function generateOTP() {
     const digits = '0123456789';
     let otp = '';
@@ -26,7 +25,7 @@ function sendVerificationMail(to, pathname, text) {
     console.log("to", to);
     //   console.log("url",url);
     const otp = generateOTP();
-    console.log(otp,'otpotpotp');
+    console.log(otp, 'otpotpotp');
     const mailOptions = {
         from: 'anmolrajputzixisoft@gmail.com',
         to: to,
@@ -36,9 +35,9 @@ function sendVerificationMail(to, pathname, text) {
 
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
-            console.log('------------------',error);
+            console.log('------------------', error);
         } else {
-            console.log('Email sent: ' );
+            console.log('Email sent: ');
         }
     })
 }
