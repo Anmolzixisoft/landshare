@@ -134,26 +134,32 @@
                         <h2>Register</h2>
                         <label for="name">Your Name</label>
                         <div class="pass-reset" onclick="activeInput(this)">
-                            <input type="text" name="name" class="name" id="nameInput" placeholder="Your Name">
+                            <input type="text" name="name" class="name" id="nameInput" placeholder="Your Name" required>
                         </div>
                         <label for="phone">Your Phone Number</label>
                         <div class="pass-reset" onclick="activeInput(this)">
                             <input type="number" name="phone" class="phone" id="phoneInput"
-                                placeholder="Enter Your Phone Number">
+                                placeholder="Enter Your Phone Number" required>
                         </div>
                         <label for="email">Email Address</label>
                         <div class="pass-reset" onclick="activeInput(this)">
-                            <input type="email" name="email" class="email" id="emailInput1" placeholder="name@mail.com">
+                            <input type="email" name="email" class="email" id="emailInput1" placeholder="name@mail.com"
+                                required>
                         </div>
                         <label for="password">Password</label>
                         <div class="pass-reset" onclick="activeInput(this)">
                             <input type="password" class="password" name="password" id="password1"
-                                placeholder="**********">
+                                placeholder="**********" required>
                         </div>
                         <label for="re-password">Re-Password</label>
                         <div class="pass-reset" onclick="activeInput(this)">
                             <input type="password" class="password" name="re-password" id="re-password"
-                                placeholder="**********">
+                                placeholder="**********" required>
+                        </div>
+                        <label for="">OTP</label>
+                        <div class="pass-reset">
+                            <input type="text" class="password" name="" id="sendOtp" placeholder="" required>
+                            <a href="#" class="reset-password">Send OTP</a>
                         </div>
                         <button class="btn btn-login">Register</button>
                         <p>Do you have an account? <a onclick="changeToLogin()" id="chnageToLogin">Sign in</a></p>
