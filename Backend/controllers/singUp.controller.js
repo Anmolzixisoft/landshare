@@ -32,48 +32,6 @@ function getuser(req, res) {
         return res.send({ data: error, status: false })
     }
 }
-// function signUp(req, res) {
-//     try {
-//         const { name, email, mobile_number, password ,otp} = req.body;
-
-//         if (!name || !email || !mobile_number || !password) {
-//             return res.status(400).json({ error: 'Missing required fields', status: false });
-//         }
-
-//         if (!isValidEmail(email)) {
-//             return res.status(400).json({ error: 'Invalid email format', status: false });
-//         }
-
-//         if (!isValidMobileNumber(mobile_number)) {
-//             return res.status(400).json({ error: 'Invalid mobile number format', status: false });
-//         }
-
-//         bcrypt.hash(password, 10, (hashErr, hashedPassword) => {
-//             if (hashErr) {
-//                 console.error('Password hashing failed: ' + hashErr);
-//                 return res.status(500).json({ error: 'Internal server error', status: false });
-//             }
-//             connection.query(
-//                 'INSERT INTO test.tbl_user (name, email, mobile_number, password) VALUES (?,?, ?, ?)',
-//                 [name, email, mobile_number, hashedPassword],
-//                 (err, result) => {
-//                     if (err) {
-//                         console.error('Error inserting data: ' + err);
-//                         return res.status(500).json({ error: 'Error inserting data', status: false });
-//                     } else {
-//                         console.log("succsess");
-//                         return res.status(201).json({ data: result, status: true, msg: "Registration successful" });
-//                     }
-//                 }
-//             );
-//         });
-//     }
-//     catch (error) {
-//         console.log(error);
-//         return res.send({ data: error, status: false })
-//     }
-// }
-
 function signUp(req, res) {
     try {
         const { name, email, mobile_number, password, otp } = req.body;
