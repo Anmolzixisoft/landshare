@@ -24,9 +24,64 @@ function getuser(req, res) {
         return res.send({ data: error, status: false })
     }
 }
+// function signUp(req, res) {
+//     try {
+//         const { name, email, mobile_number, password, otp } = req.body;
+//         if (!name || !email || !mobile_number || !password || !otp) {
+//             return res.status(400).json({ error: 'Missing required fields', status: false });
+//         }
+//         if (!isValidEmail(email)) {
+//             return res.status(400).json({ error: 'Invalid email format', status: false });
+//         }
+
+//         if (!isValidMobileNumber(mobile_number)) {
+//             return res.status(400).json({ error: 'Invalid mobile number format', status: false });
+//         }
+//         connection.query(
+//             'SELECT otp FROM test.tbl_user WHERE otp = ?',
+//             [otp],
+//             (err, result) => {
+//                 if (err) {
+//                     console.error('Database error:', err);
+//                     return res.status(500).json({ error: 'Database error' });
+//                 }
+
+//                 if (result.length === 0) {
+//                     return res.status(404).json({ error: 'otp not found' });
+//                 }
+//                 bcrypt.hash(password, 10, (hashErr, hashedPassword) => {
+//                     if (hashErr) {
+//                         console.error('Password hashing failed: ' + hashErr);
+//                         return res.status(500).json({ error: 'Internal server error', status: false });
+//                     }
+//                     connection.query(
+//                         `UPDATE test.tbl_user SET name=?, email=?, mobile_number=?, password=? WHERE otp=?`,
+//                         [name, email, mobile_number, hashedPassword, otp],
+//                         (err, result1) => {
+//                             if (err) {
+//                                 console.error('Update error:', err);
+//                                 return res.status(500).json({ error: 'Update error' });
+//                             }
+
+//                             return res.status(200).json({ success: true, message: 'User SignUp successfully' });
+//                         }
+//                     );
+//                 }
+
+//                 );
+//             });
+
+//     } catch (error) {
+//         console.log('update  error ->', error);
+//         return res.send({ data: error, status: false })
+//     }
+// }
+
+
 function signUp(req, res) {
     try {
         const { name, email, mobile_number, password, otp } = req.body;
+
         if (!name || !email || !mobile_number || !password || !otp) {
             return res.status(400).json({ error: 'Missing required fields', status: false });
         }
@@ -37,42 +92,30 @@ function signUp(req, res) {
         if (!isValidMobileNumber(mobile_number)) {
             return res.status(400).json({ error: 'Invalid mobile number format', status: false });
         }
-        connection.query(
-            'SELECT otp FROM test.tbl_user WHERE otp = ?',
-            [otp],
-            (err, result) => {
-                if (err) {
-                    console.error('Database error:', err);
-                    return res.status(500).json({ error: 'Database error' });
-                }
+        bcrypt.hash(password, 10, (hashErr, hashedPassword) => {
+            if (hashErr) {
+                console.error('Password hashing failed: ' + hashErr);
+                return res.status(500).json({ error: 'Internal server error', status: false });
+            }
 
-                if (result.length === 0) {
-                    return res.status(404).json({ error: 'otp not found' });
-                }
-                bcrypt.hash(password, 10, (hashErr, hashedPassword) => {
-                    if (hashErr) {
-                        console.error('Password hashing failed: ' + hashErr);
-                        return res.status(500).json({ error: 'Internal server error', status: false });
+            // Perform the database insertion with the hashed password
+            connection.query(
+                'INSERT INTO tbl_user (name, email, mobile_number, password,otp) VALUES (?, ?,?, ?, ?)',
+                [name, email, mobile_number, hashedPassword, otp],
+                (err, result) => {
+                    if (err) {
+                        console.error('Error inserting data: ' + err);
+                        return res.status(500).json({ error: 'Error inserting data', status: false });
+                    } else {
+                        console.log("succsess");
+                        return res.status(201).json({ data: result, status: true, msg: "Registration successful" });
                     }
-                    connection.query(
-                        `UPDATE test.tbl_user SET name=?, email=?, mobile_number=?, password=? WHERE otp=?`,
-                        [name, email, mobile_number, hashedPassword, otp],
-                        (err, result1) => {
-                            if (err) {
-                                console.error('Update error:', err);
-                                return res.status(500).json({ error: 'Update error' });
-                            }
-
-                            return res.status(200).json({ success: true, message: 'User SignUp successfully' });
-                        }
-                    );
                 }
-
-                );
-            });
-
-    } catch (error) {
-        console.log('update  error ->', error);
+            );
+        });
+    }
+    catch (error) {
+        console.log(error);
         return res.send({ data: error, status: false })
     }
 }
@@ -160,4 +203,4 @@ function sendVerificationMail(req, res) {
         }
     })
 }
-module.exports = { signUp, getuser, sendVerificationMail, deleteuser}
+module.exports = { signUp, getuser, sendVerificationMail, deleteuser }
