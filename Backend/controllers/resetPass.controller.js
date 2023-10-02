@@ -95,8 +95,6 @@ function resetPass(req, res) {
                     return res.status(500).json({ error: 'Error updating password', status: false });
                 }
 
-            
-
                 if (updateResult.affectedRows === 0) {
                     // If no rows were affected, the user with the provided email does not exist
                     return res.status(404).json({ error: 'User not found', status: false });

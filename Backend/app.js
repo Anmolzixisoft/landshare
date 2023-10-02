@@ -9,14 +9,16 @@ require('dotenv').config({
 require('./database/mysqldb');
 const signUpRouter = require('./routes/auth/singUp.route')
 const loginRouter = require('./routes/auth/login.route')
+const sellRouter = require('./routes/auth/sell.route')
 const app = express();
 
 // Middleware
 app.use(express.json());
 app.use(cors());
 
-app.use('/api',signUpRouter);
-app.use('/api',loginRouter)
+app.use('/api', signUpRouter);
+app.use('/api', loginRouter)
+app.use('/api', sellRouter)
 
 app.listen(process.env.PORT,
     async () => {
