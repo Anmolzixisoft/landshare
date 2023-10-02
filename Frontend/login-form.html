@@ -98,6 +98,7 @@
 
             <div class=" align-items-start ">
                 <div class=" col-lg-6 mb-5">
+                    <div id="emailError" style="color: rgb(233, 73, 73);"></div>
                     <form class="form active" id="login" action="authentication.php" onsubmit="return validation()"
                         method="POST">
                         <h2>Login</h2>
@@ -159,9 +160,11 @@
                         <label for="">OTP</label>
                         <div class="pass-reset">
                             <input type="text" class="password" name="" id="sendOtp" placeholder="" required>
-                            <a href="#" class="reset-password">Send OTP</a>
+                            <a href="#" class="reset-password" id="sendotpbutton" required>Send OTP</a>
                         </div>
-                        <button class="btn btn-login">Register</button>
+                        <!-- <button class="btn btn-login">Register</button> -->
+                        <button class="btn btn-login" onclick="return validatePassword();">Register</button>
+
                         <p>Do you have an account? <a onclick="changeToLogin()" id="chnageToLogin">Sign in</a></p>
                         <p class="or">or</p>
                         <button class="btn btn-gogle-auth" id="buttonDiv"><i class="google ri-google-fill"></i>Authorize
@@ -350,8 +353,7 @@
                 })
                 .catch(error => {
                     console.error('Error:', error);
-
-                    alert('An error occurred while logging in. Please try again later.');
+                    alert(`${error}`);
                 });
         }
 
@@ -368,13 +370,14 @@
             const email = document.getElementById('emailInput1').value;
             const password = document.getElementById('password1').value;
             const phone = document.getElementById('phoneInput').value;
+            const otp = document.getElementById('sendOtp').value
 
             const userData = {
                 name: name,
                 email: email,
                 password: password,
                 mobile_number: phone,
-                otp: 123
+                otp: otp
             };
 
             fetch('http://localhost:5000/api/signUp', {
@@ -386,16 +389,14 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    if (data.status == true) {
-                        alert('Registration successful!');
+                    if (data.success == true) {
+                        alert(`${data.message}`);
                     } else {
-                        alert('Registration failed. Please check your data.');
+                        alert(`${data.error}`);
                     }
                 })
                 .catch(error => {
-                    console.error('Error:', error);
-
-                    alert('An error occurred during registration. Please try again later.');
+                    alert(`${error}`);
                 });
         }
 
@@ -403,8 +404,62 @@
             e.preventDefault();
             registerUser();
         });
-    </script>
 
+        document.getElementById('sendotpbutton').addEventListener('click', function (e) {
+            e.preventDefault();
+            const email = document.getElementById('emailInput1').value;
+            const emailData = {
+                email: email
+            };
+
+            fetch('http://localhost:5000/api/Otpsent', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(emailData)
+            })
+                .then(response => response.json())
+                .then(data => {
+
+                    if (data.status == true) {
+                        alert(`${data.msg}`);
+                        document.getElementById('sendotpbutton').textContent = 'Resend';
+                    } else {
+                        alert(`${data.error}`);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert(`${error}`);
+                });
+        });
+
+        function validateEmail() {
+            const emailInput = document.getElementById('emailInput').value;
+            const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+            if (!emailRegex.test(emailInput)) {
+                document.getElementById('emailError').textContent = 'Invalid email format.';
+                return false;
+            } else {
+                document.getElementById('emailError').textContent = '';
+                return true;
+            }
+        }
+        function validatePassword() {
+            const password1 = document.getElementById('password1').value;
+            const rePassword = document.getElementById('re-password').value;
+
+            if (password1 !== rePassword) {
+                alert('Password and re-password do not match. Please enter the same password in both fields.');
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+    </script>
     </script>
 </body>
 

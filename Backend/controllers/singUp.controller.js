@@ -46,23 +46,18 @@ function signUp(req, res) {
             return res.status(400).json({ error: 'Invalid mobile number format', status: false });
         }
         connection.query(
-            'SELECT otp , email FROM test.tbl_user WHERE otp = ? AND email = ? ',
-            [otp, email],
+            'SELECT otp  FROM test.tbl_user WHERE otp = ? ',
+            [otp],
             (err, result) => {
                 if (err) {
                     console.error('Database error:', err);
                     return res.status(500).json({ error: 'Database error' });
                 }
                 const user = result[0]
-                console.log(user.otp, '-----');
-
-                if (user.otp != otp) {
-                    return res.status(404).json({ error: 'otp not found' });
+                if (!user) {
+                    return res.send({ error: "invalid otp" })
                 }
 
-                if (user.email != email) {
-                    return res.status(404).json({ error: 'email  not found' });
-                }
                 bcrypt.hash(password, 10, (hashErr, hashedPassword) => {
                     if (hashErr) {
                         console.error('Password hashing failed: ' + hashErr);
@@ -108,26 +103,54 @@ function sendVerificationMail(req, res) {
     }
 
     const otp = generateOTP();
-    console.log(otp, 'otpotpotp');
+    console.log(otp, 'otp');
     const mailOptions = {
         from: 'anmolrajputzixisoft@gmail.com',
         to: email,
         subject: "SignUp OTP",
         text: ` OTP code is: ${otp}`
     };
+
     connection.query(
-        'INSERT INTO test.tbl_user (name, email, mobile_number, password,otp) VALUES (?, ?,?, ?, ?)',
-        ["", email, "", "", otp],
-        (err, result) => {
+        'SELECT * FROM test.tbl_user WHERE email = ? ',
+        [email],
+        (err, results) => {
             if (err) {
-                console.error('Error inserting data: ' + err);
-                return res.status(500).json({ error: 'Error inserting data', status: false });
+                console.error('Error checking email existence: ' + err);
+                return res.status(500).json({ error: 'Internal server error' });
+            }
+
+            if (results.length > 0) {
+                connection.query(
+                    `UPDATE test.tbl_user SET otp=? WHERE email=?`,
+                    [otp, email],
+                    (err, result1) => {
+                        if (err) {
+                            console.error('Update error:', err);
+                            return res.status(500).json({ error: 'Update error' });
+                        }
+
+                        return res.status(201).json({ data: result1, status: true, msg: "sent mail successful" });
+                    }
+                );
             } else {
-                console.log("succsessss");
-                return res.status(201).json({ data: result, status: true, msg: "sent mail  successful" });
+                connection.query(
+                    'INSERT INTO test.tbl_user (name, email, mobile_number, password,otp) VALUES (?, ?,?, ?, ?)',
+                    ["", email, "", "", otp],
+                    (err, result) => {
+                        if (err) {
+                            console.error('Error inserting data: ' + err);
+                            return res.status(500).json({ error: 'Error inserting data', status: false });
+                        } else {
+                            console.log("succsessss");
+                            return res.status(201).json({ data: result, status: true, msg: "sent mail successful" });
+                        }
+                    }
+                );
             }
         }
     );
+
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
             console.log('------------------', error);
@@ -137,3 +160,5 @@ function sendVerificationMail(req, res) {
     })
 }
 module.exports = { signUp, getuser, sendVerificationMail }
+
+

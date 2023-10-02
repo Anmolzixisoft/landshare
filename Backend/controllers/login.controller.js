@@ -80,7 +80,7 @@ function login(req, res) {
     }
 
     const otp = generateOTP();
-    console.log(otp, 'otpotpotp');
+    console.log(otp, 'otp');
     const mailOptions = {
         from: 'anmolrajputzixisoft@gmail.com',
         to: email,

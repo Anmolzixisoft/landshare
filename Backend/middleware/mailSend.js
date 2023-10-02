@@ -25,7 +25,7 @@ function sendVerificationMail(to, pathname, text) {
     console.log("to", to);
     //   console.log("url",url);
     const otp = generateOTP();
-    console.log(otp, 'otpotpotp');
+    console.log(otp, 'otp');
     const mailOptions = {
         from: 'anmolrajputzixisoft@gmail.com',
         to: to,
