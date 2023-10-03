@@ -117,59 +117,24 @@
             <div class="row g-5 align-items-start">
                 <div class="row  mb-2 col-md-12 mx-auto" style="display:inline-flex;">
                     <div class="product-im col-lg-5">
-                        <div class="details ">
-                            <div class="thumb ">
+                        <div class="details">
+                            <div class="thumb">
                                 <div class="big-image">
-                                    <img src="img/agricultural-land-investment.jpg" alt="">
+                                    <!-- Update the src attribute with the actual image filename -->
+                                    <img src="/home/vedansh/landshare/Backend/public${property.images}" alt="">
                                 </div>
                                 <div class="small-images">
-                                    <img src="img/agricultural-land-investment.jpg" alt="">
-                                    <!-- <img src="img/agricultural-land-investment.jpg" alt="">
-                                    <img src="img/agricultural-land-investment.jpg" alt=""> -->
+                                    <!-- You can also update the src attribute for small images if needed -->
+                                    <img src="/home/vedansh/landshare/Backend/public${property.images}" alt="">
+                                    <img src="/home/vedansh/landshare/Backend/public${property.images}" alt="">
+
+                                    <img src="/home/vedansh/landshare/Backend/public${property.images}" alt="">
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="product-cnt col-lg-3  ">
-                        <h3>₹5.40 Cr</h3>
-                        <p>₹18,154 per sqft</p>
-                        <table>
-                            <tr>
-                                <td><b>Size of the Area</b></td>
-                                <td>: 1 Acre</td>
-                            </tr>
-                            <tr>
-                                <td><b>Type Of Katha</b></td>
-                                <td>: E Katha
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><b>Land Facing</b></td>
-                                <td>: East</td>
-                            </tr>
-                            <tr>
-                                <td><b>Land Mark</b></td>
-                                <td>: LS English Public School</td>
-                            </tr>
-                            <tr>
-                                <td><b>State</b></td>
-                                <td>: Karnataka</td>
-                            </tr>
-                            <tr>
-                                <td><b>City</b></td>
-                                <td>: Bangalore</td>
-                            </tr>
 
-                            <tr>
-                                <td style="vertical-align: top;"><b>Description</b></td>
-                                <td>: Commercial showroom is available for sale. East facing, Right on Bull temple main
-                                    road, Bus stop
-                                    adjacent, nearby metro, centrally located.</td>
-                            </tr>
 
-                        </table>
-
-                    </div> -->
                     <div class="product-cnt col-lg-4   ">
 
                         <div class="mapouter mb-4">
@@ -213,9 +178,6 @@
                     </div>
 
                 </div>
-
-
-
 
             </div>
         </div>
@@ -337,33 +299,33 @@
                 let tableContent = '<table>';
                 data.data.forEach(property => {
                     tableContent += `
-        <tr>
-          <td><b>Price</b></td>
-          <td>: ${property.cost_per_squre_fit}</td>
-        </tr>
-        <tr>
-          <td><b>Size of the Area</b></td>
-          <td>: ${property.size_of_land}</td>
-        </tr>
-         <tr>
-        <td><b>Land Mark</b></td>
-        <td>: ${property.landmark}</td>
-          </tr>
-          <tr>
-         <td><b>State</b></td>
-            <td>: ${property.state}</td>
-             </tr>
-          <tr>
-        <td><b>City</b></td>
-         <td>: ${property.city}</td>
+            <tr>
+            <td><b>Price</b></td>
+            <td>: ${property.cost_per_squre_fit}</td>
+            </tr>
+            <tr>
+            <td><b>Size of the Area</b></td>
+            <td>: ${property.size_of_land}</td>
+            </tr>
+            <tr>
+            <td><b>Land Mark</b></td>
+            <td>: ${property.landmark}</td>
+            </tr>
+            <tr>
+            <td><b>State</b></td>
+                <td>: ${property.state}</td>
+                </tr>
+            <tr>
+            <td><b>City</b></td>
+            <td>: ${property.city}</td>
+            </tr>
+
+            <tr>
+            <td style="vertical-align: top;"><b>Description</b></td>
+            <td>: ${property.desciption}</td>
         </tr>
 
-           <tr>
-         <td style="vertical-align: top;"><b>Description</b></td>
-         <td>: ${property.desciption}</td>
-    </tr>
-
-      `;
+        `;
                 });
                 tableContent += '</table>';
                 const tableContainer = document.querySelector('.product-cnt');

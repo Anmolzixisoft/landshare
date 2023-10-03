@@ -4,6 +4,8 @@ function sellProperty(req, res) {
 
     const { user_id, property_category_select, mobile_number, full_address, state, city, pincode, landmark, owenership, cost_per_squre_fit, size_of_land, desciption, images } = req.body
     const { image } = req.files
+    const file = image[0].filename
+
     const sql = `INSERT INTO test.sell_property (user_id, property_category_select, mobile_number, full_address, state, city, pincode, landmark, owenership, cost_per_squre_fit, size_of_land, desciption,images) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?)`;
     const values = [
         user_id,
@@ -18,7 +20,7 @@ function sellProperty(req, res) {
         cost_per_squre_fit,
         size_of_land,
         desciption,
-        image,
+        file,
     ];
 
     connection.query(sql, values, (err, result) => {
