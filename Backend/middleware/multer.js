@@ -4,7 +4,7 @@ const multer = require('multer');
 const storage = multer.diskStorage({
     destination: (req, res, cb) => {
         try {
-            cb(null, "/home/vedansh/Desktop/zixisoft/zixisoft/adminTryreact/public/uploads")
+            cb(null, "public")
         } catch (e) {
             cb(e, false)
         }
@@ -22,7 +22,7 @@ const upload = multer({
     storage: storage,
 });
 
-var singleUpload = upload.fields([{ name: 'logo' }])
+var singleUpload = upload.fields([{ name: 'image' }])
 var multiplepUload = upload.fields([{ name: 'pan_upload' }, { name: 'coi_upload' }, { name: 'moa_upload' }, { name: 'aoa_upload' }, { name: 'gst_upload' }, { name: 'cheque_upload' }])
 
 module.exports = { singleUpload, multiplepUload };
