@@ -61,7 +61,6 @@ passport.use(new FacebookStrategy({
 
             connection.query("SELECT * FROM test.tbl_user WHERE name = '" + profile.displayName + "'",
                 function (err, rows, fields) {
-                    console.log(err, '-----------');
                     if (err) throw err;
                     if (rows.length === 0) {
                         console.log("There is a new user, registering here");
