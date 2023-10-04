@@ -139,5 +139,11 @@ function login(req, res) {
         }
     })
 }
-
-module.exports = { login, verifyByOtp }
+function facebookOAuth(req, res) {
+    if (req.user.email !== null && req.user.id !== null) {
+        let email = req.user.email;
+        let fbid = req.user.facebookid;
+        res.status(200).json({ emailid: email, facebookid: fbid })
+    }
+};
+module.exports = { login, verifyByOtp, facebookOAuth }

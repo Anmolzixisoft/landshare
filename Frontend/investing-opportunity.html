@@ -7,6 +7,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
@@ -74,8 +75,6 @@
         </nav>
     </div>
 
-
-
     <!-------------------Navigation end------------>
 
 
@@ -133,107 +132,10 @@
     </div>
 
     <!-- About Start -->
-    <!-- Contact Start -->
-    <div class="container-xxl ">
-        <div class="container ">
-
-            <div class="row  align-items-start">
-                <div class="product-inner mb-5 col-md-8 mx-auto g-5">
-                    <div class="product-im col-md-3-1"><img src="img/agricultural-land-investment.jpg"
-                            style="width:100% !important;border-radius:10px;">
-                    </div>
-
-                    <div class="product-cnt col-md-8 ">
-                        <p style="font-size:18px;">1939 Sq-ft 3 BHK Flat For Sale in Hebbal, Bangalore </p>
-                        <p style="font-size:14px;">Residential Plots - ₹36 Lac onwards<br>
-                            Property Size: 1 Acre<br>
-                            Type : Plot<br><span class="product-but col-lg-5 but-sy"><span class="short"><i
-                                        class='fa fa-heart'></i></span> <button class="btn btn-primary "
-                                    onClick="window.location.href='buy.html';">View Property Details</button></span></p>
-
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
+    <div id="propertyContainer" style="display: flex; flex-wrap: wrap; justify-content: center;">
+        <!-- Content will be dynamically added here by JavaScript -->
     </div>
-    <!-- Contact End -->
-    <!-- Contact Start -->
-    <div class="container-xxl ">
-        <div class="container ">
 
-            <div class="row  align-items-start">
-                <div class="product-inner mb-5 col-md-8 mx-auto g-5">
-                    <div class="product-im col-md-3-1"><img src="img/agricultural-land-investment.jpg"
-                            style="width:100% !important;border-radius:10px;">
-                    </div>
-
-                    <div class="product-cnt col-md-8 ">
-                        <p style="font-size:18px;">1939 Sq-ft 3 BHK Flat For Sale in Hebbal, Bangalore </p>
-                        <p style="font-size:14px;">Residential Plots - ₹36 Lac onwards<br>
-                            Property Size: 1 Acre<br>
-                            Type : Plot<br><span class="product-but col-lg-5 but-sy"><span class="short"><i
-                                        class='fa fa-heart'></i></span> <button class="btn btn-primary "
-                                    onClick="window.location.href='buy.html';">View Property Details</button></span></p>
-
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Contact End --><!-- Contact Start -->
-    <div class="container-xxl ">
-        <div class="container ">
-
-            <div class="row  align-items-start">
-                <div class="product-inner mb-5 col-md-8 mx-auto g-5">
-                    <div class="product-im col-md-3-1"><img src="img/agricultural-land-investment.jpg"
-                            style="width:100% !important;border-radius:10px;">
-                    </div>
-
-                    <div class="product-cnt col-md-8 ">
-                        <p style="font-size:18px;">1939 Sq-ft 3 BHK Flat For Sale in Hebbal, Bangalore </p>
-                        <p style="font-size:14px;">Residential Plots - ₹36 Lac onwards<br>
-                            Property Size: 1 Acre<br>
-                            Type : Plot<br><span class="product-but col-lg-5 but-sy"><span class="short"><i
-                                        class='fa fa-heart'></i></span> <button class="btn btn-primary "
-                                    onClick="window.location.href='buy.html';">View Property Details</button></span></p>
-
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Contact End --><!-- Contact Start -->
-    <div class="container-xxl ">
-        <div class="container ">
-
-            <div class="row  align-items-start">
-                <div class="product-inner mb-5 col-md-8 mx-auto g-5">
-                    <div class="product-im col-md-3-1"><img src="img/agricultural-land-investment.jpg"
-                            style="width:100% !important;border-radius:10px;">
-                    </div>
-
-                    <div class="product-cnt col-md-8 ">
-                        <p style="font-size:18px;">1939 Sq-ft 3 BHK Flat For Sale in Hebbal, Bangalore </p>
-                        <p style="font-size:14px;">Residential Plots - ₹36 Lac onwards<br>
-                            Property Size: 1 Acre<br>
-                            Type : Plot<br><span class="product-but col-lg-5 but-sy"><span class="short"><i
-                                        class='fa fa-heart'></i></span> <button class="btn btn-primary "
-                                    onClick="window.location.href='buy.html';">View Property Details</button></span></p>
-
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
-    </div>
     <!-- Contact End -->
 
     <!-- Footer Start -->
@@ -341,6 +243,112 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script>
+        function fetchData() {
+            const apiUrl = 'http://localhost:5000/api//getproperty';
+
+            fetch(apiUrl)
+                .then(response => {
+                    if (response) {
+
+                        return response.json();
+                    } else {
+                        return
+                    }
+                })
+                .then(data => {
+                    console.log(data);
+
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        }
+
+        window.onload = fetchData;
+    </script>
+    <script>
+        function redirectToBuyPage(propertyId) {
+            // Construct the URL with the query parameter
+            console.log(propertyId, 'propertyId');
+            const url = `buy.html?id=${propertyId}`;
+
+            // Redirect to the URL
+            // window.location.href = url;
+        }
+
+        function populatePropertyContainer(data) {
+            const propertyContainer = document.getElementById('propertyContainer');
+            data.forEach(item => {
+                const productInner = document.createElement('div');
+                productInner.className = 'product-inner mb-5 col-md-8 mx-auto g-5';
+                productInner.style.display = 'inline-block';
+                productInner.style.margin = '10px';
+                const productIm = document.createElement('div');
+                productIm.className = 'product-im col-md-3-1';
+                const img = document.createElement('img');
+                img.style.width = '200px';
+                img.style.height = '150px';
+                img.src = `/home/vedansh/landshare/Backend/public/${item.images}`;
+                img.style.borderRadius = '10px'
+                productIm.appendChild(img);
+                console.log(img);
+
+                const productCnt = document.createElement('div');
+                productCnt.className = 'product-cnt col-md-8';
+                const title = document.createElement('p');
+                title.style.fontSize = '18px';
+                title.textContent = item.ownership;
+                var id = item.id
+                const details = document.createElement('p');
+                details.style.fontSize = '14px';
+                console.log(item.id, '----');
+                details.innerHTML = `
+                <h5> ${item.landmark}</h5>
+                ${item.cost_per_squre_fit}<br>
+                Property Size: ${item.size_of_land}<br>
+                Type: ${item.property_category_select}<br>
+                
+                <span class="product-but col-lg-5 but-sy">
+                    <span class="short"><i class='fa fa-heart'></i></span>
+                    <button class="btn btn-primary" onclick="redirectToBuyPage(id)">View Property Details</button>
+                </span>
+            `;
+
+                productCnt.appendChild(title);
+                productCnt.appendChild(details);
+                productInner.appendChild(productIm);
+                productInner.appendChild(productCnt);
+                propertyContainer.appendChild(productInner);
+            });
+        }
+
+        function fetchData() {
+            const apiUrl = 'http://localhost:5000/api/getproperty';
+
+            fetch(apiUrl)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        console.error('API request failed with status:', response.status);
+                        return Promise.reject('API request failed');
+                    }
+                })
+                .then(data => {
+                    console.log(data.data);
+
+                    populatePropertyContainer(data.data);
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        }
+
+        window.onload = fetchData;
+    </script>
+
+
 </body>
 
 </html>
