@@ -1,32 +1,36 @@
-// const express = require('express');
-// const facebook = express.Router();
-// const passport = require('passport');
-// const {loginFacebook} = require('../../controllers/facebook')
-// // Define your route handlers here
-
-// // Route for Facebook login
-// facebook.get('/auth/facebook', passport.authenticate('facebook'));
-
-// facebook.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/login' }));
-
-// // Export the router
-// module.exports = facebook;
 
 
 const express = require('express');
 const facebookRouter = express.Router();
 const passport = require('passport');
+const cors = require('cors');
 
+const session = require('express-session');
+const cookieParser = require('cookie-parser')
 const app = express()
-const { loginFacebook, loginFacebookCallback } = require('../../controllers/facebook')
-// Route for Facebook login
-app.use(passport.initialize());
-app.use(passport.session());
-// facebookRouter.get('/auth/facebook', loginFacebook);
-facebookRouter.get('/auth/facebook',
-loginFacebook);
+app.use(express.json());
+app.use(cors());
+app.use(cookieParser());
+app.set('view engine', 'ejs');
 
-// Route for Facebook callback
-facebookRouter.get('/auth/facebook/callback', loginFacebookCallback);
+const start = require('../../controllers/facebook')
+facebookRouter.get('/', (req, res) => {
+    console.log('--------');
+    res.render('index.ejs');
+});
+facebookRouter.use(session({
+    secret: 'jsonworldplaceforjsdemos',
+    saveUninitialized: false,
+}));
+facebookRouter.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email' }));
+
+facebookRouter.get('/auth/facebook/callback',
+    passport.authenticate('facebook', { successRedirect: '/api', failureRedirect: '/login' }),
+    (req, res) => {
+        console.log(req.emails);
+        console.log(req.username);
+        res.redirect('/api');
+    });
+
 
 module.exports = facebookRouter;

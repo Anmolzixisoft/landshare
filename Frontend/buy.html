@@ -121,7 +121,7 @@
                             <div class="thumb">
                                 <div class="big-image">
                                     <!-- Update the src attribute with the actual image filename -->
-                                    <img src="/home/vedansh/landshare/Backend/public${property.images}" alt="">
+                                    <img src=/home/vedansh/landshare/Backend/public${property.images}" alt="">
                                 </div>
                                 <div class="small-images">
                                     <!-- You can also update the src attribute for small images if needed -->
@@ -289,16 +289,34 @@
     <!-- Template Javascript -->
     <script>
 
-        const apiUrl = 'http://localhost:5000/api/getproperty';
 
+        function getQueryParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
 
-        fetch(apiUrl)
-            .then(response => response.json())
-            .then(data => {
-                console.log(data.data, "data.data");
-                let tableContent = '<table>';
-                data.data.forEach(property => {
-                    tableContent += `
+        function displayPropertyDetails() {
+            const propertyId = getQueryParameter("id");
+            console.log(propertyId, '-----');
+            if (propertyId) {
+
+                const userData = {
+                    id: propertyId
+                };
+
+                fetch('http://localhost:5000/api/getPropertyById', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(userData)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        let tableContent = '<table>';
+                        data.message.forEach(property => {
+                            tableContent += `
             <tr>
             <td><b>Price</b></td>
             <td>: ${property.cost_per_squre_fit}</td>
@@ -326,14 +344,25 @@
         </tr>
 
         `;
-                });
-                tableContent += '</table>';
-                const tableContainer = document.querySelector('.product-cnt');
-                tableContainer.innerHTML = tableContent;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+
+
+                        });
+                        tableContent += '</table>';
+                        const tableContainer = document.querySelector('.product-cnt');
+                        tableContainer.innerHTML = tableContent;
+
+                    })
+                    .catch(error => {
+                        alert(`${error}`);
+                    });
+
+            } else {
+                // Handle the case where no property ID is provided
+                console.error('No property ID provided in the query parameter.');
+            }
+        }
+
+        window.onload = displayPropertyDetails;
 
     </script>
     <script src="js/main.js"></script>

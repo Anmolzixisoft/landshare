@@ -311,7 +311,7 @@
                 
                 <span class="product-but col-lg-5 but-sy">
                     <span class="short"><i class='fa fa-heart'></i></span>
-                    <button class="btn btn-primary" onclick="redirectToBuyPage(id)">View Property Details</button>
+                    <button class="btn btn-primary view-details-button" data-property-id="${item.id}" onclick="viewPropertyDetails(${item.id})">View Property Details</button>
                 </span>
             `;
 
@@ -347,7 +347,15 @@
 
         window.onload = fetchData;
     </script>
+    <script>
+        function viewPropertyDetails(propertyId) {
+            // Construct the URL with the query parameter
+            const url = `buy.html?id=${propertyId}`;
 
+            // Redirect to the URL
+            window.location.href = url;
+        }
+    </script>
 
 </body>
 

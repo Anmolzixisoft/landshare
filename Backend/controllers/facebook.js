@@ -1,65 +1,53 @@
-// const passport = require('passport');
-// const express = require('express')
-// const FacebookStrategy = require('passport-facebook').Strategy;
-// const app = express();
+const session = require('express-session')
+const express = require('express')
+const passport = require('passport')
+const FacebookStrategy = require('passport-facebook').Strategy;
 
-// app.use(passport.initialize());
-// app.use(passport.session());
-// function loginFacebook(req, res) {
+const connection = require('../database/mysqldb')
+const app = express()
 
-//     console.log('api run');
-//     passport.serializeUser((user, done) => {
-//         console.log(user, '00000000000000');
-//         done(null, user);
-//     });
 
-//     passport.deserializeUser((obj, done) => {
-//         console.log('11111', obj);
-//         done(null, obj);
-//     });
-//     passport.use(new FacebookStrategy({
-//         clientID: '2708969762574726',
-//         clientSecret: '25b09c2150786774e096b506a2362b07',
-//         callbackURL: 'http://localhost:5000/',
-//         profileFields: ['id', 'displayName', 'photos', 'email']
-//     }, (accessToken, refreshToken, profile, done) => {
-//         // Handle user authentication and database interaction here
-//         console.log('55555555');
-//         console.log(accessToken, refreshToken, profile);
-//         return done(null, profile);
-//     }));
+app.use(session({
+    secret: 'jsonworldplaceforjsdemos',
+    saveUninitialized: false,
+}));
 
-//     console.log('9');
-// }
-// function loginFacebookCallback(req, res) {
-//     const user = req.user;
-//     // res.redirect('/dashboard');
-//     console.log(user, 'user');
-// };
+app.use(passport.initialize());
+app.use(passport.session());
+app.set('view engine', 'ejs');
 
-// // Export the passport configuration
-// module.exports = { loginFacebook, loginFacebookCallback };
-const Sequelize = require('sequelize');
-const passport = require('passport');
-const FacebookTokenStrategy = require('passport-facebook-token');
+passport.serializeUser(function (user, done) {
+    done(null, user);
+});
 
-//facebookToken is the custom name of facebookstrategy
-//FACEBOOK_APP_ID and FAEBOOK_APP_SECRET are set in .env file
-function loginFacebook(req, res) {
-    passport.use(
-        'facebookToken',
-        new FacebookTokenStrategy(
-            {
-                clientID: '2708969762574726',
-                clientSecret: '25b09c2150786774e096b506a2362b07',
-            },
-            async (accessToken, refreshToken, profile, done, res) => {
-                console.log(`inside facebook strategy`);
-                //log to view the profile email
-                console.log(`profile email: ${profile.emails[0].value}`);
+passport.deserializeUser(function (obj, done) {
+    done(null, obj);
+});
 
-            }
-        )
-    );
-}
-module.exports = { loginFacebook };
+passport.use(new FacebookStrategy({
+    clientID: "2708969762574726",
+    clientSecret: "25b09c2150786774e096b506a2362b07",
+    callbackURL: "http://localhost:5000/api/auth/facebook/callback",
+},
+    function (accessToken, refreshToken, profile, done) {
+
+        process.nextTick(function () {
+
+            connection.query("SELECT * FROM test.tbl_user WHERE socialid = '" + profile.id + "'",
+                function (err, rows, fields) {
+                    if (err) throw err;
+                    if (rows.length === 0) {
+                        console.log("There is a new user, registering here");
+                        connection.query("INSERT INTO test.tbl_user(name, email,mobile_number,provider,socialid) VALUES('" + profile.displayName + "', 'abc@gmail.com','8985744525','" + profile.provider + "','" + profile.id + "')");
+
+                        return done(null, profile);
+                    }
+                    else {
+                        const token = accessToken
+
+                        console.log("User already registered in database...");
+                        return done(null, profile, token);
+                    }
+                });
+        });
+    }));

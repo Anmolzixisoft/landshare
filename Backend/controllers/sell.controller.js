@@ -2,11 +2,11 @@ const connection = require('../database/mysqldb')
 
 function sellProperty(req, res) {
 
-    const { user_id, property_category_select, mobile_number, full_address, state, city, pincode, landmark, owenership, cost_per_squre_fit, size_of_land, desciption, images } = req.body
+    const { user_id, property_category_select, mobile_number, full_address, state, city, pincode, landmark, owenership, cost_per_squre_fit, size_of_land, desciption, ownerName, Survey_no, Land_Facing } = req.body
     const { image } = req.files
     const file = image[0].filename
 
-    const sql = `INSERT INTO test.sell_property (user_id, property_category_select, mobile_number, full_address, state, city, pincode, landmark, owenership, cost_per_squre_fit, size_of_land, desciption,images) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?)`;
+    const sql = `INSERT INTO test.sell_property (user_id, property_category_select, mobile_number, full_address, state, city, pincode, landmark, owenership, cost_per_squre_fit, size_of_land, desciption,ownerName,Survey_no,Land_Facing,images) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?)`;
     const values = [
         user_id,
         property_category_select,
@@ -20,6 +20,9 @@ function sellProperty(req, res) {
         cost_per_squre_fit,
         size_of_land,
         desciption,
+        ownerName,
+        Survey_no,
+        Land_Facing,
         file,
     ];
 
@@ -59,4 +62,16 @@ function updateProperty(req, res) {
         }
     );
 }
-module.exports = { sellProperty, getProperty, updateProperty }
+
+function getPropertyById(req, res) {
+    const { id } = req.body
+    connection.query('SELECT * FROM test.sell_property WHERE id="' + id + '"', (err, result) => {
+        if (err) {
+            return res.send({ err: err })
+        }
+        else {
+            return res.send({ message: result })
+        }
+    })
+}
+module.exports = { sellProperty, getProperty, updateProperty ,getPropertyById}
