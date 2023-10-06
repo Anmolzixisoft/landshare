@@ -18,11 +18,13 @@ const sellRouter = require('./routes/auth/sell.route')
 const facebook = require('./routes/auth/facebook.route')
 const linkedinRouter = require('./routes/auth/linkedin.route')
 const instgramRouter = require('./routes/auth/instagram.route')
+const serviceRouter = require('./routes/auth/service.route')
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/api', signUpRouter);
 app.use('/api', loginRouter)
 app.use('/api', sellRouter)
 app.use('/api', facebook)
+app.use('/api', serviceRouter)
 app.use(linkedinRouter)
 app.use(instgramRouter)
 app.get("/", (req, res) => {

@@ -230,6 +230,7 @@
     <script src="js/main.js"></script>
     <script src="js/login-script.js"></script>
     <script>
+        const userId = localStorage.getItem('userId')
 
         function fetchData() {
             const apiUrl = 'http://localhost:5000/api/getsortlist';
@@ -243,12 +244,12 @@
                     }
                 })
                 .then(data => {
-console.log(data.data,'-----1------');
+                    console.log(data.data, '-----1------');
                     data.data.forEach(property => {
-                      
+                        if (property.user_id == userId) {
                             const propertyListing = createPropertyListing(property);
                             propertyListingsContainer.appendChild(propertyListing);
-                        
+                        }
                     });
                     document.getElementById('spinner').style.display = 'none';
                 })
