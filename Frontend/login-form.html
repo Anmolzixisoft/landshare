@@ -33,7 +33,10 @@
     <link href="css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="css/login-style.css">
     <!-- Remix Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
+
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -302,6 +305,7 @@
     <script src="lib/waypoints/waypoints.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
     <script src="lib/parallax/parallax.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
@@ -362,19 +366,30 @@
             })
                 .then(response => response.json())
                 .then(data => {
-
                     if (data.success) {
-                        console.log(data);
-                        window.location.href = 'otp.html';
-                        alert(`Login successful!`);
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: "Login successfully",
+                        }).then(() => {
+                            window.location.href = "otp.html";
+                        });
                     } else {
-                        alert(`${data.error}`);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: data.error,
+                        });
                     }
                 })
                 .catch(error => {
-                    console.error('Error:', error);
-                    alert(`${error}`);
-                });
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'An error occurred.',
+                    });
+                })
+
         }
 
         document.getElementById('login').addEventListener('submit', function (e) {
@@ -410,15 +425,29 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success == true) {
-                        alert(`${data.message}`);
-                        window.location.href = 'login-form.html';
+                        Swal.fire({
+                            title: "Success!",
+                            text: `${data.message}`,
+                            icon: "success",
+                        }).then(() => {
+                            window.location.href = 'login-form.html';
+                        });
                     } else {
-                        alert(`${data.error}`);
+                        Swal.fire({
+                            title: "Error!",
+                            text: `${data.error}`,
+                            icon: "error",
+                        });
                     }
                 })
                 .catch(error => {
-                    alert(`${error}`);
+                    Swal.fire({
+                        title: "Error!",
+                        text: `${error}`,
+                        icon: "error",
+                    });
                 });
+
         }
 
         document.getElementById('register').addEventListener('submit', function (e) {
@@ -444,16 +473,29 @@
                 .then(data => {
 
                     if (data.status == true) {
-                        alert(`${data.msg}`);
-                        document.getElementById('sendotpbutton').textContent = 'Resend';
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: "Login successfully",
+                        }).then(() => {
+                            window.location.href = "services.html";
+                        });
                     } else {
-                        alert(`${data.error}`);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: data.error,
+                        });
                     }
                 })
                 .catch(error => {
-                    console.error('Error:', error);
-                    alert(`${error}`);
-                });
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'An error occurred.',
+                    });
+                })
+
         });
 
         function validateEmail() {

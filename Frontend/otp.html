@@ -7,6 +7,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
@@ -228,6 +229,7 @@
     <script src="js/main.js"></script>
     <!-- JS -->
     <script src="js/login-script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script>
@@ -285,16 +287,31 @@
                         console.log(data, '------');
                         const token = data.token
                         localStorage.setItem('token', token);
-                        localStorage.setItem('userId', data.userId)
-                        window.location.href = 'index.html';
-                        alert('OTP validation successful!');
+                        localStorage.setItem('userId', data.userId);
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'OTP validation successful!',
+                        }).then(() => {
+                            window.location.href = 'index.html';
+                        });
                     } else {
-                        alert(`${data.error}`);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: data.error,
+                        });
                     }
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    alert('An error occurred during OTP validation. Please try again later.');
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'An error occurred during OTP validation. Please try again later.',
+                    });
                 });
         }
 

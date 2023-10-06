@@ -21,6 +21,7 @@
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
 
     <!-- Libraries Stylesheet -->
     <link href="lib/animate/animate.min.css" rel="stylesheet">
@@ -263,6 +264,8 @@
     <script src="lib/parallax/parallax.min.js"></script>
 
     <!-- Template Javascript -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
     <script src="js/main.js"></script>
     <script>
         function service() {
@@ -289,16 +292,28 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data, '---');
                     if (data.success == true) {
-                        alert(`${data.message}`)
-                        window.location.href = "services.html"
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: data.message,
+                        }).then(() => {
+                            window.location.href = "index.html";
+                        });
                     } else {
-                        alert(`${data.error}`);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: data.error,
+                        });
                     }
                 })
                 .catch(error => {
-                    alert(`${error}`);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: error,
+                    });
                 });
         }
 

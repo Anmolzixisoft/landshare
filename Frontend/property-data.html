@@ -7,6 +7,7 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <meta content="" name="keywords">
   <meta content="" name="description">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
 
   <!-- Favicon -->
   <link href="img/favicon.ico" rel="icon">
@@ -429,6 +430,7 @@
   <script src="lib/owlcarousel/owl.carousel.min.js"></script>
   <script src="lib/parallax/parallax.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
   <!-- Template Javascript -->
   <script src="js/main.js"></script>
@@ -510,15 +512,29 @@
         .then(response => response.json())
         .then(data => {
           if (data) {
-            alert(`${data.message}`);
-            window.location.href = 'property-data.html';
+            Swal.fire({
+              title: "Success",
+              text: data.message,
+              icon: "success",
+            }).then(() => {
+              window.location.href = 'property-data.html';
+            });
           } else {
-            alert(`${data.error}`);
+            Swal.fire({
+              title: "Error",
+              text: data.error,
+              icon: "error",
+            });
           }
         })
         .catch(error => {
-          alert(`${error}`);
+          Swal.fire({
+            title: "Error",
+            text: error,
+            icon: "error",
+          });
         });
+
 
     }
 
