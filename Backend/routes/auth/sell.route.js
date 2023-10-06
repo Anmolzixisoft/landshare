@@ -3,9 +3,11 @@ const sellRouter = express.Router();
 
 const { singleUpload } = require('../../middleware/multer');
 
-const { sellProperty, getProperty, getPropertyById } = require("../../controllers/sell.controller")
+const { sellProperty, getProperty, getsortlist,getPropertyById ,sortlist} = require("../../controllers/sell.controller")
 sellRouter.post('/sellProperty', singleUpload, sellProperty);
 sellRouter.get('/getproperty', getProperty)
 sellRouter.post('/getPropertyById', getPropertyById)
+sellRouter.post('/sortlist',sortlist)
+sellRouter.get('/getsortlist',getsortlist)
 
 module.exports = sellRouter;

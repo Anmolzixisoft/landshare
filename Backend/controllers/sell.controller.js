@@ -74,4 +74,30 @@ function getPropertyById(req, res) {
         }
     })
 }
-module.exports = { sellProperty, getProperty, updateProperty ,getPropertyById}
+
+function sortlist(req, res) {
+    const { sort, id } = req.body
+
+    // if(!sort || !id){
+    //     return res.send({err:"please fill field"})
+    // }
+    connection.query('UPDATE test.sell_property SET shortList = "' + sort + '" WHERE id="' + id + '"', (err, result) => {
+        if (err) {
+            return res.send({ err: err })
+        }
+        else {
+            return res.send({ message: "success", result })
+        }
+    })
+}
+function getsortlist(req, res) {
+    connection.query('SELECT * FROM test.sell_property WHERE shortList=1', (err, result) => {
+        if (err) {
+            return res.send({ err: err })
+        } else {
+            return res.send({ data: result })
+        }
+    }
+    )
+}
+module.exports = { sellProperty, getProperty, updateProperty, getPropertyById, sortlist, getsortlist }

@@ -292,17 +292,15 @@
                 img.src = `/home/vedansh/landshare/Backend/public/${item.images}`;
                 img.style.borderRadius = '10px'
                 productIm.appendChild(img);
-                console.log(img);
-
                 const productCnt = document.createElement('div');
                 productCnt.className = 'product-cnt col-md-8';
                 const title = document.createElement('p');
                 title.style.fontSize = '18px';
                 title.textContent = item.ownership;
                 var id = item.id
+                var sort = item.shortList
                 const details = document.createElement('p');
                 details.style.fontSize = '14px';
-                console.log(item.id, '----');
                 details.innerHTML = `
                 <h5> ${item.landmark}</h5>
                 ${item.cost_per_squre_fit}<br>
@@ -310,7 +308,7 @@
                 Type: ${item.property_category_select}<br>
                 
                 <span class="product-but col-lg-5 but-sy">
-                    <span class="short"><i class='fa fa-heart'></i></span>
+                    <span class="short"><i class='fa fa-heart' id="heart-icon" onclick="toggleHeart(${item.id},${item.shortList})"></i></span>
                     <button class="btn btn-primary view-details-button" data-property-id="${item.id}" onclick="viewPropertyDetails(${item.id})">View Property Details</button>
                 </span>
             `;
@@ -336,7 +334,6 @@
                     }
                 })
                 .then(data => {
-                    console.log(data.data);
 
                     populatePropertyContainer(data.data);
                 })
@@ -354,6 +351,48 @@
 
             // Redirect to the URL
             window.location.href = url;
+        }
+
+        function toggleHeart(property_id, sort) {
+            console.log('-----');
+            var heartIcon = document.getElementById("heart-icon");
+            console.log(property_id, sort);
+            console.log('runnn', heartIcon);
+            if (sort == 1) {
+                sort = 0
+            }
+            else if (sort == 0) {
+                sort = 1
+            }
+            console.log(sort, '---', sort, '55');
+            if (heartIcon) {
+                console.log('1111111111');
+                heartIcon.addEventListener("click", function () {
+                    console.log('------inter--');
+
+                    const postData = {
+                        id: property_id,
+                        sort: sort,
+
+                    };
+                    fetch('http://localhost:5000/api/sortlist', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(postData),
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+
+                            console.log(data);
+                        })
+                        .catch(error => {
+                            console.log('API Error:', error);
+                        });
+                });
+            }
+
         }
     </script>
 

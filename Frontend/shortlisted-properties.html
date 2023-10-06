@@ -95,7 +95,7 @@
 
 
     <!-- Contact Start -->
-    <div class="container-xxl ">
+    <!-- <div class="container-xxl ">
         <div class="container ">
 
             <div class="row  align-items-start">
@@ -118,117 +118,11 @@
                 </div>
             </div>
         </div>
+    </div> -->
+
+    <div class="row align-items-start" id="property-listings">
+        <!-- Property listings will be dynamically added here -->
     </div>
-    <!-- Contact End -->
-
-    <!-- Contact Start -->
-    <div class="container-xxl">
-        <div class="container">
-            <div class="row align-items-start">
-                <div class="product-inner mb-5 col-md-8 mx-auto g-5">
-                    <div class="product-im col-md-3-1 position-relative">
-                        <!-- Image Container with "Sold Out" label -->
-                        <div class="image-container">
-                            <img src="img/agricultural-land-investment.jpg"
-                                style="width: 100% !important; border-radius: 10px;" class="blurred-image">
-                            <span class="sold-out-label">Sold Out</span>
-                        </div>
-                    </div>
-
-                    <div class="product-cnt col-md-8">
-                        <p style="font-size: 18px;">1939 Sq-ft 3 BHK Flat For Sale in Hebbal, Bangalore </span></p>
-                        <p style="font-size: 14px;">Residential Plots - ₹36 Lac onwards<br> Property Size: 1 Acre<br>
-                            Type: Plot<br><span class="product-but col-lg-5 but-sy"><span class="short"><i
-                                        class='fa fa-heart'></i></span> <button class="btn btn-primary "
-                                    onClick="window.location.href='buy.html';">View Property Details</button></span></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Contact End -->
-    <!-- Contact Start -->
-    <div class="container-xxl ">
-        <div class="container ">
-
-            <div class="row  align-items-start">
-                <div class="product-inner mb-5 col-md-8 mx-auto g-5">
-                    <div class="product-im col-md-3-1"><img src="img/agricultural-land-investment.jpg"
-                            style="width:100% !important;border-radius:10px;">
-                    </div>
-
-                    <div class="product-cnt col-md-8 ">
-                        <p style="font-size:18px;">1939 Sq-ft 3 BHK Flat For Sale in Hebbal, Bangalore </p>
-                        <p style="font-size:14px;">Residential Plots - ₹36 Lac onwards<br>
-                            Property Size: 1 Acre<br>
-                            Type : Plot<br><span class="product-but col-lg-5 but-sy"><span class="short"><i
-                                        class='fa fa-heart'></i></span> <button class="btn btn-primary "
-                                    onClick="window.location.href='buy.html';">View Property Details</button></span></p>
-
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Contact End -->
-    <!-- Contact Start -->
-    <div class="container-xxl ">
-        <div class="container ">
-
-            <div class="row  align-items-start">
-                <div class="product-inner mb-5 col-md-8 mx-auto g-5">
-                    <div class="product-im col-md-3-1"><img src="img/agricultural-land-investment.jpg"
-                            style="width:100% !important;border-radius:10px;">
-                    </div>
-
-                    <div class="product-cnt col-md-8 ">
-                        <p style="font-size:18px;">1939 Sq-ft 3 BHK Flat For Sale in Hebbal, Bangalore </p>
-                        <p style="font-size:14px;">Residential Plots - ₹36 Lac onwards<br>
-                            Property Size: 1 Acre<br>
-                            Type : Plot<br><span class="product-but col-lg-5 but-sy"><span class="short"><i
-                                        class='fa fa-heart'></i></span> <button class="btn btn-primary "
-                                    onClick="window.location.href='buy.html';">View Property Details</button></span></p>
-
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Contact End -->
-
-    <!-- Contact Start -->
-    <div class="container-xxl">
-        <div class="container">
-            <div class="row align-items-start">
-                <div class="product-inner mb-5 col-md-8 mx-auto g-5">
-                    <div class="product-im col-md-3-1 position-relative">
-                        <!-- Image Container with "Sold Out" label -->
-                        <div class="image-container">
-                            <img src="img/agricultural-land-investment.jpg"
-                                style="width: 100% !important; border-radius: 10px;" class="blurred-image">
-                            <span class="sold-out-label">Sold Out</span>
-                        </div>
-                    </div>
-
-                    <div class="product-cnt col-md-8">
-                        <p style="font-size: 18px;">1939 Sq-ft 3 BHK Flat For Sale in Hebbal, Bangalore </span></p>
-                        <p style="font-size: 14px;">Residential Plots - ₹36 Lac onwards<br> Property Size: 1 Acre<br>
-                            Type: Plot<br><span class="product-but col-lg-5 but-sy"><span class="short"><i
-                                        class='fa fa-heart'></i></span> <button class="btn btn-primary "
-                                    onClick="window.location.href='buy.html';">View Property Details</button></span></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Contact End -->
-
-
-
 
     <!-- Footer Start -->
     <div class="container-fluid bg-dark-1 text-white footer mt-5  wow fadeIn" data-wow-delay="0.1s">
@@ -335,6 +229,62 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
     <script src="js/login-script.js"></script>
+    <script>
+
+        function fetchData() {
+            const apiUrl = 'http://localhost:5000/api/getsortlist';
+
+            fetch(apiUrl)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Failed to fetch data');
+                    }
+                })
+                .then(data => {
+console.log(data.data,'-----1------');
+                    data.data.forEach(property => {
+                      
+                            const propertyListing = createPropertyListing(property);
+                            propertyListingsContainer.appendChild(propertyListing);
+                        
+                    });
+                    document.getElementById('spinner').style.display = 'none';
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        }
+
+        const propertyListingsContainer = document.getElementById('property-listings');
+
+        function createPropertyListing(property) {
+            console.log("ddd", property);
+            const container = document.createElement('div');
+            container.classList.add('product-inner', 'mb-5', 'col-md-8', 'mx-auto', 'g-5');
+
+            container.innerHTML = `
+        <div class="product-im col-md-3-1">
+            <img src="${property.images}" style="width:100% !important;border-radius:10px;">
+        </div>
+        <div class="product-cnt col-md-8">
+            <p style="font-size:18px;">${property.landmark}</p>
+            <p style="font-size:14px;">
+                Residential Plots - ${property.cost_per_squre_fit
+                } <br>
+                Property Size: ${property.size_of_land}<br>
+                Type: ${property.property_category_select}
+            </p>
+           
+        </div>
+    `;
+
+            return container;
+        }
+
+        window.onload = fetchData;
+    </script>
 </body>
 
 </html>
