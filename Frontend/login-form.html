@@ -102,7 +102,7 @@
             <div class=" align-items-start ">
                 <div class=" col-lg-6 mb-5">
                     <div id="emailError" style="color: rgb(233, 73, 73);"></div>
-                    <form class="form active" id="login" action="authentication.php" onsubmit="return validation()"
+                    <form class="form active" id="login" action="authentication.php" onsubmit="return validateForm()"
                         method="POST">
                         <h2>Login</h2>
                         <label for="email">Email Address</label>
@@ -143,17 +143,17 @@
                             </button>
                         </div>
                     </form>
-                    <form class="form" id="register" action="authentication.php" onsubmit="return validation()"
+                    <form class="form" id="register" action="authentication.php" onsubmit="return validateForm()"
                         method="POST">
                         <h2>Register</h2>
                         <label for="name">Your Name</label>
-                        <div class="pass-reset" onclick="activeInput(this)">
+                        <div class="pass-reset">
                             <input type="text" name="name" class="name" id="nameInput" placeholder="Your Name" required>
                         </div>
                         <label for="phone">Your Phone Number</label>
                         <div class="pass-reset" onclick="activeInput(this)">
-                            <input type="number" name="phone" class="phone" id="phoneInput"
-                                placeholder="Enter Your Phone Number" required>
+                            <input type="text" name="phone" class="phone" id="phoneInput"
+                                placeholder="Enter Your Phone Number" onkeypress="return isNumberKey(event)" required>
                         </div>
                         <label for="email">Email Address</label>
                         <div class="pass-reset" onclick="activeInput(this)">
@@ -314,6 +314,16 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script>
+
+        function validateForm() {
+            console.log('------11----');
+            var nameInput = document.getElementById("nameInput").value;
+            if (nameInput == "") {
+                alert("Name field cannot be empty!");
+                return false; // Form submission will be stopped
+            }
+            return true; 
+        }
         $(document).ready(function () {
             $("#contact-form").on("submit", function (e) {
                 e.preventDefault();
@@ -497,7 +507,13 @@
                 })
 
         });
-
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
         function validateEmail() {
             const emailInput = document.getElementById('emailInput').value;
             const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
