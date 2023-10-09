@@ -16,7 +16,7 @@ function Ourservice(req, res) {
             res.status(500).json({ error: 'Error inserting data into the database' });
         } else {
             console.log('Data inserted into the database.');
-            res.status(200).json({ message: 'service data  Added',success:true });
+            res.status(200).json({ message: 'service data  Added', success: true });
         }
     });
 
@@ -31,4 +31,35 @@ function getService(req, res) {
         }
     })
 }
-module.exports = { Ourservice, getService }
+function isValidMobileNumber(mobile_number) {
+
+    const mobileRegex = /^[0-9]{10}$/;
+
+    return mobileRegex.test(mobile_number);
+}
+
+function Touch(req, res) {
+    const { name, email, phone, subject, message } = req.body
+    if (!name || !email) {
+        return res.send({ err: "please fill field " })
+    }
+    if (!isValidMobileNumber(phone)) {
+        return res.status(400).json({ error: 'Invalid mobile number format', status: false });
+    }
+    const sql = `INSERT INTO test.tbl_touch (  name, email, phone_no, subject, message) VALUES (?, ?, ?, ?, ?)`;
+    const values = [
+        name, email, phone, subject, message
+    ];
+
+    connection.query(sql, values, (err, result) => {
+        if (err) {
+            console.error('Database insertion error: ' + err.message);
+            res.status(500).json({ error: 'Error inserting data into the database' });
+        } else {
+            console.log('Data inserted into the database.');
+            res.status(200).json({ message: ' data  Added', success: true });
+        }
+    });
+
+}
+module.exports = { Ourservice, getService ,Touch}

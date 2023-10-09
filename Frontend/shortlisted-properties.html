@@ -231,12 +231,21 @@
     <script src="js/login-script.js"></script>
     <script>
         const userId = localStorage.getItem('userId')
-
+        console.log('-------6777================');
         function fetchData() {
+            const postData = {
+                user_id: userId,
+            };
             const apiUrl = 'http://localhost:5000/api/getsortlist';
-
-            fetch(apiUrl)
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json', // Set the content type to JSON
+                },
+                body: JSON.stringify(postData), // Convert your data to JSON format
+            })
                 .then(response => {
+                    console.log(response, '----------------');
                     if (response.ok) {
                         return response.json();
                     } else {

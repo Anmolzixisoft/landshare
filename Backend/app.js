@@ -2,6 +2,7 @@ require('./database/mysqldb');
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
+
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser');
 const app = express();
@@ -11,6 +12,12 @@ app.use(cors());
 app.use(cookieParser());
 require('dotenv').config({
     path: path.join(__dirname, `.env.${process.env.NODE_ENV || 'development'}`)
+});
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:5500');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
 });
 const signUpRouter = require('./routes/auth/singUp.route')
 const loginRouter = require('./routes/auth/login.route')

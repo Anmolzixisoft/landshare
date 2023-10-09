@@ -124,7 +124,6 @@
       </div>
     </div>
 
-
     <form class="row" id="property">
       <div class="col-md-6 mb-3">
         <div class="row">
@@ -135,9 +134,7 @@
             <input type="text" id="landmarkOwnername" class="form-control" aria-describedby="passwordHelpInline"
               required>
             <span class="error-message" id="landmarkOwnername-error"></span>
-
           </div>
-
         </div>
       </div>
       <div class="col-md-6 mb-3">
@@ -477,9 +474,9 @@
       const ownership = document.getElementById('ownership').value
       // const image = document.getElementById('formFileMultiple').value
       const imageInput = document.getElementById('formFileMultiple');
-      const Survey_no = document.getElementById('SurveyNo')
-      const Land_Facing = document.getElementById('landFacing')
-      const form = document.getElementById('property');
+      const Survey_no = document.getElementById('SurveyNo').value
+      const Land_Facing = document.getElementById('landFacing').value
+      const form = document.getElementById('property').value;
       const formData = new FormData(form);
 
       // Append additional form fields

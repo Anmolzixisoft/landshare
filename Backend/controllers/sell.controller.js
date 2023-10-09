@@ -6,7 +6,7 @@ function sellProperty(req, res) {
     const { image } = req.files
     const file = image[0].filename
 
-    const sql = `INSERT INTO test.sell_property (user_id, property_category_select, mobile_number, full_address, state, city, pincode, landmark, owenership, cost_per_squre_fit, size_of_land, desciption,ownerName,Survey_no,Land_Facing,images) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?)`;
+    const sql = `INSERT INTO test.tbl_sell_property (user_id, property_category_select, mobile_number, full_address, state, city, pincode, landmark, owenership, cost_per_squre_fit, size_of_land, desciption,ownerName,Survey_no,Land_Facing,images) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,? ,?)`;
     const values = [
         user_id,
         property_category_select,
@@ -38,7 +38,7 @@ function sellProperty(req, res) {
 
 }
 function getProperty(req, res) {
-    connection.query(`SELECT * FROM test.sell_property`, (err, result) => {
+    connection.query(`SELECT * FROM test.tbl_sell_property`, (err, result) => {
         if (err) {
             return res.send({ error: err })
         }
@@ -65,7 +65,7 @@ function updateProperty(req, res) {
 
 function getPropertyById(req, res) {
     const { id } = req.body
-    connection.query('SELECT * FROM test.sell_property WHERE id="' + id + '"', (err, result) => {
+    connection.query('SELECT * FROM test.tbl_sell_property WHERE id="' + id + '"', (err, result) => {
         if (err) {
             return res.send({ err: err })
         }
@@ -76,28 +76,62 @@ function getPropertyById(req, res) {
 }
 
 function sortlist(req, res) {
-    const { sort, id } = req.body
+    const { property_id, user_id, status } = req.body
+    connection.query('select * from test.tbl_sortlist where property_id=? and user_id=?', [property_id, user_id], (err, result) => {
+        if (result.length > 0) {
+            return res.status(200).json({ message: 'Property alredy sorlisted' });
+        } else {
+            const sql = `INSERT INTO test.tbl_sortlist (user_id, property_id, status) VALUES (?, ?, ?)`;
+            const values = [
+                user_id,
+                property_id,
+                status,
+            ];
 
-    // if(!sort || !id){
-    //     return res.send({err:"please fill field"})
-    // }
-    connection.query('UPDATE test.sell_property SET shortList = "' + sort + '" WHERE id="' + id + '"', (err, result) => {
-        if (err) {
-            return res.send({ err: err })
+            connection.query(sql, values, (err, result) => {
+                if (err) {
+                    console.error('Database insertion error: ' + err.message);
+                    res.status(500).json({ error: 'Error inserting data into the database' });
+                } else {
+                    console.log('Data inserted into the database.');
+                    res.status(200).json({ message: 'Property sorlisted' });
+                }
+            });
         }
-        else {
-            return res.send({ message: "success", result })
-        }
+
     })
+
 }
 function getsortlist(req, res) {
-    connection.query('SELECT * FROM test.sell_property WHERE shortList=1', (err, result) => {
+    const user_id = req.body.user_id;
+    const query = `
+    SELECT test.tbl_sell_property.*, test.tbl_sortlist.status
+    FROM test.tbl_sortlist
+    LEFT JOIN test.tbl_sell_property ON test.tbl_sell_property.id = test.tbl_sortlist.property_id
+    WHERE test.tbl_sortlist.user_id = ?`;
+
+    connection.query(query, [user_id], (err, result) => {
         if (err) {
-            return res.send({ err: err })
+            console.error("MySQL error:", err);
+            return res.status(500).json({ error: "Internal Server Error" });
         } else {
             return res.send({ data: result })
         }
     }
     )
 }
-module.exports = { sellProperty, getProperty, updateProperty, getPropertyById, sortlist, getsortlist }
+
+function buyInfo(req, res) {
+    const { user_id } = req.body
+    const sql = 'INSERT INTO test.tbl_buy (user_id) VALUES (?)';
+    const values = [user_id];
+    connection.query(sql, values, (err, result) => {
+        if (err) {
+            return res.send({ err: err })
+        }
+        else {
+            return res.send({ message: "user added" })
+        }
+    })
+}
+module.exports = { sellProperty, getProperty, updateProperty, getPropertyById, sortlist, getsortlist, buyInfo }
