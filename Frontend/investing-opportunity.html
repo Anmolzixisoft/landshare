@@ -272,18 +272,18 @@
                 productInner.style.display = 'inline-block';
                 productInner.style.margin = '10px';
                 const productIm = document.createElement('div');
-                productIm.className = 'product-im col-md-3-1';
+                productIm.className = 'product-im col-md-3';
                 const img = document.createElement('img');
-                img.style.width = '200px';
-                img.style.height = '150px';
+
                 img.src = `${item.images}`;
                 img.style.borderRadius = '10px'
+                img.classList.add('image_proprty');
+
                 productIm.appendChild(img);
                 const productCnt = document.createElement('div');
-                productCnt.className = 'product-cnt col-md-8';
+                productCnt.className = 'product-cnt col-md-9';
                 const title = document.createElement('p');
-                title.style.fontSize = '18px';
-                title.textContent = item.ownership;
+          
                 var id = item.id
                 const details = document.createElement('p');
                 details.style.fontSize = '14px';
@@ -298,7 +298,6 @@
                     <button class="btn btn-primary view-details-button" data-property-id="${item.id}" onclick="viewPropertyDetails(${item.id})">View Property Details</button>
                 </span>
             `;
-                productCnt.appendChild(title);
                 productCnt.appendChild(details);
                 productInner.appendChild(productIm);
                 productInner.appendChild(productCnt);

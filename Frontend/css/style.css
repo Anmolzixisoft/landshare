@@ -1169,3 +1169,8 @@ body.is-menu-visible #menu {
             color: var(--light-color);
             line-height: 1.5;
          }
+
+         .image_proprty{
+            width: 100%;
+            height: auto;
+         }
