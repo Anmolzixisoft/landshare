@@ -57,7 +57,7 @@
             </div>
             <div style="display: inline-flex;">
                 <a href="" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2">P</a>
-                <a href="login-form.html" target="_blank" class="nav-item nav-link"><b>Login</b>&nbsp;&nbsp;<i
+                <a href="#" id="loginLogoutButton" class="nav-item nav-link"><b></b>&nbsp;&nbsp;<i
                         class="fa fa-arrow-right"></i></a>
                 <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
                     data-bs-target="#navbarCollapse">
@@ -143,7 +143,8 @@
                             headquartered in Bangalore. Our
                             focus has been to create our mark
                             in the land investment category</p>
-                        <a class="btn bg-dark-1 py-2  mb-4 animated slideInDown text-white" href="investing-opportunity.html">
+                        <a class="btn bg-dark-1 py-2  mb-4 animated slideInDown text-white"
+                            href="investing-opportunity.html">
                             GET STARTED
                             <div class="d-inline-flex btn-sm-square  text-white rounded-circle ms-2">
                                 <i class="fa fa-arrow-right"></i>
@@ -675,6 +676,7 @@
 
 </body>
 <script>
+
     function touch() {
         const name = document.getElementById('name').value;
         const email = document.getElementById('email').value;
@@ -690,7 +692,7 @@
             message: message
         };
         console.log(userData, '9999999999');
-        fetch('http://localhost:5000/api/touch', {
+        fetch('http://192.168.29.179:5000/api/touch', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -728,12 +730,33 @@
         e.preventDefault();
         touch();
     });
+
     function isNumberKey(evt) {
         var charCode = (evt.which) ? evt.which : evt.keyCode;
         if (charCode > 31 && (charCode < 48 || charCode > 57)) {
             return false;
         }
         return true;
+    }
+
+
+</script>
+<script>
+    const userId = localStorage.getItem('userId');
+    const token = localStorage.getItem('token');
+
+    const loginLogoutButton = document.getElementById('loginLogoutButton');
+
+    if (userId && token) {
+        loginLogoutButton.innerHTML = '<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
+        loginLogoutButton.addEventListener('click', () => {
+            localStorage.removeItem('userId');
+            localStorage.removeItem('token');
+            window.location.href = 'index.html'
+        });
+    } else {
+        loginLogoutButton.innerHTML = '<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
+        loginLogoutButton.href = 'login-form.html';
     }
 </script>
 

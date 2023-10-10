@@ -49,7 +49,8 @@
         </div>
         <div style="display: inline-flex;">
             <a href=""class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2">P</a>
-            <a  href="login-form.html"target="_blank"class="nav-item nav-link"><b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i></a>
+            <a href="#" id="loginLogoutButton" class="nav-item nav-link"><b></b>&nbsp;&nbsp;<i
+                class="fa fa-arrow-right"></i></a>
             <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
             </button>
@@ -287,6 +288,24 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script>
+        const userId = localStorage.getItem('userId');
+        const token = localStorage.getItem('token');
+    
+        const loginLogoutButton = document.getElementById('loginLogoutButton');
+    
+        if (userId && token) {
+            loginLogoutButton.innerHTML = '<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
+            loginLogoutButton.addEventListener('click', () => {
+                localStorage.removeItem('userId');
+                localStorage.removeItem('token');
+                window.location.href='index.html'
+            });
+        } else {
+            loginLogoutButton.innerHTML = '<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
+            loginLogoutButton.href = 'login-form.html';
+        }
+    </script>
 </body>
 
 </html>

@@ -2,23 +2,17 @@ require('./database/mysqldb');
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
-
-const cookieParser = require('cookie-parser')
-const bodyParser = require('body-parser');
+// const cookieParser = require('cookie-parser')
+// const bodyParser = require('body-parser');
 const app = express();
 
 app.use(express.json());
 app.use(cors());
-app.use(cookieParser());
+// app.use(cookieParser());
 require('dotenv').config({
     path: path.join(__dirname, `.env.${process.env.NODE_ENV || 'development'}`)
 });
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:5500');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    next();
-});
+
 const signUpRouter = require('./routes/auth/singUp.route')
 const loginRouter = require('./routes/auth/login.route')
 const sellRouter = require('./routes/auth/sell.route')
@@ -26,7 +20,7 @@ const facebook = require('./routes/auth/facebook.route')
 const linkedinRouter = require('./routes/auth/linkedin.route')
 const instgramRouter = require('./routes/auth/instagram.route')
 const serviceRouter = require('./routes/auth/service.route')
-app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use('/api', signUpRouter);
 app.use('/api', loginRouter)
 app.use('/api', sellRouter)
@@ -35,7 +29,6 @@ app.use('/api', serviceRouter)
 app.use(linkedinRouter)
 app.use(instgramRouter)
 app.get("/", (req, res) => {
-    console.log(req.user, '---------------');
     if (req.user) {
         const name = req.user.name.givenName;
         const family = req.user.name.familyName;

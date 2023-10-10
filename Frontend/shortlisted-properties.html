@@ -54,7 +54,7 @@
             </div>
             <div style="display: inline-flex;">
                 <a href="" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2">P</a>
-                <a href="login-form.html" target="_blank" class="nav-item nav-link"><b>Login</b>&nbsp;&nbsp;<i
+                <a href="#" id="loginLogoutButton" class="nav-item nav-link"><b></b>&nbsp;&nbsp;<i
                         class="fa fa-arrow-right"></i></a>
                 <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
                     data-bs-target="#navbarCollapse">
@@ -231,12 +231,11 @@
     <script src="js/login-script.js"></script>
     <script>
         const userId = localStorage.getItem('userId')
-        console.log('-------6777================');
         function fetchData() {
             const postData = {
                 user_id: userId,
             };
-            const apiUrl = 'http://localhost:5000/api/getsortlist';
+            const apiUrl = 'http://192.168.29.179:5000/api/getsortlist';
             fetch(apiUrl, {
                 method: 'POST',
                 headers: {
@@ -245,7 +244,7 @@
                 body: JSON.stringify(postData), // Convert your data to JSON format
             })
                 .then(response => {
-                    console.log(response, '----------------');
+                    console.log(response, '---4444-------------');
                     if (response.ok) {
                         return response.json();
                     } else {
@@ -253,9 +252,11 @@
                     }
                 })
                 .then(data => {
-                    console.log(data.data, '-----1------');
+                    console.log(data.data, '-----1--3444----');
                     data.data.forEach(property => {
+                        console.log('957898486y59');
                         if (property.user_id == userId) {
+                            console.log(property,'property888888888888888');
                             const propertyListing = createPropertyListing(property);
                             propertyListingsContainer.appendChild(propertyListing);
                         }
@@ -294,6 +295,23 @@
         }
 
         window.onload = fetchData;
+    </script>
+    <script>
+        const token = localStorage.getItem('token');
+
+        const loginLogoutButton = document.getElementById('loginLogoutButton');
+
+        if (userId && token) {
+            loginLogoutButton.innerHTML = '<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
+            loginLogoutButton.addEventListener('click', () => {
+                localStorage.removeItem('userId');
+                localStorage.removeItem('token');
+                window.location.href = 'index.html'
+            });
+        } else {
+            loginLogoutButton.innerHTML = '<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
+            loginLogoutButton.href = 'login-form.html';
+        }
     </script>
 </body>
 

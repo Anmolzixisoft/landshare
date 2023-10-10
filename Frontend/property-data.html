@@ -53,7 +53,7 @@
       </div>
       <div style="display: inline-flex;">
         <a href="" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2">P</a>
-        <a href="login-form.html" target="_blank" class="nav-item nav-link"><b>Login</b>&nbsp;&nbsp;<i
+        <a href="#" id="loginLogoutButton" class="nav-item nav-link"><b></b>&nbsp;&nbsp;<i
             class="fa fa-arrow-right"></i></a>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
           <span class="navbar-toggler-icon"></span>
@@ -111,18 +111,23 @@
   <div class="container">
     <div class="row mb-5 ">
       <div class="col-lg-3">
-        <input type="radio" name=".." value="..">&nbsp;&nbsp;Agricultural Land
+        <input type="radio" id="landTypeOption1" name="landType" value="Agricultural Land">
+        &nbsp;&nbsp;Agricultural Land
       </div>
       <div class="col-lg-3">
-        <input type="radio" name=".." value="..">&nbsp;&nbsp;Commercial Land
+        <input type="radio" id="landTypeOption2" name="landType" value="Commercial Land">
+        &nbsp;&nbsp;Commercial Land
       </div>
       <div class="col-lg-3">
-        <input type="radio" name=".." value="..">&nbsp;&nbsp;Commercial Building
+        <input type="radio" id="landTypeOption3" name="landType" value="Commercial Building">
+        &nbsp;&nbsp;Commercial Building
       </div>
       <div class="col-lg-3">
-        <input type="radio" name=".." value="..">&nbsp;&nbsp;Residential Land
+        <input type="radio" id="landTypeOption4" name="landType" value="Residential Land">
+        &nbsp;&nbsp;Residential Land
       </div>
     </div>
+
 
     <form class="row" id="property">
       <div class="col-md-6 mb-3">
@@ -143,8 +148,8 @@
             <label for="" class="col-form-label">Contact No.</label>
           </div>
           <div class="col-9">
-            <input type="text" id="phone" class="form-control" aria-describedby="passwordHelpInline" required
-              pattern="[0-9]+">
+            <input type="text" id="phone" class="form-control" aria-describedby="passwordHelpInline"
+              onkeypress="return isNumberKey(event)" required pattern="[0-9]+">
             <span class="error-message" id="phone-error"></span>
 
           </div>
@@ -433,6 +438,15 @@
   <script src="js/main.js"></script>
   <!-- Add this script at the bottom of your HTML file -->
   <script>
+
+
+    function isNumberKey(evt) {
+      var charCode = (evt.which) ? evt.which : evt.keyCode;
+      if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+      }
+      return true;
+    }
     const userId = localStorage.getItem('userId');
     if (!userId) {
       window.location.href = 'login-form.html';
@@ -455,11 +469,9 @@
       } else {
         document.getElementById('phone-error').textContent = '';
       }
-
-      // Add more validation rules for other fields as needed
-
       return true;
     }
+
     function addProperty() {
       const name = document.getElementById('landmarkOwnername').value;
       const state = document.getElementById('state').value;
@@ -477,15 +489,16 @@
       const Survey_no = document.getElementById('SurveyNo').value
       const Land_Facing = document.getElementById('landFacing').value
       const form = document.getElementById('property').value;
+      const selectedLandType = document.querySelector('input[name="landType"]:checked');
+
       const formData = new FormData(form);
 
-      // Append additional form fields
       formData.append("user_id", userId);
-      formData.append("property_category_select", "landmark");
 
-      // Check if a file is selected
+      if (selectedLandType) {
+        formData.append("property_category_select", selectedLandType.value);
+      }
       if (imageInput.files.length > 0) {
-        // Append the first selected file to the FormData object
         formData.append("image", imageInput.files[0]);
       }
       formData.append("ownerName", name);
@@ -502,20 +515,22 @@
       formData.append("Survey_no", Survey_no)
       formData.append("Land_Facing", Land_Facing)
 
-      fetch('http://localhost:5000/api/sellProperty', {
+      fetch('http://192.168.29.179:5000/api/sellProperty', {
         method: 'POST',
         body: formData,
       })
         .then(response => response.json())
         .then(data => {
-          if (data) {
+          if (data.message == "Property Added") {
             Swal.fire({
               title: "Success",
               text: data.message,
               icon: "success",
             }).then(() => {
+              // Pop-up ko "OK" par click karne par band karna
+              Swal.close();
               window.location.href = 'property-data.html';
-            });
+            })
           } else {
             Swal.fire({
               title: "Error",
@@ -541,7 +556,23 @@
     });
 
   </script>
+  <script>
+    const token = localStorage.getItem('token');
 
+    const loginLogoutButton = document.getElementById('loginLogoutButton');
+
+    if (userId && token) {
+      loginLogoutButton.innerHTML = '<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
+      loginLogoutButton.addEventListener('click', () => {
+        localStorage.removeItem('userId');
+        localStorage.removeItem('token');
+        window.location.href = 'index.html'
+      });
+    } else {
+      loginLogoutButton.innerHTML = '<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
+      loginLogoutButton.href = 'login-form.html';
+    }
+  </script>
 </body>
 
 </html>

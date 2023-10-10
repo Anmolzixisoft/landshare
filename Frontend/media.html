@@ -358,6 +358,24 @@
       <!-- Template Javascript -->
   
       <script src="js/main.js"></script>
+      <script>
+        const userId = localStorage.getItem('userId');
+        const token = localStorage.getItem('token');
+    
+        const loginLogoutButton = document.getElementById('loginLogoutButton');
+    
+        if (userId && token) {
+            loginLogoutButton.innerHTML = '<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
+            loginLogoutButton.addEventListener('click', () => {
+                localStorage.removeItem('userId');
+                localStorage.removeItem('token');
+                window.location.href='index.html'
+            });
+        } else {
+            loginLogoutButton.innerHTML = '<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
+            loginLogoutButton.href = 'login-form.html';
+        }
+    </script>
     <!-- Template Javascript -->
 </body>
 

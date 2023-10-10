@@ -20,7 +20,9 @@
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
     <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
@@ -53,7 +55,7 @@
             </div>
             <div style="display: inline-flex;">
                 <a href="" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2">P</a>
-                <a href="login-form.html" target="_blank" class="nav-item nav-link"><b>Login</b>&nbsp;&nbsp;<i
+                <a href="#" id="loginLogoutButton" class="nav-item nav-link"><b></b>&nbsp;&nbsp;<i
                         class="fa fa-arrow-right"></i></a>
                 <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
                     data-bs-target="#navbarCollapse">
@@ -112,17 +114,23 @@
             <div class="row  align-items-start">
                 <div class="row  align-items-start col-md-9 mx-auto py-5">
                     <div class="col-lg-3">
-                        <input type="radio" name=".." value="..">&nbsp;&nbsp;Agricultural Land
+                        <input type="radio" name="propertyCategory" id="agriculturalLand"
+                            value="Agricultural Land">&nbsp;&nbsp;Agricultural Land
+                    </div>
+
+                    <div class="col-lg-3">
+                        <input type="radio" name="propertyCategory" id="commercialLand"
+                            value="Commercial Land">&nbsp;&nbsp;Commercial Land
                     </div>
                     <div class="col-lg-3">
-                        <input type="radio" name=".." value="..">&nbsp;&nbsp;Commercial Land
+                        <input type="radio" name="propertyCategory" id="commercialBuilding"
+                            value="Commercial Building">&nbsp;&nbsp;Commercial Building
                     </div>
                     <div class="col-lg-3">
-                        <input type="radio" name=".." value="..">&nbsp;&nbsp;Commercial Building
+                        <input type="radio" name="propertyCategory" id="residentialLand"
+                            value="Residential Land">&nbsp;&nbsp;Residential Land
                     </div>
-                    <div class="col-lg-3">
-                        <input type="radio" name=".." value="..">&nbsp;&nbsp;Residential Land
-                    </div>
+
                 </div>
 
 
@@ -244,31 +252,9 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
     <script>
-        function fetchData() {
-            const apiUrl = 'http://localhost:5000/api//getproperty';
 
-            fetch(apiUrl)
-                .then(response => {
-                    if (response) {
-
-                        return response.json();
-                    } else {
-                        return
-                    }
-                })
-                .then(data => {
-                    console.log(data);
-
-                })
-                .catch(error => {
-                    console.error('There was a problem with the fetch operation:', error);
-                });
-        }
-
-        window.onload = fetchData;
-    </script>
-    <script>
         function redirectToBuyPage(propertyId) {
             // Construct the URL with the query parameter
             console.log(propertyId, 'propertyId');
@@ -281,7 +267,6 @@
         function populatePropertyContainer(data) {
             const propertyContainer = document.getElementById('propertyContainer');
             data.forEach(item => {
-                console.log(item, '---');
                 const productInner = document.createElement('div');
                 productInner.className = 'product-inner mb-5 col-md-8 mx-auto g-5';
                 productInner.style.display = 'inline-block';
@@ -291,7 +276,7 @@
                 const img = document.createElement('img');
                 img.style.width = '200px';
                 img.style.height = '150px';
-                img.src = `file:///home/vedansh/landshare/Backend/public/${item.images}`;
+                img.src = `${item.images}`;
                 img.style.borderRadius = '10px'
                 productIm.appendChild(img);
                 const productCnt = document.createElement('div');
@@ -309,11 +294,10 @@
                 Type: ${item.property_category_select}<br>
                 <i class="fa-light fa-square-heart"></i>
                 <span class="product-but col-lg-5 but-sy">
-                    <span class="short"><i class='fa fa-heart' id="heart-icon" onclick="toggleHeart(${item.id})"></i></span>
+                    <span class="short"><i class='fa-regular fa-heart' id="heart-icon" onclick="toggleHeart(${item.id},${item.sortlist_status})"></i></span>
                     <button class="btn btn-primary view-details-button" data-property-id="${item.id}" onclick="viewPropertyDetails(${item.id})">View Property Details</button>
                 </span>
             `;
-
                 productCnt.appendChild(title);
                 productCnt.appendChild(details);
                 productInner.appendChild(productIm);
@@ -323,7 +307,7 @@
         }
 
         function fetchData() {
-            const apiUrl = 'http://localhost:5000/api/getproperty';
+            const apiUrl = 'http://192.168.29.179:5000/api/getproperty';
 
             fetch(apiUrl)
                 .then(response => {
@@ -335,8 +319,22 @@
                     }
                 })
                 .then(data => {
-
                     populatePropertyContainer(data.data);
+
+                    const radioButtons = document.querySelectorAll('input[name="propertyCategory"]');
+                    if (radioButtons) {
+
+                        radioButtons.forEach(radioButton => {
+                            radioButton.addEventListener('change', () => {
+                                const selectedCategory = radioButton.value;
+                                const filteredData = data.data.filter(item => item.property_category_select === selectedCategory);
+                                console.log(filteredData, '---------');
+                                populatePropertyContainer(filteredData);
+                            });
+                        });
+                    }
+
+
                 })
                 .catch(error => {
                     console.error('There was a problem with the fetch operation:', error);
@@ -344,6 +342,9 @@
         }
 
         window.onload = fetchData;
+        // Add an event listener to the radio buttons
+
+
     </script>
     <script>
         const user_id = localStorage.getItem('userId');
@@ -356,20 +357,28 @@
             window.location.href = url;
         }
 
-        function toggleHeart(property_id) {
+        function toggleHeart(property_id, sortlist_status) {
             var heartIcon = document.getElementById("heart-icon");
-            console.log(property_id);
 
+            let sortlist
+            if (sortlist_status == 1) {
+                console.log('if inter');
+                sortlist = 0
+            } else {
+                console.log('else einet');
+                sortlist = 1
+            }
+            console.log(sortlist);
             if (heartIcon) {
 
                 const postData = {
                     property_id: property_id,
                     user_id: user_id,
-                    status: "1"
+                    status: sortlist
 
                 };
 
-                fetch('http://localhost:5000/api/sortlist', {
+                fetch('http://192.168.29.179:5000/api/sortlist', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -378,22 +387,13 @@
                 })
                     .then(response => response.json())
                     .then(data => {
-                        console.log(data);
                         if (data.message) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Success',
-                                text: `“${data.message}“`,
-                            })
-                            // .then(() => {
-                            //     window.location.href = "index.html";
-                            // });
+                            // If data.message is present, change the class attribute
+                            const heartIcon = document.getElementById("heart-icon");
+                            heartIcon.classList.remove("fa-regular");
+                            heartIcon.classList.add("fa");
                         } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error',
-                                text: data.error,
-                            });
+
                         }
                     })
                     .catch(error => {
@@ -410,7 +410,24 @@
 
         }
     </script>
+    <script>
+        const userId = localStorage.getItem('userId');
+        const token = localStorage.getItem('token');
 
+        const loginLogoutButton = document.getElementById('loginLogoutButton');
+
+        if (userId && token) {
+            loginLogoutButton.innerHTML = '<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
+            loginLogoutButton.addEventListener('click', () => {
+                localStorage.removeItem('userId');
+                localStorage.removeItem('token');
+                window.location.href = 'index.html'
+            });
+        } else {
+            loginLogoutButton.innerHTML = '<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
+            loginLogoutButton.href = 'login-form.html';
+        }
+    </script>
 </body>
 
 </html>

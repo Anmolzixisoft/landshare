@@ -2,6 +2,13 @@
 <html lang="en">
 
 <head>
+    <style>
+        .required {
+            color: red;
+            margin-left: 5px;
+            /* Add space between label text and asterisk */
+        }
+    </style>
     <meta charset="utf-8">
     <title>Agrocorp- Landshare India (P) Limited.</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -57,8 +64,8 @@
                 </a>
             </div>
             <div style="display: inline-flex;">
-                <a href="login-form.html" target="_blank" class="nav-item nav-link"><b>Login</b>&nbsp;&nbsp;<i
-                        class="fa fa-arrow-right"></i></a>
+                <a href="#" id="loginLogoutButton" class="nav-item nav-link"><b></b>&nbsp;&nbsp;<i
+                    class="fa fa-arrow-right"></i></a>
                 <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
                     data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
@@ -105,16 +112,16 @@
                     <form class="form active" id="login" action="authentication.php" onsubmit="return validateForm()"
                         method="POST">
                         <h2>Login</h2>
-                        <label for="email">Email Address</label>
+                        <label for="email">Email Address <span class="required">*</span></label>
                         <div class="pass-reset" onclick="activeInput(this)">
                             <input type="email" name="email" class="email" id="emailInput" placeholder="name@mail.com"
                                 required>
                         </div>
-                        <label for="password">Password</label>
+                        <label for="password">Password <span class="required">*</span> </label>
                         <div class="pass-reset" onclick="activeInput(this)">
                             <input type="password" class="password" name="password" id="password"
                                 placeholder="**********" required>
-                            <a href="#" class="reset-password">Reset Password</a>
+                            <!-- <a href="#" class="reset-password">Reset Password</a> -->
                         </div>
                         <div class="pass-reset remember-box">
                             <input type="checkbox" name="remember" class="remember" id="remember"><span
@@ -146,31 +153,32 @@
                     <form class="form" id="register" action="authentication.php" onsubmit="return validateForm()"
                         method="POST">
                         <h2>Register</h2>
-                        <label for="name">Your Name</label>
+                        <label for="name">Your Name <span class="required">*</span></label>
                         <div class="pass-reset">
                             <input type="text" name="name" class="name" id="nameInput" placeholder="Your Name" required>
                         </div>
-                        <label for="phone">Your Phone Number</label>
+                        <label for="phone">Your Phone Number <span class="required">*</span> </label>
                         <div class="pass-reset" onclick="activeInput(this)">
                             <input type="text" name="phone" class="phone" id="phoneInput"
                                 placeholder="Enter Your Phone Number" onkeypress="return isNumberKey(event)" required>
                         </div>
-                        <label for="email">Email Address</label>
+                        <label for="email">Email Address <span class="required">*</span> </label>
                         <div class="pass-reset" onclick="activeInput(this)">
                             <input type="email" name="email" class="email" id="emailInput1" placeholder="name@mail.com"
                                 required>
                         </div>
-                        <label for="password">Password</label>
+                        <label for="password">Password <span class="required">*</span> </label>
                         <div class="pass-reset" onclick="activeInput(this)">
                             <input type="password" class="password" name="password" id="password1"
                                 placeholder="**********" required>
                         </div>
-                        <label for="re-password">Re-Password</label>
+                        <label for="re-password">Re-Password <span class="required">*</span> </label>
                         <div class="pass-reset" onclick="activeInput(this)">
                             <input type="password" class="password" name="re-password" id="re-password"
                                 placeholder="**********" required>
                         </div>
-                        <label for="">OTP</label>
+                        <div id="error-message" style="color: red;"></div>
+                        <label for="">OTP <span class="required">*</span> </label>
                         <div class="pass-reset">
                             <input type="text" class="password" name="" id="sendOtp" placeholder="" required>
                             <a href="#" class="reset-password" id="sendotpbutton" required>Send OTP</a>
@@ -316,13 +324,8 @@
     <script>
 
         function validateForm() {
-            console.log('------11----');
             var nameInput = document.getElementById("nameInput").value;
-            if (nameInput == "") {
-                alert("Name field cannot be empty!");
-                return false; // Form submission will be stopped
-            }
-            return true; 
+         
         }
         $(document).ready(function () {
             $("#contact-form").on("submit", function (e) {
@@ -367,7 +370,7 @@
                 password: password
             };
 
-            fetch('http://localhost:5000/api/login', {
+            fetch('http://192.168.29.179:5000/api/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -406,6 +409,7 @@
             e.preventDefault(); // Prevent the default form submission
             loginUser(); // Call the loginUser function
         });
+
         function validation() {
 
         }
@@ -425,7 +429,7 @@
                 otp: otp
             };
 
-            fetch('http://localhost:5000/api/signUp', {
+            fetch('http://192.168.29.179:5000/api/signUp', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -472,7 +476,7 @@
                 email: email
             };
 
-            fetch('http://localhost:5000/api/Otpsent', {
+            fetch('http://192.168.29.179:5000/api/Otpsent', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -486,10 +490,8 @@
                         Swal.fire({
                             icon: 'success',
                             title: 'Success',
-                            text: "Login successfully",
-                        }).then(() => {
-                            window.location.href = "services.html";
-                        });
+                            text: "Otp Sent successfully",
+                        })
                     } else {
                         Swal.fire({
                             icon: 'error',
@@ -507,6 +509,7 @@
                 })
 
         });
+
         function isNumberKey(evt) {
             var charCode = (evt.which) ? evt.which : evt.keyCode;
             if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -514,6 +517,7 @@
             }
             return true;
         }
+
         function validateEmail() {
             const emailInput = document.getElementById('emailInput').value;
             const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -526,19 +530,27 @@
                 return true;
             }
         }
-        function validatePassword() {
-            const password1 = document.getElementById('password1').value;
-            const rePassword = document.getElementById('re-password').value;
 
-            if (password1 !== rePassword) {
-                alert('Password and re-password do not match. Please enter the same password in both fields.');
-                return false;
-            } else {
-                return true;
-            }
-        }
 
     </script>
+    </script>
+    <script>
+        const passwordInput = document.getElementById('password1');
+        const rePasswordInput = document.getElementById('re-password');
+
+        const errorMessage = document.getElementById('error-message');
+        rePasswordInput.addEventListener('input', checkPasswordMatch);
+
+        function checkPasswordMatch() {
+            const password = passwordInput.value;
+            const rePassword = rePasswordInput.value;
+
+            if (password === rePassword) {
+                errorMessage.textContent = '';
+            } else {
+                errorMessage.textContent = 'Passwords not match';
+            }
+        }
     </script>
 </body>
 

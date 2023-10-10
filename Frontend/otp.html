@@ -55,8 +55,8 @@
                 </a>
             </div>
             <div style="display: inline-flex;">
-                <a href="login-form.html" target="_blank" class="nav-item nav-link"><b>Login</b>&nbsp;&nbsp;<i
-                        class="fa fa-arrow-right"></i></a>
+                <a href="#" id="loginLogoutButton" class="nav-item nav-link"><b></b>&nbsp;&nbsp;<i
+                    class="fa fa-arrow-right"></i></a>
                 <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
                     data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
@@ -274,7 +274,7 @@
                 otp: otp
             };
 
-            fetch('http://localhost:5000/api/verifybyotp', {
+            fetch('http://192.168.29.179:5000/api/verifybyotp', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

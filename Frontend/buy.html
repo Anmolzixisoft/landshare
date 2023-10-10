@@ -53,8 +53,8 @@
             </div>
             <div style="display: inline-flex;">
                 <a href="" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2">P</a>
-                <a href="login-form.html" target="_blank" class="nav-item nav-link"><b>Login</b>&nbsp;&nbsp;<i
-                        class="fa fa-arrow-right"></i></a>
+                <a href="#" id="loginLogoutButton" class="nav-item nav-link"><b></b>&nbsp;&nbsp;<i
+                    class="fa fa-arrow-right"></i></a>
                 <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
                     data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
@@ -117,19 +117,32 @@
         <div class="container  ">
             <div class="row g-5 align-items-start">
                 <div class="row  mb-2 col-md-12 mx-auto" style="display:inline-flex;">
+                    <!-- <div class="product-im col-lg-5">
+                        <div class="details">
+                            <div class="thumb">
+                                <div class="big-image">
+                                    <img src=${property.images} alt="">
+                                </div>
+                                <div class="small-images">
+                                    <img src="${property.images}" alt="">
+                                    <img src="${property.images}" alt="">
+
+                                    <img src="${property.images}" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+
                     <div class="product-im col-lg-5">
                         <div class="details">
                             <div class="thumb">
                                 <div class="big-image">
-                                    <!-- Update the src attribute with the actual image filename -->
-                                    <img src=/home/vedansh/landshare/Backend/public${property.images}" alt="">
+                                    <img class="common-image" src="" alt="">
                                 </div>
                                 <div class="small-images">
-                                    <!-- You can also update the src attribute for small images if needed -->
-                                    <img src="/home/vedansh/landshare/Backend/public${property.images}" alt="">
-                                    <img src="/home/vedansh/landshare/Backend/public${property.images}" alt="">
-
-                                    <img src="/home/vedansh/landshare/Backend/public${property.images}" alt="">
+                                    <img class="common-image" src="" alt="">
+                                    <img class="common-image" src="" alt="">
+                                    <img class="common-image" src="" alt="">
                                 </div>
                             </div>
                         </div>
@@ -306,7 +319,7 @@
                     id: propertyId
                 };
 
-                fetch('http://localhost:5000/api/getPropertyById', {
+                fetch('http://192.168.29.179:5000/api/getPropertyById', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -315,6 +328,7 @@
                 })
                     .then(response => response.json())
                     .then(data => {
+
                         console.log(data);
                         let tableContent = '<table>';
                         data.message.forEach(property => {
@@ -358,7 +372,12 @@
                         tableContent += '</table>';
                         const tableContainer = document.querySelector('.product-cnt');
                         tableContainer.innerHTML = tableContent;
+                        const property = data.message[0]; // Assuming you want to display the first property in the list
 
+                        const commonImages = document.querySelectorAll(".common-image");
+                        commonImages.forEach(imgElement => {
+                            imgElement.src = property.images; // Set the src attribute of the images
+                        });
                     })
                     .catch(error => {
                         alert(`${error}`);
@@ -385,6 +404,24 @@
             }).then(() => {
                 window.location.href = 'index.html'
             })
+        }
+    </script>
+    <script>
+        const userId = localStorage.getItem('userId');
+        const token = localStorage.getItem('token');
+    
+        const loginLogoutButton = document.getElementById('loginLogoutButton');
+    
+        if (userId && token) {
+            loginLogoutButton.innerHTML = '<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
+            loginLogoutButton.addEventListener('click', () => {
+                localStorage.removeItem('userId');
+                localStorage.removeItem('token');
+                window.location.href='index.html'
+            });
+        } else {
+            loginLogoutButton.innerHTML = '<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
+            loginLogoutButton.href = 'login-form.html';
         }
     </script>
 
