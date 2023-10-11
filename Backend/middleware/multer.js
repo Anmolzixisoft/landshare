@@ -23,6 +23,7 @@ const upload = multer({
 });
 
 var singleUpload = upload.fields([{ name: 'image' }])
-var multiplepUload = upload.fields([{ name: 'pan_upload' }, { name: 'coi_upload' }, { name: 'moa_upload' }, { name: 'aoa_upload' }, { name: 'gst_upload' }, { name: 'cheque_upload' }])
+// var multiplepUload = upload.fields([{ name: 'pan_upload' }, { name: 'coi_upload' }, { name: 'moa_upload' }, { name: 'aoa_upload' }, { name: 'gst_upload' }, { name: 'cheque_upload' }])
+var multiplepUload = upload.fields([{ name: 'image', maxCount: 6 }]);
 
 module.exports = { singleUpload, multiplepUload };

@@ -54,7 +54,7 @@
             <div style="display: inline-flex;">
                 <a href="" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2">P</a>
                 <a href="#" id="loginLogoutButton" class="nav-item nav-link"><b></b>&nbsp;&nbsp;<i
-                    class="fa fa-arrow-right"></i></a>
+                        class="fa fa-arrow-right"></i></a>
                 <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
                     data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
@@ -89,37 +89,7 @@
 
         </div>
     </div>
-    <!-- Page Header End -->
 
-    <!-- Contact End -->
-    <!-- Contact Start -->
-    <!-- <div class="container-xxl ">
-        <div class="container ">
-
-            <div class="row  align-items-start">
-                <div class="product-inner mb-5 col-md-8 mx-auto g-5">
-                    <div class="product-im col-md-3-1"><img src="img/agricultural-land-investment.jpg"
-                            style="width:100% !important;border-radius:10px;">
-                    </div>
-
-                    <div class="product-cnt col-md-8 ">
-                        <p style="font-size:18px;">1939 Sq-ft 3 BHK Flat For Sale in Hebbal, Bangalore <span
-                                class="mx-auto text-center edit" onClick="window.location.href='sell.html';"><i
-                                    class='fas fa-pencil-alt'></i></span></p>
-                        <p style="font-size:14px;">Residential Plots - ₹36 Lac onwards<br>
-                            Property Size: 1 Acre<br>
-                            Type : Plot<br><span class="product-but col-lg-4 but-sy"><span class="short"><i
-                                        class='fa fa-heart'></i></span> <button class="btn btn-outline-primary "
-                                    onClick="window.location.href='login-form.html';">Change Status</button></span></p>
-
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <!-- Contact End -->
     <div class="row align-items-start" id="property-listings">
         <!-- Property listings will be dynamically added here -->
     </div>
@@ -233,7 +203,17 @@
         function fetchData() {
             const apiUrl = 'http://192.168.29.179:5000/api/getproperty';
 
-            fetch(apiUrl)
+            const requestData = {
+                user_id: userId
+            };
+
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json', // Set the appropriate content type
+                },
+                body: JSON.stringify(requestData), // Convert the request data to JSON
+            })
                 .then(response => {
                     if (response.ok) {
                         return response.json();
@@ -260,25 +240,22 @@
 
         function createPropertyListing(property) {
             const container = document.createElement('div');
-            container.classList.add('product-inner', 'mb-5', 'col-md-8', 'mx-auto', 'g-5');
 
             container.innerHTML = `
-        <div class="product-im col-md-3-1">
-            <img src="${property.images}" style="width:100% !important;border-radius:10px;">
-        </div>
-        <div class="product-cnt col-md-8">
-            <p style="font-size:18px;">${property.landmark}</p>
-            <p style="font-size:14px;">
-                Residential Plots - ${property.cost_per_squre_fit
-                } <br>
-                Property Size: ${property.size_of_land}<br>
-                Type: ${property.property_category_select}
-            </p>
-            <div class="mt-3">
-                <button class="btn btn-outline-primary">Change Status</button>
-            </div>
-        </div>
-    `;
+            <div class="row  align-items-start">
+    <div class="product-inner mb-5 col-md-8 mx-auto g-5">
+                        <div class="product-im col-md-3-1"><img src="${property.images}" style="width:100% !important;border-radius:10px;">
+                        </div>
+                        <div class="product-cnt col-md-8 ">
+                            <p style="font-size:18px;"> ${property.landmark} <span  class="mx-auto text-center edit" onClick="window.location.href='property-data.html'"><i class='fas fa-pencil-alt'></i></span></p>
+                            <p style="font-size:14px;">Residential Plots -  ${property.cost_per_squre_fit} <br>
+                                Property Size:${property.size_of_land}<br>
+                                Type : ${property.property_category_select}<br><span class="product-but col-lg-4 but-sy"><span class="short"><i class='fa fa-heart'></i></span> <button class="btn btn-outline-primary "onClick="window.location.href='login-form.html';
+                                ">Change Status</button></span></p>
+                                                         </div>                                                
+                    </div>
+                </div>
+                    `
 
             return container;
         }
@@ -289,15 +266,15 @@
     <script>
         // const userId = localStorage.getItem('userId');
         const token = localStorage.getItem('token');
-    
+
         const loginLogoutButton = document.getElementById('loginLogoutButton');
-    
+
         if (userId && token) {
             loginLogoutButton.innerHTML = '<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
             loginLogoutButton.addEventListener('click', () => {
                 localStorage.removeItem('userId');
                 localStorage.removeItem('token');
-                window.location.href='index.html'
+                window.location.href = 'index.html'
             });
         } else {
             loginLogoutButton.innerHTML = '<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';

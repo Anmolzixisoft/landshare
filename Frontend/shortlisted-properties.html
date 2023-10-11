@@ -252,11 +252,8 @@
                     }
                 })
                 .then(data => {
-                    console.log(data.data, '-----1--3444----');
                     data.data.forEach(property => {
-                        console.log('957898486y59');
-                        if (property.user_id == userId) {
-                            console.log(property,'property888888888888888');
+                        if (property.status == 1) {
                             const propertyListing = createPropertyListing(property);
                             propertyListingsContainer.appendChild(propertyListing);
                         }
@@ -287,7 +284,11 @@
                 Property Size: ${property.size_of_land}<br>
                 Type: ${property.property_category_select}
             </p>
-           
+            <span class="product-but col-lg-5 but-sy">
+                    <span class="short"><i  class="${property.status == 0 ? 'fa-regular fa-heart' : 'fa fa-heart'}" id="heart-icon" onclick="toggleHeart(${property.property_id},${property.status == 0 ? 1 : 0})"></i></span>
+                    <button class="btn btn-primary view-details-button" data-property-id="${property.id}" onclick="viewPropertyDetails(${property.property_id})">View Property Details</button>
+                </span>
+            
         </div>
     `;
 
@@ -298,6 +299,52 @@
     </script>
     <script>
         const token = localStorage.getItem('token');
+        const user_id = localStorage.getItem('userId')
+        function viewPropertyDetails(propertyId) {
+            // Construct the URL with the query parameter
+            const url = `buy.html?id=${propertyId}`;
+
+            // Redirect to the URL
+            window.location.href = url;
+        }
+
+        function toggleHeart(property_id, sortlist_status) {
+            var heartIcon = document.getElementById("heart-icon");
+
+            if (heartIcon) {
+
+                const postData = {
+                    property_id: property_id,
+                    user_id: user_id,
+                    status: sortlist_status
+
+                };
+
+                fetch('http://192.168.29.179:5000/api/sortlist', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(postData),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        window.location.href = 'shortlisted-properties.html'
+                    })
+                    .catch(error => {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: error,
+                        });
+                    });
+            }
+            else {
+                console.log('095789780');
+            }
+
+        }
+
 
         const loginLogoutButton = document.getElementById('loginLogoutButton');
 

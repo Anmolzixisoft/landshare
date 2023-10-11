@@ -2,6 +2,14 @@
 <html lang="en">
 
 <head>
+
+  <style>
+    .required {
+      color: red;
+      margin-left: 5px;
+      /* Add space between label text and asterisk */
+    }
+  </style>
   <meta charset="utf-8">
   <title>Upload Property - Landshare India Private Limited </title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -133,7 +141,7 @@
       <div class="col-md-6 mb-3">
         <div class="row">
           <div class="col-4">
-            <label for="" class="col-form-label">Land Owner Name</label>
+            <label for="" class="col-form-label">Land Owner Name <span class="required">*</span></label>
           </div>
           <div class="col-8">
             <input type="text" id="landmarkOwnername" class="form-control" aria-describedby="passwordHelpInline"
@@ -145,11 +153,11 @@
       <div class="col-md-6 mb-3">
         <div class="row">
           <div class="col-3">
-            <label for="" class="col-form-label">Contact No.</label>
+            <label for="" class="col-form-label">Contact No. <span class="required">*</span> </label>
           </div>
           <div class="col-9">
             <input type="text" id="phone" class="form-control" aria-describedby="passwordHelpInline"
-              onkeypress="return isNumberKey(event)" required pattern="[0-9]+">
+              onkeypress="return isNumberKey(event)" required pattern="[0-9]+" maxlength="10">
             <span class="error-message" id="phone-error"></span>
 
           </div>
@@ -160,25 +168,25 @@
       <div class="col-md-6 mb-3">
         <div class="row g-3 align-items-center">
           <div class="col-4">
-            <label for="" class="col-form-label">Size of the Land</label>
+            <label for="" class="col-form-label">Size of the Land <span class="required">*</span> </label>
           </div>
           <div class="col-4">
-            <label for="" class="form-label">No. of acres</label>
+            <label for="" class="form-label">No. of acres <span class="required">*</span></label>
             <input type="text" id="sizeoflandmark" class="form-control" aria-describedby="" required>
 
           </div>
           <div class="col-4">
-            <label for="" class="form-label">Guntas</label>
+            <label for="" class="form-label">Guntas <span class="required">*</span></label>
             <input type="text" id="" class="form-control" aria-describedby="" required>
 
           </div>
           <div class="offset-4 col-4">
-            <label for="" class="form-label">Auto Value in Sqft</label>
+            <label for="" class="form-label">Auto Value in Sqft <span class="required">*</span> </label>
             <input type="text" id="" class="form-control" aria-describedby="" required>
 
           </div>
           <div class="col-4">
-            <label for="" class="form-label">Auto Value in Sqmt</label>
+            <label for="" class="form-label">Auto Value in Sqmt <span class="required">*</span></label>
             <input type="text" id="" class="form-control" aria-describedby="" required>
 
           </div>
@@ -189,7 +197,7 @@
       <div class="col-md-6 mb-3">
         <div class="row">
           <div class="col-3">
-            <label for="" class="col-form-label">Land Facing</label>
+            <label for="" class="col-form-label">Land Facing <span class="required">*</span> </label>
           </div>
           <div class="col-9">
             <input type="text" id="landFacing" class="form-control" aria-describedby="passwordHelpInline" required>
@@ -201,7 +209,7 @@
       <div class="col-md-6 mb-3">
         <div class="row">
           <div class="col-3">
-            <label for="" class="col-form-label">Survey No.</label>
+            <label for="" class="col-form-label">Survey No. <span class="required">*</span></label>
           </div>
           <div class="col-9">
             <input type="text" id="SurveyNo" class="form-control" aria-describedby="passwordHelpInline" required>
@@ -212,7 +220,7 @@
       <div class="col-md-6 mb-3">
         <div class="row">
           <div class="col-3">
-            <label for="" class="col-form-label">Landmark</label>
+            <label for="" class="col-form-label">Landmark <span class="required">*</span></label>
           </div>
           <div class="col-9">
             <input type="text" id="landmark" class="form-control" aria-describedby="passwordHelpInline" required>
@@ -223,7 +231,7 @@
       <div class="col-md-6 mb-3">
         <div class="row">
           <div class="col-3">
-            <label for="" class="col-form-label">Full Address</label>
+            <label for="" class="col-form-label">Full Address <span class="required">*</span></label>
           </div>
           <div class="col-9">
             <input type="text" id="Address" class="form-control" aria-describedby="passwordHelpInline" required>
@@ -234,7 +242,7 @@
       <div class="col-md-6 mb-3">
         <div class="row">
           <div class="col-3">
-            <label for="" class="col-form-label">Type of Ownership</label>
+            <label for="" class="col-form-label">Type of Ownership <span class="required">*</span> </label>
           </div>
           <div class="col-9">
             <select class="form-select" id="ownership" aria-label="Default select example">
@@ -250,7 +258,7 @@
       <div class="col-md-6 mb-3">
         <div class="row">
           <div class="col-3">
-            <label for="" class="col-form-label">Cost Per Sqft</label>
+            <label for="" class="col-form-label">Cost Per Sqft <span class="required">*</span></label>
           </div>
           <div class="col-9">
             <input type="text" id="cost" class="form-control" aria-describedby="passwordHelpInline" required>
@@ -262,7 +270,7 @@
       <div class="col-md-6 mb-3">
         <div class="row">
           <div class="col-3">
-            <label for="" class="col-form-label">Land price</label>
+            <label for="" class="col-form-label">Land price <span class="required">*</span> </label>
           </div>
           <div class="col-9">
             <input type="text" id="landPrice" class="form-control" aria-describedby="passwordHelpInline" required>
@@ -272,7 +280,7 @@
       <div class="col-md-6 mb-3">
         <div class="row">
           <div class="col-3">
-            <label for="" class="col-form-label">State</label>
+            <label for="" class="col-form-label">State <span class="required">*</span> </label>
           </div>
           <div class="col-9">
             <input type="text" id="state" class="form-control" aria-describedby="passwordHelpInline" required>
@@ -282,7 +290,7 @@
       <div class="col-md-6 mb-3">
         <div class="row">
           <div class="col-3">
-            <label for="" class="col-form-label">City</label>
+            <label for="" class="col-form-label">City <span class="required">*</span> </label>
           </div>
           <div class="col-9">
             <input type="text" id="city" class="form-control" aria-describedby="passwordHelpInline" required>
@@ -292,17 +300,18 @@
       <div class="col-md-6 mb-3">
         <div class="row">
           <div class="col-3">
-            <label for="" class="col-form-label">Pincode</label>
+            <label for="" class="col-form-label">Pincode <span class="required">*</span> </label>
           </div>
           <div class="col-9">
-            <input type="text" id="pincode" class="form-control" aria-describedby="passwordHelpInline" required>
+            <input type="text" id="pincode" class="form-control" aria-describedby="passwordHelpInline" maxlength="6"
+              onkeypress="return isNumberKey(event)" required pattern="[0-9]+">
           </div>
         </div>
       </div>
       <div class="col-md-6 mb-3">
         <div class="row">
           <div class="col-3">
-            <label for="" class="col-form-label">Description</label>
+            <label for="" class="col-form-label">Description <span class="required">*</span></label>
           </div>
           <div class="col-9">
             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
@@ -310,7 +319,7 @@
         </div>
       </div>
       <div class="col-md-6 mb-3">
-        <label for="" class="col-form-label">upload images</label>
+        <label for="" class="col-form-label">upload images <span class="required">*</span></label>
         <input class="form-control" type="file" id="formFileMultiple" multiple required>
 
       </div>
@@ -489,6 +498,7 @@
       const Survey_no = document.getElementById('SurveyNo').value
       const Land_Facing = document.getElementById('landFacing').value
       const form = document.getElementById('property').value;
+      const landPrice = document.getElementById('landPrice').value
       const selectedLandType = document.querySelector('input[name="landType"]:checked');
 
       const formData = new FormData(form);
@@ -514,7 +524,7 @@
       formData.append("desciption", desciption);
       formData.append("Survey_no", Survey_no)
       formData.append("Land_Facing", Land_Facing)
-
+      formData.append('landPrice', landPrice)
       fetch('http://192.168.29.179:5000/api/sellProperty', {
         method: 'POST',
         body: formData,
@@ -526,11 +536,11 @@
               title: "Success",
               text: data.message,
               icon: "success",
-            }).then(() => {
-              // Pop-up ko "OK" par click karne par band karna
-              Swal.close();
-              window.location.href = 'property-data.html';
             })
+            setTimeout(function () {
+              window.location.href = 'property-data.html';
+            }, 3000); // 2000 milliseconds (2 seconds) delay
+
           } else {
             Swal.fire({
               title: "Error",

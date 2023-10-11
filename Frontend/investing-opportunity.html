@@ -254,6 +254,7 @@
     <script src="js/main.js"></script>
 
     <script>
+        var userId = localStorage.getItem('userId');
 
         function redirectToBuyPage(propertyId) {
             // Construct the URL with the query parameter
@@ -283,7 +284,7 @@
                 const productCnt = document.createElement('div');
                 productCnt.className = 'product-cnt col-md-9';
                 const title = document.createElement('p');
-          
+
                 var id = item.id
                 const details = document.createElement('p');
                 details.style.fontSize = '14px';
@@ -292,9 +293,9 @@
                 ${item.cost_per_squre_fit}<br>
                 Property Size: ${item.size_of_land}<br>
                 Type: ${item.property_category_select}<br>
-                <i class="fa-light fa-square-heart"></i>
+                
                 <span class="product-but col-lg-5 but-sy">
-                    <span class="short"><i class='fa-regular fa-heart' id="heart-icon" onclick="toggleHeart(${item.id},${item.sortlist_status})"></i></span>
+                    <span class="short"><i  class="${item.status == 0 ? 'fa-regular fa-heart' : 'fa fa-heart'}" id="heart-icon" onclick="toggleHeart(${item.id},${item.status == 0 ? 1 : 0})"></i></span>
                     <button class="btn btn-primary view-details-button" data-property-id="${item.id}" onclick="viewPropertyDetails(${item.id})">View Property Details</button>
                 </span>
             `;
@@ -308,15 +309,24 @@
         function fetchData() {
             const apiUrl = 'http://192.168.29.179:5000/api/getproperty';
 
-            fetch(apiUrl)
-                .then(response => {
-                    if (response.ok) {
-                        return response.json();
-                    } else {
-                        console.error('API request failed with status:', response.status);
-                        return Promise.reject('API request failed');
-                    }
-                })
+            const requestData = {
+                user_id: userId
+            };
+
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json', // Set the appropriate content type
+                },
+                body: JSON.stringify(requestData), // Convert the request data to JSON
+            }).then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    console.error('API request failed with status:', response.status);
+                    return Promise.reject('API request failed');
+                }
+            })
                 .then(data => {
                     populatePropertyContainer(data.data);
 
@@ -346,7 +356,6 @@
 
     </script>
     <script>
-        const user_id = localStorage.getItem('userId');
 
         function viewPropertyDetails(propertyId) {
             // Construct the URL with the query parameter
@@ -359,21 +368,12 @@
         function toggleHeart(property_id, sortlist_status) {
             var heartIcon = document.getElementById("heart-icon");
 
-            let sortlist
-            if (sortlist_status == 1) {
-                console.log('if inter');
-                sortlist = 0
-            } else {
-                console.log('else einet');
-                sortlist = 1
-            }
-            console.log(sortlist);
             if (heartIcon) {
 
                 const postData = {
                     property_id: property_id,
-                    user_id: user_id,
-                    status: sortlist
+                    user_id: userId,
+                    status: sortlist_status
 
                 };
 
@@ -386,14 +386,8 @@
                 })
                     .then(response => response.json())
                     .then(data => {
-                        if (data.message) {
-                            // If data.message is present, change the class attribute
-                            const heartIcon = document.getElementById("heart-icon");
-                            heartIcon.classList.remove("fa-regular");
-                            heartIcon.classList.add("fa");
-                        } else {
-
-                        }
+                        console.log(data,'data');
+                        window.location.href = 'shortlisted-properties.html'
                     })
                     .catch(error => {
                         Swal.fire({
@@ -410,7 +404,6 @@
         }
     </script>
     <script>
-        const userId = localStorage.getItem('userId');
         const token = localStorage.getItem('token');
 
         const loginLogoutButton = document.getElementById('loginLogoutButton');

@@ -1045,28 +1045,28 @@ body.is-menu-visible #menu {
         .details{
             background-color: var(--white);
             box-shadow: var(--primary);
-            
-            overflow-x: hidden;
+/*             
+            overflow-x: hidden; */
          }
          
        .details .thumb{
             background-color: var(--black);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
+            /* padding: 1.5rem;
+            margin-bottom: 1.5rem; */
             border-radius: 10px;
          }
          
        .details .thumb .big-image img{
-            height: 20rem;
+            height: 200px;
             width: 100%;
-            object-fit: contain;
+            /* object-fit: contain; */
             border-radius: 10px;
          }
          
           .details .thumb .small-images{
             display: flex;
-            justify-content: center;
-            gap: 1.5rem;
+            justify-content: space-between;
+            gap: 10px;
             padding-top: 1rem;
             flex-wrap: wrap;
             border-radius: 10px;
@@ -1173,4 +1173,13 @@ body.is-menu-visible #menu {
          .image_proprty{
             width: 100%;
             height: auto;
+         }
+
+         .plot-table{
+            margin: 25px 0;
+
+         }
+         .plot-table table tr td{
+            padding: 10px 0;
+            
          }
