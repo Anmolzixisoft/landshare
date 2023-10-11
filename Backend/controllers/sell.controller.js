@@ -66,7 +66,6 @@ function getProperty(req, res) {
         }
         else {
             result.forEach(element => {
-                console.log(element.images);
                 element.images = `http://192.168.29.179:5500/Backend/public/${element.images}`
                 if (element.status == null) {
                     element.status = 0

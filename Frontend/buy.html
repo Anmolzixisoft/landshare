@@ -102,7 +102,8 @@
             <div class="row  align-items-start">
                 <div class="row  align-items-start mb-4 mt-4">
                     <div class="text-center">
-                        <h2><a href="investing-opportunity.html" style="padding:10px;border-bottom:4px solid #384119;">Buy</a>&nbsp;
+                        <h2><a href="investing-opportunity.html"
+                                style="padding:10px;border-bottom:4px solid #384119;">Buy</a>&nbsp;
                             &nbsp;| &nbsp;&nbsp;<a href="property-data.html">Sell</a></h2>
                     </div>
 
@@ -298,7 +299,7 @@
                     <div class="ms-3">
                         <h3>${property.landPrice}</h3>
                     <p class="mb-4">${property.cost_per_squre_fit}</p> </div>
-                    <button class="btn btn-primary py-2 px-3 me-3" onclick="openSweetAlert(${property.id})">
+                    <button class="btn btn-primary py-2 px-3 ms-3" onclick="openSweetAlert(${property.id})">
                                 Enquire Now
                             <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
                                 <i class="fa fa-arrow-right"></i>
@@ -326,34 +327,68 @@
                     <div class="plot-table">
 
                         <table >
+                            <tr>
+                            <th><b>Owner Name</b></th>
+                            <td>: ${property.ownerName}</td>
+                        </tr>
                         <tr>
-                            <td><b>Size of the Area</b></td>
+                            <th><b>Contact No</b></th>
+                            <td>: ${property.mobile_number}</td>
+                        </tr>
+                        <tr>
+                            <th><b>Cost Per Sqft </b></th>
+                            <td>: ${property.cost_per_squre_fit}</td>
+                        </tr>
+                        <tr>
+                            <th><b>Land price </b></th>
+                            <td>: ${property.landPrice}</td>
+                        </tr>
+                 
+                        <tr>
+                            <th><b>Type of landmark</b></th>
+                            <td>: ${property.property_category_select}</td>
+                        </tr>
+                        <tr>
+                            <th><b>Size of the Area</b></th>
                             <td>:${property.size_of_land}</td>
                         </tr>
                         <tr>
-                            <td><b>Type Of Katha</b></td>
-                            <td>: E Katha
+                            <th style="vertical-align: top;"><b>Address</b></th>
+                            <td><p class="address_plot">:
+                                 ${property.full_address} 
+                                </p>
                             </td>
                         </tr>
                         <tr>
-                            <td><b>Land Facing</b></td>
+                            <th><b>Land Facing</b></th>
                             <td>: ${property.Land_Facing}</td>
                         </tr>
                         <tr>
-                            <td><b>Land Mark</b></td>
-                            <td>: ${property.landmark}</td>
+                            <th><b>Land Mark</b></th>
+                            <td><p class="address_plot">:
+                                 ${property.landmark} 
+                                </p>
+                            </td>
                         </tr>
                         <tr>
-                            <td><b>State</b></td>
+                            <th><b>Survey No</b></th>
+                            <td>: ${property.Survey_no}</td>
+                        </tr>
+                       
+                        <tr>
+                            <th><b>City</b></th>
+                            <td>: ${property.city}</td>
+                        </tr>
+                        <tr>
+                            <th><b>State</b></th>
                             <td>: ${property.state}</td>
                         </tr>
                         <tr>
-                            <td><b>City</b></td>
-                            <td>: ${property.city}</td>
+                            <th><b>Pincode</b></th>
+                            <td>: ${property.pincode}</td>
                         </tr>
-
                         <tr>
-                            <td style="vertical-align: top;"><b>Description</b></td>
+                            <th style="vertical-align: top;"><b>Description</b></th>
                             <td>: ${property.desciption}.</td>
                         </tr>
 

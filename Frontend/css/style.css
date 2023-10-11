@@ -1067,14 +1067,14 @@ body.is-menu-visible #menu {
             display: flex;
             justify-content: space-between;
             gap: 10px;
-            padding-top: 1rem;
+            padding-top: 5px;
             flex-wrap: wrap;
             border-radius: 10px;
          }
          
        .details .thumb .small-images img{
             height: 7rem;
-            width: 8rem;
+            width: 9rem;
             object-fit: cover;
             cursor: pointer;
             transition: .2s linear;
@@ -1180,6 +1180,15 @@ body.is-menu-visible #menu {
 
          }
          .plot-table table tr td{
-            padding: 10px 0;
+            padding: 6px 0;
+            color:rgb(39, 38, 38);
             
+         }
+         .plot-table table tr th{
+           width: 200px;
+            color:rgb(39, 38, 38);
+         }
+         .address_plot{
+            width: 50%;
+            margin-bottom: 0;
          }
