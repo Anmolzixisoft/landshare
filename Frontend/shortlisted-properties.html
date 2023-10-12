@@ -275,7 +275,7 @@
             container.innerHTML = `
             <div class="product-im col-md-3-1 position-relative">
                 <div class="image-container">
-                    <img src="${property.images}" style="width: 100% !important; border-radius: 10px;" class="${property.sold == 1 ? 'blurred-image' : ''}">
+                    <img src="${property.images[0]}" style="width: 100% !important; border-radius: 10px;" class="${property.sold == 1 ? 'blurred-image' : ''}">
         ${property.sold == 1 ? '<span class="sold-out-label">Sold Out</span>' : ''}
                 </div>
             </div>

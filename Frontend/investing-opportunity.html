@@ -281,7 +281,7 @@
                 productIm.className = 'product-im col-md-3';
                 const img = document.createElement('img');
                 console.log(item.sold, 'item');
-                img.src = `${item.images}`;
+                img.src = `${item.images[0]}`;
                 img.style.borderRadius = '10px'
                 img.classList.add('image_proprty');
                 if (item.sold == 1) {

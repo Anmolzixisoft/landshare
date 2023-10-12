@@ -4,14 +4,16 @@ function sellProperty(req, res) {
 
     const { user_id, property_category_select, landPrice, mobile_number, full_address, state, city, pincode, landmark, owenership, cost_per_squre_fit, size_of_land, desciption, ownerName, Survey_no, Land_Facing } = req.body
     const { image } = req.files
-    // const imageArray = []
-    // image.forEach((element) => {
-    //     imageArray.push(element.filename)
-    // })
-    const file = image[0].filename
-    //     const imagestring = JSON.stringify(imageArray);
-    //     console.log(imagestring,'----');
-    // return
+    // const file = image[0].filename
+
+    const imageArray = []
+    image.forEach((element) => {
+        imageArray.push(element.filename)
+    })
+    // const imagestring = JSON.stringify(imageArray);
+    // console.log(imagestring, '----', imageArray[0]);
+
+
     const sql = `INSERT INTO test.tbl_sell_property (user_id, property_category_select, mobile_number, full_address, state, city, pincode, landmark, owenership, cost_per_squre_fit,landPrice, size_of_land, desciption,ownerName,Survey_no,Land_Facing,images) VALUES (?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,? ,?)`;
     const values = [
         user_id,
@@ -30,8 +32,10 @@ function sellProperty(req, res) {
         ownerName,
         Survey_no,
         Land_Facing,
-        file,
+        JSON.stringify(imageArray), ,
     ];
+
+    console.log(imageArray, 'imageArray');
 
     connection.query(sql, values, (err, result) => {
         if (err) {
@@ -72,12 +76,21 @@ function getProperty(req, res) {
         }
         else {
             result.forEach(element => {
-                element.images = `http://192.168.29.179:5500/Backend/public/${element.images}`
+
+                if (typeof element.images === 'string') {
+                    element.images = element.images.split(',').map(image => {
+                        return `http://192.168.29.179:5500/Backend/public/${image.trim().replace(/["[\]]/g, '')}`;
+                    });
+                } else if (Array.isArray(element.images)) {
+                    element.images = element.images.map(image => `http://192.168.29.179:5500/Backend/public/${image}`);
+                }
+
                 if (element.status == null) {
                     element.status = 0
                 }
 
             });
+
             return res.send({ data: result })
         }
     })
@@ -90,9 +103,20 @@ function getPropertyById(req, res) {
             return res.send({ err: err })
         }
         else {
-            // return res.send({ message: result })
             result.forEach(element => {
-                element.images = `http://192.168.29.179:5500/Backend/public/${element.images}`
+
+                if (typeof element.images === 'string') {
+                    element.images = element.images.split(',').map(image => {
+                        return `http://192.168.29.179:5500/Backend/public/${image.trim().replace(/["[\]]/g, '')}`;
+                    });
+                } else if (Array.isArray(element.images)) {
+                    element.images = element.images.map(image => `http://192.168.29.179:5500/Backend/public/${image}`);
+                }
+
+                if (element.status == null) {
+                    element.status = 0
+                }
+                console.log(element.images);
             });
             return res.send({ message: result })
         }
@@ -101,13 +125,12 @@ function getPropertyById(req, res) {
 
 function updateProperty(req, res) {
     const { user_id, property_category_select, landPrice, mobile_number, full_address, state, city, pincode, landmark, owenership, cost_per_squre_fit, size_of_land, desciption, ownerName, Survey_no, Land_Facing } = req.body;
-    // const { image } = req.files;
-    // console.log(image,'image');
-    // const file = image[0].filename;
-    // console.log(file);
+    const { image } = req.files;
+    const file = image[0].filename;
+
     const propertyId = req.params.propertyId; // Assuming you pass the property ID as a parameter in the URL.
 
-    const sql = 'UPDATE test.tbl_sell_property SET  property_category_select="' + property_category_select + '", mobile_number="' + mobile_number + '", full_address="' + full_address + '", state="' + state + '", city="' + city + '", pincode="' + pincode + '", landmark="' + landmark + '", owenership="' + owenership + '", cost_per_squre_fit="' + cost_per_squre_fit + '", landPrice="' + landPrice + '", size_of_land="' + size_of_land + '", desciption="' + desciption + '", ownerName="' + ownerName + '", Survey_no="' + Survey_no + '", Land_Facing="' + Land_Facing + '" WHERE id="' + propertyId + '" AND  user_id="' + user_id + '"'
+    const sql = 'UPDATE test.tbl_sell_property SET  property_category_select="' + property_category_select + '", mobile_number="' + mobile_number + '", full_address="' + full_address + '", state="' + state + '", city="' + city + '", pincode="' + pincode + '", landmark="' + landmark + '", owenership="' + owenership + '", cost_per_squre_fit="' + cost_per_squre_fit + '", landPrice="' + landPrice + '", size_of_land="' + size_of_land + '", desciption="' + desciption + '", ownerName="' + ownerName + '", Survey_no="' + Survey_no + '", Land_Facing="' + Land_Facing + '", images="' + file + '" WHERE id="' + propertyId + '" AND  user_id="' + user_id + '"'
 
     connection.query(sql, (err, result) => {
         console.log(result, 'result');

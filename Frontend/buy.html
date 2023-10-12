@@ -284,13 +284,15 @@
                     <div class="details ">
                         <div class="thumb ">
                             <div class="big-image">
-                                <img src=${property.images} alt="">
-                            </div>
-                            <div class="small-images">
-                                <img src=${property.images} alt="">
-                                <img src=${property.images} alt="">
-                                <img src=${property.images} alt="">
-                            </div>
+    <img id="bigImage" src=${property.images[0]} alt="">
+</div>
+<div class="small-images">
+    ${[0, 1, 2].map(index => `
+        <img src=${property.images[index] || property.images[0]} alt="">
+    `).join('')}
+</div>
+
+
                         </div>
                     </div>
                 </div>
@@ -408,7 +410,9 @@
         }
 
         window.onload = displayPropertyDetails;
-
+        function changeImage(imageSrc) {
+            document.getElementById("bigImage").src = imageSrc;
+        }
     </script>
     <script src="js/main.js"></script>
     <script>
