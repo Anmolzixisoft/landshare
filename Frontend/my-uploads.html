@@ -7,6 +7,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
@@ -66,11 +67,8 @@
                         <a href="index.html" class="nav-item nav-link ">Home</a>
                         <a href="investing-opportunity.html" class="nav-item nav-link ">Opportunity</a>
                         <a href="contact.html" class="nav-item nav-link">Connect</a>
-                        <a href="" class="nav-item nav-link">Press-Room</a>
-                        <a href="press-room.html" class="nav-item nav-link ">Blog</a>
-
-
-
+                        <a href="shortlisted-properties.html" class="nav-item nav-link">Sortlist Property</a>
+                        <a href="my-uploads.html" class="nav-item nav-link ">My Property</a>
                     </div>
                 </div>
             </div>
@@ -181,10 +179,26 @@
             </div>
         </div>
     </div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <p id="propertyId"></p>
+            <label>
+                <input type="radio" name="status" value="sold"> Sold Out
+            </label>
+            <br>
+            <label>
+                <input type="radio" name="status" value="unsold"> Unsold
+            </label>
+            <button onclick="updatePropertyStatus()">Update Status</button>
+        </div>
+    </div>
+
+
     <!-- Footer End -->
     <!-- Back to Top -->
     <a href="#" class=" back-to-top"><img src="img/up-dwn-icon.png"></a>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -239,25 +253,152 @@
         const propertyListingsContainer = document.getElementById('property-listings');
 
         function createPropertyListing(property) {
+            console.log(property.id, 'property', property.user_id, property.sold);
             const container = document.createElement('div');
-
             container.innerHTML = `
             <div class="row  align-items-start">
     <div class="product-inner mb-5 col-md-8 mx-auto g-5">
                         <div class="product-im col-md-3-1"><img src="${property.images}" style="width:100% !important;border-radius:10px;">
                         </div>
                         <div class="product-cnt col-md-8 ">
-                            <p style="font-size:18px;"> ${property.landmark} <span  class="mx-auto text-center edit" onClick="window.location.href='property-data.html'"><i class='fas fa-pencil-alt'></i></span></p>
+                            <p style="font-size:18px; margin-right:58px"> ${property.landmark} 
+                                <span  class="mx-auto text-center edit "> <i class="fas fa-trash-alt"    onclick="deleteElement(${property.id},${property.user_id})"></i></span>
+                                
+                                <span  class="mx-auto text-center edit" onclick="redirectToPropertyDataPage(${property.id})"><i class='fas fa-pencil-alt'></i></span></p>
                             <p style="font-size:14px;">Residential Plots -  ${property.cost_per_squre_fit} <br>
                                 Property Size:${property.size_of_land}<br>
-                                Type : ${property.property_category_select}<br><span class="product-but col-lg-4 but-sy"><span class="short"><i class='fa fa-heart'></i></span> <button class="btn btn-outline-primary "onClick="window.location.href='login-form.html';
-                                ">Change Status</button></span></p>
+                                Type : ${property.property_category_select}<br><span class="product-but col-lg-4 but-sy"><button class="btn btn-outline-primary 
+                                "  onclick="openModal('${property.id}','${property.user_id}','${property.sold}')" >Change Status</button></span></p>
                                                          </div>                                                
                     </div>
                 </div>
                     `
 
             return container;
+        }
+
+
+        function redirectToPropertyDataPage(id) {
+            location.href = `update-property.html?id=${id}`;
+        }
+        let currentPropertyId; // Variable to store the current property id
+        let currentUserId; // Variable to store the current user id
+
+        function openModal(propertyId, userId, soldStatus) {
+            const modal = document.getElementById('myModal');
+            const soldRadio = document.querySelector('input[value="sold"]');
+            const unsoldRadio = document.querySelector('input[value="unsold"]');
+
+            currentPropertyId = propertyId;
+            currentUserId = userId;
+
+            if (soldStatus === '1') {
+                soldRadio.checked = true;
+            } else {
+                unsoldRadio.checked = true;
+            }
+
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('myModal');
+            modal.style.display = 'none';
+        }
+
+        function updatePropertyStatus() {
+            const soldRadio = document.querySelector('input[value="sold"]');
+            const unsoldRadio = document.querySelector('input[value="unsold"]');
+            const status = soldRadio.checked ? '1' : '0';
+
+            const data = {
+                propertyId: currentPropertyId,
+                user_id: currentUserId,
+                sold_status: status
+            };
+
+            const apiUrl = 'http://192.168.29.179:5000/api/sold_property';
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+                .then(response => response.json())
+                .then(responseData => {
+                    // Handle the API response here, such as showing a success message
+                    console.log('API response:', responseData);
+                    // Close the modal after a successful update
+                    if (responseData.message) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: responseData.message,
+                        }).then(() => {
+                            closeModal();
+                            location.reload()
+                        })
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: responseData.error,
+                        });
+                    }
+                })
+                .catch(error => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: error,
+                    });
+                });
+        }
+
+
+
+        function deleteElement(propertyId, userId) {
+            console.log(propertyId, userId);
+            var apiURL = 'http://192.168.29.179:5000/api/delete_proprty';
+
+            var data = {
+                propertyId: propertyId,
+                user_id: userId
+            };
+
+            fetch(apiURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.json())
+                .then(responseData => {
+                    if (responseData.message) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: responseData.message,
+                        }).then(() => {
+                            location.reload()
+                        })
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: responseData.error,
+                        });
+                    }
+                })
+                .catch(error => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: error,
+                    });
+                });
         }
 
         window.onload = fetchData;

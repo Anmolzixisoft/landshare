@@ -68,8 +68,8 @@
                         <a href="index.html" class="nav-item nav-link ">Home</a>
                         <a href="investing-opportunity.html" class="nav-item nav-link ">Opportunity</a>
                         <a href="contact.html" class="nav-item nav-link">Connect</a>
-                        <a href="" class="nav-item nav-link">Press-Room</a>
-                        <a href="press-room.html" class="nav-item nav-link ">Blog</a>
+                        <a href="shortlisted-properties.html" class="nav-item nav-link">Sortlist Property</a>
+                        <a href="my-uploads.html" class="nav-item nav-link ">My Property</a>
                     </div>
                 </div>
             </div>
@@ -114,6 +114,9 @@
             <div class="row  align-items-start">
                 <div class="row  align-items-start col-md-9 mx-auto py-5">
                     <div class="col-lg-3">
+                        <input type="radio" name="propertyCategory" id="agriculturalLand" value="all">&nbsp;&nbsp; All
+                    </div>
+                    <div class="col-lg-3">
                         <input type="radio" name="propertyCategory" id="agriculturalLand"
                             value="Agricultural Land">&nbsp;&nbsp;Agricultural Land
                     </div>
@@ -157,7 +160,7 @@
                             1st Floor, 90, BELLARY ROAD, BYATARAYANPURA,<br> Bengaluru (Bangalore) Urban, Karnataka,
                             560092</p><br>
                         <i class="fa fa-phone-alt me-3"></i>Enquiries: (+91) 9540 03 0303<br>
-                        <i class="fa fa-envelope me-3"></i>info@landshareindia.com</p>
+                        <i class="fa fa-envelope mailto:me-3"></i>info@landshareindia.com</p>
                     </div>
                     <div class="d-flex pt-2">
                         <a class="btn btn-square me-1" target="_blank" href="https://www.facebook.com/landshareindia"><i
@@ -266,8 +269,10 @@
         }
 
         function populatePropertyContainer(data) {
+            console.log('data', data);
+
             const propertyContainer = document.getElementById('propertyContainer');
-            data.forEach(item => {
+            data.forEach((item) => {
                 const productInner = document.createElement('div');
                 productInner.className = 'product-inner mb-5 col-md-8 mx-auto g-5';
                 productInner.style.display = 'inline-block';
@@ -275,10 +280,17 @@
                 const productIm = document.createElement('div');
                 productIm.className = 'product-im col-md-3';
                 const img = document.createElement('img');
-
+                console.log(item.sold, 'item');
                 img.src = `${item.images}`;
                 img.style.borderRadius = '10px'
                 img.classList.add('image_proprty');
+                if (item.sold == 1) {
+                    img.classList.add('blurred-image');
+                    const soldOutLabel = document.createElement('span');
+                    soldOutLabel.className = 'sold-out-label';
+                    soldOutLabel.innerText = 'Sold Out';
+                    img.appendChild(soldOutLabel);
+                }
 
                 productIm.appendChild(img);
                 const productCnt = document.createElement('div');
@@ -306,6 +318,12 @@
             });
         }
 
+        function clearPropertyContainer() {
+            const propertyContainer = document.getElementById('propertyContainer');
+            propertyContainer.innerHTML = ''; // Clearing existing content
+        }
+
+
         function fetchData() {
             const apiUrl = 'http://192.168.29.179:5000/api/getproperty';
 
@@ -328,26 +346,41 @@
                 }
             })
                 .then(data => {
-                    populatePropertyContainer(data.data);
-
                     const radioButtons = document.querySelectorAll('input[name="propertyCategory"]');
-                    if (radioButtons) {
+                    console.log('radioButtons', radioButtons);
+                    function updatePropertyData(selectedCategory) {
+                        console.log(selectedCategory);
+                        let filteredData;
 
-                        radioButtons.forEach(radioButton => {
+                        if (selectedCategory === "all") {
+                            // If "all" is selected, show all data
+                            filteredData = data.data;
+                        } else {
+                            // Filter data based on selected category
+                            filteredData = data.data.filter((item) => item.property_category_select === selectedCategory);
+                        }
+
+                        clearPropertyContainer(); // Clear existing data
+                        populatePropertyContainer(filteredData); // Populate with filtered data
+                    }
+
+
+                    if (radioButtons) {
+                        radioButtons.forEach((radioButton) => {
                             radioButton.addEventListener('change', () => {
                                 const selectedCategory = radioButton.value;
-                                const filteredData = data.data.filter(item => item.property_category_select === selectedCategory);
-                                console.log(filteredData, '---------');
-                                populatePropertyContainer(filteredData);
+                                updatePropertyData(selectedCategory);
                             });
                         });
                     }
 
-
+                    // Initially, populate with all data
+                    populatePropertyContainer(data.data);
                 })
                 .catch(error => {
                     console.error('There was a problem with the fetch operation:', error);
                 });
+
         }
 
         window.onload = fetchData;
@@ -366,6 +399,7 @@
         }
 
         function toggleHeart(property_id, sortlist_status) {
+
             var heartIcon = document.getElementById("heart-icon");
 
             if (heartIcon) {
@@ -386,8 +420,10 @@
                 })
                     .then(response => response.json())
                     .then(data => {
-                        console.log(data,'data');
-                        window.location.href = 'shortlisted-properties.html'
+
+                        location.reload();
+
+
                     })
                     .catch(error => {
                         Swal.fire({
@@ -402,6 +438,7 @@
             }
 
         }
+
     </script>
     <script>
         const token = localStorage.getItem('token');

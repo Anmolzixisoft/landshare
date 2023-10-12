@@ -66,8 +66,8 @@
                         <a href="index.html" class="nav-item nav-link ">Home</a>
                         <a href="investing-opportunity.html" class="nav-item nav-link ">Opportunity</a>
                         <a href="contact.html" class="nav-item nav-link">Connect</a>
-                        <a href="" class="nav-item nav-link">Press-Room</a>
-                        <a href="press-room.html" class="nav-item nav-link ">Blog</a>
+                        <a href="shortlisted-properties.html" class="nav-item nav-link">Sortlist Property</a>
+                        <a href="my-uploads.html" class="nav-item nav-link ">My Property</a>
 
 
 
@@ -271,8 +271,7 @@
         }
         const propertyListingsContainer = document.getElementById('property-listings');
         function createPropertyListing(property) {
-            console.log(property.desciption, '7777777777');
-            console.log(property, '77777776577777');
+
 
             const container = document.createElement('div');
 
@@ -299,12 +298,14 @@
                     <div class="ms-3">
                         <h3>${property.landPrice}</h3>
                     <p class="mb-4">${property.cost_per_squre_fit}</p> </div>
-                    <button class="btn btn-primary py-2 px-3 ms-3" onclick="openSweetAlert(${property.id})">
-                                Enquire Now
-                            <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
-                                <i class="fa fa-arrow-right"></i>
-                            </div>
-                        </button>
+                    ${property.sold == 1
+                    ? ' <h3> sold out </h3>'
+                    : '<button class="btn btn-primary py-2 px-3 ms-3" onclick="openSweetAlert(' + property.id + ')">Enquire Now' +
+                    '<div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">' +
+                    '<i class="fa fa-arrow-right"></i>' +
+                    '</div>' +
+                    '</button>'
+                }
            
                          
                 </div>
@@ -420,7 +421,7 @@
 
             };
 
-            fetch('http://localhost:5000/api/buy', {
+            fetch('http://192.168.29.179:5000/api/buy', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

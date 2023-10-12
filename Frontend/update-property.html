@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
   <style>
     .required {
       color: red;
@@ -174,26 +175,12 @@
             <input type="text" id="sizeoflandmark" class="form-control" aria-describedby="" required>
 
           </div>
-          <div class="col-4">
-            <label for="" class="form-label">Guntas <span class="required">*</span></label>
-            <input type="text" id="" class="form-control" aria-describedby="" required>
 
-          </div>
-          <div class="offset-4 col-4">
-            <label for="" class="form-label">Auto Value in Sqft <span class="required">*</span> </label>
-            <input type="text" id="" class="form-control" aria-describedby="" required>
-
-          </div>
-          <div class="col-4">
-            <label for="" class="form-label">Auto Value in Sqmt <span class="required">*</span></label>
-            <input type="text" id="" class="form-control" aria-describedby="" required>
-
-          </div>
 
         </div>
       </div>
 
-      <div class="col-md-6 mb-3">
+      <!-- <div class="col-md-6 mb-3">
         <div class="row">
           <div class="col-3">
             <label for="" class="col-form-label">Land Facing <span class="required">*</span> </label>
@@ -203,16 +190,16 @@
           </div>
 
         </div>
-      </div>
+      </div> -->
 
       <div class="col-md-6 mb-3">
         <div class="row">
-          <div class="col-3">
+          <!-- <div class="col-3">
             <label for="" class="col-form-label">Survey No. <span class="required">*</span></label>
-          </div>
-          <div class="col-9">
+          </div> -->
+          <!-- <div class="col-9">
             <input type="text" id="SurveyNo" class="form-control" aria-describedby="passwordHelpInline" required>
-          </div>
+          </div> -->
 
         </div>
       </div>
@@ -238,22 +225,7 @@
 
         </div>
       </div>
-      <div class="col-md-6 mb-3">
-        <div class="row">
-          <div class="col-3">
-            <label for="" class="col-form-label">Type of Ownership <span class="required">*</span> </label>
-          </div>
-          <div class="col-9">
-            <select class="form-select" id="ownership" aria-label="Default select example">
-              <option selected>Open this select menu</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
-          </div>
 
-        </div>
-      </div>
       <div class="col-md-6 mb-3">
         <div class="row">
           <div class="col-3">
@@ -268,12 +240,12 @@
       </div>
       <div class="col-md-6 mb-3">
         <div class="row">
-          <div class="col-3">
+          <!-- <div class="col-3">
             <label for="" class="col-form-label">Land price <span class="required">*</span> </label>
           </div>
           <div class="col-9">
             <input type="text" id="landPrice" class="form-control" aria-describedby="passwordHelpInline" required>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="col-md-6 mb-3">
@@ -319,7 +291,7 @@
       </div>
       <div class="col-md-6 mb-3">
         <label for="" class="col-form-label">upload images <span class="required">*</span></label>
-        <input class="form-control" type="file" id="formFileMultiple" multiple required>
+        <input class="form-control" type="file" id="formFileMultiple" multiple>
 
       </div>
 
@@ -334,7 +306,7 @@
 
       <div class="col-12 my-4 text-center">
         <button class="btn btn-primary py-2 px-3 me-3">
-          Submit
+          Update
           <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
             <i class="fa fa-arrow-right"></i>
           </div>
@@ -447,6 +419,55 @@
   <!-- Add this script at the bottom of your HTML file -->
   <script>
 
+    const urlParams = new URLSearchParams(window.location.search);
+    var pageId = urlParams.get('id');
+    async function getPropertyData() {
+      const userData = {
+        id: pageId
+      };
+
+      fetch('http://192.168.29.179:5000/api/getPropertyById', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data.message[0], '99');
+
+          document.getElementById('landmarkOwnername').value = data.message[0].ownerName;
+          document.getElementById('state').value = data.message[0].state;
+          document.getElementById('Address').value = data.message[0].full_address;
+          document.getElementById('phone').value = data.message[0].mobile_number;
+          document.getElementById('city').value = data.message[0].city;
+          document.getElementById('pincode').value = data.message[0].pincode;
+          document.getElementById('exampleFormControlTextarea1').value = data.message[0].desciption;
+          document.getElementById('cost').value = data.message[0].cost_per_squre_fit;
+          document.getElementById('sizeoflandmark').value = data.message[0].size_of_land;
+          document.getElementById('landmark').value = data.message[0].landmark;
+          document.getElementById('ownership').value = data.message[0].owenership;
+          document.getElementById('formFileMultiple').value = data.message[0].mobile_number;
+          document.getElementById('landFacing').value = data.message[0].Land_Facing;
+          document.getElementById('landPrice').value = data.message[0].landPrice
+
+          const landTypeRadios = document.getElementsByName('landType');
+          landTypeRadios.forEach(radio => {
+            if (radio.value == data.message[0].property_category_select) {
+              radio.checked = true;
+            }
+          });
+          const imageInput = document.getElementById('formFileMultiple');
+
+        })
+        .catch(error => {
+        });
+    }
+
+
+    getPropertyData()
+
 
     function isNumberKey(evt) {
       var charCode = (evt.which) ? evt.which : evt.keyCode;
@@ -480,7 +501,7 @@
       return true;
     }
 
-    function addProperty() {
+    function addProperty(pageId) {
       const name = document.getElementById('landmarkOwnername').value;
       const state = document.getElementById('state').value;
       const Address = document.getElementById('Address').value;
@@ -491,14 +512,14 @@
       const cost = document.getElementById('cost').value
       const sizeoflandmark = document.getElementById('sizeoflandmark').value
       const landmark = document.getElementById('landmark').value
-      const ownership = document.getElementById('ownership').value
-      // const image = document.getElementById('formFileMultiple').value
+      const ownership = "self"
+      const image = document.getElementById('formFileMultiple').value
       const imageInput = document.getElementById('formFileMultiple');
-      const Survey_no = document.getElementById('SurveyNo').value
-      const Land_Facing = document.getElementById('landFacing').value
+      const Survey_no = "7987"
+      const Land_Facing = "4758"
       const form = document.getElementById('property').value;
-      const landPrice = document.getElementById('landPrice').value
-      const selectedLandType = document.querySelector('input[name="landType"]:checked');
+      const landPrice = " 12 cr"
+      var selectedLandType = document.querySelector('input[name="landType"]:checked');
 
       const formData = new FormData(form);
 
@@ -524,21 +545,46 @@
       formData.append("Survey_no", Survey_no)
       formData.append("Land_Facing", Land_Facing)
       formData.append('landPrice', landPrice)
-      fetch('http://192.168.29.179:5000/api/sellProperty', {
+      console.log(formData, 'formData', name, phone);
+
+
+
+      const datarequet = {
+        user_id: userId,
+        image: imageInput.files[0],
+        property_category_select: "",
+        ownerName: name,
+        mobile_number: phone,
+        full_address: Address,
+        state: state,
+        city: city,
+        pincode: pincode,
+        landmark: landmark,
+        owenership: ownership,
+        cost_per_squre_fit: cost,
+        size_of_land: sizeoflandmark,
+        desciption: desciption,
+        Survey_no: Survey_no,
+        Land_Facing: Land_Facing,
+        landPrice: landPrice
+      }
+      console.log(datarequet,'datarequet');
+      fetch(`http://192.168.29.179:5000/api/updateProperty/${pageId}`, {
         method: 'POST',
-        body: formData,
+        body: datarequet,
       })
         .then(response => response.json())
         .then(data => {
-          if (data.message == "Property Added") {
+        
+          if (data.message == "Property Updated") {
             Swal.fire({
               title: "Success",
               text: data.message,
               icon: "success",
             })
-            setTimeout(function () {
-              window.location.href = 'property-data.html';
-            }, 3000); // 2000 milliseconds (2 seconds) delay
+              .then((data) => {
+                window.location.href = 'my-uploads.html'
+              })
 
           } else {
             Swal.fire({
