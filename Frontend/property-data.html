@@ -167,20 +167,22 @@
           <div class="col-md-3">
             <div class="form-floating">
 
-              <input type="number" class="form-control" id="acre" placeholder="Enter acres" oninput="calculateTotal()">
+              <input type="number" class="form-control" id="acre" placeholder="Enter acres" oninput="calculateTotal()"
+                min="0">
               <label for="acre">Acres</label>
             </div>
           </div>
           <div class="col-md-2">
             <div class="form-floating">
               <input type="number" class="form-control" id="guntas" placeholder="Enter guntas"
-                oninput="calculateTotal()">
+                oninput="calculateTotal()" min="0">
               <label for="guntas">Guntas</label>
             </div>
           </div>
           <div class="col-md-2">
             <div class="form-floating">
-              <input type="number" class="form-control" id="cents" placeholder="Enter Cents" oninput="calculateTotal()">
+              <input type="number" class="form-control" id="cents" placeholder="Enter Cents" oninput="calculateTotal()"
+                min="0">
               <label for="cents">Cents</label>
             </div>
           </div>
@@ -446,7 +448,7 @@
   <script src="js/main.js"></script>
   <!-- Add this script at the bottom of your HTML file -->
   <script>
-    
+
     function calculateTotal() {
       var acre = parseFloat(document.getElementById('acre').value) || 0;
       var gunta = parseFloat(document.getElementById('guntas').value) || 0;
@@ -462,12 +464,14 @@
         document.getElementById('total-sqft').textContent = '';
         return;
       }
-      document.getElementById('cost').value = totalLandInSqft;
+      document.getElementById('cost').value = totalLandInSqft + " " + 'sqft.';
 
       document.getElementById('total-sqft').textContent = 'Total : ' + totalLandInSqft + ' sqft.';
       return totalLandInSqft;
     }
 
+    const data = document.getElementsByName('landType')
+    console.log(data, '111----111');
 
     function isNumberKey(evt) {
       var charCode = (evt.which) ? evt.which : evt.keyCode;
