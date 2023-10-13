@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+    <script src="utils.js"></script>
+
     <meta charset="utf-8">
     <title>Agrocorp- Landshare India (P) Limited.</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -235,8 +237,8 @@
             const postData = {
                 user_id: userId,
             };
-            const apiUrl = 'http://192.168.29.179:5000/api/getsortlist';
-            fetch(apiUrl, {
+            const api = apiUrl + '/getsortlist';
+            fetch(api, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json', // Set the content type to JSON
@@ -324,7 +326,7 @@
 
                 };
 
-                fetch('http://192.168.29.179:5000/api/sortlist', {
+                fetch(apiUrl + '/sortlist', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

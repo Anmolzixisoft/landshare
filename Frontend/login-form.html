@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+    <script src="utils.js"></script>
+
     <style>
         .required {
             color: red;
@@ -65,7 +67,7 @@
             </div>
             <div style="display: inline-flex;">
                 <a href="#" id="loginLogoutButton" class="nav-item nav-link"><b></b>&nbsp;&nbsp;<i
-                    class="fa fa-arrow-right"></i></a>
+                        class="fa fa-arrow-right"></i></a>
                 <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
                     data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
@@ -325,7 +327,7 @@
 
         function validateForm() {
             var nameInput = document.getElementById("nameInput").value;
-         
+
         }
         $(document).ready(function () {
             $("#contact-form").on("submit", function (e) {
@@ -370,7 +372,7 @@
                 password: password
             };
 
-            fetch('http://192.168.29.179:5000/api/login', {
+            fetch(apiUrl + '/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -429,7 +431,7 @@
                 otp: otp
             };
 
-            fetch('http://192.168.29.179:5000/api/signUp', {
+            fetch(apiUrl + '/signUp', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -476,7 +478,7 @@
                 email: email
             };
 
-            fetch('http://192.168.29.179:5000/api/Otpsent', {
+            fetch(apiUrl+'/Otpsent', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

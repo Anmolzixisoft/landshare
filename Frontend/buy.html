@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <script src="utils.js"></script>
     <meta charset="utf-8">
     <title>Agrocorp- Landshare India (P) Limited.</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -243,7 +244,7 @@
                     id: propertyId
                 };
 
-                fetch('http://192.168.29.179:5000/api/getPropertyById', {
+                fetch(apiUrl+ '/getPropertyById', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -416,7 +417,7 @@
     </script>
     <script src="js/main.js"></script>
     <script>
-
+   
         function openSweetAlert(propertyId) {
             console.log(propertyId);
             const postData = {
@@ -425,7 +426,7 @@
 
             };
 
-            fetch('http://192.168.29.179:5000/api/buy', {
+            fetch(apiUrl + '/buy', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

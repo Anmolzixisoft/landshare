@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+    <script src="utils.js"></script>
+
     <meta charset="utf-8">
     <title>Agrocorp- Landshare India (P) Limited.</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -56,7 +58,7 @@
             </div>
             <div style="display: inline-flex;">
                 <a href="#" id="loginLogoutButton" class="nav-item nav-link"><b></b>&nbsp;&nbsp;<i
-                    class="fa fa-arrow-right"></i></a>
+                        class="fa fa-arrow-right"></i></a>
                 <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
                     data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
@@ -274,7 +276,7 @@
                 otp: otp
             };
 
-            fetch('http://192.168.29.179:5000/api/verifybyotp', {
+            fetch(apiUrl + '/verifybyotp', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

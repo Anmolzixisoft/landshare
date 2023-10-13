@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+    <script src="utils.js"></script>
+
     <meta charset="utf-8">
     <title>Landshare India Pvt Ltd.</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -692,7 +694,7 @@
             message: message
         };
         console.log(userData, '9999999999');
-        fetch('http://192.168.29.179:5000/api/touch', {
+        fetch(apiUrl + '/touch', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

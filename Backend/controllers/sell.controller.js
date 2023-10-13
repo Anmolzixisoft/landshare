@@ -10,9 +10,6 @@ function sellProperty(req, res) {
     image.forEach((element) => {
         imageArray.push(element.filename)
     })
-    // const imagestring = JSON.stringify(imageArray);
-    // console.log(imagestring, '----', imageArray[0]);
-
 
     const sql = `INSERT INTO test.tbl_sell_property (user_id, property_category_select, mobile_number, full_address, state, city, pincode, landmark, owenership, cost_per_squre_fit,landPrice, size_of_land, desciption,ownerName,Survey_no,Land_Facing,images) VALUES (?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,? ,?)`;
     const values = [
@@ -32,10 +29,9 @@ function sellProperty(req, res) {
         ownerName,
         Survey_no,
         Land_Facing,
-        JSON.stringify(imageArray), ,
+        JSON.stringify(imageArray),
     ];
 
-    console.log(imageArray, 'imageArray');
 
     connection.query(sql, values, (err, result) => {
         if (err) {
@@ -77,7 +73,7 @@ function getProperty(req, res) {
         else {
             result.forEach(element => {
 
-                if (typeof element.images === 'string') {
+                if (typeof element.images == 'string') {
                     element.images = element.images.split(',').map(image => {
                         return `http://192.168.29.179:5500/Backend/public/${image.trim().replace(/["[\]]/g, '')}`;
                     });
@@ -105,7 +101,7 @@ function getPropertyById(req, res) {
         else {
             result.forEach(element => {
 
-                if (typeof element.images === 'string') {
+                if (typeof element.images == 'string') {
                     element.images = element.images.split(',').map(image => {
                         return `http://192.168.29.179:5500/Backend/public/${image.trim().replace(/["[\]]/g, '')}`;
                     });
@@ -116,7 +112,6 @@ function getPropertyById(req, res) {
                 if (element.status == null) {
                     element.status = 0
                 }
-                console.log(element.images);
             });
             return res.send({ message: result })
         }
@@ -124,16 +119,20 @@ function getPropertyById(req, res) {
 }
 
 function updateProperty(req, res) {
-    const { user_id, property_category_select, landPrice, mobile_number, full_address, state, city, pincode, landmark, owenership, cost_per_squre_fit, size_of_land, desciption, ownerName, Survey_no, Land_Facing } = req.body;
-    const { image } = req.files;
-    const file = image[0].filename;
+    const { id, user_id, property_category_select, landPrice, mobile_number, full_address, state, city, pincode, landmark, cost_per_squre_fit, size_of_land, desciption, ownerName, Survey_no, Land_Facing } = req.body;
+    const { image } = req.files
 
-    const propertyId = req.params.propertyId; // Assuming you pass the property ID as a parameter in the URL.
+    const imageArray = []
+    image.forEach((element) => {
+        imageArray.push(element.filename)
+    })
 
-    const sql = 'UPDATE test.tbl_sell_property SET  property_category_select="' + property_category_select + '", mobile_number="' + mobile_number + '", full_address="' + full_address + '", state="' + state + '", city="' + city + '", pincode="' + pincode + '", landmark="' + landmark + '", owenership="' + owenership + '", cost_per_squre_fit="' + cost_per_squre_fit + '", landPrice="' + landPrice + '", size_of_land="' + size_of_land + '", desciption="' + desciption + '", ownerName="' + ownerName + '", Survey_no="' + Survey_no + '", Land_Facing="' + Land_Facing + '", images="' + file + '" WHERE id="' + propertyId + '" AND  user_id="' + user_id + '"'
+    const imagedata = JSON.stringify(imageArray)
+
+    const sql = `UPDATE test.tbl_sell_property SET  property_category_select= '${property_category_select}', mobile_number= ${mobile_number}, full_address='${full_address}', state= '${state}', city='${city}', pincode=${pincode}, landmark='${landmark}',cost_per_squre_fit='${cost_per_squre_fit}', landPrice='${landPrice}', size_of_land='${size_of_land}', desciption='${desciption}', ownerName='${ownerName}', Survey_no='${Survey_no}', Land_Facing='${Land_Facing}', images='${JSON.stringify(imageArray)}' WHERE id= ${id} AND  user_id='${user_id}'`
+
 
     connection.query(sql, (err, result) => {
-        console.log(result, 'result');
         if (err) {
             console.error('Database update error: ' + err.message);
             res.status(500).json({ error: 'Error updating data in the database' });
@@ -152,7 +151,7 @@ function deleteProperty(req, res) {
             return res.send({ error: checkErr });
         }
 
-        if (checkResult.length === 0) {
+        if (checkResult.length == 0) {
             return res.send({ error: 'Property not found' });
         }
 
@@ -175,7 +174,6 @@ function sortlist(req, res) {
             // return res.status(200).json({ message: 'Property alredy sorlisted' });
             connection.query('UPDATE test.tbl_sortlist SET status = "' + status + '" WHERE user_id = "' + user_id + '" AND property_id = "' + property_id + '"', (err, updateResult) => {
                 if (err) {
-                    console.log(err, '698');
                     return res.status(500).json({ error: 'Failed to update status' });
                 }
                 return res.status(200).json({ message: 'Property status updated' });
@@ -205,7 +203,7 @@ function sortlist(req, res) {
 function getsortlist(req, res) {
     const user_id = req.body.user_id;
     const query = `
-    SELECT test.tbl_sell_property.*, test.tbl_sortlist.*
+    SELECT test.tbl_sell_property., test.tbl_sortlist.
     FROM test.tbl_sortlist
     LEFT JOIN test.tbl_sell_property ON test.tbl_sell_property.id = test.tbl_sortlist.property_id
     WHERE test.tbl_sortlist.user_id = ?`;
@@ -250,7 +248,6 @@ function sold_property(req, res) {
     const { propertyId, user_id, sold_status } = req.body
     connection.query('UPDATE test.tbl_sell_property SET sold = "' + sold_status + '" WHERE user_id = "' + user_id + '" AND id = "' + propertyId + '"', (err, updateResult) => {
         if (err) {
-            console.log(err, '698');
             return res.status(500).json({ error: 'Failed to update status' });
         }
         return res.status(200).json({ message: 'sold status updated' });

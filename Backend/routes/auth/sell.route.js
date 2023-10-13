@@ -11,7 +11,7 @@ sellRouter.post('/sortlist', sortlist)
 sellRouter.post('/getsortlist', getsortlist)
 sellRouter.post('/buy', buyInfo)
 sellRouter.post('/getsortlistByID', getsortlistByID)
-sellRouter.post('/updateProperty/:propertyId', singleUpload, updateProperty)
+sellRouter.post('/updateProperty', multiplepUload, updateProperty)
 sellRouter.post('/delete_proprty', deleteProperty)
 sellRouter.post('/sold_property', sold_property)
 

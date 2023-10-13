@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+    <script src="utils.js"></script>
+
     <meta charset="utf-8">
     <title>Agrocorp- Landshare India (P) Limited.</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -325,13 +327,13 @@
 
 
         function fetchData() {
-            const apiUrl = 'http://192.168.29.179:5000/api/getproperty';
+            const api = apiUrl + '/getproperty';
 
             const requestData = {
                 user_id: userId
             };
 
-            fetch(apiUrl, {
+            fetch(api, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json', // Set the appropriate content type
@@ -346,22 +348,24 @@
                 }
             })
                 .then(data => {
+                    const showData = data.data.filter(item => item.user_id != userId);
+                    console.log(showData, 'showData');
                     const radioButtons = document.querySelectorAll('input[name="propertyCategory"]');
                     console.log('radioButtons', radioButtons);
                     function updatePropertyData(selectedCategory) {
                         console.log(selectedCategory);
                         let filteredData;
 
-                        if (selectedCategory === "all") {
+                        if (selectedCategory == "all") {
                             // If "all" is selected, show all data
-                            filteredData = data.data;
+                            filteredData = showData;
                         } else {
                             // Filter data based on selected category
-                            filteredData = data.data.filter((item) => item.property_category_select === selectedCategory);
+                            filteredData = showData.filter((item) => item.property_category_select == selectedCategory);
                         }
 
-                        clearPropertyContainer(); // Clear existing data
-                        populatePropertyContainer(filteredData); // Populate with filtered data
+                        clearPropertyContainer();
+                        populatePropertyContainer(filteredData);
                     }
 
 
@@ -375,7 +379,7 @@
                     }
 
                     // Initially, populate with all data
-                    populatePropertyContainer(data.data);
+                    populatePropertyContainer(showData);
                 })
                 .catch(error => {
                     console.error('There was a problem with the fetch operation:', error);
@@ -411,7 +415,7 @@
 
                 };
 
-                fetch('http://192.168.29.179:5000/api/sortlist', {
+                fetch(apiUrl + '/sortlist', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

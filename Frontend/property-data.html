@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+  <script src="utils.js"></script>
+
   <style>
     .required {
       color: red;
@@ -47,10 +49,7 @@
     class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
     <div class="spinner-grow text-primary" role="status"></div>
   </div>
-  <!-- Spinner End -->
 
-
-  <!-- Navbar Start -->
   <div class="container-fluid fixed-top px-0 wow fadeIn" data-wow-delay="0.1s">
     <nav class="navbar navbar-expand-lg navbar-dark py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
       <div style="padding-top: 15px;">
@@ -85,17 +84,12 @@
   </div>
 
 
-
-  <!-------------------Navigation end------------>
-
-  <!-- Page Header Start -->
   <div class="container-fluid page-header mb-5 wow fadeIn" data-wow-delay="0.1s">
     <div class="container text-center">
       <h1 class="display-4  animated slideInDown mb-4">Start posting your property for free.</h1>
 
     </div>
   </div>
-  <!-- Page Header End -->
 
   <div class="container-xxl ">
     <div class="container">
@@ -113,7 +107,6 @@
 
     </div>
   </div>
-  <!-- Contact Start -->
 
   <div class="container">
     <div class="row mb-5 ">
@@ -345,10 +338,7 @@
 
   </div>
 
-  <!-- Contact End -->
 
-
-  <!-- Footer Start -->
   <div class="container-fluid bg-dark-1 text-white footer mt-5  wow fadeIn" data-wow-delay="0.1s">
     <div class="container ">
       <div class="row g-5" style="font-size:12px !important;">
@@ -524,7 +514,7 @@
       formData.append("Survey_no", Survey_no)
       formData.append("Land_Facing", Land_Facing)
       formData.append('landPrice', landPrice)
-      fetch('http://192.168.29.179:5000/api/sellProperty', {
+      fetch(apiUrl + '/sellProperty', {
         method: 'POST',
         body: formData,
       })

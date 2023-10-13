@@ -2,12 +2,18 @@
 <html lang="en">
 
 <head>
+  <script src="utils.js"></script>
 
   <style>
     .required {
       color: red;
       margin-left: 5px;
       /* Add space between label text and asterisk */
+    }
+
+    #propertyImage {
+      padding: 10px;
+      /* Adjust the value to set the desired padding */
     }
   </style>
   <meta charset="utf-8">
@@ -43,15 +49,11 @@
 </head>
 
 <body>
-  <!-- Spinner Start -->
   <div id="spinner"
     class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
     <div class="spinner-grow text-primary" role="status"></div>
   </div>
-  <!-- Spinner End -->
 
-
-  <!-- Navbar Start -->
   <div class="container-fluid fixed-top px-0 wow fadeIn" data-wow-delay="0.1s">
     <nav class="navbar navbar-expand-lg navbar-dark py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
       <div style="padding-top: 15px;">
@@ -86,17 +88,12 @@
   </div>
 
 
-
-  <!-------------------Navigation end------------>
-
-  <!-- Page Header Start -->
   <div class="container-fluid page-header mb-5 wow fadeIn" data-wow-delay="0.1s">
     <div class="container text-center">
       <h1 class="display-4  animated slideInDown mb-4">Start posting your property for free.</h1>
 
     </div>
   </div>
-  <!-- Page Header End -->
 
   <div class="container-xxl ">
     <div class="container">
@@ -114,7 +111,6 @@
 
     </div>
   </div>
-  <!-- Contact Start -->
 
   <div class="container">
     <div class="row mb-5 ">
@@ -177,10 +173,11 @@
           </div>
 
 
+
         </div>
       </div>
 
-      <!-- <div class="col-md-6 mb-3">
+      <div class="col-md-6 mb-3">
         <div class="row">
           <div class="col-3">
             <label for="" class="col-form-label">Land Facing <span class="required">*</span> </label>
@@ -190,16 +187,16 @@
           </div>
 
         </div>
-      </div> -->
+      </div>
 
       <div class="col-md-6 mb-3">
         <div class="row">
-          <!-- <div class="col-3">
+          <div class="col-3">
             <label for="" class="col-form-label">Survey No. <span class="required">*</span></label>
-          </div> -->
-          <!-- <div class="col-9">
+          </div>
+          <div class="col-9">
             <input type="text" id="SurveyNo" class="form-control" aria-describedby="passwordHelpInline" required>
-          </div> -->
+          </div>
 
         </div>
       </div>
@@ -225,7 +222,9 @@
 
         </div>
       </div>
+      <div class="col-md-6 mb-3">
 
+      </div>
       <div class="col-md-6 mb-3">
         <div class="row">
           <div class="col-3">
@@ -240,12 +239,12 @@
       </div>
       <div class="col-md-6 mb-3">
         <div class="row">
-          <!-- <div class="col-3">
+          <div class="col-3">
             <label for="" class="col-form-label">Land price <span class="required">*</span> </label>
           </div>
           <div class="col-9">
             <input type="text" id="landPrice" class="form-control" aria-describedby="passwordHelpInline" required>
-          </div> -->
+          </div>
         </div>
       </div>
       <div class="col-md-6 mb-3">
@@ -291,7 +290,8 @@
       </div>
       <div class="col-md-6 mb-3">
         <label for="" class="col-form-label">upload images <span class="required">*</span></label>
-        <input class="form-control" type="file" id="formFileMultiple" multiple>
+        <input class="form-control" type="file" id="formFileMultiple" multiple required>
+        <img id="propertyImage" alt="Property Image" width="90" height="90">
 
       </div>
 
@@ -306,7 +306,7 @@
 
       <div class="col-12 my-4 text-center">
         <button class="btn btn-primary py-2 px-3 me-3">
-          Update
+          Submit
           <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
             <i class="fa fa-arrow-right"></i>
           </div>
@@ -317,10 +317,7 @@
 
   </div>
 
-  <!-- Contact End -->
 
-
-  <!-- Footer Start -->
   <div class="container-fluid bg-dark-1 text-white footer mt-5  wow fadeIn" data-wow-delay="0.1s">
     <div class="container ">
       <div class="row g-5" style="font-size:12px !important;">
@@ -398,8 +395,7 @@
       </div>
     </div>
   </div>
-  <!-- Footer End -->
-  <!-- Back to Top -->
+
   <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 
 
@@ -426,7 +422,7 @@
         id: pageId
       };
 
-      fetch('http://192.168.29.179:5000/api/getPropertyById', {
+      fetch(apiUrl + '/getPropertyById', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -447,20 +443,18 @@
           document.getElementById('cost').value = data.message[0].cost_per_squre_fit;
           document.getElementById('sizeoflandmark').value = data.message[0].size_of_land;
           document.getElementById('landmark').value = data.message[0].landmark;
-          document.getElementById('ownership').value = data.message[0].owenership;
-          document.getElementById('formFileMultiple').value = data.message[0].mobile_number;
           document.getElementById('landFacing').value = data.message[0].Land_Facing;
           document.getElementById('landPrice').value = data.message[0].landPrice
-
+          document.getElementById('SurveyNo').value = data.message[0].Survey_no
           const landTypeRadios = document.getElementsByName('landType');
           landTypeRadios.forEach(radio => {
             if (radio.value == data.message[0].property_category_select) {
               radio.checked = true;
             }
           });
-          const imageInput = document.getElementById('formFileMultiple');
-
+          document.getElementById('propertyImage').src = data.message[0].images;
         })
+      'http://192.168.29.179:5500/Backend/public/image_20231013_1697174371212_.jpeg'
         .catch(error => {
         });
     }
@@ -501,7 +495,7 @@
       return true;
     }
 
-    function addProperty(pageId) {
+    function addProperty() {
       const name = document.getElementById('landmarkOwnername').value;
       const state = document.getElementById('state').value;
       const Address = document.getElementById('Address').value;
@@ -512,13 +506,12 @@
       const cost = document.getElementById('cost').value
       const sizeoflandmark = document.getElementById('sizeoflandmark').value
       const landmark = document.getElementById('landmark').value
-      const ownership = "self"
       const image = document.getElementById('formFileMultiple').value
       const imageInput = document.getElementById('formFileMultiple');
-      const Survey_no = "7987"
-      const Land_Facing = "4758"
+      const Survey_no = document.getElementById('SurveyNo').value
+      const Land_Facing = document.getElementById('landFacing').value
       const form = document.getElementById('property').value;
-      const landPrice = " 12 cr"
+      const landPrice = document.getElementById('landPrice').value
       var selectedLandType = document.querySelector('input[name="landType"]:checked');
 
       const formData = new FormData(form);
@@ -528,8 +521,8 @@
       if (selectedLandType) {
         formData.append("property_category_select", selectedLandType.value);
       }
-      if (imageInput.files.length > 0) {
-        formData.append("image", imageInput.files[0]);
+      for (let i = 0; i < imageInput.files.length; i++) {
+        formData.append("image", imageInput.files[i]);
       }
       formData.append("ownerName", name);
       formData.append("mobile_number", phone);
@@ -538,44 +531,22 @@
       formData.append("city", city);
       formData.append("pincode", pincode);
       formData.append("landmark", landmark);
-      formData.append("owenership", ownership);
       formData.append("cost_per_squre_fit", cost);
       formData.append("size_of_land", sizeoflandmark);
       formData.append("desciption", desciption);
       formData.append("Survey_no", Survey_no)
       formData.append("Land_Facing", Land_Facing)
       formData.append('landPrice', landPrice)
+      formData.append('id', pageId)
       console.log(formData, 'formData', name, phone);
 
-
-
-      const datarequet = {
-        user_id: userId,
-        image: imageInput.files[0],
-        property_category_select: "",
-        ownerName: name,
-        mobile_number: phone,
-        full_address: Address,
-        state: state,
-        city: city,
-        pincode: pincode,
-        landmark: landmark,
-        owenership: ownership,
-        cost_per_squre_fit: cost,
-        size_of_land: sizeoflandmark,
-        desciption: desciption,
-        Survey_no: Survey_no,
-        Land_Facing: Land_Facing,
-        landPrice: landPrice
-      }
-      console.log(datarequet,'datarequet');
-      fetch(`http://192.168.29.179:5000/api/updateProperty/${pageId}`, {
+      fetch(apiUrl + '/updateProperty', {
         method: 'POST',
-        body: datarequet,
+        body: formData,
       })
         .then(response => response.json())
         .then(data => {
-        
+
           if (data.message == "Property Updated") {
             Swal.fire({
               title: "Success",

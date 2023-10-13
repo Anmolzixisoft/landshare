@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+    <script src="utils.js"></script>
+
     <meta charset="utf-8">
     <title>My Shortlisting - Landshare India Private Limited </title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -215,13 +217,13 @@
         const userId = localStorage.getItem('userId')
         console.log(userId, '0000');
         function fetchData() {
-            const apiUrl = 'http://192.168.29.179:5000/api/getproperty';
+            const api = apiUrl + '/getproperty';
 
             const requestData = {
                 user_id: userId
             };
 
-            fetch(apiUrl, {
+            fetch(api, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json', // Set the appropriate content type
@@ -317,8 +319,8 @@
                 sold_status: status
             };
 
-            const apiUrl = 'http://192.168.29.179:5000/api/sold_property';
-            fetch(apiUrl, {
+            const api = apiUrl + '/sold_property';
+            fetch(api, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -360,14 +362,14 @@
 
         function deleteElement(propertyId, userId) {
             console.log(propertyId, userId);
-            var apiURL = 'http://192.168.29.179:5000/api/delete_proprty';
+            var api = apiUrl + '/delete_proprty';
 
             var data = {
                 propertyId: propertyId,
                 user_id: userId
             };
 
-            fetch(apiURL, {
+            fetch(api, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
