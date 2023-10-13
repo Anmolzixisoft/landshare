@@ -52,7 +52,7 @@
             </div>
             <div style="display: inline-flex;">
                 <a href="#" id="loginLogoutButton" class="nav-item nav-link"><b></b>&nbsp;&nbsp;<i
-                    class="fa fa-arrow-right"></i></a>
+                        class="fa fa-arrow-right"></i></a>
                 <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
                     data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
@@ -342,20 +342,52 @@
     <script>
         const userId = localStorage.getItem('userId');
         const token = localStorage.getItem('token');
-    
+
         const loginLogoutButton = document.getElementById('loginLogoutButton');
-    
+
         if (userId && token) {
             loginLogoutButton.innerHTML = '<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
             loginLogoutButton.addEventListener('click', () => {
                 localStorage.removeItem('userId');
                 localStorage.removeItem('token');
-                window.location.href='index.html'
+                window.location.href = 'index.html'
             });
         } else {
             loginLogoutButton.innerHTML = '<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
             loginLogoutButton.href = 'login-form.html';
         }
+        function getname() {
+        const userData = {
+            userid: userId
+        };
+        console.log(userData, '9999999999');
+        fetch(apiUrl + '/getuserName', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userData)
+        })
+            .then(response => response.json())
+            .then(data => {
+                const name = data.message[0].name;
+                console.log(data.message[0].name, 'data');
+                const firstLetter = name.charAt(0).toUpperCase(); // Get the first letter in uppercase
+                const elementToReplace = document.querySelector('.d-inline-flex.btn-sm-square.bg-primary.text-white.rounded-circle.ms-2');
+
+                if (elementToReplace) {
+                    elementToReplace.textContent = firstLetter; // Set the content to the obtained name
+                }
+            })
+            .catch(error => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: error,
+                });
+            });
+    }
+    getname()
     </script>
 </body>
 

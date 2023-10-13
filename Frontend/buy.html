@@ -223,6 +223,7 @@
     <script src="lib/waypoints/waypoints.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
     <script src="lib/parallax/parallax.min.js"></script>
+    <script src="js/main.js"></script>
 
     <!-- Template Javascript -->
     <script>
@@ -244,7 +245,7 @@
                     id: propertyId
                 };
 
-                fetch(apiUrl+ '/getPropertyById', {
+                fetch(apiUrl + '/getPropertyById', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -414,10 +415,8 @@
         function changeImage(imageSrc) {
             document.getElementById("bigImage").src = imageSrc;
         }
-    </script>
-    <script src="js/main.js"></script>
-    <script>
-   
+
+
         function openSweetAlert(propertyId) {
             console.log(propertyId);
             const postData = {
@@ -460,7 +459,6 @@
         }
 
 
-
         function toggleHeart(property_id, sortlist_status) {
             var heartIcon = document.getElementById("heart-icon");
 
@@ -474,9 +472,38 @@
 
         }
 
-    </script>
-    <script>
+        function getname() {
+            const userData = {
+                userid: userId
+            };
+            console.log(userData, '9999999999');
+            fetch(apiUrl + '/getuserName', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userData)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const name = data.message[0].name;
+                    console.log(data.message[0].name, 'data');
+                    const firstLetter = name.charAt(0).toUpperCase(); // Get the first letter in uppercase
+                    const elementToReplace = document.querySelector('.d-inline-flex.btn-sm-square.bg-primary.text-white.rounded-circle.ms-2');
 
+                    if (elementToReplace) {
+                        elementToReplace.textContent = firstLetter; // Set the content to the obtained name
+                    }
+                })
+                .catch(error => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: error,
+                    });
+                });
+        }
+        getname()
 
         const loginLogoutButton = document.getElementById('loginLogoutButton');
 

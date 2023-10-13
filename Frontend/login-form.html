@@ -10,6 +10,10 @@
             margin-left: 5px;
             /* Add space between label text and asterisk */
         }
+
+        .error-text {
+            color: red;
+        }
     </style>
     <meta charset="utf-8">
     <title>Agrocorp- Landshare India (P) Limited.</title>
@@ -157,17 +161,21 @@
                         <h2>Register</h2>
                         <label for="name">Your Name <span class="required">*</span></label>
                         <div class="pass-reset">
-                            <input type="text" name="name" class="name" id="nameInput" placeholder="Your Name" required>
+                            <input type="text" name="name" class="name" id="nameInput" placeholder="Your Name"
+                                onkeypress="return isCharacterKey(event)" required pattern="[A-Za-z]+" maxlength="50">
                         </div>
                         <label for="phone">Your Phone Number <span class="required">*</span> </label>
                         <div class="pass-reset" onclick="activeInput(this)">
                             <input type="text" name="phone" class="phone" id="phoneInput"
-                                placeholder="Enter Your Phone Number" onkeypress="return isNumberKey(event)" required>
+                                placeholder="Enter Your Phone Number" onkeypress="return isNumberKey(event)" required
+                                pattern="[0-9]+" maxlength="10">
                         </div>
                         <label for="email">Email Address <span class="required">*</span> </label>
                         <div class="pass-reset" onclick="activeInput(this)">
                             <input type="email" name="email" class="email" id="emailInput1" placeholder="name@mail.com"
-                                required>
+                                required oninput="validateEmail()">
+                            <div class="error-message"></div>
+                            
                         </div>
                         <label for="password">Password <span class="required">*</span> </label>
                         <div class="pass-reset" onclick="activeInput(this)">
@@ -323,9 +331,10 @@
     <script src="js/login-script.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script>
 
-        function validateForm() {
+<script>
+
+function validateForm() {
             var nameInput = document.getElementById("nameInput").value;
 
         }
@@ -474,11 +483,24 @@
         document.getElementById('sendotpbutton').addEventListener('click', function (e) {
             e.preventDefault();
             const email = document.getElementById('emailInput1').value;
+            function validateEmail(email) {
+                var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+                return emailRegex.test(email);
+            }
+            if (!validateEmail(email)) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Please enter a valid email address.',
+                });
+                return; // Stop execution if email is invalid
+            }
+
             const emailData = {
                 email: email
             };
 
-            fetch(apiUrl+'/Otpsent', {
+            fetch(apiUrl + '/Otpsent', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -514,29 +536,46 @@
 
         function isNumberKey(evt) {
             var charCode = (evt.which) ? evt.which : evt.keyCode;
+            var inputValue = evt.target.value + String.fromCharCode(charCode);
+
             if (charCode > 31 && (charCode < 48 || charCode > 57)) {
                 return false;
+            }
+            if (inputValue.length === 1 && (charCode === 48 || charCode === 49 || charCode === 50 || charCode === 51 || charCode === 52 || charCode === 53)) {
+                return false; // Disallow starting with 0, 1, 2, 3, 4, or 5
             }
             return true;
         }
 
-        function validateEmail() {
-            const emailInput = document.getElementById('emailInput').value;
-            const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
-            if (!emailRegex.test(emailInput)) {
-                document.getElementById('emailError').textContent = 'Invalid email format.';
-                return false;
+        function validateEmail() {
+            var emailInput = document.getElementById('emailInput1');
+            var email = emailInput.value;
+            var errorContainer = emailInput.parentElement.querySelector('.error-message');
+
+            var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+            if (!email) {
+
+                errorContainer.innerText = '';
+            } else if (!email.match(emailRegex)) {
+
+                errorContainer.innerText = 'Invalid ';
+                errorContainer.classList.add('error-text');
             } else {
-                document.getElementById('emailError').textContent = '';
-                return true;
+
+                errorContainer.innerText = '';
             }
         }
 
+        function isCharacterKey(evt) {
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if ((charCode >= 65 && charCode <= 90) || (charCode >= 97 && charCode <= 122)) {
+                return true;
+            }
+            return false;
+        }
 
-    </script>
-    </script>
-    <script>
         const passwordInput = document.getElementById('password1');
         const rePasswordInput = document.getElementById('re-password');
 

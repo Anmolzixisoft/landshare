@@ -146,4 +146,16 @@ function facebookOAuth(req, res) {
         res.status(200).json({ emailid: email, facebookid: fbid })
     }
 };
-module.exports = { login, verifyByOtp, facebookOAuth }
+
+function getuserName(req, res) {
+    const { userid } = req.body
+    connection.query('SELECT name FROM test.tbl_user where id ="' + userid + '"', (err, results) => {
+        if (err) {
+            return res.send({ erorr: err })
+        }
+        else {
+            return res.send({ message: results })
+        }
+    })
+}
+module.exports = { login, verifyByOtp, facebookOAuth,getuserName }

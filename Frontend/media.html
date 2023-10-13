@@ -375,6 +375,38 @@
             loginLogoutButton.innerHTML = '<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
             loginLogoutButton.href = 'login-form.html';
         }
+        function getname() {
+        const userData = {
+            userid: userId
+        };
+        console.log(userData, '9999999999');
+        fetch(apiUrl + '/getuserName', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userData)
+        })
+            .then(response => response.json())
+            .then(data => {
+                const name = data.message[0].name;
+                console.log(data.message[0].name, 'data');
+                const firstLetter = name.charAt(0).toUpperCase(); // Get the first letter in uppercase
+                const elementToReplace = document.querySelector('.d-inline-flex.btn-sm-square.bg-primary.text-white.rounded-circle.ms-2');
+
+                if (elementToReplace) {
+                    elementToReplace.textContent = firstLetter; // Set the content to the obtained name
+                }
+            })
+            .catch(error => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: error,
+                });
+            });
+    }
+    getname()
     </script>
     <!-- Template Javascript -->
 </body>

@@ -162,25 +162,34 @@
           <div class="col-4">
             <label for="" class="col-form-label">Size of the Land <span class="required">*</span> </label>
           </div>
-          <div class="col-4">
-            <label for="" class="form-label">No. of acres <span class="required">*</span></label>
-            <input type="text" id="sizeoflandmark" class="form-control" aria-describedby="" required>
 
+          <div class="col-md-3">
+            <div class="form-floating">
+
+              <input type="number" class="form-control" id="acre" placeholder="Enter acres" oninput="calculateTotal()">
+              <label for="acre">Acres</label>
+            </div>
           </div>
-          <div class="col-4">
-            <label for="" class="form-label">Guntas <span class="required">*</span></label>
-            <input type="text" id="" class="form-control" aria-describedby="" required>
-
+          <div class="col-md-2">
+            <div class="form-floating">
+              <input type="number" class="form-control" id="guntas" placeholder="Enter guntas"
+                oninput="calculateTotal()">
+              <label for="guntas">Guntas</label>
+            </div>
           </div>
-          <div class="offset-4 col-4">
-            <label for="" class="form-label">Auto Value in Sqft <span class="required">*</span> </label>
-            <input type="text" id="" class="form-control" aria-describedby="" required>
-
+          <div class="col-md-2">
+            <div class="form-floating">
+              <input type="number" class="form-control" id="cents" placeholder="Enter Cents" oninput="calculateTotal()">
+              <label for="cents">Cents</label>
+            </div>
           </div>
-          <div class="col-4">
-            <label for="" class="form-label">Auto Value in Sqmt <span class="required">*</span></label>
-            <input type="text" id="" class="form-control" aria-describedby="" required>
+          <div class="col-md-5">
+            <div class="form-floating">
 
+              <p class="text-primary form-control" id="total-sqft"></p>
+              <p class="error-message" id="error-message"></p>
+
+            </div>
           </div>
 
         </div>
@@ -436,6 +445,27 @@
   <script src="js/main.js"></script>
   <!-- Add this script at the bottom of your HTML file -->
   <script>
+    
+    function calculateTotal() {
+      var acre = parseFloat(document.getElementById('acre').value) || 0;
+      var gunta = parseFloat(document.getElementById('guntas').value) || 0;
+      var cent = parseFloat(document.getElementById('cents').value) || 0;
+
+      var totalLandInSqft = (acre * 43560) + (gunta * 1089) + (cent * 435.6);
+      console.log(totalLandInSqft, 'totalLandInSqft');
+
+      document.getElementById('error-message').textContent = '';
+
+      if (isNaN(totalLandInSqft) || totalLandInSqft < 0) {
+        document.getElementById('error-message').textContent = 'Invalid input. Please enter positive numbers.';
+        document.getElementById('total-sqft').textContent = '';
+        return;
+      }
+      document.getElementById('cost').value = totalLandInSqft;
+
+      document.getElementById('total-sqft').textContent = 'Total : ' + totalLandInSqft + ' sqft.';
+      return totalLandInSqft;
+    }
 
 
     function isNumberKey(evt) {
@@ -554,8 +584,6 @@
       addProperty();
     });
 
-  </script>
-  <script>
     const token = localStorage.getItem('token');
 
     const loginLogoutButton = document.getElementById('loginLogoutButton');
@@ -571,6 +599,38 @@
       loginLogoutButton.innerHTML = '<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
       loginLogoutButton.href = 'login-form.html';
     }
+    function getname() {
+      const userData = {
+        userid: userId
+      };
+      console.log(userData, '9999999999');
+      fetch(apiUrl + '/getuserName', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+      })
+        .then(response => response.json())
+        .then(data => {
+          const name = data.message[0].name;
+          console.log(data.message[0].name, 'data');
+          const firstLetter = name.charAt(0).toUpperCase(); // Get the first letter in uppercase
+          const elementToReplace = document.querySelector('.d-inline-flex.btn-sm-square.bg-primary.text-white.rounded-circle.ms-2');
+
+          if (elementToReplace) {
+            elementToReplace.textContent = firstLetter; // Set the content to the obtained name
+          }
+        })
+        .catch(error => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: error,
+          });
+        });
+    }
+    getname()
   </script>
 </body>
 

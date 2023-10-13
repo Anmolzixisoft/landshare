@@ -203,7 +203,7 @@ function sortlist(req, res) {
 function getsortlist(req, res) {
     const user_id = req.body.user_id;
     const query = `
-    SELECT test.tbl_sell_property., test.tbl_sortlist.
+    SELECT test.tbl_sell_property.*, test.tbl_sortlist.*
     FROM test.tbl_sortlist
     LEFT JOIN test.tbl_sell_property ON test.tbl_sell_property.id = test.tbl_sortlist.property_id
     WHERE test.tbl_sortlist.user_id = ?`;
@@ -214,7 +214,14 @@ function getsortlist(req, res) {
             return res.status(500).json({ error: "Internal Server Error" });
         } else {
             result.forEach(element => {
-                element.images = `http://192.168.29.179:5500/Backend/public/${element.images}`
+                if (typeof element.images == 'string') {
+                    element.images = element.images.split(',').map(image => {
+                        return `http://192.168.29.179:5500/Backend/public/${image.trim().replace(/["[\]]/g, '')}`;
+                    });
+                } else if (Array.isArray(element.images)) {
+                    element.images = element.images.map(image => `http://192.168.29.179:5500/Backend/public/${image}`);
+                }
+
             });
             return res.send({ data: result })
         }
