@@ -73,6 +73,7 @@
             <a href="contact.html" class="nav-item nav-link">Connect</a>
             <a href="shortlisted-properties.html" class="nav-item nav-link">Sortlist Property</a>
             <a href="my-uploads.html" class="nav-item nav-link ">My Property</a>
+            <a href="enquire.html" class="nav-item nav-link">Enquiries My Property</a>
 
 
 
@@ -512,7 +513,6 @@
       const sizeoflandmark = document.getElementById('sizeoflandmark').value
       const landmark = document.getElementById('landmark').value
       const ownership = document.getElementById('ownership').value
-      // const image = document.getElementById('formFileMultiple').value
       const imageInput = document.getElementById('formFileMultiple');
       const Survey_no = document.getElementById('SurveyNo').value
       const Land_Facing = document.getElementById('landFacing').value
@@ -523,7 +523,6 @@
       const formData = new FormData(form);
 
       formData.append("user_id", userId);
-
       if (selectedLandType) {
         formData.append("property_category_select", selectedLandType.value);
       }
