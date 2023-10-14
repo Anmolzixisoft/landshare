@@ -561,15 +561,14 @@
         .then(response => response.json())
         .then(data => {
           if (data.message == "Property Added") {
-            Swal.fire({
+            return Swal.fire({
               title: "Success",
               text: data.message,
               icon: "success",
             })
-            setTimeout(function () {
-              window.location.href = 'property-data.html';
-            }, 3000); // 2000 milliseconds (2 seconds) delay
-
+              .then(() => {
+                window.location.href = 'property-data.html';
+              })
           } else {
             Swal.fire({
               title: "Error",

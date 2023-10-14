@@ -80,31 +80,41 @@ function resetPass(req, res) {
     }
 
     // Hash the new password
-    bcrypt.hash(newPassword, 10, (hashErr, hashedPassword) => {
-        if (hashErr) {
-            console.error('Password hashing failed: ' + hashErr);
-            return res.status(500).json({ error: 'Internal server error', status: false });
+
+    connection.query('select * from test.tbl_user where email= "' + email + '" ', (err, results) => {
+        if (results.length > 0) {
+
+            bcrypt.hash(newPassword, 10, (hashErr, hashedPassword) => {
+                if (hashErr) {
+                    console.error('Password hashing failed: ' + hashErr);
+                    return res.status(500).json({ error: 'Internal server error', status: false });
+                }
+
+                connection.query(
+                    'UPDATE test.tbl_user SET password = ? WHERE email = ?',
+                    [hashedPassword, email],
+                    (updateErr, updateResult) => {
+                        if (updateErr) {
+                            console.error('Error updating password: ' + updateErr);
+                            return res.status(500).json({ error: 'Error updating password', status: false });
+                        }
+
+                        if (updateResult.affectedRows === 0) {
+                            // If no rows were affected, the user with the provided email does not exist
+                            return res.status(404).json({ error: 'User not found', status: false });
+                        }
+
+                        console.log('Password reset successfully.');
+                        return res.status(200).json({ status: true, msg: 'Password Change successfully' });
+                    }
+                );
+            });
         }
+        else {
+            return res.send({ message: "email not register" })
+        }
+    })
 
-        connection.query(
-            'UPDATE tbl_user SET password = ? WHERE email = ?',
-            [hashedPassword, email],
-            (updateErr, updateResult) => {
-                if (updateErr) {
-                    console.error('Error updating password: ' + updateErr);
-                    return res.status(500).json({ error: 'Error updating password', status: false });
-                }
-
-                if (updateResult.affectedRows === 0) {
-                    // If no rows were affected, the user with the provided email does not exist
-                    return res.status(404).json({ error: 'User not found', status: false });
-                }
-
-                console.log('Password reset successfully.');
-                return res.status(200).json({ status: true, msg: 'Password Change successfully' });
-            }
-        );
-    });
 }
 
 module.exports = { resetPass, verifyByOtp }

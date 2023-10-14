@@ -418,46 +418,58 @@
 
 
         function openSweetAlert(propertyId) {
-            console.log(propertyId);
-            const postData = {
-                property_id: propertyId,
-                user_id: userId,
 
-            };
+            if (userId) {
 
-            fetch(apiUrl + '/buy', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(postData),
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    if (data.message) {
-                        Swal.fire({
-                            title: 'Thank You ',
-                            text: `For Showing Intrest,
-                 our team will get back to you within 24 hours`,
-                            icon: 'info', // You can use 'info', 'success', 'warning', 'error', etc.
-                            confirmButtonText: 'OK',
-                        }).then(() => {
-                            window.location.href = 'index.html'
-                        })
-                    }
+                const postData = {
+                    property_id: propertyId,
+                    user_id: userId,
 
+                };
+
+                fetch(apiUrl + '/buy', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(postData),
                 })
-                .catch(error => {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: error,
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        if (data.message) {
+                            Swal.fire({
+                                title: 'Thank You ',
+                                text: `For Showing Intrest,
+                 our team will get back to you within 24 hours`,
+                                icon: 'info', // You can use 'info', 'success', 'warning', 'error', etc.
+                                confirmButtonText: 'OK',
+                            }).then(() => {
+                                window.location.href = 'index.html'
+                            })
+                        }
+
+                    })
+                    .catch(error => {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: error,
+                        });
                     });
-                });
 
+            }
+
+            else {
+               return Swal.fire({
+                    icon: 'info',
+                    title: 'message',
+                    text: "please  login",
+                }).then(()=>{
+                    window.location.href="login-form.html"
+                })
+            }
         }
-
 
         function toggleHeart(property_id, sortlist_status) {
             var heartIcon = document.getElementById("heart-icon");
