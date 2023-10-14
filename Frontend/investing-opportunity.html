@@ -10,6 +10,7 @@
     <meta content="" name="keywords">
     <meta content="" name="description">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
@@ -20,7 +21,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Saira:wght@500;600;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
+   
     <!-- Icon Font Stylesheet -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
@@ -482,11 +483,11 @@
                 .then(data => {
                     const name = data.message[0].name;
                    
-                    const firstLetter = name.charAt(0).toUpperCase(); // Get the first letter in uppercase
+                    const firstLetter = name.charAt(0).toUpperCase();
                     const elementToReplace = document.querySelector('.d-inline-flex.btn-sm-square.bg-primary.text-white.rounded-circle.ms-2');
 
                     if (elementToReplace) {
-                        elementToReplace.textContent = firstLetter; // Set the content to the obtained name
+                        elementToReplace.textContent = firstLetter; 
                     }
                 })
                 .catch(error => {

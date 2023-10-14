@@ -330,11 +330,11 @@
             .then(data => {
                 const name = data.message[0].name;
               
-                const firstLetter = name.charAt(0).toUpperCase(); // Get the first letter in uppercase
+                const firstLetter = name.charAt(0).toUpperCase();
                 const elementToReplace = document.querySelector('.d-inline-flex.btn-sm-square.bg-primary.text-white.rounded-circle.ms-2');
 
                 if (elementToReplace) {
-                    elementToReplace.textContent = firstLetter; // Set the content to the obtained name
+                    elementToReplace.textContent = firstLetter; 
                 }
             })
             .catch(error => {

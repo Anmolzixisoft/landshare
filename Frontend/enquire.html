@@ -5,6 +5,7 @@
     <style>
         .table-container {
             text-align: center;
+            padding: 10px;
         }
 
         table {
@@ -38,7 +39,10 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Saira:wght@500;600;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10"> -->
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -235,9 +239,9 @@
             fetch(api, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json', // Set the content type to JSON
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(postData), // Convert your data to JSON format
+                body: JSON.stringify(postData),
             })
                 .then(response => {
                     if (response.ok) {
@@ -262,7 +266,7 @@
         const propertyListingsContainer = document.getElementById('property-listings');
 
         function createPropertyListing(property) {
-           
+
             const container = document.createElement('div');
             const originalDateTime = new Date(property.enquire_create_at);
             const day = originalDateTime.getUTCDate();
@@ -270,11 +274,8 @@
             const year = originalDateTime.getUTCFullYear();
 
             const formattedDate = `${day}-${month}-${year}`;
-
-
-
             container.innerHTML = `
-   
+   <div class="table-container" >
                 <table>
                  
                     <tbody>
@@ -285,12 +286,12 @@
                             <td>${property.property_category_select}</td>
                             <td>${formattedDate}</td>
                             <td> ${property.full_address} </td>
-                    
+
                         </tr>
                         
                     </tbody>
                 </table>
-           
+          </div> 
 `;
 
             return container;
@@ -324,12 +325,12 @@
                 .then(response => response.json())
                 .then(data => {
                     const name = data.message[0].name;
-                    
-                    const firstLetter = name.charAt(0).toUpperCase(); // Get the first letter in uppercase
+
+                    const firstLetter = name.charAt(0).toUpperCase(); 
                     const elementToReplace = document.querySelector('.d-inline-flex.btn-sm-square.bg-primary.text-white.rounded-circle.ms-2');
 
                     if (elementToReplace) {
-                        elementToReplace.textContent = firstLetter; // Set the content to the obtained name
+                        elementToReplace.textContent = firstLetter; 
                     }
                 })
                 .catch(error => {

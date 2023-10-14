@@ -8,7 +8,9 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
+ 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
 
@@ -454,14 +456,13 @@
                     });
 
             }
-
             else {
-               return Swal.fire({
+                return Swal.fire({
                     icon: 'info',
                     title: 'message',
                     text: "please  login",
-                }).then(()=>{
-                    window.location.href="login-form.html"
+                }).then(() => {
+                    window.location.href = "login-form.html"
                 })
             }
         }
@@ -473,7 +474,7 @@
 
 
             }
-          
+
 
         }
 
@@ -503,6 +504,7 @@
                 });
         }
         getname()
+
 
         const loginLogoutButton = document.getElementById('loginLogoutButton');
 
