@@ -2,6 +2,11 @@
 <html lang="en">
 
 <head>
+    <style>
+        .error-text {
+            color: red;
+        }
+    </style>
     <script src="utils.js"></script>
     <meta charset="utf-8">
     <title>Contact - Landshare India Private Limited </title>
@@ -112,14 +117,15 @@
                             <div class="col-md-6">
                                 <div class="form-floating">
                                     <input type="email" class="form-control" id="email" placeholder="Your Email"
-                                        required>
+                                        required oninput="validateEmail()">
+                                    <div class="error-message"></div>
                                     <label for="email">Your Email</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
                                     <input type="text" class="form-control" id="phone" placeholder="Your Phone Number"
-                                        onkeypress="return isNumberKey(event)" required>
+                                        onkeypress="return isNumberKey(event)" required maxlength="10">
                                     <label for="phone">Phone</label>
                                 </div>
                             </div>
@@ -258,6 +264,26 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
     <script>
+
+        function validateEmail() {
+            var emailInput = document.getElementById('email');
+            var email = emailInput.value;
+            var errorContainer = emailInput.parentElement.querySelector('.error-message');
+
+            var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+            if (!email) {
+
+                errorContainer.innerText = '';
+            } else if (!email.match(emailRegex)) {
+
+                errorContainer.innerText = 'Invalid ';
+                errorContainer.classList.add('error-text');
+            } else {
+
+                errorContainer.innerText = '';
+            }
+        }
         function touch() {
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
@@ -318,7 +344,7 @@
             }
             return true;
         }
-   
+
         const userId = localStorage.getItem('userId');
         const token = localStorage.getItem('token');
 
@@ -359,7 +385,7 @@
                     }
                 })
                 .catch(error => {
-                   
+
                 });
         }
         getname()

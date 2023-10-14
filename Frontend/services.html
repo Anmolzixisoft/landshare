@@ -2,6 +2,11 @@
 <html lang="en">
 
 <head>
+    <style>
+        .error-text {
+            color: red;
+        }
+    </style>
     <script src="utils.js"></script>
 
     <meta charset="utf-8">
@@ -116,7 +121,8 @@
                             <div class="col-md-6">
                                 <div class="form-floating">
                                     <input type="email" class="form-control" id="email" placeholder="Your Email Id"
-                                        required>
+                                        required oninput="validateEmail()">
+                                    <div class="error-message"></div>
                                     <label for="email">Your Email Id</label>
                                 </div>
                             </div>
@@ -271,6 +277,26 @@
 
     <script src="js/main.js"></script>
     <script>
+
+        function validateEmail() {
+            var emailInput = document.getElementById('email');
+            var email = emailInput.value;
+            var errorContainer = emailInput.parentElement.querySelector('.error-message');
+
+            var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+            if (!email) {
+
+                errorContainer.innerText = '';
+            } else if (!email.match(emailRegex)) {
+
+                errorContainer.innerText = 'Invalid ';
+                errorContainer.classList.add('error-text');
+            } else {
+
+                errorContainer.innerText = '';
+            }
+        }
         function service() {
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
@@ -323,7 +349,7 @@
             e.preventDefault();
             service();
         });
-   
+
         const userId = localStorage.getItem('userId');
         const token = localStorage.getItem('token');
 
@@ -341,33 +367,33 @@
             loginLogoutButton.href = 'login-form.html';
         }
         function getname() {
-        const userData = {
-            userid: userId
-        };
-        console.log(userData, '9999999999');
-        fetch(apiUrl + '/getuserName', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(userData)
-        })
-            .then(response => response.json())
-            .then(data => {
-                const name = data.message[0].name;
-                console.log(data.message[0].name, 'data');
-                const firstLetter = name.charAt(0).toUpperCase(); // Get the first letter in uppercase
-                const elementToReplace = document.querySelector('.d-inline-flex.btn-sm-square.bg-primary.text-white.rounded-circle.ms-2');
-
-                if (elementToReplace) {
-                    elementToReplace.textContent = firstLetter; // Set the content to the obtained name
-                }
+            const userData = {
+                userid: userId
+            };
+            console.log(userData, '9999999999');
+            fetch(apiUrl + '/getuserName', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userData)
             })
-            .catch(error => {
-               
-            });
-    }
-    getname()
+                .then(response => response.json())
+                .then(data => {
+                    const name = data.message[0].name;
+                    console.log(data.message[0].name, 'data');
+                    const firstLetter = name.charAt(0).toUpperCase(); // Get the first letter in uppercase
+                    const elementToReplace = document.querySelector('.d-inline-flex.btn-sm-square.bg-primary.text-white.rounded-circle.ms-2');
+
+                    if (elementToReplace) {
+                        elementToReplace.textContent = firstLetter; // Set the content to the obtained name
+                    }
+                })
+                .catch(error => {
+
+                });
+        }
+        getname()
     </script>
 </body>
 
