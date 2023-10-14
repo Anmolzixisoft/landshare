@@ -432,7 +432,6 @@
       })
         .then(response => response.json())
         .then(data => {
-          console.log(data.message[0], '99');
 
           document.getElementById('landmarkOwnername').value = data.message[0].ownerName;
           document.getElementById('state').value = data.message[0].state;
@@ -539,7 +538,6 @@
       formData.append("Land_Facing", Land_Facing)
       formData.append('landPrice', landPrice)
       formData.append('id', pageId)
-      console.log(formData, 'formData', name, phone);
 
       fetch(apiUrl + '/updateProperty', {
         method: 'POST',
@@ -601,7 +599,6 @@
         const userData = {
             userid: userId
         };
-        console.log(userData, '9999999999');
         fetch(apiUrl + '/getuserName', {
             method: 'POST',
             headers: {
@@ -612,7 +609,6 @@
             .then(response => response.json())
             .then(data => {
                 const name = data.message[0].name;
-                console.log(data.message[0].name, 'data');
                 const firstLetter = name.charAt(0).toUpperCase(); // Get the first letter in uppercase
                 const elementToReplace = document.querySelector('.d-inline-flex.btn-sm-square.bg-primary.text-white.rounded-circle.ms-2');
 

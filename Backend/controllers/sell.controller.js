@@ -266,7 +266,6 @@ test.tbl_sell_property.user_id = ${user_id} AND test.tbl_buy.property_id = test.
         if (err) {
             return res.send({ error: err })
         } else {
-            console.log(result.length);
             return res.send({ message: result })
         }
     })

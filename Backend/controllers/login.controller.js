@@ -133,7 +133,7 @@ function login(req, res) {
     );
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
-            console.log('------------------', error);
+            return res.send({ error: error })
         } else {
             console.log('Email sent: ');
         }
@@ -158,4 +158,4 @@ function getuserName(req, res) {
         }
     })
 }
-module.exports = { login, verifyByOtp, facebookOAuth,getuserName }
+module.exports = { login, verifyByOtp, facebookOAuth, getuserName }

@@ -240,7 +240,6 @@
                 body: JSON.stringify(postData), // Convert your data to JSON format
             })
                 .then(response => {
-                    console.log(response, '---4444-------------');
                     if (response.ok) {
                         return response.json();
                     } else {
@@ -248,7 +247,6 @@
                     }
                 })
                 .then(data => {
-                    console.log(data.message, '890');
                     data.message.forEach(property => {
 
                         const propertyListing = createPropertyListing(property);
@@ -264,7 +262,7 @@
         const propertyListingsContainer = document.getElementById('property-listings');
 
         function createPropertyListing(property) {
-            console.log("ddd", property);
+           
             const container = document.createElement('div');
             const originalDateTime = new Date(property.enquire_create_at);
             const day = originalDateTime.getUTCDate();
@@ -316,7 +314,6 @@
             const userData = {
                 userid: userId
             };
-            console.log(userData, '9999999999');
             fetch(apiUrl + '/getuserName', {
                 method: 'POST',
                 headers: {
@@ -327,7 +324,7 @@
                 .then(response => response.json())
                 .then(data => {
                     const name = data.message[0].name;
-                    console.log(data.message[0].name, 'data');
+                    
                     const firstLetter = name.charAt(0).toUpperCase(); // Get the first letter in uppercase
                     const elementToReplace = document.querySelector('.d-inline-flex.btn-sm-square.bg-primary.text-white.rounded-circle.ms-2');
 

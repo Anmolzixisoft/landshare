@@ -456,7 +456,7 @@
       var cent = parseFloat(document.getElementById('cents').value) || 0;
 
       var totalLandInSqft = (acre * 43560) + (gunta * 1089) + (cent * 435.6);
-      console.log(totalLandInSqft, 'totalLandInSqft');
+   
 
       document.getElementById('error-message').textContent = '';
 
@@ -472,7 +472,7 @@
     }
 
     const data = document.getElementsByName('landType')
-    console.log(data, '111----111');
+   
 
     function isNumberKey(evt) {
       var charCode = (evt.which) ? evt.which : evt.keyCode;
@@ -528,7 +528,7 @@
       const cents = document.getElementById('cents').value
       const guntas = document.getElementById('guntas').value
       sizeoflandmark = acre + " " + "acre" + "  " + guntas + "  " + "guntas" + " " + cents + " " + " cents"
-      console.log(sizeoflandmark);
+      
       const formData = new FormData(form);
 
       formData.append("user_id", userId);
@@ -612,7 +612,6 @@
       const userData = {
         userid: userId
       };
-      console.log(userData, '9999999999');
       fetch(apiUrl + '/getuserName', {
         method: 'POST',
         headers: {
@@ -623,7 +622,6 @@
         .then(response => response.json())
         .then(data => {
           const name = data.message[0].name;
-          console.log(data.message[0].name, 'data');
           const firstLetter = name.charAt(0).toUpperCase(); // Get the first letter in uppercase
           const elementToReplace = document.querySelector('.d-inline-flex.btn-sm-square.bg-primary.text-white.rounded-circle.ms-2');
 
