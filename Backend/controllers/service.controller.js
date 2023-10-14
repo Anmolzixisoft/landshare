@@ -5,6 +5,9 @@ function Ourservice(req, res) {
     if (!name || !email || !address) {
         return res.send({ err: "please fill field " })
     }
+    if (!isValidEmail(email)) {
+        return res.status(400).json({ error: 'Invalid email format', status: false });
+    }
     const sql = `INSERT INTO test.tbl_OurService ( name,email,select_work,comment ,address) VALUES (?, ?, ?, ?, ?)`;
     const values = [
         name, email, select, comment, address
@@ -37,7 +40,10 @@ function isValidMobileNumber(mobile_number) {
 
     return mobileRegex.test(mobile_number);
 }
-
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
 function Touch(req, res) {
     const { name, email, phone, subject, message } = req.body
     if (!name || !email) {
@@ -45,6 +51,9 @@ function Touch(req, res) {
     }
     if (!isValidMobileNumber(phone)) {
         return res.status(400).json({ error: 'Invalid mobile number format', status: false });
+    }
+    if (!isValidEmail(email)) {
+        return res.status(400).json({ error: 'Invalid email format', status: false });
     }
     const sql = `INSERT INTO test.tbl_touch (  name, email, phone_no, subject, message) VALUES (?, ?, ?, ?, ?)`;
     const values = [
@@ -62,4 +71,4 @@ function Touch(req, res) {
     });
 
 }
-module.exports = { Ourservice, getService ,Touch}
+module.exports = { Ourservice, getService, Touch }
