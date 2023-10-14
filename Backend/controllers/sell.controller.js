@@ -44,19 +44,7 @@ function sellProperty(req, res) {
     });
 
 }
-// function getProperty(req, res) {
-//     connection.query(`SELECT * FROM test.tbl_sell_property`, (err, result) => {
-//         if (err) {
-//             return res.send({ error: err })
-//         }
-//         else {
-//             result.forEach(element => {
-//                 element.images = `http://127.0.0.1:5500/Backend/public/${element.images}`
-//             });
-//             return res.send({ data: result })
-//         }
-//     })
-// }
+
 function getProperty(req, res) {
     const { user_id } = req.body
     connection.query(`SELECT sell_property.*, sortlist.status
@@ -169,6 +157,7 @@ function deleteProperty(req, res) {
 function sortlist(req, res) {
     const { property_id, user_id, status } = req.body
     connection.query('select * from test.tbl_sortlist where property_id=? and user_id=?', [property_id, user_id], (err, result) => {
+        console.log(err, 'err');
         if (result.length > 0) {
 
             // return res.status(200).json({ message: 'Property alredy sorlisted' });
@@ -200,6 +189,7 @@ function sortlist(req, res) {
     })
 
 }
+
 function getsortlist(req, res) {
     const user_id = req.body.user_id;
     const query = `
@@ -235,6 +225,7 @@ function buyInfo(req, res) {
     const values = [user_id, property_id];
     connection.query(sql, values, (err, result) => {
         if (err) {
+            console.log(err, 'err');
             return res.send({ err: err })
         }
         else {
@@ -260,5 +251,29 @@ function sold_property(req, res) {
         return res.status(200).json({ message: 'sold status updated' });
     })
 }
-module.exports = { sellProperty, getProperty, getPropertyById, sortlist, getsortlist, buyInfo, getsortlistByID, updateProperty, deleteProperty, sold_property }
+
+function enquire(req, res) {
+    const { user_id } = req.body
+    connection.query(`SELECT
+test.tbl_sell_property.*,
+        test.tbl_buy.user_id,test.tbl_buy.enquire_create_at,
+        test.tbl_user.*
+        FROM test.tbl_sell_property
+LEFT JOIN test.tbl_buy ON test.tbl_buy.property_id = test.tbl_sell_property.id
+LEFT JOIN test.tbl_user ON test.tbl_user.id = test.tbl_buy.user_id
+WHERE
+test.tbl_sell_property.user_id = ${user_id} AND test.tbl_buy.property_id = test.tbl_sell_property.id`, (err, result) => {
+        if (err) {
+            return res.send({ error: err })
+        } else {
+            console.log(result.length);
+            return res.send({ message: result })
+        }
+    })
+
+}
+
+
+
+module.exports = { sellProperty, getProperty, getPropertyById, sortlist, getsortlist, buyInfo, getsortlistByID, updateProperty, deleteProperty, sold_property, enquire }
 

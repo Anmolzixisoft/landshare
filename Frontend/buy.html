@@ -434,7 +434,7 @@
             })
                 .then(response => response.json())
                 .then(data => {
-
+                    console.log(data);
                     if (data.message) {
                         Swal.fire({
                             title: 'Thank You ',
@@ -496,11 +496,7 @@
                     }
                 })
                 .catch(error => {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: error,
-                    });
+
                 });
         }
         getname()

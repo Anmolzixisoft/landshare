@@ -426,7 +426,6 @@
             const userData = {
                 userid: userId
             };
-            console.log(userData, '9999999999');
             fetch(apiUrl + '/getuserName', {
                 method: 'POST',
                 headers: {
@@ -446,11 +445,7 @@
                     }
                 })
                 .catch(error => {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: error,
-                    });
+                    
                 });
         }
         getname()

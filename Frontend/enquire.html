@@ -97,66 +97,24 @@
 
         </div>
     </div>
-    <!-- <div class="container-xxl ">
-        <div class="container">
 
-           
-        </div>
-    </div> -->
-    
-    <div class="container-xxl">
+    <div class="container-xxl" id="property-listings">
         <div class="container">
             <div class="table-container">
                 <table>
+
                     <thead>
                         <tr>
                             <th>Username</th>
                             <th>Email</th>
-                            <th>Property Name</th>
+                            <th>mobile Number</th>
+                            <th>Property Type</th>
+
                             <th>Enquire Date</th>
-                            <th>Details</th>
 
+                            <th> Property Address</th>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>John Doe</td>
-                            <td>johndoe@example.com</td>
-                            <td>Property 1</td>
-                            <td>12/10/2023</td>
-                            <td><i class="fa-solid fa-eye"></i></td>
-                        </tr>
-                        <tr>
-                            <td>John Doe</td>
-                            <td>johndoe@example.com</td>
-                            <td>Property 1</td>
-                            <td>12/10/2023</td>
-                            <td><i class="fa-solid fa-eye"></i></td>
-                        </tr>
-                        <tr>
-                            <td>John Doe</td>
-                            <td>johndoe@example.com</td>
-                            <td>Property 1</td>
-                            <td>12/10/2023</td>
-                            <td><i class="fa-solid fa-eye"></i></td>
-                        </tr>
-                        <tr>
-                            <td>John Doe</td>
-                            <td>johndoe@example.com</td>
-                            <td>Property 1</td>
-                            <td>12/10/2023</td>
-                            <td><i class="fa-solid fa-eye"></i></td>
-                        </tr>
-                        <tr>
-                            <td>Jane Smith</td>
-                            <td>janesmith@example.com</td>
-                            <td>Property 2</td>
-                            <td>12/10/2023</td>
-                            <td><i class="fa-solid fa-eye"></i></td>
 
-                        </tr>
-                        <!-- Aur isi tarah se aur rows add kar sakte hain -->
-                    </tbody>
                 </table>
             </div>
         </div>
@@ -267,8 +225,79 @@
 
     <script>
         var userId = localStorage.getItem('userId');
-        const token = localStorage.getItem('token');
 
+        const token = localStorage.getItem('token');
+        function fetchData() {
+            const postData = {
+                user_id: userId,
+            };
+            const api = apiUrl + '/enquire';
+            fetch(api, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json', // Set the content type to JSON
+                },
+                body: JSON.stringify(postData), // Convert your data to JSON format
+            })
+                .then(response => {
+                    console.log(response, '---4444-------------');
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Failed to fetch data');
+                    }
+                })
+                .then(data => {
+                    console.log(data.message, '890');
+                    data.message.forEach(property => {
+
+                        const propertyListing = createPropertyListing(property);
+                        propertyListingsContainer.appendChild(propertyListing);
+
+                    });
+                    document.getElementById('spinner').style.display = 'none';
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        }
+        const propertyListingsContainer = document.getElementById('property-listings');
+
+        function createPropertyListing(property) {
+            console.log("ddd", property);
+            const container = document.createElement('div');
+            const originalDateTime = new Date(property.enquire_create_at);
+            const day = originalDateTime.getUTCDate();
+            const month = originalDateTime.getUTCMonth() + 1;
+            const year = originalDateTime.getUTCFullYear();
+
+            const formattedDate = `${day}-${month}-${year}`;
+
+
+
+            container.innerHTML = `
+   
+                <table>
+                 
+                    <tbody>
+                        <tr>
+                            <td>${property.name}</td>
+                            <td>${property.email}</td>
+                            <td>${property.mobile_number}</td>
+                            <td>${property.property_category_select}</td>
+                            <td>${formattedDate}</td>
+                            <td> ${property.full_address} </td>
+                    
+                        </tr>
+                        
+                    </tbody>
+                </table>
+           
+`;
+
+            return container;
+        }
+        window.onload = fetchData;
         const loginLogoutButton = document.getElementById('loginLogoutButton');
 
         if (userId && token) {
@@ -307,11 +336,7 @@
                     }
                 })
                 .catch(error => {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: error,
-                    });
+
                 });
         }
         getname()
