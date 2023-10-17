@@ -39,7 +39,7 @@
 
 
 .btn.btn-primary:hover {
-    color: var(--primary);
+    color:  #384119;
     background: transparent;
 }
 
@@ -56,6 +56,11 @@
 .btn-lg-square {
     width: 48px;
     height: 48px;
+    border: 1px solid white;
+}
+.btn-lg-square:hover {
+ background-color: #68801b !important ;
+    border: 1px solid white;
 }
 
 .btn-square,
@@ -134,7 +139,7 @@
 .bg-1 {
     z-index: auto;
     width:100%;
-    height:600px;
+    height:400px;
     background: url(../img/the-future-of-real-estate.png);
     background-size: 100%;
     animation: bounce-in-right 3s ease-in;
@@ -546,46 +551,46 @@ body.is-menu-visible #menu {
 }
 
 .page-header {
-    padding-top: 12rem;
-    padding-bottom: 6rem;
+    padding-top: 7rem;
+    padding-bottom: 2rem;
     background:  url(../img/land-investment-and-advisory-companies-in-india.webp) center center no-repeat;
     background-size: cover;
 }
 
 .page-header-what-we-do {
-    padding-top: 12rem;
-    padding-bottom: 6rem;
+    padding-top: 7rem;
+    padding-bottom: 2rem;
     background:  url(../img/why-landshare.webp) center center no-repeat;
     background-size: cover;
 }
 .page-header-client {
-    padding-top: 12rem;
-    padding-bottom: 6rem;
+    padding-top: 7rem;
+    padding-bottom: 2rem;
     background:url(../img/client-bg.webp) center center no-repeat;
     background-size: cover;
 }
 .page-header-press-room {
-    padding-top: 12rem;
-    padding-bottom: 6rem;
+    padding-top: 7rem;
+    padding-bottom: 2rem;
     background:  url(../img/press-room.webp) center center no-repeat;
     background-size: cover;
 }
 .page-header-investment {
-    padding-top: 12rem;
-    padding-bottom: 6rem;
+    padding-top: 7rem;
+    padding-bottom: 2rem;
     background:  url(../img/investing-opportunity.webp) center center no-repeat;
     background-size: cover;
 }
 .page-header-connect {
-    padding-top: 12rem;
-    padding-bottom: 6rem;
+    padding-top: 7rem;
+    padding-bottom: 2rem;
     background:  url(../img/connect.webp) center center no-repeat;
     background-size: cover;
 }
 
 .page-header-form {
-    padding-top: 12rem;
-    padding-bottom: 6rem;
+    padding-top: 7rem;
+    padding-bottom: 2rem;
     background:  url(../img/the-future-of-real-estate.png) center center no-repeat;
     background-size: cover;
 }
@@ -1240,4 +1245,6 @@ body.is-menu-visible #menu {
     filter: blur(5px); 
 }
 
-  
+.inputpdg {
+    padding-right: 25px;
+}

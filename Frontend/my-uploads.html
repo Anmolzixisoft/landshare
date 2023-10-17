@@ -25,6 +25,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Catamaran' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
     <link href="lib/animate/animate.min.css" rel="stylesheet">
@@ -201,7 +202,9 @@
 
     <!-- Footer End -->
     <!-- Back to Top -->
-    <a href="#" class=" back-to-top"><img src="img/up-dwn-icon.png"></a>
+    <span class=" back-to-top">
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </span>
     
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
@@ -257,11 +260,12 @@
         const propertyListingsContainer = document.getElementById('property-listings');
 
         function createPropertyListing(property) {
+            console.log(property.images[1]);
             const container = document.createElement('div');
             container.innerHTML = `
             <div class="row  align-items-start">
     <div class="product-inner mb-5 col-md-8 mx-auto g-5">
-                        <div class="product-im col-md-3-1"><img src="${property.images[0]}" style="width:100% !important;border-radius:10px;">
+                        <div class="product-im col-md-3-1"><img src=${property.images[0]} style="width:100% !important;border-radius:10px;">
                         </div>
                         <div class="product-cnt col-md-8 ">
                             <p style="font-size:18px; margin-right:58px"> ${property.landmark} 

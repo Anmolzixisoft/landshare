@@ -34,7 +34,7 @@
 </head>
 
 <body>
- 
+
     <div id="spinner"
         class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
         <div class="spinner-grow text-primary" role="status"></div>
@@ -86,10 +86,10 @@
 
 
     <div class="row align-items-start" id="property-listings">
-        
+
     </div>
 
-   
+
     <div class="container-fluid bg-dark-1 text-white footer mt-5  wow fadeIn" data-wow-delay="0.1s">
         <div class="container ">
             <div class="row g-5" style="font-size:12px !important;">
@@ -226,6 +226,7 @@
         const propertyListingsContainer = document.getElementById('property-listings');
 
         function createPropertyListing(property) {
+            console.log(property);
             const container = document.createElement('div');
             container.classList.add('product-inner', 'mb-5', 'col-md-8', 'mx-auto', 'g-5');
             container.innerHTML = `
@@ -298,7 +299,7 @@
                         });
                     });
             }
-            
+
 
         }
 
@@ -330,15 +331,15 @@
                 .then(response => response.json())
                 .then(data => {
                     const name = data.message[0].name;
-                    const firstLetter = name.charAt(0).toUpperCase(); 
+                    const firstLetter = name.charAt(0).toUpperCase();
                     const elementToReplace = document.querySelector('.d-inline-flex.btn-sm-square.bg-primary.text-white.rounded-circle.ms-2');
 
                     if (elementToReplace) {
-                        elementToReplace.textContent = firstLetter; 
+                        elementToReplace.textContent = firstLetter;
                     }
                 })
                 .catch(error => {
-                   
+
                 });
         }
         getname()

@@ -22,6 +22,7 @@ facebookRouter.use(session({
     secret: 'jsonworldplaceforjsdemos',
     saveUninitialized: false,
 }));
+
 facebookRouter.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email' }));
 
 facebookRouter.get('/auth/facebook/callback',

@@ -106,23 +106,24 @@
         <div class="container">
             <div class="table-container">
                 <table>
-
                     <thead>
                         <tr>
                             <th>Username</th>
                             <th>Email</th>
-                            <th>mobile Number</th>
+                            <th>Mobile Number</th>
                             <th>Property Type</th>
-
                             <th>Enquire Date</th>
-
-                            <th> Property Address</th>
+                            <th>Property Address</th>
                         </tr>
-
+                    </thead>
+                    <tbody id="property-list">
+                        <!-- Dynamic data will be populated here -->
+                    </tbody>
                 </table>
             </div>
         </div>
     </div>
+
 
     <div id="propertyContainer" style="display: flex; flex-wrap: wrap; justify-content: center;">
     </div>
@@ -231,6 +232,8 @@
         var userId = localStorage.getItem('userId');
 
         const token = localStorage.getItem('token');
+        const propertyList = document.getElementById('property-list');
+
         function fetchData() {
             const postData = {
                 user_id: userId,
@@ -252,9 +255,8 @@
                 })
                 .then(data => {
                     data.message.forEach(property => {
-
-                        const propertyListing = createPropertyListing(property);
-                        propertyListingsContainer.appendChild(propertyListing);
+                        const newRow = createPropertyListing(property);
+                        propertyList.appendChild(newRow);
 
                     });
                     document.getElementById('spinner').style.display = 'none';
@@ -263,39 +265,28 @@
                     console.error('There was a problem with the fetch operation:', error);
                 });
         }
-        const propertyListingsContainer = document.getElementById('property-listings');
 
         function createPropertyListing(property) {
-
-            const container = document.createElement('div');
             const originalDateTime = new Date(property.enquire_create_at);
             const day = originalDateTime.getUTCDate();
             const month = originalDateTime.getUTCMonth() + 1;
             const year = originalDateTime.getUTCFullYear();
 
             const formattedDate = `${day}-${month}-${year}`;
-            container.innerHTML = `
-   <div class="table-container" >
-                <table>
-                 
-                    <tbody>
-                        <tr>
-                            <td>${property.name}</td>
-                            <td>${property.email}</td>
-                            <td>${property.mobile_number}</td>
-                            <td>${property.property_category_select}</td>
-                            <td>${formattedDate}</td>
-                            <td> ${property.full_address} </td>
 
-                        </tr>
-                        
-                    </tbody>
-                </table>
-          </div> 
-`;
+            const tableRow = document.createElement('tr'); // Create a table row
+            tableRow.innerHTML = `
+        <td>${property.name}</td>
+        <td>${property.email}</td>
+        <td>${property.mobile_number}</td>
+        <td>${property.property_category_select}</td>
+        <td>${formattedDate}</td>
+        <td>${property.full_address}</td>
+    `;
 
-            return container;
+            return tableRow; // Return the table row element
         }
+
         window.onload = fetchData;
         const loginLogoutButton = document.getElementById('loginLogoutButton');
 
@@ -326,11 +317,11 @@
                 .then(data => {
                     const name = data.message[0].name;
 
-                    const firstLetter = name.charAt(0).toUpperCase(); 
+                    const firstLetter = name.charAt(0).toUpperCase();
                     const elementToReplace = document.querySelector('.d-inline-flex.btn-sm-square.bg-primary.text-white.rounded-circle.ms-2');
 
                     if (elementToReplace) {
-                        elementToReplace.textContent = firstLetter; 
+                        elementToReplace.textContent = firstLetter;
                     }
                 })
                 .catch(error => {
