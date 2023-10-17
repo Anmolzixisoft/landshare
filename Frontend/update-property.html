@@ -21,7 +21,7 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <meta content="" name="keywords">
   <meta content="" name="description">
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
 
   <!-- Favicon -->
   <link href="img/favicon.ico" rel="icon">
@@ -452,9 +452,9 @@
               radio.checked = true;
             }
           });
-          document.getElementById('propertyImage').src = data.message[0].images;
+          document.getElementById('propertyImage').src = data.message[0].images[0];
         })
-      'http://192.168.29.179:5500/Backend/public/image_20231013_1697174371212_.jpeg'
+
         .catch(error => {
         });
     }
@@ -596,29 +596,29 @@
       loginLogoutButton.href = 'login-form.html';
     }
     function getname() {
-        const userData = {
-            userid: userId
-        };
-        fetch(apiUrl + '/getuserName', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(userData)
-        })
-            .then(response => response.json())
-            .then(data => {
-                const name = data.message[0].name;
-                const firstLetter = name.charAt(0).toUpperCase(); // Get the first letter in uppercase
-                const elementToReplace = document.querySelector('.d-inline-flex.btn-sm-square.bg-primary.text-white.rounded-circle.ms-2');
+      const userData = {
+        userid: userId
+      };
+      fetch(apiUrl + '/getuserName', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+      })
+        .then(response => response.json())
+        .then(data => {
+          const name = data.message[0].name;
+          const firstLetter = name.charAt(0).toUpperCase(); // Get the first letter in uppercase
+          const elementToReplace = document.querySelector('.d-inline-flex.btn-sm-square.bg-primary.text-white.rounded-circle.ms-2');
 
-                if (elementToReplace) {
-                    elementToReplace.textContent = firstLetter; // Set the content to the obtained name
-                }
-            })
-            .catch(error => {
-               
-            });
+          if (elementToReplace) {
+            elementToReplace.textContent = firstLetter; // Set the content to the obtained name
+          }
+        })
+        .catch(error => {
+
+        });
     }
     getname()
   </script>
