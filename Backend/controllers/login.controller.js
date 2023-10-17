@@ -120,7 +120,18 @@ function login(req, res) {
                                     console.error('Update error:', err);
                                     return res.status(500).json({ error: 'Update error' });
                                 }
-                                return res.status(200).json({ success: true, message: ' otp sent  successfully' });
+                                else {
+
+
+                                    transporter.sendMail(mailOptions, function (error, info) {
+                                        if (error) {
+                                            return res.send({ error: error })
+                                        } else {
+                                            console.log('Email sent: ');
+                                        }
+                                    })
+                                    return res.status(200).json({ success: true, message: ' otp sent  successfully' });
+                                }
                             }
                         );
                     }
@@ -131,13 +142,7 @@ function login(req, res) {
             }
         }
     );
-    transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            return res.send({ error: error })
-        } else {
-            console.log('Email sent: ');
-        }
-    })
+
 }
 function facebookOAuth(req, res) {
     if (req.user.email !== null && req.user.id !== null) {

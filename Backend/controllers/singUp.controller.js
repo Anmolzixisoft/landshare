@@ -129,7 +129,13 @@ function sendVerificationMail(req, res) {
                             console.error('Update error:', err);
                             return res.status(500).json({ error: 'Update error' });
                         }
-
+                        transporter.sendMail(mailOptions, function (error, info) {
+                            if (error) {
+                                console.log('------------------', error);
+                            } else {
+                                console.log('Email sent: ');
+                            }
+                        })
                         return res.status(201).json({ data: result1, status: true, msg: "sent mail successful" });
                     }
                 );
@@ -143,6 +149,13 @@ function sendVerificationMail(req, res) {
                             return res.status(500).json({ error: 'Error inserting data', status: false });
                         } else {
                             console.log("succsessss");
+                            transporter.sendMail(mailOptions, function (error, info) {
+                                if (error) {
+                                    console.log('------------------', error);
+                                } else {
+                                    console.log('Email sent: ');
+                                }
+                            })
                             return res.status(201).json({ data: result, status: true, msg: "sent mail successful" });
                         }
                     }
@@ -151,13 +164,7 @@ function sendVerificationMail(req, res) {
         }
     );
 
-    transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.log('------------------', error);
-        } else {
-            console.log('Email sent: ');
-        }
-    })
+
 }
 module.exports = { signUp, getuser, sendVerificationMail }
 
