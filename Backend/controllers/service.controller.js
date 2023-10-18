@@ -8,7 +8,7 @@ function Ourservice(req, res) {
     if (!isValidEmail(email)) {
         return res.status(400).json({ error: 'Invalid email format', status: false });
     }
-    const sql = `INSERT INTO test.tbl_OurService ( name,email,select_work,comment ,address) VALUES (?, ?, ?, ?, ?)`;
+    const sql = `INSERT INTO landsharein_db.tbl_OurService ( name,email,select_work,comment ,address) VALUES (?, ?, ?, ?, ?)`;
     const values = [
         name, email, select, comment, address
     ];
@@ -26,7 +26,7 @@ function Ourservice(req, res) {
 
 }
 function getService(req, res) {
-    connection.query('select * from  test.tbl_OurService ', (err, result) => {
+    connection.query('select * from  landsharein_db.tbl_OurService ', (err, result) => {
         if (err) {
             return res.send({ error: err })
         } else {
@@ -55,7 +55,7 @@ function Touch(req, res) {
     if (!isValidEmail(email)) {
         return res.status(400).json({ error: 'Invalid email format', status: false });
     }
-    const sql = `INSERT INTO test.tbl_touch (  name, email, phone_no, subject, message) VALUES (?, ?, ?, ?, ?)`;
+    const sql = `INSERT INTO landsharein_db.tbl_touch (  name, email, phone_no, subject, message) VALUES (?, ?, ?, ?, ?)`;
     const values = [
         name, email, phone, subject, message
     ];

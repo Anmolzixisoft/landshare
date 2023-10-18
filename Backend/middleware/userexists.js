@@ -4,7 +4,7 @@ function checkIfUserExists(req, res, next) {
     const { email } = req.body;
 
     connection.query(
-        'SELECT * FROM test.tbl_user WHERE email = ? ',
+        'SELECT * FROM landsharein_db.tbl_user WHERE email = ? ',
         [email],
         (err, results) => {
             if (err) {

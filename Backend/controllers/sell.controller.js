@@ -5,13 +5,15 @@ function sellProperty(req, res) {
     const { user_id, property_category_select, landPrice, mobile_number, full_address, state, city, pincode, landmark, owenership, cost_per_squre_fit, size_of_land, desciption, ownerName, Survey_no, Land_Facing } = req.body
     const { image } = req.files
     // const file = image[0].filename
-
+    if (!image) {
+        return res.send({ error: "inter image" })
+    }
     const imageArray = []
     image.forEach((element) => {
         imageArray.push(element.filename)
     })
 
-    const sql = `INSERT INTO test.tbl_sell_property (user_id, property_category_select, mobile_number, full_address, state, city, pincode, landmark, owenership, cost_per_squre_fit,landPrice, size_of_land, desciption,ownerName,Survey_no,Land_Facing,images) VALUES (?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,? ,?)`;
+    const sql = `INSERT INTO landsharein_db.tbl_sell_property (user_id, property_category_select, mobile_number, full_address, state, city, pincode, landmark, owenership, cost_per_squre_fit,landPrice, size_of_land, desciption,ownerName,Survey_no,Land_Facing,images) VALUES (?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,? ,?)`;
     const values = [
         user_id,
         property_category_select,
@@ -48,10 +50,10 @@ function sellProperty(req, res) {
 function getProperty(req, res) {
     const { user_id } = req.body
     connection.query(`SELECT sell_property.*, sortlist.status
-    FROM test.tbl_sell_property AS sell_property
+    FROM landsharein_db.tbl_sell_property AS sell_property
     LEFT JOIN (
         SELECT property_id, status
-        FROM test.tbl_sortlist
+        FROM landsharein_db.tbl_sortlist
         WHERE user_id = ?
     ) AS sortlist ON sell_property.id = sortlist.property_id;
     `, [user_id], (err, result) => {
@@ -82,7 +84,7 @@ function getProperty(req, res) {
 
 function getPropertyById(req, res) {
     const { id } = req.body
-    connection.query('SELECT * FROM test.tbl_sell_property WHERE id="' + id + '"', (err, result) => {
+    connection.query('SELECT * FROM landsharein_db.tbl_sell_property WHERE id="' + id + '"', (err, result) => {
         if (err) {
             return res.send({ err: err })
         }
@@ -117,7 +119,7 @@ function updateProperty(req, res) {
 
     const imagedata = JSON.stringify(imageArray)
 
-    const sql = `UPDATE test.tbl_sell_property SET  property_category_select= '${property_category_select}', mobile_number= ${mobile_number}, full_address='${full_address}', state= '${state}', city='${city}', pincode=${pincode}, landmark='${landmark}',cost_per_squre_fit='${cost_per_squre_fit}', landPrice='${landPrice}', size_of_land='${size_of_land}', desciption='${desciption}', ownerName='${ownerName}', Survey_no='${Survey_no}', Land_Facing='${Land_Facing}', images='${JSON.stringify(imageArray)}' WHERE id= ${id} AND  user_id='${user_id}'`
+    const sql = `UPDATE landsharein_db.tbl_sell_property SET  property_category_select= '${property_category_select}', mobile_number= ${mobile_number}, full_address='${full_address}', state= '${state}', city='${city}', pincode=${pincode}, landmark='${landmark}',cost_per_squre_fit='${cost_per_squre_fit}', landPrice='${landPrice}', size_of_land='${size_of_land}', desciption='${desciption}', ownerName='${ownerName}', Survey_no='${Survey_no}', Land_Facing='${Land_Facing}', images='${JSON.stringify(imageArray)}' WHERE id= ${id} AND  user_id='${user_id}'`
 
 
     connection.query(sql, (err, result) => {
@@ -133,7 +135,7 @@ function updateProperty(req, res) {
 
 function deleteProperty(req, res) {
     const { propertyId, user_id } = req.body;
-    const checkQuery = 'SELECT id FROM test.tbl_sell_property WHERE id = "' + propertyId + '" AND user_id="' + user_id + '"';
+    const checkQuery = 'SELECT id FROM landsharein_db.tbl_sell_property WHERE id = "' + propertyId + '" AND user_id="' + user_id + '"';
     connection.query(checkQuery, (checkErr, checkResult) => {
         if (checkErr) {
             return res.send({ error: checkErr });
@@ -143,7 +145,7 @@ function deleteProperty(req, res) {
             return res.send({ error: 'Property not found' });
         }
 
-        const deleteQuery = 'DELETE FROM test.tbl_sell_property WHERE id = "' + propertyId + '" AND user_id="' + user_id + '"';
+        const deleteQuery = 'DELETE FROM landsharein_db.tbl_sell_property WHERE id = "' + propertyId + '" AND user_id="' + user_id + '"';
         connection.query(deleteQuery, (err, result) => {
             if (err) {
                 return res.send({ error: err });
@@ -156,19 +158,19 @@ function deleteProperty(req, res) {
 
 function sortlist(req, res) {
     const { property_id, user_id, status } = req.body
-    connection.query('select * from test.tbl_sortlist where property_id=? and user_id=?', [property_id, user_id], (err, result) => {
+    connection.query('select * from landsharein_db.tbl_sortlist where property_id=? and user_id=?', [property_id, user_id], (err, result) => {
         console.log(err, 'err');
         if (result.length > 0) {
 
             // return res.status(200).json({ message: 'Property alredy sorlisted' });
-            connection.query('UPDATE test.tbl_sortlist SET status = "' + status + '" WHERE user_id = "' + user_id + '" AND property_id = "' + property_id + '"', (err, updateResult) => {
+            connection.query('UPDATE landsharein_db.tbl_sortlist SET status = "' + status + '" WHERE user_id = "' + user_id + '" AND property_id = "' + property_id + '"', (err, updateResult) => {
                 if (err) {
                     return res.status(500).json({ error: 'Failed to update status' });
                 }
                 return res.status(200).json({ message: 'Property status updated' });
             })
         } else {
-            const sql = `INSERT INTO test.tbl_sortlist (user_id, property_id, status) VALUES (?, ?, ?)`;
+            const sql = `INSERT INTO landsharein_db.tbl_sortlist (user_id, property_id, status) VALUES (?, ?, ?)`;
             const values = [
                 user_id,
                 property_id,
@@ -193,10 +195,10 @@ function sortlist(req, res) {
 function getsortlist(req, res) {
     const user_id = req.body.user_id;
     const query = `
-    SELECT test.tbl_sell_property.*, test.tbl_sortlist.*
-    FROM test.tbl_sortlist
-    LEFT JOIN test.tbl_sell_property ON test.tbl_sell_property.id = test.tbl_sortlist.property_id
-    WHERE test.tbl_sortlist.user_id = ?`;
+    SELECT landsharein_db.tbl_sell_property.*, landsharein_db.tbl_sortlist.*
+    FROM landsharein_dbtbl_sortlist
+    LEFT JOIN landsharein_db.tbl_sell_property ON landsharein_db.tbl_sell_property.id = landsharein_db.tbl_sortlist.property_id
+    WHERE landsharein_db.tbl_sortlist.user_id = ?`;
 
     connection.query(query, [user_id], (err, result) => {
         if (err) {
@@ -221,7 +223,7 @@ function getsortlist(req, res) {
 
 function buyInfo(req, res) {
     const { user_id, property_id } = req.body
-    const sql = 'INSERT INTO test.tbl_buy (user_id, property_id) VALUES (?,?)';
+    const sql = 'INSERT INTO landsharein_db.tbl_buy (user_id, property_id) VALUES (?,?)';
     const values = [user_id, property_id];
     connection.query(sql, values, (err, result) => {
         if (err) {
@@ -236,7 +238,7 @@ function buyInfo(req, res) {
 
 function getsortlistByID(req, res) {
     const { property_id, user_id } = req.body
-    connection.query('select * from test.tbl_sortlist where property_id="' + property_id + '" and user_id="' + user_id + '"', (err, result) => {
+    connection.query('select * from landsharein_db.tbl_sortlist where property_id="' + property_id + '" and user_id="' + user_id + '"', (err, result) => {
         return res.send({ data: result })
     })
 
@@ -244,7 +246,7 @@ function getsortlistByID(req, res) {
 
 function sold_property(req, res) {
     const { propertyId, user_id, sold_status } = req.body
-    connection.query('UPDATE test.tbl_sell_property SET sold = "' + sold_status + '" WHERE user_id = "' + user_id + '" AND id = "' + propertyId + '"', (err, updateResult) => {
+    connection.query('UPDATE landsharein_db.tbl_sell_property SET sold = "' + sold_status + '" WHERE user_id = "' + user_id + '" AND id = "' + propertyId + '"', (err, updateResult) => {
         if (err) {
             return res.status(500).json({ error: 'Failed to update status' });
         }
@@ -255,14 +257,14 @@ function sold_property(req, res) {
 function enquire(req, res) {
     const { user_id } = req.body
     connection.query(`SELECT
-test.tbl_sell_property.*,
-        test.tbl_buy.user_id,test.tbl_buy.enquire_create_at,
-        test.tbl_user.*
-        FROM test.tbl_sell_property
-LEFT JOIN test.tbl_buy ON test.tbl_buy.property_id = test.tbl_sell_property.id
-LEFT JOIN test.tbl_user ON test.tbl_user.id = test.tbl_buy.user_id
+landsharein_db.tbl_sell_property.*,
+        landsharein_db.tbl_buy.user_id,landsharein_db.tbl_buy.enquire_create_at,
+        landsharein_db.tbl_user.*
+        FROM landsharein_db.tbl_sell_property
+LEFT JOIN landsharein_db.tbl_buy ON landsharein_db.tbl_buy.property_id = landsharein_db.tbl_sell_property.id
+LEFT JOIN landsharein_db.tbl_user ON landsharein_db.tbl_user.id = landsharein_db.tbl_buy.user_id
 WHERE
-test.tbl_sell_property.user_id = ${user_id} AND test.tbl_buy.property_id = test.tbl_sell_property.id`, (err, result) => {
+landsharein_db.tbl_sell_property.user_id = ${user_id} AND landsharein_db.tbl_buy.property_id = landsharein_db.tbl_sell_property.id`, (err, result) => {
         if (err) {
             return res.send({ error: err })
         } else {

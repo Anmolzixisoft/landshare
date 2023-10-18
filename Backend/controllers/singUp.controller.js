@@ -46,7 +46,7 @@ function signUp(req, res) {
             return res.status(400).json({ error: 'Invalid mobile number format', status: false });
         }
         connection.query(
-            'SELECT otp  FROM test.tbl_user WHERE otp = ? ',
+            'SELECT otp  FROM landsharein_db.tbl_user WHERE otp = ? ',
             [otp],
             (err, result) => {
                 if (err) {
@@ -64,7 +64,7 @@ function signUp(req, res) {
                         return res.status(500).json({ error: 'Internal server error', status: false });
                     }
                     connection.query(
-                        `UPDATE test.tbl_user SET name=?, mobile_number=?, password=? WHERE otp=?`,
+                        `UPDATE landsharein_db.tbl_user SET name=?, mobile_number=?, password=? WHERE otp=?`,
                         [name, mobile_number, hashedPassword, otp],
                         (err, result1) => {
                             if (err) {
@@ -112,7 +112,7 @@ function sendVerificationMail(req, res) {
     };
 
     connection.query(
-        'SELECT * FROM test.tbl_user WHERE email = ? ',
+        'SELECT * FROM landsharein_db.tbl_user WHERE email = ? ',
         [email],
         (err, results) => {
             if (err) {
@@ -122,7 +122,7 @@ function sendVerificationMail(req, res) {
 
             if (results.length > 0) {
                 connection.query(
-                    `UPDATE test.tbl_user SET otp=? WHERE email=?`,
+                    `UPDATE landsharein_db.tbl_user SET otp=? WHERE email=?`,
                     [otp, email],
                     (err, result1) => {
                         if (err) {
@@ -141,7 +141,7 @@ function sendVerificationMail(req, res) {
                 );
             } else {
                 connection.query(
-                    'INSERT INTO test.tbl_user (name, email, mobile_number, password,otp) VALUES (?, ?,?, ?, ?)',
+                    'INSERT INTO landsharein_db.tbl_user (name, email, mobile_number, password,otp) VALUES (?, ?,?, ?, ?)',
                     ["", email, "", "", otp],
                     (err, result) => {
                         if (err) {

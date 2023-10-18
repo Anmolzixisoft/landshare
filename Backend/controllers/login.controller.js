@@ -34,7 +34,7 @@ function verifyByOtp(req, res) {
         }
 
         connection.query(
-            'SELECT *  FROM test.tbl_user WHERE otp = ? ',
+            'SELECT *  FROM landsharein_db.tbl_user WHERE otp = ? ',
             [otp],
             (err, results) => {
 
@@ -89,7 +89,7 @@ function login(req, res) {
     };
 
     connection.query(
-        'SELECT *  FROM test.tbl_user WHERE email = ?',
+        'SELECT *  FROM landsharein_db.tbl_user WHERE email = ?',
         [email],
         (err, results) => {
 
@@ -113,7 +113,7 @@ function login(req, res) {
                         return res.send({ error: 'Authentication failed' });
                     } else {
                         connection.query(
-                            `UPDATE test.tbl_user SET  otp=? WHERE email=?`,
+                            `UPDATE landsharein_db.tbl_user SET  otp=? WHERE email=?`,
                             [otp, user.email],
                             (err, result1) => {
                                 if (err) {
@@ -154,7 +154,7 @@ function facebookOAuth(req, res) {
 
 function getuserName(req, res) {
     const { userid } = req.body
-    connection.query('SELECT name FROM test.tbl_user where id ="' + userid + '"', (err, results) => {
+    connection.query('SELECT name FROM landsharein_db.tbl_user where id ="' + userid + '"', (err, results) => {
         if (err) {
             return res.send({ erorr: err })
         }

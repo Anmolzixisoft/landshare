@@ -33,7 +33,7 @@ function verifyByOtp(req, res) {
         }
 
         connection.query(
-            'SELECT *  FROM test.tbl_user WHERE otp = ? ',
+            'SELECT *  FROM landsharein_db.tbl_user WHERE otp = ? ',
             [otp],
             (err, results) => {
 
@@ -81,7 +81,7 @@ function resetPass(req, res) {
 
     // Hash the new password
 
-    connection.query('select * from test.tbl_user where email= "' + email + '" ', (err, results) => {
+    connection.query('select * from landsharein_db.tbl_user where email= "' + email + '" ', (err, results) => {
         if (results.length > 0) {
 
             bcrypt.hash(newPassword, 10, (hashErr, hashedPassword) => {
@@ -91,7 +91,7 @@ function resetPass(req, res) {
                 }
 
                 connection.query(
-                    'UPDATE test.tbl_user SET password = ? WHERE email = ?',
+                    'UPDATE landsharein_db.tbl_user SET password = ? WHERE email = ?',
                     [hashedPassword, email],
                     (updateErr, updateResult) => {
                         if (updateErr) {

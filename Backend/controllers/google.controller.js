@@ -27,12 +27,12 @@ passport.use(new GoogleStrategy({
 
     function (accessToken, refreshToken, profile, done) {
         process.nextTick(function () {
-            connection.query("SELECT * FROM test.tbl_user WHERE socialid = '" + profile.id + "'",
+            connection.query("SELECT * FROM  landsharein_db.tbl_user WHERE socialid = '" + profile.id + "'",
                 function (err, rows, fields) {
                     if (err) throw err;
                     if (rows.length === 0) {
                         console.log("There is a new user, registering here");
-                        connection.query("INSERT INTO test.tbl_user(name, email,mobile_number,provider,socialid) VALUES('" + profile.displayName + "', '" + profile.emails[0].value + "','8985744525','" + profile.provider + "','" + profile.id + "')");
+                        connection.query("INSERT INTO  landsharein_db.tbl_user(name, email,mobile_number,provider,socialid) VALUES('" + profile.displayName + "', '" + profile.emails[0].value + "','8985744525','" + profile.provider + "','" + profile.id + "')");
                         const payload = {
                             userId: profile.id,
                             email: profile.emails[0].value
