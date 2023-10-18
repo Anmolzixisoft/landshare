@@ -21,37 +21,39 @@ const linkedinRouter = require('./routes/auth/linkedin.route')
 const instgramRouter = require('./routes/auth/instagram.route')
 const serviceRouter = require('./routes/auth/service.route')
 const resetpass = require('./routes/auth/resetPass.route')
-
+const googleRouter = require('./routes/auth/google.route')
 app.use('/api', signUpRouter);
 app.use('/api', loginRouter)
 app.use('/api', sellRouter)
 app.use('/api', facebook)
 app.use('/api', serviceRouter)
 app.use('/api', resetpass)
+app.use('/', googleRouter)
+
 app.use(linkedinRouter)
 app.use(instgramRouter)
-app.get("/", (req, res) => {
-    if (req.user) {
-        const name = req.user.name.givenName;
-        const family = req.user.name.familyName;
-        const photo = req.user.photos[0].value;
-        const email = req.user.emails[0].value;
-        res.send(
-            `<center style="font-size:140%"> <p>User is Logged In </p>
-        <p>Name: ${name} ${family} </p>
-        <p> Linkedn Email: ${email} </p>    
-        <img src="${photo}"/>
-        </center>
-        `
-        )
-    } else {
-        res.send(`<center style="font-size:160%"> <p>This is Home Page </p>
-      <p>User is not Logged In</p>
-      <img style="cursor:pointer;"  onclick="window.location='/auth/linkedIn'" src="http://www.bkpandey.com/wp-content/uploads/2017/09/linkedinlogin.png"/>
-      </center>
-      `);
-    }
-});
+// app.get("/", (req, res) => {
+//     if (req.user) {
+//         const name = req.user.name.givenName;
+//         const family = req.user.name.familyName;
+//         const photo = req.user.photos[0].value;
+//         const email = req.user.emails[0].value;
+//         res.send(
+//             `<center style="font-size:140%"> <p>User is Logged In </p>
+//         <p>Name: ${name} ${family} </p>
+//         <p> Linkedn Email: ${email} </p>    
+//         <img src="${photo}"/>
+//         </center>
+//         `
+//         )
+//     } else {
+//         res.send(`<center style="font-size:160%"> <p>This is Home Page </p>
+//       <p>User is not Logged In</p>
+//       <img style="cursor:pointer;"  onclick="window.location='/auth/linkedIn'" src="http://www.bkpandey.com/wp-content/uploads/2017/09/linkedinlogin.png"/>
+//       </center>
+//       `);
+//     }
+// });
 
 app.listen(process.env.PORT,
     async () => {

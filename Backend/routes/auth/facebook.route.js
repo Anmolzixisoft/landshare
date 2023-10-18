@@ -15,7 +15,7 @@ app.set('view engine', 'ejs');
 
 const start = require('../../controllers/facebook')
 facebookRouter.get('/', (req, res) => {
-    console.log('--------');
+    console.log('---55555-----');
     res.render('index.ejs');
 });
 facebookRouter.use(session({

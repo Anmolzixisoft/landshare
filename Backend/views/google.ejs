@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="google-signin-client_id"
+        content="155903182279-t4v8mn9r5okufunlmk47akggjl8i893c.apps.googleusercontent.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+</head>
+
+<body>
+    <h2>this id google login</h2>
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    <script>
+        function onSignIn(googleUser) {
+
+            // var id_token = googleUser.getAuthResponse().id_token;
+            console.log(googleUser, '000000');
+            // var profile = googleUser.getBasicProfile();
+            // console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+            // console.log('Name: ' + profile.getName());
+            // console.log('Image URL: ' + profile.getImageUrl());
+            // console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+        }
+        onSignIn()
+    </script>
+</body>
+
+</html>

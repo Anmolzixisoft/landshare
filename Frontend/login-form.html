@@ -140,7 +140,8 @@
                     <div style="display:inline-flex;" class="mx-auto">
                         <button class="btn  btn-primary btn-lg-square"><i class="fab fa-facebook-f"></i>
                         </button>&nbsp;&nbsp;
-                        <button class="btn  btn-primary btn-lg-square"><i class='fab fa-google'></i>
+                        <button class="btn  btn-primary btn-lg-square" id="google-login-btn"><i
+                                class='fab fa-google'></i>
                         </button>&nbsp;&nbsp;
                         <button class="btn  btn-primary btn-lg-square"><i class='fab fa-instagram'></i>
                         </button>&nbsp;&nbsp;
@@ -358,7 +359,9 @@
         });
     </script>
     <script>
-
+        document.getElementById('google-login-btn').addEventListener('click', function () {
+            // Handle Google login here
+        });
         function loginUser() {
             const email = document.getElementById('emailInput').value;
             const password = document.getElementById('password').value;
