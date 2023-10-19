@@ -506,90 +506,90 @@
     }
 
     function addProperty() {
-      const name = document.getElementById('landmarkOwnername').value;
-      const state = document.getElementById('state').value;
-      const Address = document.getElementById('Address').value;
-      const phone = document.getElementById('phone').value;
-      const city = document.getElementById('city').value
-      const pincode = document.getElementById('pincode').value;
-      const desciption = document.getElementById('exampleFormControlTextarea1').value
-      const cost = document.getElementById('cost').value
-      // var sizeoflandmark = document.getElementById('sizeoflandmark').value
-      const landmark = document.getElementById('landmark').value
-      const ownership = document.getElementById('ownership').value
-      const imageInput = document.getElementById('formFileMultiple');
-      const Survey_no = document.getElementById('SurveyNo').value
-      const Land_Facing = document.getElementById('landFacing').value
-      const form = document.getElementById('property').value;
-      const landPrice = document.getElementById('landPrice').value
-      const selectedLandType = document.querySelector('input[name="landType"]:checked');
-      const acre = document.getElementById('acre').value
-      const cents = document.getElementById('cents').value
-      const guntas = document.getElementById('guntas').value
-      sizeoflandmark = acre + " " + "acre" + "  " + guntas + "  " + "guntas" + " " + cents + " " + " cents"
-      
-      const formData = new FormData(form);
+        const name = $('#landmarkOwnername').val();
+        const state = $('#state').val();
+        const Address = $('#Address').val();
+        const phone = $('#phone').val();
+        const city = $('#city').val();
+        const pincode = $('#pincode').val();
+        const desciption = $('#exampleFormControlTextarea1').val();
+        const cost = $('#cost').val();
+        const landmark = $('#landmark').val();
+        const ownership = $('#ownership').val();
+        const imageInput = $('#formFileMultiple');
+        const Survey_no = $('#SurveyNo').val();
+        const Land_Facing = $('#landFacing').val();
+        const form = $('#property')[0];
+        const landPrice = $('#landPrice').val();
+        const selectedLandType = $('input[name="landType"]:checked');
+        const acre = $('#acre').val();
+        const cents = $('#cents').val();
+        const guntas = $('#guntas').val();
+        const sizeoflandmark = acre + ' acre ' + guntas + ' guntas ' + cents + ' cents';
 
-      formData.append("user_id", userId);
-      if (selectedLandType) {
-        formData.append("property_category_select", selectedLandType.value);
-      }
-      for (let i = 0; i < imageInput.files.length; i++) {
-        formData.append("image", imageInput.files[i]);
-      }
-      formData.append("ownerName", name);
-      formData.append("mobile_number", phone);
-      formData.append("full_address", Address);
-      formData.append("state", state);
-      formData.append("city", city);
-      formData.append("pincode", pincode);
-      formData.append("landmark", landmark);
-      formData.append("owenership", ownership);
-      formData.append("cost_per_squre_fit", cost);
-      formData.append("size_of_land", sizeoflandmark);
-      formData.append("desciption", desciption);
-      formData.append("Survey_no", Survey_no)
-      formData.append("Land_Facing", Land_Facing)
-      formData.append('landPrice', landPrice)
+        const formData = new FormData(form);
 
-      fetch(apiUrl + '/sellProperty', {
-        method: 'POST',
-        body: formData,
-      })
+        formData.append('user_id', userId);
 
-        .then(response => response.json())
-        .then(data => {
-          if (data.message == "Property Added") {
-            return Swal.fire({
-              title: "Success",
-              text: data.message,
-              icon: "success",
-            })
-              .then(() => {
-                window.location.href = 'property-data.html';
-              })
-          } else {
-            Swal.fire({
-              title: "Error",
-              text: data.error,
-              icon: "error",
-            });
-          }
-        })
-        .catch(error => {
-          Swal.fire({
-            title: "Error",
-            text: error,
-            icon: "error",
-          });
+        if (selectedLandType.length > 0) {
+            formData.append('property_category_select', selectedLandType.val());
+        }
+
+        for (let i = 0; i < imageInput[0].files.length; i++) {
+            formData.append('image', imageInput[0].files[i]);
+        }
+
+        formData.append('ownerName', name);
+        formData.append('mobile_number', phone);
+        formData.append('full_address', Address);
+        formData.append('state', state);
+        formData.append('city', city);
+        formData.append('pincode', pincode);
+        formData.append('landmark', landmark);
+        formData.append('owenership', ownership);
+        formData.append('cost_per_squre_fit', cost);
+        formData.append('size_of_land', sizeoflandmark);
+        formData.append('desciption', desciption);
+        formData.append('Survey_no', Survey_no);
+        formData.append('Land_Facing', Land_Facing);
+        formData.append('landPrice', landPrice);
+
+        $.ajax({
+            url: apiUrl + '/sellProperty',
+            method: 'POST',
+            processData: false,
+            contentType: false,
+            data: formData,
+            success: function(data) {
+                if (data.message == 'Property Added') {
+                    Swal.fire({
+                        title: 'Success',
+                        text: data.message,
+                        icon: 'success',
+                    }).then(function() {
+                        window.location.href = 'property-data.html';
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Error',
+                        text: data.error,
+                        icon: 'error',
+                    });
+                }
+            },
+            error: function(error) {
+                Swal.fire({
+                    title: 'Error',
+                    text: error,
+                    icon: 'error',
+                });
+            },
         });
-
-
     }
 
-    document.getElementById('property').addEventListener('submit', function (e) {
-      e.preventDefault();
-      addProperty();
+    $('#property').on('submit', function(e) {
+        e.preventDefault();
+        addProperty();
     });
 
     const token = localStorage.getItem('token');

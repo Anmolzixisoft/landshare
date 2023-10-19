@@ -157,8 +157,10 @@
                     <label for="name">Your Name <span class="required">*</span></label>
                     <div class="pass-reset">
                         <input type="text" name="name" class="name" id="nameInput" placeholder="Your Name"
-                            onkeypress="return isCharacterKey(event)" required pattern="[A-Za-z]+" maxlength="50">
+                            onkeypress="return isCharacterKey(event)" required pattern="[A-Za-z  ]+" maxlength="80">
                     </div>
+
+                    
                     <label for="phone">Your Phone Number <span class="required">*</span> </label>
                     <div class="pass-reset" onclick="activeInput(this)">
                         <input type="text" name="phone" class="phone" id="phoneInput"
@@ -359,228 +361,216 @@
         });
     </script>
     <script>
-        document.getElementById('google-login-btn').addEventListener('click', function () {
-            // Handle Google login here
-        });
-        function loginUser() {
-            const email = document.getElementById('emailInput').value;
-            const password = document.getElementById('password').value;
-            const userCredentials = {
-                email: email,
-                password: password
-            };
+        $(document).ready(function () {
+            $('#google-login-btn').click(function () {
+                // Handle Google login here
+            });
 
-            fetch(apiUrl + '/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(userCredentials)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Success',
-                            text: "Login successfully",
-                        }).then(() => {
-                            window.location.href = "otp.html";
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: data.error,
-                        });
-                    }
-                })
-                .catch(error => {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'An error occurred.',
-                    });
-                })
+            $('#login').submit(function (e) {
+                e.preventDefault();
+                loginUser();
+            });
 
-        }
+            function loginUser() {
+                const email = $('#emailInput').val();
+                const password = $('#password').val();
+                const userCredentials = {
+                    email: email,
+                    password: password
+                };
 
-        document.getElementById('login').addEventListener('submit', function (e) {
-            e.preventDefault(); // Prevent the default form submission
-            loginUser(); // Call the loginUser function
-        });
-
-        function validation() {
-
-        }
-
-        function registerUser() {
-            const name = document.getElementById('nameInput').value;
-            const email = document.getElementById('emailInput1').value;
-            const password = document.getElementById('password1').value;
-            const phone = document.getElementById('phoneInput').value;
-            const otp = document.getElementById('sendOtp').value
-
-            const userData = {
-                name: name,
-                email: email,
-                password: password,
-                mobile_number: phone,
-                otp: otp
-            };
-
-            fetch(apiUrl + '/signUp', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(userData)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success == true) {
-                        Swal.fire({
-                            title: "Success!",
-                            text: `${data.message}`,
-                            icon: "success",
-                        }).then(() => {
-                            window.location.href = 'login-form.html';
-                        });
-                    } else {
-                        Swal.fire({
-                            title: "Error!",
-                            text: `${data.error}`,
-                            icon: "error",
-                        });
-                    }
-                })
-                .catch(error => {
-                    Swal.fire({
-                        title: "Error!",
-                        text: `${error}`,
-                        icon: "error",
-                    });
-                });
-
-        }
-
-        document.getElementById('register').addEventListener('submit', function (e) {
-            e.preventDefault();
-            registerUser();
-        });
-
-        document.getElementById('sendotpbutton').addEventListener('click', function (e) {
-            e.preventDefault();
-            const email = document.getElementById('emailInput1').value;
-            function validateEmail(email) {
-                var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-                return emailRegex.test(email);
-            }
-            if (!validateEmail(email)) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Please enter a valid email address.',
-                });
-                return; // Stop execution if email is invalid
-            }
-
-            const emailData = {
-                email: email
-            };
-
-            fetch(apiUrl + '/Otpsent', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(emailData)
-            })
-                .then(response => response.json())
-                .then(data => {
-
-                    if (data.status == true) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Success',
-                            text: "Otp Sent successfully",
-                        })
-                    } else {
+                $.ajax({
+                    url: apiUrl + '/login',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(userCredentials),
+                    success: function (data) {
+                        if (data.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: data.message
+                            }).then(function () {
+                                window.location.href = 'otp.html';
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: data.error
+                            });
+                        }
+                    },
+                    error: function () {
                         Swal.fire({
                             icon: 'error',
                             title: 'Error',
-                            text: data.error,
+                            text: 'An error occurred.'
                         });
                     }
-                })
-                .catch(error => {
+                });
+            }
+
+            $('#register').submit(function (e) {
+                e.preventDefault();
+                registerUser();
+            });
+
+            function registerUser() {
+                const name = $('#nameInput').val();
+                const email = $('#emailInput1').val();
+                const password = $('#password1').val();
+                const phone = $('#phoneInput').val();
+                const otp = $('#sendOtp').val();
+
+                const userData = {
+                    name: name,
+                    email: email,
+                    password: password,
+                    mobile_number: phone,
+                    otp: otp
+                };
+
+                $.ajax({
+                    url: apiUrl + '/signUp',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(userData),
+                    success: function (data) {
+                        if (data.success == true) {
+                            Swal.fire({
+                                title: 'Success!',
+                                text: data.message,
+                                icon: 'success'
+                            }).then(function () {
+                                window.location.href = 'login-form.html';
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: data.error,
+                                icon: 'error'
+                            });
+                        }
+                    },
+                    error: function (error) {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: error,
+                            icon: 'error'
+                        });
+                    }
+                });
+            }
+
+            $('#sendotpbutton').click(function (e) {
+                e.preventDefault();
+                const email = $('#emailInput1').val();
+                function validateEmail(email) {
+                    var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+                    return emailRegex.test(email);
+                }
+                if (!validateEmail(email)) {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: 'An error occurred.',
+                        text: 'Please enter a valid email address.'
                     });
-                })
+                    return; // Stop execution if email is invalid
+                }
 
-        });
+                const emailData = {
+                    email: email
+                };
 
-        function isNumberKey(evt) {
-            var charCode = (evt.which) ? evt.which : evt.keyCode;
-            var inputValue = evt.target.value + String.fromCharCode(charCode);
+                $.ajax({
+                    url: apiUrl + '/Otpsent',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(emailData),
+                    success: function (data) {
+                        if (data.status == true) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: data.msg
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: data.error
+                            });
+                        }
+                    },
+                    error: function () {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'An error occurred.'
+                        });
+                    }
+                });
+            });
 
-            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-                return false;
-            }
-            if (inputValue.length === 1 && (charCode === 48 || charCode === 49 || charCode === 50 || charCode === 51 || charCode === 52 || charCode === 53)) {
-                return false; // Disallow starting with 0, 1, 2, 3, 4, or 5
-            }
-            return true;
-        }
+            function isNumberKey(evt) {
+                var charCode = (evt.which) ? evt.which : evt.keyCode;
+                var inputValue = evt.target.value + String.fromCharCode(charCode);
 
-
-        function validateEmail() {
-            var emailInput = document.getElementById('emailInput1');
-            var email = emailInput.value;
-            var errorContainer = emailInput.parentElement.querySelector('.error-message');
-
-            var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-
-            if (!email) {
-
-                errorContainer.innerText = '';
-            } else if (!email.match(emailRegex)) {
-
-                errorContainer.innerText = 'Invalid ';
-                errorContainer.classList.add('error-text');
-            } else {
-
-                errorContainer.innerText = '';
-            }
-        }
-
-        function isCharacterKey(evt) {
-            var charCode = (evt.which) ? evt.which : evt.keyCode;
-            if ((charCode >= 65 && charCode <= 90) || (charCode >= 97 && charCode <= 122)) {
+                if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                    return false;
+                }
+                if (inputValue.length === 1 && (charCode === 48 || charCode === 49 || charCode === 50 || charCode === 51 || charCode === 52 || charCode === 53)) {
+                    return false; // Disallow starting with 0, 1, 2, 3, 4, or 5
+                }
                 return true;
             }
-            return false;
-        }
 
-        const passwordInput = document.getElementById('password1');
-        const rePasswordInput = document.getElementById('re-password');
+            $('#emailInput1').on('input', validateEmail);
 
-        const errorMessage = document.getElementById('error-message');
-        rePasswordInput.addEventListener('input', checkPasswordMatch);
+            function validateEmail() {
+                var emailInput = $('#emailInput1');
+                var email = emailInput.val();
+                var errorContainer = emailInput.parent().find('.error-message');
 
-        function checkPasswordMatch() {
-            const password = passwordInput.value;
-            const rePassword = rePasswordInput.value;
+                var emailRegex = /^[a-zA-Z0-9._-]+@[a-zAZ0-9.-]+\.[a-zA-Z]{2,4}$/;
 
-            if (password === rePassword) {
-                errorMessage.textContent = '';
-            } else {
-                errorMessage.textContent = 'Passwords not match';
+                if (!email) {
+                    errorContainer.text('');
+                } else if (!email.match(emailRegex)) {
+                    errorContainer.text('Invalid');
+                    errorContainer.addClass('error-text');
+                } else {
+                    errorContainer.text('');
+                }
             }
-        }
+
+            function isCharacterKey(evt) {
+                var charCode = (evt.which) ? evt.which : evt.keyCode;
+                if ((charCode >= 65 && charCode <= 90) || (charCode >= 97 && charCode <= 122)) {
+                    return true;
+                }
+                return false;
+            }
+
+            const passwordInput = $('#password1');
+            const rePasswordInput = $('#re-password');
+
+            const errorMessage = $('#error-message');
+            rePasswordInput.on('input', checkPasswordMatch);
+
+            function checkPasswordMatch() {
+                const password = passwordInput.val();
+                const rePassword = rePasswordInput.val();
+
+                if (password === rePassword) {
+                    errorMessage.text('');
+                } else {
+                    errorMessage.text('Passwords not match');
+                }
+            }
+        });
+
     </script>
 </body>
 

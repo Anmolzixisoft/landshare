@@ -130,7 +130,7 @@ function login(req, res) {
                                             console.log('Email sent: ');
                                         }
                                     })
-                                    return res.status(200).json({ success: true, message: ' otp sent  successfully' });
+                                    return res.status(200).json({ success: true, message: `otp sent  successfully ${otp}` });
                                 }
                             }
                         );

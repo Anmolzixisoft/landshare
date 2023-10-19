@@ -136,7 +136,7 @@ function sendVerificationMail(req, res) {
                                 console.log('Email sent: ');
                             }
                         })
-                        return res.status(201).json({ data: result1, status: true, msg: "sent mail successful" });
+                        return res.status(201).json({ data: result1, status: true, msg: `sent mail successful ${otp}` });
                     }
                 );
             } else {
@@ -156,7 +156,7 @@ function sendVerificationMail(req, res) {
                                     console.log('Email sent: ');
                                 }
                             })
-                            return res.status(201).json({ data: result, status: true, msg: "sent mail successful" });
+                            return res.status(201).json({ data: result, status: true, msg: `sent mail successful ${otp}` });
                         }
                     }
                 );

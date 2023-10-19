@@ -415,54 +415,42 @@
   <script src="js/main.js"></script>
   <!-- Add this script at the bottom of your HTML file -->
   <script>
-
     const urlParams = new URLSearchParams(window.location.search);
     var pageId = urlParams.get('id');
+  
     async function getPropertyData() {
       const userData = {
         id: pageId
       };
-
-      fetch(apiUrl + '/getPropertyById', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(userData)
-      })
-        .then(response => response.json())
-        .then(data => {
-
-          document.getElementById('landmarkOwnername').value = data.message[0].ownerName;
-          document.getElementById('state').value = data.message[0].state;
-          document.getElementById('Address').value = data.message[0].full_address;
-          document.getElementById('phone').value = data.message[0].mobile_number;
-          document.getElementById('city').value = data.message[0].city;
-          document.getElementById('pincode').value = data.message[0].pincode;
-          document.getElementById('exampleFormControlTextarea1').value = data.message[0].desciption;
-          document.getElementById('cost').value = data.message[0].cost_per_squre_fit;
-          document.getElementById('sizeoflandmark').value = data.message[0].size_of_land;
-          document.getElementById('landmark').value = data.message[0].landmark;
-          document.getElementById('landFacing').value = data.message[0].Land_Facing;
-          document.getElementById('landPrice').value = data.message[0].landPrice
-          document.getElementById('SurveyNo').value = data.message[0].Survey_no
-          const landTypeRadios = document.getElementsByName('landType');
-          landTypeRadios.forEach(radio => {
-            if (radio.value == data.message[0].property_category_select) {
-              radio.checked = true;
-            }
-          });
-          document.getElementById('propertyImage').src = data.message[0].images[0];
-        })
-
-        .catch(error => {
-        });
+  
+      $.ajax({
+        type: 'POST',
+        url: apiUrl + '/getPropertyById',
+        contentType: 'application/json',
+        data: JSON.stringify(userData)
+      }).done(function(data) {
+        $('#landmarkOwnername').val(data.message[0].ownerName);
+        $('#state').val(data.message[0].state);
+        $('#Address').val(data.message[0].full_address);
+        $('#phone').val(data.message[0].mobile_number);
+        $('#city').val(data.message[0].city);
+        $('#pincode').val(data.message[0].pincode);
+        $('#exampleFormControlTextarea1').val(data.message[0].desciption);
+        $('#cost').val(data.message[0].cost_per_squre_fit);
+        $('#sizeoflandmark').val(data.message[0].size_of_land);
+        $('#landmark').val(data.message[0].landmark);
+        $('#landFacing').val(data.message[0].Land_Facing);
+        $('#landPrice').val(data.message[0].landPrice);
+        $('#SurveyNo').val(data.message[0].Survey_no);
+        var selectedLandType = $(`input[name="landType"][value="${data.message[0].property_category_select}"]`);
+        selectedLandType.prop('checked', true);
+        $('#propertyImage').attr('src', data.message[0].images[0]);
+      }).fail(function(error) {
+      });
     }
-
-
-    getPropertyData()
-
-
+  
+    getPropertyData();
+  
     function isNumberKey(evt) {
       var charCode = (evt.which) ? evt.which : evt.keyCode;
       if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -470,60 +458,64 @@
       }
       return true;
     }
+  
     const userId = localStorage.getItem('userId');
+  
     if (!userId) {
       window.location.href = 'login-form.html';
     }
-
+  
     function validateForm() {
-      const name = document.getElementById('landmarkOwnername').value;
-      const phone = document.getElementById('phone').value;
-
+      const name = $('#landmarkOwnername').val();
+      const phone = $('#phone').val();
+  
       if (name.trim() === '') {
-        document.getElementById('landmarkOwnername-error').textContent = 'Name is required.';
+        $('#landmarkOwnername-error').text('Name is required.');
         return false;
       } else {
-        document.getElementById('landmarkOwnername-error').textContent = '';
+        $('#landmarkOwnername-error').text('');
       }
-
+  
       if (!/^\d+$/.test(phone)) {
-        document.getElementById('phone-error').textContent = 'Phone number must contain only digits.';
+        $('#phone-error').text('Phone number must contain only digits.');
         return false;
       } else {
-        document.getElementById('phone-error').textContent = '';
+        $('#phone-error').text('');
       }
+  
       return true;
     }
-
+  
     function addProperty() {
-      const name = document.getElementById('landmarkOwnername').value;
-      const state = document.getElementById('state').value;
-      const Address = document.getElementById('Address').value;
-      const phone = document.getElementById('phone').value;
-      const city = document.getElementById('city').value
-      const pincode = document.getElementById('pincode').value;
-      const desciption = document.getElementById('exampleFormControlTextarea1').value
-      const cost = document.getElementById('cost').value
-      const sizeoflandmark = document.getElementById('sizeoflandmark').value
-      const landmark = document.getElementById('landmark').value
-      const image = document.getElementById('formFileMultiple').value
-      const imageInput = document.getElementById('formFileMultiple');
-      const Survey_no = document.getElementById('SurveyNo').value
-      const Land_Facing = document.getElementById('landFacing').value
-      const form = document.getElementById('property').value;
-      const landPrice = document.getElementById('landPrice').value
-      var selectedLandType = document.querySelector('input[name="landType"]:checked');
-
+      const name = $('#landmarkOwnername').val();
+      const state = $('#state').val();
+      const Address = $('#Address').val();
+      const phone = $('#phone').val();
+      const city = $('#city').val();
+      const pincode = $('#pincode').val();
+      const desciption = $('#exampleFormControlTextarea1').val();
+      const cost = $('#cost').val();
+      const sizeoflandmark = $('#sizeoflandmark').val();
+      const landmark = $('#landmark').val();
+      const imageInput = $('#formFileMultiple');
+      const Survey_no = $('#SurveyNo').val();
+      const Land_Facing = $('#landFacing').val();
+      const form = $('#property')[0];
+      const landPrice = $('#landPrice').val();
+      var selectedLandType = $(`input[name="landType"]:checked`);
+  
       const formData = new FormData(form);
-
+  
       formData.append("user_id", userId);
-
+  
       if (selectedLandType) {
-        formData.append("property_category_select", selectedLandType.value);
+        formData.append("property_category_select", selectedLandType.val());
       }
-      for (let i = 0; i < imageInput.files.length; i++) {
-        formData.append("image", imageInput.files[i]);
+  
+      for (let i = 0; i < imageInput[0].files.length; i++) {
+        formData.append("image", imageInput[0].files[i]);
       }
+  
       formData.append("ownerName", name);
       formData.append("mobile_number", phone);
       formData.append("full_address", Address);
@@ -534,94 +526,87 @@
       formData.append("cost_per_squre_fit", cost);
       formData.append("size_of_land", sizeoflandmark);
       formData.append("desciption", desciption);
-      formData.append("Survey_no", Survey_no)
-      formData.append("Land_Facing", Land_Facing)
-      formData.append('landPrice', landPrice)
-      formData.append('id', pageId)
-
-      fetch(apiUrl + '/updateProperty', {
-        method: 'POST',
-        body: formData,
-      })
-        .then(response => response.json())
-        .then(data => {
-
-          if (data.message == "Property Updated") {
-            Swal.fire({
-              title: "Success",
-              text: data.message,
-              icon: "success",
-            })
-              .then((data) => {
-                window.location.href = 'my-uploads.html'
-              })
-
-          } else {
-            Swal.fire({
-              title: "Error",
-              text: data.error,
-              icon: "error",
-            });
-          }
-        })
-        .catch(error => {
+      formData.append("Survey_no", Survey_no);
+      formData.append("Land_Facing", Land_Facing);
+      formData.append('landPrice', landPrice);
+      formData.append('id', pageId);
+  
+      $.ajax({
+        type: 'POST',
+        url: apiUrl + '/updateProperty',
+        data: formData,
+        processData: false,
+        contentType: false
+      }).done(function(data) {
+        if (data.message == "Property Updated") {
+          Swal.fire({
+            title: "Success",
+            text: data.message,
+            icon: "success",
+          }).then(function(data) {
+            window.location.href = 'my-uploads.html';
+          });
+        } else {
           Swal.fire({
             title: "Error",
-            text: error,
+            text: data.error,
             icon: "error",
           });
+        }
+      }).fail(function(error) {
+        Swal.fire({
+          title: "Error",
+          text: error,
+          icon: "error",
         });
-
-
+      });
     }
-
-    document.getElementById('property').addEventListener('submit', function (e) {
+  
+    $('#property').submit(function(e) {
       e.preventDefault();
       addProperty();
     });
-
+  
     const token = localStorage.getItem('token');
-
-    const loginLogoutButton = document.getElementById('loginLogoutButton');
-
+    const loginLogoutButton = $('#loginLogoutButton');
+  
     if (userId && token) {
-      loginLogoutButton.innerHTML = '<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
-      loginLogoutButton.addEventListener('click', () => {
+      loginLogoutButton.html('<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
+      loginLogoutButton.on('click', function() {
         localStorage.removeItem('userId');
         localStorage.removeItem('token');
-        window.location.href = 'index.html'
+        window.location.href = 'index.html';
       });
     } else {
-      loginLogoutButton.innerHTML = '<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
-      loginLogoutButton.href = 'login-form.html';
+      loginLogoutButton.html('<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
+      loginLogoutButton.attr('href', 'login-form.html');
     }
+  
     function getname() {
       const userData = {
         userid: userId
       };
-      fetch(apiUrl + '/getuserName', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(userData)
-      })
-        .then(response => response.json())
-        .then(data => {
-          const name = data.message[0].name;
-          const firstLetter = name.charAt(0).toUpperCase(); // Get the first letter in uppercase
-          const elementToReplace = document.querySelector('.d-inline-flex.btn-sm-square.bg-primary.text-white.rounded-circle.ms-2');
-
-          if (elementToReplace) {
-            elementToReplace.textContent = firstLetter; // Set the content to the obtained name
-          }
-        })
-        .catch(error => {
-
-        });
+      $.ajax({
+        type: 'POST',
+        url: apiUrl + '/getuserName',
+        contentType: 'application/json',
+        data: JSON.stringify(userData)
+      }).done(function(data) {
+        const name = data.message[0].name;
+        const firstLetter = name.charAt(0).toUpperCase();
+        const elementToReplace = $('.d-inline-flex.btn-sm-square.bg-primary.text-white.rounded-circle.ms-2');
+  
+        if (elementToReplace) {
+          elementToReplace.text(firstLetter);
+        }
+      }).fail(function(error) {
+  
+      });
     }
-    getname()
+  
+    getname();
   </script>
+  
 </body>
 
 </html>

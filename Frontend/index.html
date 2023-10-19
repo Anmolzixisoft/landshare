@@ -679,6 +679,7 @@
     <script src="lib/parallax/parallax.min.js"></script>
     <script src="lib/isotope/isotope.pkgd.min.js"></script>
     <script src="lib/lightbox/js/lightbox.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script src="js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -687,131 +688,125 @@
 
 </body>
 <script>
-    var userId = localStorage.getItem('userId');
+    $(document).ready(function () {
+        var userId = localStorage.getItem('userId');
+        var token = localStorage.getItem('token');
+        var loginLogoutButton = $('#loginLogoutButton');
 
-    function validateEmail() {
-        var emailInput = document.getElementById('email');
-        var email = emailInput.value;
-        var errorContainer = emailInput.parentElement.querySelector('.error-message');
+        function validateEmail() {
+            var emailInput = $('#email');
+            var email = emailInput.val();
+            var errorContainer = emailInput.parent().find('.error-message');
 
-        var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+            var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
-        if (!email) {
-
-            errorContainer.innerText = '';
-        } else if (!email.match(emailRegex)) {
-
-            errorContainer.innerText = 'Invalid ';
-            errorContainer.classList.add('error-text');
-        } else {
-
-            errorContainer.innerText = '';
+            if (!email) {
+                errorContainer.text('');
+            } else if (!email.match(emailRegex)) {
+                errorContainer.text('Invalid');
+                errorContainer.addClass('error-text');
+            } else {
+                errorContainer.text('');
+            }
         }
-    }
 
-    function touch() {
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const phone = document.getElementById('phone').value;
-        const subject = document.getElementById('subject').value;
-        const message = document.getElementById('message').value
+        function touch() {
+            var name = $('#name').val();
+            var email = $('#email').val();
+            var phone = $('#phone').val();
+            var subject = $('#subject').val();
+            var message = $('#message').val();
 
-        const userData = {
-            name: name,
-            email: email,
-            phone: phone,
-            subject: subject,
-            message: message
-        };
-        fetch(apiUrl + '/touch', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(userData)
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success == true) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Success',
-                        text: data.message,
-                    }).then(() => {
-                        window.location.href = "index.html";
-                    });
-                } else {
+            var userData = {
+                name: name,
+                email: email,
+                phone: phone,
+                subject: subject,
+                message: message
+            };
+
+            $.ajax({
+                url: apiUrl + '/touch',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(userData),
+                success: function (data) {
+                    if (data.success == true) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: data.message
+                        }).then(function () {
+                            window.location.href = 'index.html';
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: data.error
+                        });
+                    }
+                },
+                error: function (error) {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: data.error,
+                        text: error
                     });
                 }
-            })
-            .catch(error => {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: error,
-                });
             });
-    }
+        }
 
-    document.getElementById('touch').addEventListener('submit', function (e) {
-        e.preventDefault();
-        touch();
+        $('#touch').submit(function (e) {
+            e.preventDefault();
+            touch();
+        });
+
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
+
+        if (userId && token) {
+            loginLogoutButton.html('<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
+            loginLogoutButton.click(function () {
+                localStorage.removeItem('userId');
+                localStorage.removeItem('token');
+                window.location.href = 'index.html';
+            });
+        } else {
+            loginLogoutButton.html('<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
+            loginLogoutButton.attr('href', 'login-form.html');
+        }
+
+        function getname() {
+            var userData = {
+                userid: userId
+            };
+
+            $.ajax({
+                url: apiUrl + '/getuserName',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(userData),
+                success: function (data) {
+                    var name = data.message[0].name;
+                    var firstLetter = name.charAt(0).toUpperCase();
+                    var elementToReplace = $('.d-inline-flex.btn-sm-square.bg-primary.text-white.rounded-circle.ms-2');
+
+                    if (elementToReplace.length > 0) {
+                        elementToReplace.text(firstLetter);
+                    }
+                }
+            });
+        }
+
+        getname();
     });
 
-    function isNumberKey(evt) {
-        var charCode = (evt.which) ? evt.which : evt.keyCode;
-        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-            return false;
-        }
-        return true;
-    }
-
-    const token = localStorage.getItem('token');
-
-    const loginLogoutButton = document.getElementById('loginLogoutButton');
-
-    if (userId && token) {
-        loginLogoutButton.innerHTML = '<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
-        loginLogoutButton.addEventListener('click', () => {
-            localStorage.removeItem('userId');
-            localStorage.removeItem('token');
-            window.location.href = 'index.html'
-        });
-    } else {
-        loginLogoutButton.innerHTML = '<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
-        loginLogoutButton.href = 'login-form.html';
-    }
-    function getname() {
-        const userData = {
-            userid: userId
-        };
-        fetch(apiUrl + '/getuserName', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(userData)
-        })
-            .then(response => response.json())
-            .then(data => {
-                const name = data.message[0].name;
-
-                const firstLetter = name.charAt(0).toUpperCase();
-                const elementToReplace = document.querySelector('.d-inline-flex.btn-sm-square.bg-primary.text-white.rounded-circle.ms-2');
-
-                if (elementToReplace) {
-                    elementToReplace.textContent = firstLetter;
-                }
-            })
-            .catch(error => {
-
-            });
-    }
-    getname()
 </script>
 
 </html>

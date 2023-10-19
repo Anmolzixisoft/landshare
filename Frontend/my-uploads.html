@@ -219,237 +219,211 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+  
     <script>
-        const userId = localStorage.getItem('userId')
+        const userId = localStorage.getItem('userId');
+      
         function fetchData() {
-            const api = apiUrl + '/getproperty';
-
-            const requestData = {
-                user_id: userId
-            };
-
-            fetch(api, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json', // Set the appropriate content type
-                },
-                body: JSON.stringify(requestData), // Convert the request data to JSON
-            })
-                .then(response => {
-                    if (response.ok) {
-                        return response.json();
-                    } else {
-                        throw new Error('Failed to fetch data');
-                    }
-                })
-                .then(data => {
-
-                    data.data.forEach(property => {
-                        if (property.user_id == userId) {
-                            const propertyListing = createPropertyListing(property, userId);
-                            propertyListingsContainer.appendChild(propertyListing);
-                        }
-                    });
-                    document.getElementById('spinner').style.display = 'none';
-                })
-                .catch(error => {
-                    console.error('There was a problem with the fetch operation:', error);
-                });
-        }
-
-        const propertyListingsContainer = document.getElementById('property-listings');
-
-        function createPropertyListing(property) {
-            console.log(property.images[1]);
-            const container = document.createElement('div');
-            container.innerHTML = `
-            <div class="row  align-items-start">
-    <div class="product-inner mb-5 col-md-8 mx-auto g-5">
-                        <div class="product-im col-md-3-1"><img src=${property.images[0]} style="width:100% !important;border-radius:10px;">
-                        </div>
-                        <div class="product-cnt col-md-8 ">
-                            <p style="font-size:18px; margin-right:58px"> ${property.landmark} 
-                                <span  class="mx-auto text-center edit "> <i class="fas fa-trash-alt"    onclick="deleteElement(${property.id},${property.user_id})"></i></span>
-                                
-                                <span  class="mx-auto text-center edit" onclick="redirectToPropertyDataPage(${property.id})"><i class='fas fa-pencil-alt'></i></span></p>
-                            <p style="font-size:14px;">Residential Plots -  ${property.cost_per_squre_fit} <br>
-                                Property Size:${property.size_of_land}<br>
-                                Type : ${property.property_category_select}<br><span class="product-but col-lg-4 but-sy"><button class="btn btn-outline-primary 
-                                "  onclick="openModal('${property.id}','${property.user_id}','${property.sold}')" >Change Status</button></span></p>
-                                                         </div>                                                
-                    </div>
-                </div>
-                    `
-
-            return container;
-        }
-
-
-        function redirectToPropertyDataPage(id) {
-            location.href = `update-property.html?id=${id}`;
-        }
-        let currentPropertyId; // Variable to store the current property id
-        let currentUserId; // Variable to store the current user id
-
-        function openModal(propertyId, userId, soldStatus) {
-            const modal = document.getElementById('myModal');
-            const soldRadio = document.querySelector('input[value="sold"]');
-            const unsoldRadio = document.querySelector('input[value="unsold"]');
-
-            currentPropertyId = propertyId;
-            currentUserId = userId;
-
-            if (soldStatus === '1') {
-                soldRadio.checked = true;
-            } else {
-                unsoldRadio.checked = true;
-            }
-
-            modal.style.display = 'block';
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('myModal');
-            modal.style.display = 'none';
-        }
-
-        function updatePropertyStatus() {
-            const soldRadio = document.querySelector('input[value="sold"]');
-            const unsoldRadio = document.querySelector('input[value="unsold"]');
-            const status = soldRadio.checked ? '1' : '0';
-
-            const data = {
-                propertyId: currentPropertyId,
-                user_id: currentUserId,
-                sold_status: status
-            };
-
-            const api = apiUrl + '/sold_property';
-            fetch(api, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            })
-                .then(response => response.json())
-                .then(responseData => {
-                    // Handle the API response here, such as showing a success message
-                    // Close the modal after a successful update
-                    if (responseData.message) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Success',
-                            text: responseData.message,
-                        }).then(() => {
-                            closeModal();
-                            location.reload()
-                        })
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: responseData.error,
-                        });
-                    }
-                })
-                .catch(error => {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: error,
-                    });
-                });
-        }
-
-
-
-        function deleteElement(propertyId, userId) {
-            var api = apiUrl + '/delete_proprty';
-
-            var data = {
-                propertyId: propertyId,
-                user_id: userId
-            };
-
-            fetch(api, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-                .then(response => response.json())
-                .then(responseData => {
-                    if (responseData.message) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Success',
-                            text: responseData.message,
-                        }).then(() => {
-                            location.reload()
-                        })
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: responseData.error,
-                        });
-                    }
-                })
-                .catch(error => {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: error,
-                    });
-                });
-        }
-
-        window.onload = fetchData;
-        // const userId = localStorage.getItem('userId');
-        const token = localStorage.getItem('token');
-
-        const loginLogoutButton = document.getElementById('loginLogoutButton');
-
-        if (userId && token) {
-            loginLogoutButton.innerHTML = '<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
-            loginLogoutButton.addEventListener('click', () => {
-                localStorage.removeItem('userId');
-                localStorage.removeItem('token');
-                window.location.href = 'index.html'
+          const api = apiUrl + '/getproperty';
+          const requestData = {
+            user_id: userId
+          };
+      
+          $.ajax({
+            type: 'POST',
+            url: api,
+            contentType: 'application/json',
+            data: JSON.stringify(requestData)
+          }).done(function(data) {
+            data.data.forEach(function(property) {
+              if (property.user_id == userId) {
+                var propertyListing = createPropertyListing(property);
+                $('#property-listings').append(propertyListing);
+              }
             });
-        } else {
-            loginLogoutButton.innerHTML = '<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
-            loginLogoutButton.href = 'login-form.html';
+            $('#spinner').hide();
+          }).fail(function(error) {
+            console.error('There was a problem with the fetch operation:', error);
+          });
         }
-        function getname() {
+      
+        const propertyListingsContainer = $('#property-listings');
+      
+        function createPropertyListing(property) {
+          return $('<div class="row align-items-start">').html(`
+            <div class="product-inner mb-5 col-md-8 mx-auto g-5">
+              <div class="product-im col-md-3-1">
+                <img src="${property.images[0]}" style="width:100% !important; border-radius:10px;">
+              </div>
+              <div class="product-cnt col-md-8">
+                <p style="font-size:18px; margin-right:58px">${property.landmark}
+                  <span class="mx-auto text-center edit">
+                    <i class="fas fa-trash-alt" onclick="deleteElement(${property.id},${property.user_id})"></i>
+                  </span>
+                  <span class="mx-auto text-center edit" onclick="redirectToPropertyDataPage(${property.id})">
+                    <i class="fas fa-pencil-alt"></i>
+                  </span>
+                </p>
+                <p style="font-size:14px;">Residential Plots - ${property.cost_per_squre_fit} <br>
+                  Property Size:${property.size_of_land}<br>
+                  Type : ${property.property_category_select}<br>
+                  <span class="product-but col-lg-4 but-sy">
+                    <button class="btn btn-outline-primary" onclick="openModal('${property.id}','${property.user_id}','${property.sold}')">Change Status</button>
+                  </span>
+                </p>
+              </div>
+            </div>
+          `);
+        }
+      
+        function redirectToPropertyDataPage(id) {
+          location.href = `update-property.html?id=${id}`;
+        }
+      
+        let currentPropertyId;
+        let currentUserId;
+      
+        function openModal(propertyId, userId, soldStatus) {
+          const modal = $('#myModal');
+          const soldRadio = $('input[value="sold"]');
+          const unsoldRadio = $('input[value="unsold"]');
+      
+          currentPropertyId = propertyId;
+          currentUserId = userId;
+      
+          if (soldStatus === '1') {
+            soldRadio.prop('checked', true);
+          } else {
+            unsoldRadio.prop('checked', true);
+          }
+      
+          modal.show();
+        }
+      
+        function closeModal() {
+          const modal = $('#myModal');
+          modal.hide();
+        }
+      
+        function updatePropertyStatus() {
+          const soldRadio = $('input[value="sold"]');
+          const status = soldRadio.prop('checked') ? '1' : '0';
+      
+          const data = {
+            propertyId: currentPropertyId,
+            user_id: currentUserId,
+            sold_status: status
+          };
+      
+          const api = apiUrl + '/sold_property';
+          $.ajax({
+            type: 'POST',
+            url: api,
+            contentType: 'application/json',
+            data: JSON.stringify(data)
+          }).done(function(responseData) {
+            if (responseData.message) {
+              Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: responseData.message
+              }).then(function() {
+                closeModal();
+                location.reload();
+              });
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: responseData.error
+              });
+            }
+          }).fail(function(error) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: error
+            });
+          });
+        }
+      
+        function deleteElement(propertyId, userId) {
+          var api = apiUrl + '/delete_proprty';
+      
+          var data = {
+            propertyId: propertyId,
+            user_id: userId
+          };
+      
+          $.ajax({
+            type: 'POST',
+            url: api,
+            contentType: 'application/json',
+            data: JSON.stringify(data)
+          }).done(function(responseData) {
+            if (responseData.message) {
+              Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: responseData.message
+              }).then(function() {
+                location.reload();
+              });
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: responseData.error
+              });
+            }
+          }).fail(function(error) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: error
+            });
+          });
+        }
+      
+        $(document).ready(function() {
+          fetchData();
+          const token = localStorage.getItem('token');
+          const loginLogoutButton = $('#loginLogoutButton');
+      
+          if (userId && token) {
+            loginLogoutButton.html('<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
+            loginLogoutButton.on('click', function() {
+              localStorage.removeItem('userId');
+              localStorage.removeItem('token');
+              window.location.href = 'index.html';
+            });
+          } else {
+            loginLogoutButton.html('<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
+            loginLogoutButton.attr('href', 'login-form.html');
+          }
+          function getname() {
             const userData = {
-                userid: userId
+              userid: userId
             };
-            fetch(apiUrl + '/getuserName', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(userData)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    const name = data.message[0].name;
-                    const firstLetter = name.charAt(0).toUpperCase(); // Get the first letter in uppercase
-                    const elementToReplace = document.querySelector('.d-inline-flex.btn-sm-square.bg-primary.text-white.rounded-circle.ms-2');
-
-                    if (elementToReplace) {
-                        elementToReplace.textContent = firstLetter; // Set the content to the obtained name
-                    }
-                })
-                .catch(error => {
-                    
-                });
-        }
-        getname()
-    </script>
-</body>
+            $.ajax({
+              type: 'POST',
+              url: apiUrl + '/getuserName',
+              contentType: 'application/json',
+              data: JSON.stringify(userData)
+            }).done(function(data) {
+              const name = data.message[0].name;
+              const firstLetter = name.charAt(0).toUpperCase();
+              const elementToReplace = $('.d-inline-flex.btn-sm-square.bg-primary.text-white.rounded-circle.ms-2');
+      
+              if (elementToReplace) {
+                elementToReplace.text(firstLetter);
+              }
+            }).fail(function(error) {
+            });
+          }
+          getname();
+        });
+      </script>
+      </body>
 
 </html>
