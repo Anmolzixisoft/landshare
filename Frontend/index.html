@@ -64,7 +64,7 @@
                 </a>
             </div>
             <div style="display: inline-flex;">
-                <a href="" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2"></a>
+                <a href="" id="circle"></a>
                 <a href="#" id="loginLogoutButton" class="nav-item nav-link"><b></b>&nbsp;&nbsp;<i
                         class="fa fa-arrow-right"></i></a>
                 <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
@@ -108,8 +108,8 @@
                                 Land Investments</p>
                         </div>
                     </div>
-                    <div class="col-lg-10 row g-3 ">
-                        <div class="col-lg-2-2">
+                    <div class="row ">
+                        <div class="col-lg-2">
                             <a class="btn bg-dark-1 py-2   animated slideInDown text-white" href="#service">
                                 Land Advisory
                                 <div class="d-inline-flex btn-sm-square  text-white rounded-circle ms-2">
@@ -138,33 +138,35 @@
     <!------------about section------>
 
 
-    <div class="container mb-4">
-        <h2 class="text-center mb-4 pb-4" style="font-size:40px;">Leading Real Estate Advisory in India</h2>
+    <div class="container mb-5  py-5">
+        <h2 class="text-center mb-5 pb-5" style="font-size:40px;">Leading Real Estate Advisory in India</h2>
         <div class="row  align-items-start">
-            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.2s">
+            <div class="col-lg-6-2 col-md-7-1  wow fadeInUp" data-wow-delay="0.2s">
+                <div class="col-lg-6">
+                    <h2>Elevate Your Portfolio with<br>
+                        Landshare's Strategic
+                        Investments</h2>
+                    <p class="mb-4 fadeInUp" data-wow-delay="0.5s">we take immense pride in being
+                        one of the leading Land Investment
+                        & Advisory companies in India,
+                        headquartered in Bangalore. Our
+                        focus has been to create our mark
+                        in the land investment category</p>
+                    <a class="btn bg-dark-1 py-2  mb-4 animated slideInDown text-white"
+                        href="investing-opportunity.html">
+                        GET STARTED
+                        <div class="d-inline-flex btn-sm-square  text-white rounded-circle ms-2">
+                            <i class="fa fa-arrow-right"></i>
+                        </div>
+                    </a>
 
-                <h2>Elevate Your Portfolio with<br>
-                    Landshare's Strategic
-                    Investments</h2>
-                <p class="mb-4 fadeInUp" data-wow-delay="0.5s">we take immense pride in being
-                    one of the leading Land Investment
-                    & Advisory companies in India,
-                    headquartered in Bangalore. Our
-                    focus has been to create our mark
-                    in the land investment category</p>
-                <a class="btn bg-dark-1 py-2  mb-4 animated slideInDown text-white" href="investing-opportunity.html">
-                    GET STARTED
-                    <div class="d-inline-flex btn-sm-square  text-white rounded-circle ms-2">
-                        <i class="fa fa-arrow-right"></i>
-                    </div>
-                </a>
 
+                </div>
             </div>
-            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                <img class="img-fluid rounded" data-wow-delay="0.1s" src="img/LS2.png">
+            <div class="col-lg-6-1 col-md-7-2 wow fadeInUp" data-wow-delay="0.1s">
+                <img class="img-fluid rounded" data-wow-delay="0.1s" src="img/LS2.png" style="width:100% !important;">
             </div>
         </div>
-
     </div>
 
     <!-------------about section end---------->
@@ -688,11 +690,25 @@
 
 </body>
 <script>
+     function getQueryParam(name) {
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            return urlSearchParams.get(name);
+        }
+
+        // Get the token and userId from the query parameters
+        const token = getQueryParam('token');
+        const userId = getQueryParam('userId');
+
+        if (token && userId) {
+            // Store the token and userId in local storage
+            localStorage.setItem('token', token);
+            localStorage.setItem('userId', userId);
+        }
     $(document).ready(function () {
         var userId = localStorage.getItem('userId');
         var token = localStorage.getItem('token');
         var loginLogoutButton = $('#loginLogoutButton');
-
+        var circle = $('#circle')
         function validateEmail() {
             var emailInput = $('#email');
             var email = emailInput.val();
@@ -772,11 +788,13 @@
 
         if (userId && token) {
             loginLogoutButton.html('<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
+
             loginLogoutButton.click(function () {
                 localStorage.removeItem('userId');
                 localStorage.removeItem('token');
                 window.location.href = 'index.html';
             });
+            circle.html('<a href="" id="circle" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2"></a>')
         } else {
             loginLogoutButton.html('<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
             loginLogoutButton.attr('href', 'login-form.html');

@@ -57,7 +57,8 @@
         </a>
       </div>
       <div style="display: inline-flex;">
-        <a href="" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2">P</a>
+                        <a href="" id="circle"></a>
+
         <a href="#" id="loginLogoutButton" class="nav-item nav-link"><b></b>&nbsp;&nbsp;<i
             class="fa fa-arrow-right"></i></a>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -265,7 +266,8 @@
             <label for="" class="col-form-label">Cost Per Sqft <span class="required">*</span></label>
           </div>
           <div class="col-9">
-            <input type="text" id="cost" class="form-control" aria-describedby="passwordHelpInline" required>
+            <input type="text" id="cost" class="form-control" aria-describedby="passwordHelpInline" required
+              oninput="calculateTotal()">
             <div id="" class="form-text">*Please do not add if you do not know</div>
           </div>
 
@@ -449,13 +451,13 @@
   <!-- Add this script at the bottom of your HTML file -->
   <script>
 
+var circle = document.getElementById('circle')
     function calculateTotal() {
       var acre = parseFloat(document.getElementById('acre').value) || 0;
       var gunta = parseFloat(document.getElementById('guntas').value) || 0;
       var cent = parseFloat(document.getElementById('cents').value) || 0;
-
+      var cost = parseFloat(document.getElementById('cost').value) || 0;
       var totalLandInSqft = (acre * 43560) + (gunta * 1089) + (cent * 435.6);
-   
 
       document.getElementById('error-message').textContent = '';
 
@@ -464,14 +466,14 @@
         document.getElementById('total-sqft').textContent = '';
         return;
       }
-      document.getElementById('cost').value = totalLandInSqft + " " + 'sqft.';
-
-      document.getElementById('total-sqft').textContent = 'Total : ' + totalLandInSqft + ' sqft.';
+      var landPrice = totalLandInSqft * cost;
+      document.getElementById('landPrice').value = landPrice;
+      document.getElementById('total-sqft').textContent = 'Total: ' + totalLandInSqft + ' sqft.';
       return totalLandInSqft;
     }
 
     const data = document.getElementsByName('landType')
-   
+
 
     function isNumberKey(evt) {
       var charCode = (evt.which) ? evt.which : evt.keyCode;
@@ -506,90 +508,90 @@
     }
 
     function addProperty() {
-        const name = $('#landmarkOwnername').val();
-        const state = $('#state').val();
-        const Address = $('#Address').val();
-        const phone = $('#phone').val();
-        const city = $('#city').val();
-        const pincode = $('#pincode').val();
-        const desciption = $('#exampleFormControlTextarea1').val();
-        const cost = $('#cost').val();
-        const landmark = $('#landmark').val();
-        const ownership = $('#ownership').val();
-        const imageInput = $('#formFileMultiple');
-        const Survey_no = $('#SurveyNo').val();
-        const Land_Facing = $('#landFacing').val();
-        const form = $('#property')[0];
-        const landPrice = $('#landPrice').val();
-        const selectedLandType = $('input[name="landType"]:checked');
-        const acre = $('#acre').val();
-        const cents = $('#cents').val();
-        const guntas = $('#guntas').val();
-        const sizeoflandmark = acre + ' acre ' + guntas + ' guntas ' + cents + ' cents';
+      const name = $('#landmarkOwnername').val();
+      const state = $('#state').val();
+      const Address = $('#Address').val();
+      const phone = $('#phone').val();
+      const city = $('#city').val();
+      const pincode = $('#pincode').val();
+      const desciption = $('#exampleFormControlTextarea1').val();
+      const cost = $('#cost').val();
+      const landmark = $('#landmark').val();
+      const ownership = $('#ownership').val();
+      const imageInput = $('#formFileMultiple');
+      const Survey_no = $('#SurveyNo').val();
+      const Land_Facing = $('#landFacing').val();
+      const form = $('#property')[0];
+      const landPrice = $('#landPrice').val();
+      const selectedLandType = $('input[name="landType"]:checked');
+      const acre = $('#acre').val();
+      const cents = $('#cents').val();
+      const guntas = $('#guntas').val();
+      const sizeoflandmark = acre + ' acre ' + guntas + ' guntas ' + cents + ' cents';
 
-        const formData = new FormData(form);
+      const formData = new FormData(form);
 
-        formData.append('user_id', userId);
+      formData.append('user_id', userId);
 
-        if (selectedLandType.length > 0) {
-            formData.append('property_category_select', selectedLandType.val());
-        }
+      if (selectedLandType.length > 0) {
+        formData.append('property_category_select', selectedLandType.val());
+      }
 
-        for (let i = 0; i < imageInput[0].files.length; i++) {
-            formData.append('image', imageInput[0].files[i]);
-        }
+      for (let i = 0; i < imageInput[0].files.length; i++) {
+        formData.append('image', imageInput[0].files[i]);
+      }
 
-        formData.append('ownerName', name);
-        formData.append('mobile_number', phone);
-        formData.append('full_address', Address);
-        formData.append('state', state);
-        formData.append('city', city);
-        formData.append('pincode', pincode);
-        formData.append('landmark', landmark);
-        formData.append('owenership', ownership);
-        formData.append('cost_per_squre_fit', cost);
-        formData.append('size_of_land', sizeoflandmark);
-        formData.append('desciption', desciption);
-        formData.append('Survey_no', Survey_no);
-        formData.append('Land_Facing', Land_Facing);
-        formData.append('landPrice', landPrice);
+      formData.append('ownerName', name);
+      formData.append('mobile_number', phone);
+      formData.append('full_address', Address);
+      formData.append('state', state);
+      formData.append('city', city);
+      formData.append('pincode', pincode);
+      formData.append('landmark', landmark);
+      formData.append('owenership', ownership);
+      formData.append('cost_per_squre_fit', cost);
+      formData.append('size_of_land', sizeoflandmark);
+      formData.append('desciption', desciption);
+      formData.append('Survey_no', Survey_no);
+      formData.append('Land_Facing', Land_Facing);
+      formData.append('landPrice', landPrice);
 
-        $.ajax({
-            url: apiUrl + '/sellProperty',
-            method: 'POST',
-            processData: false,
-            contentType: false,
-            data: formData,
-            success: function(data) {
-                if (data.message == 'Property Added') {
-                    Swal.fire({
-                        title: 'Success',
-                        text: data.message,
-                        icon: 'success',
-                    }).then(function() {
-                        window.location.href = 'property-data.html';
-                    });
-                } else {
-                    Swal.fire({
-                        title: 'Error',
-                        text: data.error,
-                        icon: 'error',
-                    });
-                }
-            },
-            error: function(error) {
-                Swal.fire({
-                    title: 'Error',
-                    text: error,
-                    icon: 'error',
-                });
-            },
-        });
+      $.ajax({
+        url: apiUrl + '/sellProperty',
+        method: 'POST',
+        processData: false,
+        contentType: false,
+        data: formData,
+        success: function (data) {
+          if (data.message == 'Property Added') {
+            Swal.fire({
+              title: 'Success',
+              text: data.message,
+              icon: 'success',
+            }).then(function () {
+              window.location.href = 'property-data.html';
+            });
+          } else {
+            Swal.fire({
+              title: 'Error',
+              text: data.error,
+              icon: 'error',
+            });
+          }
+        },
+        error: function (error) {
+          Swal.fire({
+            title: 'Error',
+            text: error,
+            icon: 'error',
+          });
+        },
+      });
     }
 
-    $('#property').on('submit', function(e) {
-        e.preventDefault();
-        addProperty();
+    $('#property').on('submit', function (e) {
+      e.preventDefault();
+      addProperty();
     });
 
     const token = localStorage.getItem('token');
@@ -603,6 +605,7 @@
         localStorage.removeItem('token');
         window.location.href = 'index.html'
       });
+      circle.html('<a href="" id="circle" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2"></a>')
     } else {
       loginLogoutButton.innerHTML = '<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
       loginLogoutButton.href = 'login-form.html';

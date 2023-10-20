@@ -62,7 +62,8 @@
         </a>
       </div>
       <div style="display: inline-flex;">
-        <a href="" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2">P</a>
+        <a href="" id="circle"></a>
+
         <a href="#" id="loginLogoutButton" class="nav-item nav-link"><b></b>&nbsp;&nbsp;<i
             class="fa fa-arrow-right"></i></a>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -417,18 +418,18 @@
   <script>
     const urlParams = new URLSearchParams(window.location.search);
     var pageId = urlParams.get('id');
-  
+    var circle = $('#circle')
     async function getPropertyData() {
       const userData = {
         id: pageId
       };
-  
+
       $.ajax({
         type: 'POST',
         url: apiUrl + '/getPropertyById',
         contentType: 'application/json',
         data: JSON.stringify(userData)
-      }).done(function(data) {
+      }).done(function (data) {
         $('#landmarkOwnername').val(data.message[0].ownerName);
         $('#state').val(data.message[0].state);
         $('#Address').val(data.message[0].full_address);
@@ -445,12 +446,12 @@
         var selectedLandType = $(`input[name="landType"][value="${data.message[0].property_category_select}"]`);
         selectedLandType.prop('checked', true);
         $('#propertyImage').attr('src', data.message[0].images[0]);
-      }).fail(function(error) {
+      }).fail(function (error) {
       });
     }
-  
+
     getPropertyData();
-  
+
     function isNumberKey(evt) {
       var charCode = (evt.which) ? evt.which : evt.keyCode;
       if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -458,34 +459,34 @@
       }
       return true;
     }
-  
+
     const userId = localStorage.getItem('userId');
-  
+
     if (!userId) {
       window.location.href = 'login-form.html';
     }
-  
+
     function validateForm() {
       const name = $('#landmarkOwnername').val();
       const phone = $('#phone').val();
-  
+
       if (name.trim() === '') {
         $('#landmarkOwnername-error').text('Name is required.');
         return false;
       } else {
         $('#landmarkOwnername-error').text('');
       }
-  
+
       if (!/^\d+$/.test(phone)) {
         $('#phone-error').text('Phone number must contain only digits.');
         return false;
       } else {
         $('#phone-error').text('');
       }
-  
+
       return true;
     }
-  
+
     function addProperty() {
       const name = $('#landmarkOwnername').val();
       const state = $('#state').val();
@@ -503,19 +504,19 @@
       const form = $('#property')[0];
       const landPrice = $('#landPrice').val();
       var selectedLandType = $(`input[name="landType"]:checked`);
-  
+
       const formData = new FormData(form);
-  
+
       formData.append("user_id", userId);
-  
+
       if (selectedLandType) {
         formData.append("property_category_select", selectedLandType.val());
       }
-  
+
       for (let i = 0; i < imageInput[0].files.length; i++) {
         formData.append("image", imageInput[0].files[i]);
       }
-  
+
       formData.append("ownerName", name);
       formData.append("mobile_number", phone);
       formData.append("full_address", Address);
@@ -530,20 +531,20 @@
       formData.append("Land_Facing", Land_Facing);
       formData.append('landPrice', landPrice);
       formData.append('id', pageId);
-  
+
       $.ajax({
         type: 'POST',
         url: apiUrl + '/updateProperty',
         data: formData,
         processData: false,
         contentType: false
-      }).done(function(data) {
+      }).done(function (data) {
         if (data.message == "Property Updated") {
           Swal.fire({
             title: "Success",
             text: data.message,
             icon: "success",
-          }).then(function(data) {
+          }).then(function (data) {
             window.location.href = 'my-uploads.html';
           });
         } else {
@@ -553,7 +554,7 @@
             icon: "error",
           });
         }
-      }).fail(function(error) {
+      }).fail(function (error) {
         Swal.fire({
           title: "Error",
           text: error,
@@ -561,27 +562,28 @@
         });
       });
     }
-  
-    $('#property').submit(function(e) {
+
+    $('#property').submit(function (e) {
       e.preventDefault();
       addProperty();
     });
-  
+
     const token = localStorage.getItem('token');
     const loginLogoutButton = $('#loginLogoutButton');
-  
+
     if (userId && token) {
       loginLogoutButton.html('<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
-      loginLogoutButton.on('click', function() {
+      loginLogoutButton.on('click', function () {
         localStorage.removeItem('userId');
         localStorage.removeItem('token');
         window.location.href = 'index.html';
       });
+      circle.html('<a href="" id="circle" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2"></a>')
     } else {
       loginLogoutButton.html('<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
       loginLogoutButton.attr('href', 'login-form.html');
     }
-  
+
     function getname() {
       const userData = {
         userid: userId
@@ -591,22 +593,22 @@
         url: apiUrl + '/getuserName',
         contentType: 'application/json',
         data: JSON.stringify(userData)
-      }).done(function(data) {
+      }).done(function (data) {
         const name = data.message[0].name;
         const firstLetter = name.charAt(0).toUpperCase();
         const elementToReplace = $('.d-inline-flex.btn-sm-square.bg-primary.text-white.rounded-circle.ms-2');
-  
+
         if (elementToReplace) {
           elementToReplace.text(firstLetter);
         }
-      }).fail(function(error) {
-  
+      }).fail(function (error) {
+
       });
     }
-  
+
     getname();
   </script>
-  
+
 </body>
 
 </html>

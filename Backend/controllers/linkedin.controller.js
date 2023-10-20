@@ -19,7 +19,7 @@ passport.use(
         {
             clientID: '78xez2ai9obm3k',
             clientSecret: 'D9apUO2W6EsvwTaM',
-            callbackURL: "http://localhost:5000/auth/linkedin/callback",
+            callbackURL: "http://localhost:5000/api/auth/linkedin/callback",
             // scope: ["r_emailaddress", "r_liteprofile"],
             scope: ['r_liteprofile'],
         },

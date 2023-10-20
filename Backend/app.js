@@ -30,8 +30,8 @@ app.use('/api', serviceRouter)
 app.use('/api', resetpass)
 app.use('/', googleRouter)
 
-app.use(linkedinRouter)
-app.use(instgramRouter)
+app.use('/api',linkedinRouter)
+app.use('/api', instgramRouter)
 // app.get("/", (req, res) => {
 //     if (req.user) {
 //         const name = req.user.name.givenName;

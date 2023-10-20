@@ -292,9 +292,10 @@
     <script>
         const userId = localStorage.getItem('userId');
         const token = localStorage.getItem('token');
+var circle = $('#circle')     
+   const loginLogoutButton = document.getElementById('loginLogoutButton');
     
-        const loginLogoutButton = document.getElementById('loginLogoutButton');
-    
+
         if (userId && token) {
             loginLogoutButton.innerHTML = '<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
             loginLogoutButton.addEventListener('click', () => {
@@ -302,6 +303,7 @@
                 localStorage.removeItem('token');
                 window.location.href='index.html'
             });
+            circle.html('<a href="" id="circle" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2"></a>')
         } else {
             loginLogoutButton.innerHTML = '<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
             loginLogoutButton.href = 'login-form.html';

@@ -138,11 +138,8 @@
                     <p>Don't have an account? <a onclick="changeToRegister()" id="changeToRegister">Sign up</a></p>
                     <p class="or">or</p>
                     <div style="display:inline-flex;" class="mx-auto">
-                        <button class="btn  btn-primary btn-lg-square"><i class="fab fa-facebook-f"></i>
-                        </button>&nbsp;&nbsp;
-                        <button class="btn  btn-primary btn-lg-square" id="google-login-btn"><i
-                                class='fab fa-google'></i>
-                        </button>&nbsp;&nbsp;
+
+
                         <button class="btn  btn-primary btn-lg-square"><i class='fab fa-instagram'></i>
                         </button>&nbsp;&nbsp;
                         <button class="btn  btn-primary btn-lg-square"><i class='fab fa-twitter'></i>
@@ -151,6 +148,12 @@
                         </button>
                     </div>
                 </form>
+                <button class="btn  btn-primary btn-lg-square" onclick="performGoogleLogin()"><i
+                        class='fab fa-google'></i>
+                </button>&nbsp;&nbsp;
+                <button class="btn  btn-primary btn-lg-square" onclick="performFacebookLogin()"><i
+                        class="fab fa-facebook-f"></i>
+                </button>&nbsp;&nbsp;
                 <form class="form" id="register" action="authentication.php" onsubmit="return validateForm()"
                     method="POST">
                     <h2 class="login-h2">Register</h2>
@@ -160,7 +163,7 @@
                             onkeypress="return isCharacterKey(event)" required pattern="[A-Za-z  ]+" maxlength="80">
                     </div>
 
-                    
+
                     <label for="phone">Your Phone Number <span class="required">*</span> </label>
                     <div class="pass-reset" onclick="activeInput(this)">
                         <input type="text" name="phone" class="phone" id="phoneInput"
@@ -322,7 +325,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
     <script>
-
+        var circle = document.getElementById('circle')
         function validateForm() {
             var nameInput = document.getElementById("nameInput").value;
 
@@ -361,6 +364,16 @@
         });
     </script>
     <script>
+
+        function performGoogleLogin() {
+            window.open('http://localhost:5000/auth/google');
+
+        }
+        function performFacebookLogin() {
+            window.open('http://localhost:5000/api/auth/facebook');
+
+        }
+
         $(document).ready(function () {
             $('#google-login-btn').click(function () {
                 // Handle Google login here

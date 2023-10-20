@@ -56,7 +56,8 @@
                 </a>
             </div>
             <div style="display: inline-flex;">
-                <a href="" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2">P</a>
+                                <a href="" id="circle"></a>
+
                 <a href="#" id="loginLogoutButton" class="nav-item nav-link"><b></b>&nbsp;&nbsp;<i
                         class="fa fa-arrow-right"></i></a>
                 <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
@@ -222,8 +223,8 @@
   
     <script>
         const userId = localStorage.getItem('userId');
-      
-        function fetchData() {
+var circle = $('#circle')       
+ function fetchData() {
           const api = apiUrl + '/getproperty';
           const requestData = {
             user_id: userId
@@ -397,6 +398,7 @@
               localStorage.removeItem('token');
               window.location.href = 'index.html';
             });
+            circle.html('<a href="" id="circle" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2"></a>')
           } else {
             loginLogoutButton.html('<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
             loginLogoutButton.attr('href', 'login-form.html');

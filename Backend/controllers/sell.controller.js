@@ -55,7 +55,8 @@ function getProperty(req, res) {
         SELECT property_id, status
         FROM landsharein_db.tbl_sortlist
         WHERE user_id = ?
-    ) AS sortlist ON sell_property.id = sortlist.property_id;
+    ) AS sortlist ON sell_property.id = sortlist.property_id
+    ORDER BY sell_property.id DESC;
     `, [user_id], (err, result) => {
         if (err) {
             return res.send({ error: err })

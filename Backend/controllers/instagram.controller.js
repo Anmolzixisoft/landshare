@@ -19,15 +19,30 @@ app.use(passport.session());
 passport.use(
     new InstagramStrategy(
         {
-            clientID: "1069108724005842",
-            clientSecret: "7e2d49ab1ce8936eba7744eff1579f62",
+            clientID: "990282092080599",
+            clientSecret: "c4af330155a6409a1635903db18d237b",
             callbackURL: "https://localhost:5000/auth/instagram/callback"
         },
-        (accessToken, refreshToken, profile, done) => {
-            process.nextTick(() => {
-                console.log(profile);
-                return done(null, profile);
-            });
-        }))
+        function (accessToken, refreshToken, profile, done) {
 
+            process.nextTick(function () {
+    
+                connection.query("SELECT * FROM landsharein_db.tbl_user WHERE socialid = '" + profile.id + "'",
+                    function (err, rows, fields) {
+                        if (err) throw err;
+                        if (rows.length === 0) {
+                            console.log("There is a new user, registering here");
+                            connection.query("INSERT INTO landsharein_db.tbl_user(name, email,mobile_number,provider,socialid) VALUES('" + profile.displayName + "', 'abc@gmail.com','8985744525','" + profile.provider + "','" + profile.id + "')");
+    
+                            return done(null, profile);
+                        }
+                        else {
+                            const token = accessToken
+    
+                            console.log("User already registered in database...");
+                            return done(null, profile, token);
+                        }
+                    });
+            });
+        }));
 

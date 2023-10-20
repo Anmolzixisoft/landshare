@@ -57,7 +57,8 @@
                 </a>
             </div>
             <div style="display: inline-flex;">
-                <a href="" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2">P</a>
+                <a href="" id="circle"></a>
+
                 <a href="#" id="loginLogoutButton" class="nav-item nav-link"><b></b>&nbsp;&nbsp;<i
                         class="fa fa-arrow-right"></i></a>
                 <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
@@ -267,7 +268,7 @@
     <script>
         var userId = localStorage.getItem('userId');
         var token = localStorage.getItem('token');
-
+        var circle = $('#circle')
         function redirectToBuyPage(propertyId) {
             const url = `buy.html?id=${propertyId}`;
 
@@ -313,8 +314,9 @@
                 }
             })
                 .then(data => {
+                    console.log(data.data, 'data');
                     const showData = data.data.filter(item => item.user_id != userId);
-
+                    // console.log(showData,'showData');
                     const radioButtons = document.querySelectorAll('input[name="propertyCategory"]');
 
                     function updatePropertyData(selectedCategory) {
@@ -323,10 +325,10 @@
 
                         if (selectedCategory == "all") {
                             // If "all" is selected, show all data
-                            filteredData = showData;
+                            filteredData = data.data;
                         } else {
                             // Filter data based on selected category
-                            filteredData = showData.filter((item) => item.property_category_select == selectedCategory);
+                            filteredData = data.data.filter((item) => item.property_category_select == selectedCategory);
                         }
 
                         clearPropertyContainer();
@@ -344,7 +346,7 @@
                     }
 
                     // Initially, populate with all data
-                    populatePropertyContainer(showData);
+                    populatePropertyContainer(data.data);
                 })
                 .catch(error => {
                     console.error('There was a problem with the fetch operation:', error);
@@ -451,6 +453,7 @@
                 localStorage.removeItem('token');
                 window.location.href = 'index.html'
             });
+            circle.html('<a href="" id="circle" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2"></a>')
         } else {
             loginLogoutButton.innerHTML = '<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
             loginLogoutButton.href = 'login-form.html';

@@ -58,7 +58,8 @@
                 </a>
             </div>
             <div style="display: inline-flex;">
-                <a href="" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2">P</a>
+                <a href="" id="circle"></a>
+
                 <a href="#" id="loginLogoutButton" class="nav-item nav-link"><b></b>&nbsp;&nbsp;<i
                         class="fa fa-arrow-right"></i></a>
                 <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
@@ -264,7 +265,7 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
     <script>
-
+       
         function validateEmail() {
             var emailInput = document.getElementById('email');
             var email = emailInput.value;
@@ -348,7 +349,7 @@
         const token = localStorage.getItem('token');
 
         const loginLogoutButton = document.getElementById('loginLogoutButton');
-
+        var circle = $('#circle') 
         if (userId && token) {
             loginLogoutButton.innerHTML = '<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
             loginLogoutButton.addEventListener('click', () => {
@@ -356,6 +357,7 @@
                 localStorage.removeItem('token');
                 window.location.href = 'index.html'
             });
+            circle.html('<a href="" id="circle" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2"></a>')
         } else {
             loginLogoutButton.innerHTML = '<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
             loginLogoutButton.href = 'login-form.html';
@@ -364,7 +366,7 @@
             const userData = {
                 userid: userId
             };
-            
+
             fetch(apiUrl + '/getuserName', {
                 method: 'POST',
                 headers: {
@@ -375,12 +377,12 @@
                 .then(response => response.json())
                 .then(data => {
                     const name = data.message[0].name;
-                  
+
                     const firstLetter = name.charAt(0).toUpperCase();
                     const elementToReplace = document.querySelector('.d-inline-flex.btn-sm-square.bg-primary.text-white.rounded-circle.ms-2');
 
                     if (elementToReplace) {
-                        elementToReplace.textContent = firstLetter; 
+                        elementToReplace.textContent = firstLetter;
                     }
                 })
                 .catch(error => {
