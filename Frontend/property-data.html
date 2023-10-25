@@ -333,11 +333,11 @@
 
       <div class="col-md-6">
         <label for="exampleFormControlInput1" class="form-label">Location</label>
-        <div class="">
-          <iframe src="https://maps.google.com/maps?q=bangalore&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=&amp;output=embed"
-            frameborder="0" scrolling="no">
-          </iframe>
-        </div>
+        <!-- <div class="" id="map">
+       
+        </div> -->
+        <div id="map" style="width: 75%; height: 200px;"></div>
+
       </div>
 
       <div class="col-12 my-4 text-center">
@@ -446,7 +446,10 @@
   <script src="lib/parallax/parallax.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA97EGCI1sWCnGdedOjA5bOFRvjw-d5_7Q&libraries=places&callback=initMap"
+    async defer></script>
 
   <!-- Template Javascript -->
   <script src="js/main.js"></script>
@@ -508,6 +511,60 @@
       }
       return true;
     }
+    function initMap() {
+      var input = document.getElementById('Address');
+      var autocomplete = new google.maps.places.Autocomplete(input);
+      var map;
+      var geocoder = new google.maps.Geocoder();
+      var marker;
+
+      autocomplete.addListener('place_changed', function () {
+        var place = autocomplete.getPlace();
+
+        console.log('Place Name:', place.name);
+        console.log('Place Address:', place.formatted_address);
+        console.log('Place Coordinates (Lat, Lng):', place.geometry.location.lat(), place.geometry.location.lng());
+
+        // Extract address components
+        var addressComponents = place.address_components;
+        var extractedState = '';
+        var extractedCity = '';
+        var extractedPincode = '';
+
+        for (var i = 0; i < addressComponents.length; i++) {
+          var types = addressComponents[i].types;
+          for (var j = 0; j < types.length; j++) {
+            if (types[j] === 'administrative_area_level_1') {
+              extractedState = addressComponents[i].long_name;
+            } else if (types[j] === 'locality') {
+              extractedCity = addressComponents[i].long_name;
+            } else if (types[j] === 'postal_code') {
+              extractedPincode = addressComponents[i].long_name;
+            }
+          }
+        }
+        document.getElementById('state').value = extractedState;
+        document.getElementById('city').value = extractedCity;
+        document.getElementById('pincode').value = extractedPincode;
+
+        if (place.geometry) {
+          if (!map) {
+            map = new google.maps.Map(document.getElementById('map'), {
+              center: place.geometry.location,
+              zoom: 15
+            });
+            marker = new google.maps.Marker({
+              map: map,
+              position: place.geometry.location
+            });
+          } else {
+            map.setCenter(place.geometry.location);
+            marker.setPosition(place.geometry.location);
+          }
+        }
+      });
+    }
+
 
     function addProperty() {
       const name = $('#landmarkOwnername').val();
@@ -534,6 +591,8 @@
         (acre ? acre + ' acre ' : '0 acre ') +
         (guntas ? guntas + ' guntas ' : '0 guntas ') +
         (cents ? cents + ' cents' : '0 cents');
+
+
 
       let ownershipName = '';
 
