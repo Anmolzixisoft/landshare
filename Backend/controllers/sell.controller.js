@@ -34,7 +34,6 @@ function sellProperty(req, res) {
         JSON.stringify(imageArray),
     ];
 
-
     connection.query(sql, values, (err, result) => {
         if (err) {
             console.error('Database insertion error: ' + err.message);
@@ -197,7 +196,7 @@ function getsortlist(req, res) {
     const user_id = req.body.user_id;
     const query = `
     SELECT landsharein_db.tbl_sell_property.*, landsharein_db.tbl_sortlist.*
-    FROM landsharein_dbtbl_sortlist
+    FROM landsharein_db.tbl_sortlist
     LEFT JOIN landsharein_db.tbl_sell_property ON landsharein_db.tbl_sell_property.id = landsharein_db.tbl_sortlist.property_id
     WHERE landsharein_db.tbl_sortlist.user_id = ?`;
 

@@ -2,256 +2,258 @@
 <html lang="en">
 
 <head>
-    <script src="utils.js"></script>
+  <script src="utils.js"></script>
 
-    <meta charset="utf-8">
-    <title>My Shortlisting - Landshare India Private Limited </title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+  <meta charset="utf-8">
+  <title>My Shortlisting - Landshare India Private Limited </title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
 
-    <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+  <!-- Favicon -->
+  <link href="img/favicon.ico" rel="icon">
 
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Saira:wght@500;600;700&display=swap"
-        rel="stylesheet">
+  <!-- Google Web Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Saira:wght@500;600;700&display=swap"
+    rel="stylesheet">
 
-    <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
-    <link href='https://fonts.googleapis.com/css?family=Catamaran' rel='stylesheet'>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Icon Font Stylesheet -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+  <link href='https://fonts.googleapis.com/css?family=Catamaran' rel='stylesheet'>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
-    <!-- Libraries Stylesheet -->
-    <link href="lib/animate/animate.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <!-- Libraries Stylesheet -->
+  <link href="lib/animate/animate.min.css" rel="stylesheet">
+  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!-- Customized Bootstrap Stylesheet -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
+  <!-- Template Stylesheet -->
+  <link href="css/style.css" rel="stylesheet">
 </head>
 
 <body>
-    <!-- Spinner Start -->
-    <div id="spinner"
-        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-        <div class="spinner-grow text-primary" role="status"></div>
+  <!-- Spinner Start -->
+  <div id="spinner"
+    class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+    <div class="spinner-grow text-primary" role="status"></div>
+  </div>
+  <!-- Spinner End -->
+
+
+  <!-- Navbar Start -->
+  <div class="container-fluid fixed-top px-0 wow fadeIn" data-wow-delay="0.1s">
+    <nav class="navbar navbar-expand-lg navbar-dark py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
+      <div style="padding-top: 15px;">
+        <a href="index.html" class="navbar-brand ms-4 ms-lg-0 py-6">
+          <img src="img/landshare-logo.png">
+        </a>
+      </div>
+      <div style="display: inline-flex;">
+        <a href="" id="circle"></a>
+
+        <a href="#" id="loginLogoutButton" class="nav-item nav-link"><b></b>&nbsp;&nbsp;<i
+            class="fa fa-arrow-right"></i></a>
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <div class="navbar-nav ms-auto p-4 p-lg-0">
+            <a href="index.html" class="nav-item nav-link ">Home</a>
+            <a id="profile"></a>
+
+            <a href="investing-opportunity.html" class="nav-item nav-link ">Opportunity</a>
+            <a href="shortlisted-properties.html" class="nav-item nav-link">Sortlist Property</a>
+            <a href="my-uploads.html" class="nav-item nav-link ">My Property</a>
+
+            <a href="enquire.html" class="nav-item nav-link">Enquiries My Property</a>
+
+            <a href="contact.html" class="nav-item nav-link">Connect</a>
+
+          </div>
+        </div>
+      </div>
+
+    </nav>
+  </div>
+
+
+
+  <!-------------------Navigation end------------>
+
+  <!-- Page Header Start -->
+  <div class="container-fluid page-header mb-5 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container text-center">
+      <h1 class="display-4  animated slideInDown mb-4">My Properties</h1>
+
     </div>
-    <!-- Spinner End -->
+  </div>
+
+  <div class="row align-items-start" id="property-listings">
+    <!-- Property listings will be dynamically added here -->
+  </div>
 
 
-    <!-- Navbar Start -->
-    <div class="container-fluid fixed-top px-0 wow fadeIn" data-wow-delay="0.1s">
-        <nav class="navbar navbar-expand-lg navbar-dark py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
-            <div style="padding-top: 15px;">
-                <a href="index.html" class="navbar-brand ms-4 ms-lg-0 py-6">
-                    <img src="img/landshare-logo.png">
-                </a>
-            </div>
-            <div style="display: inline-flex;">
-                                <a href="" id="circle"></a>
+  <!-- Footer Start -->
+  <div class="container-fluid bg-dark-1 text-white footer mt-5  wow fadeIn" data-wow-delay="0.1s">
+    <div class="container ">
+      <div class="row g-5" style="font-size:12px !important;">
+        <div class="col-lg-3 col-md-6">
+          <div class=" pt-1">
+            <h3 class="text-light mb-4">Corporate Office</h3>
+            <p>
+              1st Floor, 90, BELLARY ROAD, BYATARAYANPURA,<br> Bengaluru (Bangalore) Urban, Karnataka,
+              560092</p><br>
+            <i class="fa fa-phone-alt me-3"></i>Enquiries: (+91) 9540 03 0303<br>
+            <i class="fa fa-envelope me-3"></i>info@landshareindia.com</p>
+          </div>
+          <div class="d-flex pt-2">
+            <a class="btn btn-square me-1" target="_blank" href="https://www.facebook.com/landshareindia"><i
+                class="fab fa-facebook-f"></i></a>
+            <a class="btn btn-square me-1" target="_blank"
+              href="https://www.youtube.com/channel/UCN1Y1BSKrRyCkrroPSqAPaw"><i class="fab fa-youtube"></i></a>
+            <a class="btn btn-square me-1" target="_blank"
+              href="https://www.linkedin.com/company/90611397/admin/feed/posts/"><i class="fab fa-linkedin-in"></i></a>
+            <a class="btn btn-square me-0" target="_blank" href="https://www.instagram.com/landshare.india"><i
+                class='fab fa-instagram'></i></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 ">
+          <h3 class="text-light mb-4">Our Companies</h3>
+          <p>Landshare India Private Limited<br>
+            Agrocorp Landbase Private Limited<br>
+            Agrocorp Landshare India Private Limited<br>
 
-                <a href="#" id="loginLogoutButton" class="nav-item nav-link"><b></b>&nbsp;&nbsp;<i
-                        class="fa fa-arrow-right"></i></a>
-                <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
-                    data-bs-target="#navbarCollapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-            </div>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <div class="navbar-nav ms-auto p-4 p-lg-0">
-                        <a href="index.html" class="nav-item nav-link ">Home</a>
-                        <a href="investing-opportunity.html" class="nav-item nav-link ">Opportunity</a>
-                        <a href="contact.html" class="nav-item nav-link">Connect</a>
-                        <a href="shortlisted-properties.html" class="nav-item nav-link">Sortlist Property</a>
-                        <a href="my-uploads.html" class="nav-item nav-link ">My Property</a>
-                        <a href="enquire.html" class="nav-item nav-link">Enquiries My Property</a>
-
-                    </div>
-                </div>
-            </div>
-
-        </nav>
-    </div>
-
-
-
-    <!-------------------Navigation end------------>
-
-    <!-- Page Header Start -->
-    <div class="container-fluid page-header mb-5 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container text-center">
-            <h1 class="display-4  animated slideInDown mb-4">My Properties</h1>
+            Logical Farmer Private Limited<br>
+            ALPL One Private Limited</p>
+        </div>
+        <div class="col-lg-3 col-md-6 text-white">
+          <h3 class="text-light mb-4">What we do</h3>
+          <p><a href="farm-communities" style="color:#fff !important;" target="_blank">Land Acquisition &
+              Sale</a><br>
+            <a href="landshare" style="color:#fff !important;" target="_blank">Transaction Advisory
+              Services</a><br>
+            <a href="residential" style="color:#fff !important;" target="_blank">Asset Management
+              Services</a><br>
+            <a href="residential" style="color:#fff !important;" target="_blank">Title Due Diligence</a><br>
+            <a href="residential" style="color:#fff !important;" target="_blank">Prime & Opulent Investment
+              Locations</a><br>
+            <a href="residential" style="color:#fff !important;" target="_blank">Legal & Policy Research</a>
+          </p>
 
         </div>
-    </div>
-
-    <div class="row align-items-start" id="property-listings">
-        <!-- Property listings will be dynamically added here -->
-    </div>
-
-
-    <!-- Footer Start -->
-    <div class="container-fluid bg-dark-1 text-white footer mt-5  wow fadeIn" data-wow-delay="0.1s">
-        <div class="container ">
-            <div class="row g-5" style="font-size:12px !important;">
-                <div class="col-lg-3 col-md-6">
-                    <div class=" pt-1">
-                        <h3 class="text-light mb-4">Corporate Office</h3>
-                        <p>
-                            1st Floor, 90, BELLARY ROAD, BYATARAYANPURA,<br> Bengaluru (Bangalore) Urban, Karnataka,
-                            560092</p><br>
-                        <i class="fa fa-phone-alt me-3"></i>Enquiries: (+91) 9540 03 0303<br>
-                        <i class="fa fa-envelope me-3"></i>info@landshareindia.com</p>
-                    </div>
-                    <div class="d-flex pt-2">
-                        <a class="btn btn-square me-1" target="_blank" href="https://www.facebook.com/landshareindia"><i
-                                class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-square me-1" target="_blank"
-                            href="https://www.youtube.com/channel/UCN1Y1BSKrRyCkrroPSqAPaw"><i
-                                class="fab fa-youtube"></i></a>
-                        <a class="btn btn-square me-1" target="_blank"
-                            href="https://www.linkedin.com/company/90611397/admin/feed/posts/"><i
-                                class="fab fa-linkedin-in"></i></a>
-                        <a class="btn btn-square me-0" target="_blank"
-                            href="https://www.instagram.com/landshare.india"><i class='fab fa-instagram'></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 ">
-                    <h3 class="text-light mb-4">Our Companies</h3>
-                    <p>Landshare India Private Limited<br>
-                        Agrocorp Landbase Private Limited<br>
-                        Agrocorp Landshare India Private Limited<br>
-
-                        Logical Farmer Private Limited<br>
-                        ALPL One Private Limited</p>
-                </div>
-                <div class="col-lg-3 col-md-6 text-white">
-                    <h3 class="text-light mb-4">What we do</h3>
-                    <p><a href="farm-communities" style="color:#fff !important;" target="_blank">Land Acquisition &
-                            Sale</a><br>
-                        <a href="landshare" style="color:#fff !important;" target="_blank">Transaction Advisory
-                            Services</a><br>
-                        <a href="residential" style="color:#fff !important;" target="_blank">Asset Management
-                            Services</a><br>
-                        <a href="residential" style="color:#fff !important;" target="_blank">Title Due Diligence</a><br>
-                        <a href="residential" style="color:#fff !important;" target="_blank">Prime & Opulent Investment
-                            Locations</a><br>
-                        <a href="residential" style="color:#fff !important;" target="_blank">Legal & Policy Research</a>
-                    </p>
-
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <h3 class="text-light mb-4">Quick Links</h3>
-                    <p><a href="https://www.agrocorp.co.in" style="color:#fff !important;">Home</a><br>
-                        <a href="about" style="color:#fff !important;">Know Us</a><br>
-                        <a href="https://landshareindia.com/demo/what-we-offer.html" style="color:#fff !important;">What
-                            We Do</a><br>
-                        <a href="https://landshareindia.com/demo/investing-opportunity.html"
-                            style="color:#fff !important;">Investment Opportunitiess</a><br>
-                        <a href="https://landshareindia.com/demo/media.html" style="color:#fff !important;">Press
-                            Room</a><br>
-                        <a href="https://landshareindia.com/demo/clients.html" style="color:#fff !important;">Our
-                            Clients</a><br>
-                        <a href="contact" style="color:#fff !important;">Contact Us</a><br>
-                        <a href="faq" style="color:#fff !important;">FAQ</a><br>
-                        <a href="privacy-policy" style="color:#fff !important;">Privacy Policy</a><br>
-                        <a href="disclaimer" style="color:#fff !important;">Disclaimer</a><br>
-                        <a href="sitemap" style="color:#fff !important;">Sitemap</a>
-                    </p>
+        <div class="col-lg-3 col-md-6">
+          <h3 class="text-light mb-4">Quick Links</h3>
+          <p><a href="https://www.agrocorp.co.in" style="color:#fff !important;">Home</a><br>
+            <a href="about" style="color:#fff !important;">Know Us</a><br>
+            <a href="https://landshareindia.com/demo/what-we-offer.html" style="color:#fff !important;">What
+              We Do</a><br>
+            <a href="https://landshareindia.com/demo/investing-opportunity.html"
+              style="color:#fff !important;">Investment Opportunitiess</a><br>
+            <a href="https://landshareindia.com/demo/media.html" style="color:#fff !important;">Press
+              Room</a><br>
+            <a href="https://landshareindia.com/demo/clients.html" style="color:#fff !important;">Our
+              Clients</a><br>
+            <a href="contact" style="color:#fff !important;">Contact Us</a><br>
+            <a href="faq" style="color:#fff !important;">FAQ</a><br>
+            <a href="privacy-policy" style="color:#fff !important;">Privacy Policy</a><br>
+            <a href="disclaimer" style="color:#fff !important;">Disclaimer</a><br>
+            <a href="sitemap" style="color:#fff !important;">Sitemap</a>
+          </p>
 
 
-                </div>
-            </div>
         </div>
-
-        <div class="container-fluid copyright">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a class="border-bottom" href="https://www.landshareindia.com"
-                            style="color:white !important;">Landshare India Pvt. Ltd</a>, All Right Reserved.
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <p id="propertyId"></p>
-            <label>
-                <input type="radio" name="status" value="sold"> Sold Out
-            </label>
-            <br>
-            <label>
-                <input type="radio" name="status" value="unsold"> Unsold
-            </label>
-            <button onclick="updatePropertyStatus()">Update Status</button>
-        </div>
+      </div>
     </div>
 
+    <div class="container-fluid copyright">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+            &copy; <a class="border-bottom" href="https://www.landshareindia.com"
+              style="color:white !important;">Landshare India Pvt. Ltd</a>, All Right Reserved.
+          </div>
 
-    <!-- Footer End -->
-    <!-- Back to Top -->
-    <span class=" back-to-top">
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-    </span>
-    
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <p id="propertyId"></p>
+      <label>
+        <input type="radio" name="status" value="sold"> Sold Out
+      </label>
+      <br>
+      <label>
+        <input type="radio" name="status" value="unsold"> Unsold
+      </label>
+      <button onclick="updatePropertyStatus()">Update Status</button>
+    </div>
+  </div>
 
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/parallax/parallax.min.js"></script>
 
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
-  
-    <script>
-        const userId = localStorage.getItem('userId');
-var circle = $('#circle')       
- function fetchData() {
-          const api = apiUrl + '/getproperty';
-          const requestData = {
-            user_id: userId
-          };
-      
-          $.ajax({
-            type: 'POST',
-            url: api,
-            contentType: 'application/json',
-            data: JSON.stringify(requestData)
-          }).done(function(data) {
-            data.data.forEach(function(property) {
-              if (property.user_id == userId) {
-                var propertyListing = createPropertyListing(property);
-                $('#property-listings').append(propertyListing);
-              }
-            });
-            $('#spinner').hide();
-          }).fail(function(error) {
-            console.error('There was a problem with the fetch operation:', error);
-          });
-        }
-      
-        const propertyListingsContainer = $('#property-listings');
-      
-        function createPropertyListing(property) {
-          return $('<div class="row align-items-start">').html(`
+  <!-- Footer End -->
+  <!-- Back to Top -->
+  <span class=" back-to-top">
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+  </span>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+  <!-- JavaScript Libraries -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="lib/wow/wow.min.js"></script>
+  <script src="lib/easing/easing.min.js"></script>
+  <script src="lib/waypoints/waypoints.min.js"></script>
+  <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+  <script src="lib/parallax/parallax.min.js"></script>
+
+  <!-- Template Javascript -->
+  <script src="js/main.js"></script>
+
+  <script>
+    const userId = localStorage.getItem('userId');
+    var circle = $('#circle')
+    var profile = $('#profile')
+    function fetchData() {
+      const api = apiUrl + '/getproperty';
+      const requestData = {
+        user_id: userId
+      };
+
+      $.ajax({
+        type: 'POST',
+        url: api,
+        contentType: 'application/json',
+        data: JSON.stringify(requestData)
+      }).done(function (data) {
+        data.data.forEach(function (property) {
+          if (property.user_id == userId) {
+            var propertyListing = createPropertyListing(property);
+            $('#property-listings').append(propertyListing);
+          }
+        });
+        $('#spinner').hide();
+      }).fail(function (error) {
+        console.error('There was a problem with the fetch operation:', error);
+      });
+    }
+
+    const propertyListingsContainer = $('#property-listings');
+
+    function createPropertyListing(property) {
+      return $('<div class="row align-items-start">').html(`
             <div class="product-inner mb-5 col-md-8 mx-auto g-5">
               <div class="product-im col-md-3-1">
                 <img src="${property.images[0]}" style="width:100% !important; border-radius:10px;">
@@ -275,157 +277,158 @@ var circle = $('#circle')
               </div>
             </div>
           `);
-        }
-      
-        function redirectToPropertyDataPage(id) {
-          location.href = `update-property.html?id=${id}`;
-        }
-      
-        let currentPropertyId;
-        let currentUserId;
-      
-        function openModal(propertyId, userId, soldStatus) {
-          const modal = $('#myModal');
-          const soldRadio = $('input[value="sold"]');
-          const unsoldRadio = $('input[value="unsold"]');
-      
-          currentPropertyId = propertyId;
-          currentUserId = userId;
-      
-          if (soldStatus === '1') {
-            soldRadio.prop('checked', true);
-          } else {
-            unsoldRadio.prop('checked', true);
-          }
-      
-          modal.show();
-        }
-      
-        function closeModal() {
-          const modal = $('#myModal');
-          modal.hide();
-        }
-      
-        function updatePropertyStatus() {
-          const soldRadio = $('input[value="sold"]');
-          const status = soldRadio.prop('checked') ? '1' : '0';
-      
-          const data = {
-            propertyId: currentPropertyId,
-            user_id: currentUserId,
-            sold_status: status
-          };
-      
-          const api = apiUrl + '/sold_property';
-          $.ajax({
-            type: 'POST',
-            url: api,
-            contentType: 'application/json',
-            data: JSON.stringify(data)
-          }).done(function(responseData) {
-            if (responseData.message) {
-              Swal.fire({
-                icon: 'success',
-                title: 'Success',
-                text: responseData.message
-              }).then(function() {
-                closeModal();
-                location.reload();
-              });
-            } else {
-              Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: responseData.error
-              });
-            }
-          }).fail(function(error) {
-            Swal.fire({
-              icon: 'error',
-              title: 'Error',
-              text: error
-            });
+    }
+
+    function redirectToPropertyDataPage(id) {
+      location.href = `update-property.html?id=${id}`;
+    }
+
+    let currentPropertyId;
+    let currentUserId;
+
+    function openModal(propertyId, userId, soldStatus) {
+      const modal = $('#myModal');
+      const soldRadio = $('input[value="sold"]');
+      const unsoldRadio = $('input[value="unsold"]');
+
+      currentPropertyId = propertyId;
+      currentUserId = userId;
+
+      if (soldStatus === '1') {
+        soldRadio.prop('checked', true);
+      } else {
+        unsoldRadio.prop('checked', true);
+      }
+
+      modal.show();
+    }
+
+    function closeModal() {
+      const modal = $('#myModal');
+      modal.hide();
+    }
+
+    function updatePropertyStatus() {
+      const soldRadio = $('input[value="sold"]');
+      const status = soldRadio.prop('checked') ? '1' : '0';
+
+      const data = {
+        propertyId: currentPropertyId,
+        user_id: currentUserId,
+        sold_status: status
+      };
+
+      const api = apiUrl + '/sold_property';
+      $.ajax({
+        type: 'POST',
+        url: api,
+        contentType: 'application/json',
+        data: JSON.stringify(data)
+      }).done(function (responseData) {
+        if (responseData.message) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: responseData.message
+          }).then(function () {
+            closeModal();
+            location.reload();
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: responseData.error
           });
         }
-      
-        function deleteElement(propertyId, userId) {
-          var api = apiUrl + '/delete_proprty';
-      
-          var data = {
-            propertyId: propertyId,
-            user_id: userId
-          };
-      
-          $.ajax({
-            type: 'POST',
-            url: api,
-            contentType: 'application/json',
-            data: JSON.stringify(data)
-          }).done(function(responseData) {
-            if (responseData.message) {
-              Swal.fire({
-                icon: 'success',
-                title: 'Success',
-                text: responseData.message
-              }).then(function() {
-                location.reload();
-              });
-            } else {
-              Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: responseData.error
-              });
-            }
-          }).fail(function(error) {
-            Swal.fire({
-              icon: 'error',
-              title: 'Error',
-              text: error
-            });
-          });
-        }
-      
-        $(document).ready(function() {
-          fetchData();
-          const token = localStorage.getItem('token');
-          const loginLogoutButton = $('#loginLogoutButton');
-      
-          if (userId && token) {
-            loginLogoutButton.html('<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
-            loginLogoutButton.on('click', function() {
-              localStorage.removeItem('userId');
-              localStorage.removeItem('token');
-              window.location.href = 'index.html';
-            });
-            circle.html('<a href="" id="circle" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2"></a>')
-          } else {
-            loginLogoutButton.html('<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
-            loginLogoutButton.attr('href', 'login-form.html');
-          }
-          function getname() {
-            const userData = {
-              userid: userId
-            };
-            $.ajax({
-              type: 'POST',
-              url: apiUrl + '/getuserName',
-              contentType: 'application/json',
-              data: JSON.stringify(userData)
-            }).done(function(data) {
-              const name = data.message[0].name;
-              const firstLetter = name.charAt(0).toUpperCase();
-              const elementToReplace = $('.d-inline-flex.btn-sm-square.bg-primary.text-white.rounded-circle.ms-2');
-      
-              if (elementToReplace) {
-                elementToReplace.text(firstLetter);
-              }
-            }).fail(function(error) {
-            });
-          }
-          getname();
+      }).fail(function (error) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: error
         });
-      </script>
-      </body>
+      });
+    }
+
+    function deleteElement(propertyId, userId) {
+      var api = apiUrl + '/delete_proprty';
+
+      var data = {
+        propertyId: propertyId,
+        user_id: userId
+      };
+
+      $.ajax({
+        type: 'POST',
+        url: api,
+        contentType: 'application/json',
+        data: JSON.stringify(data)
+      }).done(function (responseData) {
+        if (responseData.message) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: responseData.message
+          }).then(function () {
+            location.reload();
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: responseData.error
+          });
+        }
+      }).fail(function (error) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: error
+        });
+      });
+    }
+
+    $(document).ready(function () {
+      fetchData();
+      const token = localStorage.getItem('token');
+      const loginLogoutButton = $('#loginLogoutButton');
+
+      if (userId && token) {
+        loginLogoutButton.html('<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
+        loginLogoutButton.on('click', function () {
+          localStorage.removeItem('userId');
+          localStorage.removeItem('token');
+          window.location.href = 'index.html';
+        });
+        profile.html('<a href="my-profile.html" class="nav-item nav-link">Profile </a>')
+        circle.html('<a href="" id="circle" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2"></a>')
+      } else {
+        loginLogoutButton.html('<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
+        loginLogoutButton.attr('href', 'login-form.html');
+      }
+      function getname() {
+        const userData = {
+          userid: userId
+        };
+        $.ajax({
+          type: 'POST',
+          url: apiUrl + '/getuserName',
+          contentType: 'application/json',
+          data: JSON.stringify(userData)
+        }).done(function (data) {
+          const name = data.message[0].name;
+          const firstLetter = name.charAt(0).toUpperCase();
+          const elementToReplace = $('.d-inline-flex.btn-sm-square.bg-primary.text-white.rounded-circle.ms-2');
+
+          if (elementToReplace) {
+            elementToReplace.text(firstLetter);
+          }
+        }).fail(function (error) {
+        });
+      }
+      getname();
+    });
+  </script>
+</body>
 
 </html>

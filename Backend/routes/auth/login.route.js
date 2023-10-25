@@ -7,5 +7,5 @@ const { loginFacebook } = require("../../controllers/facebook")
 loginRouter.post('/login', login);
 loginRouter.post('/verifybyotp', verifyByOtp)
 loginRouter.post('/auth/facebook', passport.authenticate('facebookToken', { session: false }), facebookOAuth);
-loginRouter.post('/getuserName', getuserName)
+loginRouter.post('/getusername', getuserName)
 module.exports = loginRouter;

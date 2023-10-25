@@ -57,7 +57,7 @@
         </a>
       </div>
       <div style="display: inline-flex;">
-                        <a href="" id="circle"></a>
+        <a href="" id="circle"></a>
 
         <a href="#" id="loginLogoutButton" class="nav-item nav-link"><b></b>&nbsp;&nbsp;<i
             class="fa fa-arrow-right"></i></a>
@@ -246,15 +246,16 @@
       </div>
       <div class="col-md-6 mb-3">
         <div class="row">
+
           <div class="col-3">
             <label for="" class="col-form-label">Type of Ownership <span class="required">*</span> </label>
           </div>
           <div class="col-9">
             <select class="form-select" id="ownership" aria-label="Default select example">
               <option selected>Open this select menu</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+              <option value="1"> Sole Owner</option>
+              <option value="2">Joint Owner</option>
+              <option value="3">Multiple Owners</option>
             </select>
           </div>
 
@@ -445,13 +446,14 @@
   <script src="lib/parallax/parallax.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
 
   <!-- Template Javascript -->
   <script src="js/main.js"></script>
   <!-- Add this script at the bottom of your HTML file -->
   <script>
 
-var circle = document.getElementById('circle')
+    var circle = $('#circle')
     function calculateTotal() {
       var acre = parseFloat(document.getElementById('acre').value) || 0;
       var gunta = parseFloat(document.getElementById('guntas').value) || 0;
@@ -527,8 +529,28 @@ var circle = document.getElementById('circle')
       const acre = $('#acre').val();
       const cents = $('#cents').val();
       const guntas = $('#guntas').val();
-      const sizeoflandmark = acre + ' acre ' + guntas + ' guntas ' + cents + ' cents';
+      // const sizeoflandmark = acre + ' acre ' + guntas + ' guntas ' + cents + ' cents';
+      const sizeoflandmark =
+        (acre ? acre + ' acre ' : '0 acre ') +
+        (guntas ? guntas + ' guntas ' : '0 guntas ') +
+        (cents ? cents + ' cents' : '0 cents');
 
+      let ownershipName = '';
+
+      // Value ke basis par option ke name ko nikalein
+      switch (ownership) {
+        case '1':
+          ownershipName = 'Sole Owner';
+          break;
+        case '2':
+          ownershipName = 'Joint Owner';
+          break;
+        case '3':
+          ownershipName = 'Multiple Owners';
+          break;
+        default:
+          ownershipName = 'Unknown'; // Agar koi match na ho toh default naam set karein
+      }
       const formData = new FormData(form);
 
       formData.append('user_id', userId);
@@ -548,7 +570,7 @@ var circle = document.getElementById('circle')
       formData.append('city', city);
       formData.append('pincode', pincode);
       formData.append('landmark', landmark);
-      formData.append('owenership', ownership);
+      formData.append('owenership', ownershipName);
       formData.append('cost_per_squre_fit', cost);
       formData.append('size_of_land', sizeoflandmark);
       formData.append('desciption', desciption);
@@ -597,6 +619,7 @@ var circle = document.getElementById('circle')
     const token = localStorage.getItem('token');
 
     const loginLogoutButton = document.getElementById('loginLogoutButton');
+
 
     if (userId && token) {
       loginLogoutButton.innerHTML = '<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';

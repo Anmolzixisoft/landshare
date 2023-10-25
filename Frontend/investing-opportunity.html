@@ -70,11 +70,15 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto p-4 p-lg-0">
                         <a href="index.html" class="nav-item nav-link ">Home</a>
+                        <a id="profile"></a>
+
                         <a href="investing-opportunity.html" class="nav-item nav-link ">Opportunity</a>
-                        <a href="contact.html" class="nav-item nav-link">Connect</a>
                         <a href="shortlisted-properties.html" class="nav-item nav-link">Sortlist Property</a>
                         <a href="my-uploads.html" class="nav-item nav-link ">My Property</a>
+
                         <a href="enquire.html" class="nav-item nav-link">Enquiries My Property</a>
+
+                        <a href="contact.html" class="nav-item nav-link">Connect</a>
 
                     </div>
                 </div>
@@ -169,7 +173,7 @@
                             1st Floor, 90, BELLARY ROAD, BYATARAYANPURA,<br> Bengaluru (Bangalore) Urban, Karnataka,
                             560092</p><br>
                         <i class="fa fa-phone-alt me-3"></i>Enquiries: (+91) 9540 03 0303<br>
-                        <i class="fa fa-envelope mailto:me-3"></i>info@landshareindia.com</p>
+                        <i class="fa fa-envelope me-3"></i>info@landshareindia.com</p>
                     </div>
                     <div class="d-flex pt-2">
                         <a class="btn btn-square me-1" target="_blank" href="https://www.facebook.com/landshareindia"><i
@@ -269,6 +273,7 @@
         var userId = localStorage.getItem('userId');
         var token = localStorage.getItem('token');
         var circle = $('#circle')
+        var profile = $('#profile')
         function redirectToBuyPage(propertyId) {
             const url = `buy.html?id=${propertyId}`;
 
@@ -359,7 +364,7 @@
 
         function createPropertyListing(property) {
             const container = document.createElement('div');
-            container.classList.add('product-inner', 'mb-5', 'col-md-8', 'mx-auto', 'g-5');
+            container.classList.add('product-inner', 'mb-5', 'col-md-7', 'mx-auto', 'g-5');
             container.innerHTML = `
             <div class="product-im col-md-3-1 position-relative">
                 <div class="image-container">
@@ -453,7 +458,8 @@
                 localStorage.removeItem('token');
                 window.location.href = 'index.html'
             });
-            circle.html('<a href="" id="circle" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2"></a>')
+            profile.html('<a href="my-profile.html" class="nav-item nav-link">Profile </a>')
+            circle.html('<a href="my-profile.html" id="circle" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2"></a>')
         } else {
             loginLogoutButton.innerHTML = '<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
             loginLogoutButton.href = 'login-form.html';

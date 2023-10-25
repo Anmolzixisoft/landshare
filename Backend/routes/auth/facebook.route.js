@@ -6,7 +6,6 @@ const facebookRouter = express.Router();
 const passport = require('passport');
 const cors = require('cors');
 const connection = require('../../database/mysqldb')
-const session = require('express-session');
 const cookieParser = require('cookie-parser')
 const app = express()
 app.use(express.json());
@@ -18,10 +17,6 @@ const start = require('../../controllers/facebook')
 facebookRouter.get('/', (req, res) => {
     res.redirect('http://127.0.0.1:5500/Frontend/index.html', req.user);
 });
-facebookRouter.use(session({
-    secret: 'jsonworldplaceforjsdemos',
-    saveUninitialized: false,
-}));
 
 facebookRouter.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email' }));
 

@@ -1,4 +1,4 @@
-const session = require('express-session')
+const session = require('express-session');
 const express = require('express')
 const passport = require('passport')
 const FacebookStrategy = require('passport-facebook').Strategy;
@@ -7,8 +7,13 @@ const connection = require('../database/mysqldb')
 const app = express()
 
 
+// app.use(session({
+//     secret: 'jsonworldplaceforjsdemos',
+//     saveUninitialized: false,
+// }));
 app.use(session({
-    secret: 'jsonworldplaceforjsdemos',
+    secret: '699fb97fecacfd3f72ba1400e27286fa',
+    resave: false,
     saveUninitialized: false,
 }));
 

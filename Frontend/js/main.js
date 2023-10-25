@@ -10,15 +10,15 @@
         }, 1);
     };
     spinner();
-    
-    
+
+
     // Initiate the wowjs
     new WOW().init();
 
 
     // Fixed Navbar
     $(window).scroll(function () {
-        if ($(window).width() >20) {
+        if ($(window).width() > 20) {
             if ($(this).scrollTop() > 45) {
                 $('.fixed-top').addClass('bg-dark shadow');
             } else {
@@ -32,8 +32,8 @@
             }
         }
     });
-    
-    
+
+
     // Back to top button
     $(window).scroll(function () {
         if ($(this).scrollTop() > 300) {
@@ -43,7 +43,7 @@
         }
     });
     $('.back-to-top').click(function () {
-        $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
+        $('html, body').animate({ scrollTop: 0 }, 1500, 'easeInOutExpo');
         return false;
     });
     // Facts counter
@@ -58,9 +58,9 @@
         $('.progress .progress-bar').each(function () {
             $(this).css("width", $(this).attr("aria-valuenow") + '%');
         });
-    }, {offset: '80%'});
+    }, { offset: '80%' });
 
-    
+
     // Portfolio isotope and filter
     var portfolioIsotope = $('.portfolio-container').isotope({
         itemSelector: '.portfolio-item',
@@ -70,11 +70,11 @@
         $("#portfolio-flters li").removeClass('active');
         $(this).addClass('active');
 
-        portfolioIsotope.isotope({filter: $(this).data('filter')});
+        portfolioIsotope.isotope({ filter: $(this).data('filter') });
     });
 
 
-   
+
     // Testimonials carousel
     $(".testimonial-carousel").owlCarousel({
         autoplay: true,
@@ -83,7 +83,7 @@
         loop: true,
         items: 3, // Display only 1 item
         margin: 30,
-        nav: true,
+        nav: false,
         navText: [
             '<i class="bi bi-chevron-left"></i>',
             '<i class="bi bi-chevron-right"></i>'
@@ -102,7 +102,7 @@
             // You can add more breakpoints as needed
         }
     });
-    
+
     // Menu.
     var $menu = $('#menu');
 
@@ -195,11 +195,11 @@
                 $menu._hide();
 
         });
-    
 
-    
+
+
 })(jQuery);
-    
+
 
 
 

@@ -2,14 +2,8 @@
 <html lang="en">
 
 <head>
-    <style>
-        .error-text {
-            color: red;
-        }
-    </style>
-    <script src="utils.js"></script>
     <meta charset="utf-8">
-    <title>Contact - Landshare India Private Limited </title>
+    <title>Upload Property - Landshare India Private Limited </title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -59,7 +53,6 @@
             </div>
             <div style="display: inline-flex;">
                 <a href="" id="circle"></a>
-
                 <a href="#" id="loginLogoutButton" class="nav-item nav-link"><b></b>&nbsp;&nbsp;<i
                         class="fa fa-arrow-right"></i></a>
                 <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
@@ -71,15 +64,12 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto p-4 p-lg-0">
                         <a href="index.html" class="nav-item nav-link ">Home</a>
-                        <a id="profile"></a>
-
                         <a href="investing-opportunity.html" class="nav-item nav-link ">Opportunity</a>
-                        <a href="shortlisted-properties.html" class="nav-item nav-link">Sortlist Property</a>
-                        <a href="my-uploads.html" class="nav-item nav-link ">My Property</a>
-
-                        <a href="enquire.html" class="nav-item nav-link">Enquiries My Property</a>
-
                         <a href="contact.html" class="nav-item nav-link">Connect</a>
+                        <a href="" class="nav-item nav-link">Press-Room</a>
+                        <a href="press-room.html" class="nav-item nav-link ">Blog</a>
+
+
 
                     </div>
                 </div>
@@ -93,9 +83,9 @@
     <!-------------------Navigation end------------>
 
     <!-- Page Header Start -->
-    <div class="container-fluid page-header-connect mb-5 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container-fluid page-header mb-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center">
-            <h1 class="display-4 text-white animated slideInDown mb-4">Contact Us</h1>
+            <h1 class="display-4  animated slideInDown mb-4">My Profile</h1>
 
         </div>
     </div>
@@ -105,53 +95,78 @@
     <!-- Contact Start -->
     <div class="container-xxl py-5">
         <div class="container mb-5">
-            <div class="row g-5">
-                <div class="col-lg-6  mx-auto wow fadeIn" data-wow-delay="0.1s">
-                    <h2 class="display-6 mb-5">If You Have Any Query, Please Contact Us</h2>
 
-                    <form id="touch">
+            <div class="row g-3">
+                <div class="col-lg-7  mx-auto wow fadeIn" data-wow-delay="0.1s">
+
+                    <form id="update">
                         <div class="row g-3 ">
-                            <div class="col-md-6">
+                            <!-- <div class="col-md-6">
+                                <p>Customer Id</p>
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="name" placeholder="Your Name" required>
-                                    <label for="name">Your Name</label>
+
+                                    <p class="form-control" id="userid"></p>
+
+                                </div>
+                            </div> -->
+                            <div class="col-md-6">
+                                <p>Customer Id</p>
+                                <div class="form-floating">
+
+                                    <input type="text" class="form-control" id="userid" name="userid" readonly>
+
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input type="email" class="form-control" id="email" placeholder="Your Email"
-                                        required oninput="validateEmail()">
-                                    <div class="error-message"></div>
-                                    <label for="email">Your Email</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
+                                <p>Mobile Number</p>
                                 <div class="form-floating">
                                     <input type="text" class="form-control" id="phone" placeholder="Your Phone Number"
-                                        onkeypress="return isNumberKey(event)" required maxlength="10">
-                                    <label for="phone">Phone</label>
+                                        onkeypress="return isNumberKey(event)" required pattern="[0-9]+" maxlength="10">
+                                    <label for="phone">Contact Number</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <p>Name</p>
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="nameInput" placeholder="Name"
+                                        onkeypress="return isCharacterKey(event)" required pattern="[A-Za-z  ]+"
+                                        maxlength="80">
+                                    <label for="subject">Name</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
+                                <p>Email Id</p>
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="subject" placeholder="Subject" required>
-                                    <label for="subject">Subject</label>
+                                    <input type="email" class="form-control" id="email" placeholder="Email">
+                                    <label for="subject">Email Id</label>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <div class="col-md-6">
+
+                                <p>Change Password</p>
                                 <div class="form-floating">
-                                    <textarea class="form-control" placeholder="Leave a message here" id="message"
-                                        style="height: 100px"></textarea>
-                                    <label for="message">Message</label>
+                                    <input type="password" class="form-control" id="pass" placeholder="Email">
+                                    <label for="subject">New Password</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <p></p>Confirm Password
+                                <div class="form-floating">
+                                    <input type="password" class="form-control" id="pass1" placeholder="Email">
+                                    <label for="subject">Confirm Password</label>
+                                    <div id="error-message" style="color: red;"></div>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <button class="btn btn-primary py-2 px-3 me-3">
-                                    Send Message
+                                    Update
                                     <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
                                         <i class="fa fa-arrow-right"></i>
                                     </div>
                                 </button>
+
                             </div>
                         </div>
                     </form>
@@ -266,134 +281,159 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script src="./utils.js"></script>
     <script>
-        var profile = $('#profile')
-        function validateEmail() {
-            var emailInput = document.getElementById('email');
-            var email = emailInput.value;
-            var errorContainer = emailInput.parentElement.querySelector('.error-message');
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            var inputValue = evt.target.value + String.fromCharCode(charCode);
 
-            var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            if (inputValue.length === 1 && (charCode === 48 || charCode === 49 || charCode === 50 || charCode === 51 || charCode === 52 || charCode === 53)) {
+                return false; // Disallow starting with 0, 1, 2, 3, 4, or 5
+            }
+            return true;
+        }
+        function isCharacterKey(evt) {
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if ((charCode >= 65 && charCode <= 90) || (charCode >= 97 && charCode <= 122)) {
+                return true;
+            }
+            return false;
+        }
+        var userId = localStorage.getItem('userId');
+        var token = localStorage.getItem('token');
+        console.log(userId, '-----');
+        var loginLogoutButton = $('#loginLogoutButton');
 
-            if (!email) {
+        var circle = $('#circle')
+        if (userId && token) {
+            loginLogoutButton.html('<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
 
-                errorContainer.innerText = '';
-            } else if (!email.match(emailRegex)) {
+            loginLogoutButton.click(function () {
+                localStorage.removeItem('userId');
+                localStorage.removeItem('token');
+                window.location.href = 'index.html';
+            });
+            circle.html('<a href="" id="circle" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2"></a>')
+        } else {
+            loginLogoutButton.html('<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
+            loginLogoutButton.attr('href', 'login-form.html');
+        }
 
-                errorContainer.innerText = 'Invalid ';
-                errorContainer.classList.add('error-text');
+        function getname() {
+            var userData = {
+                userid: userId
+            };
+
+            $.ajax({
+                url: apiUrl + '/getuserName',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(userData),
+                success: function (data) {
+                    var name = data.message[0].name;
+                    var firstLetter = name.charAt(0).toUpperCase();
+                    var elementToReplace = $('.d-inline-flex.btn-sm-square.bg-primary.text-white.rounded-circle.ms-2');
+
+                    if (elementToReplace.length > 0) {
+                        elementToReplace.text(firstLetter);
+                    }
+                }
+            });
+        }
+
+
+        function fetchData() {
+            var userData = {
+                userid: userId
+            };
+
+            $.ajax({
+                url: apiUrl + '/getuser',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(userData),
+                success: function (data) {
+                    $('#phone').val(data.message[0].mobile_number);
+                    $('#nameInput').val(data.message[0].name);
+                    $('#email').val(data.message[0].email);
+                    $('#userid').val(data.message[0].User_ID)
+                }
+            });
+        }
+        getname();
+        window.onload = fetchData;
+        const passwordInput = $('#pass');
+        const rePasswordInput = $('#pass1');
+
+        const errorMessage = $('#error-message');
+        rePasswordInput.on('input', checkPasswordMatch);
+
+        function checkPasswordMatch() {
+            const password = passwordInput.val();
+            const rePassword = rePasswordInput.val();
+
+            if (password === rePassword) {
+                errorMessage.text('');
             } else {
-
-                errorContainer.innerText = '';
+                errorMessage.text('Passwords not match');
             }
         }
-        function touch() {
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            const subject = document.getElementById('subject').value;
-            const message = document.getElementById('message').value
+
+
+        $('#update').submit(function (e) {
+            e.preventDefault();
+            update();
+        });
+
+        function update(req, res) {
+            const name = $('#nameInput').val();
+            const email = $('#email').val();
+            const password = $('#pass').val();
+            const phone = $('#phone').val();
+
 
             const userData = {
                 name: name,
                 email: email,
-                phone: phone,
-                subject: subject,
-                message: message
-            };
-            fetch(apiUrl + '/touch', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(userData)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success == true) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Success',
-                            text: data.message,
-                        }).then(() => {
-                            window.location.href = "index.html";
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: data.error,
-                        });
-                    }
-                })
-                .catch(error => {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: error,
-                    });
-                });
-        }
-
-        document.getElementById('touch').addEventListener('submit', function (e) {
-            e.preventDefault();
-            touch();
-        });
-        function isNumberKey(evt) {
-            var charCode = (evt.which) ? evt.which : evt.keyCode;
-            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-                return false;
-            }
-            return true;
-        }
-
-        const userId = localStorage.getItem('userId');
-        const token = localStorage.getItem('token');
-
-        const loginLogoutButton = document.getElementById('loginLogoutButton');
-        var circle = $('#circle')
-        if (userId && token) {
-            loginLogoutButton.innerHTML = '<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
-            loginLogoutButton.addEventListener('click', () => {
-                localStorage.removeItem('userId');
-                localStorage.removeItem('token');
-                window.location.href = 'index.html'
-            });
-            profile.html('<a href="my-profile.html" class="nav-item nav-link">Profile </a>')
-
-            circle.html('<a href="" id="circle" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2"></a>')
-        } else {
-            loginLogoutButton.innerHTML = '<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
-            loginLogoutButton.href = 'login-form.html';
-        }
-        function getname() {
-            const userData = {
+                password: password,
+                mobile_number: phone,
                 userid: userId
             };
 
-            fetch(apiUrl + '/getuserName', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(userData)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    const name = data.message[0].name;
-
-                    const firstLetter = name.charAt(0).toUpperCase();
-                    const elementToReplace = document.querySelector('.d-inline-flex.btn-sm-square.bg-primary.text-white.rounded-circle.ms-2');
-
-                    if (elementToReplace) {
-                        elementToReplace.textContent = firstLetter;
+            $.ajax({
+                url: apiUrl + '/updateuser',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(userData),
+                success: function (data) {
+                    if (data.success == true) {
+                        Swal.fire({
+                            title: 'Success!',
+                            text: data.message,
+                            icon: 'success'
+                        }).then(function () {
+                            window.location.href = 'index.html';
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: data.error,
+                            icon: 'error'
+                        });
                     }
-                })
-                .catch(error => {
-
-                });
+                },
+                error: function (error) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: error,
+                        icon: 'error'
+                    });
+                }
+            });
         }
-        getname()
     </script>
 </body>
 

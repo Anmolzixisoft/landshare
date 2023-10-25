@@ -17,10 +17,9 @@ app.set('view engine', 'ejs');
 const start = require('../../controllers/google.controller')
 
 googleRouter.get('/', (req, res) => {
-    console.log('User Profile:', req.user); // Log the user object
+    console.log('User Profile:', req.user); 
     res.redirect('http://127.0.0.1:5500/Frontend/index.html', req.user);
 
-    // res.render('google.ejs');
 
 });
 
