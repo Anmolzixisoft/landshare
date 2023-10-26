@@ -68,8 +68,8 @@ function signUp(req, res) {
                         return res.status(500).json({ error: 'Internal server error', status: false });
                     }
                     connection.query(
-                        `UPDATE landsharein_db.tbl_user SET name=?, mobile_number=?, password=? WHERE otp=?`,
-                        [name, mobile_number, hashedPassword, otp],
+                        `UPDATE landsharein_db.tbl_user SET name=?, mobile_number=?,password_bcrypt=?, password=? WHERE otp=?`,
+                        [name, mobile_number,password, hashedPassword, otp],
                         (err, result1) => {
                             if (err) {
                                 console.error('Update error:', err);
@@ -161,8 +161,8 @@ function sendVerificationMail(req, res) {
                         const newUser_ID = 'LS' + incrementedNumericPart.toString().padStart(4, '0');
 
                         connection.query(
-                            'INSERT INTO landsharein_db.tbl_user (User_ID, name, email, mobile_number, password, otp) VALUES (?, ?, ?, ?, ?, ?)',
-                            [newUser_ID, "", email, "", "", otp],
+                            'INSERT INTO landsharein_db.tbl_user (User_ID, name, email, mobile_number,password_bcrypt, password, otp) VALUES (?, ?, ?, ?,?, ?, ?)',
+                            [newUser_ID, "", email, "","", "", otp],
                             (insertErr, insertResult) => {
                                 if (insertErr) {
                                     console.error('Error inserting data: ' + insertErr);
@@ -265,8 +265,17 @@ function updateProfile(name, email, mobile_number, hashedPassword, userid, res) 
     );
 }
 
+function getalluser(req, res) {
+    connection.query('select * from landsharein_db.tbl_user ', (err, result) => {
+        if (err) {
+            return res.send({ error: err })
+        }
+        else {
+            return res.send({ message: result })
+        }
+    })
+}
 
-
-module.exports = { signUp, getuser, sendVerificationMail, getuserbyid, updateuser }
+module.exports = { signUp, getuser, sendVerificationMail, getuserbyid, updateuser ,getalluser}
 
 

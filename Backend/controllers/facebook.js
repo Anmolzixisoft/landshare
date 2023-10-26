@@ -12,7 +12,7 @@ const app = express()
 //     saveUninitialized: false,
 // }));
 app.use(session({
-    secret: '699fb97fecacfd3f72ba1400e27286fa',
+    secret: '344529d1910586669f27bbee07f0c80c',
     resave: false,
     saveUninitialized: false,
 }));
@@ -30,12 +30,13 @@ passport.deserializeUser(function (obj, done) {
 });
 
 passport.use(new FacebookStrategy({
-    clientID: "340924918460829",
-    clientSecret: "699fb97fecacfd3f72ba1400e27286fa",
-    callbackURL: "http://localhost:5000/api/auth/facebook/callback",
+    clientID: "1351807122090160",
+    clientSecret: "344529d1910586669f27bbee07f0c80c",
+    callbackURL: "http://api.landshareindia.com:5000/api/auth/facebook/callback",
 },
-    function (accessToken, refreshToken, profile, done) {
-
+  async function (accessToken, refreshToken, profile, done) {
+    console.log("accessToken =>", accessToken)
+    console.log("profile =>", profile);
         process.nextTick(function () {
 
             connection.query("SELECT * FROM landsharein_db.tbl_user WHERE socialid = '" + profile.id + "'",

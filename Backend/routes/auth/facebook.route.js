@@ -33,7 +33,7 @@ facebookRouter.get('/auth/facebook/callback',
                         return res.send({ error: err });
                     } else {
                         if (result.length > 0) {
-                    
+
                             userData = {
                                 'userId': result[0].id,
                                 'username': result[0].email
@@ -47,7 +47,7 @@ facebookRouter.get('/auth/facebook/callback',
                 }
             );
         } else {
-             
+
             userData = {
                 'userId': req.user[0].id,
                 'username': req.user[0].email

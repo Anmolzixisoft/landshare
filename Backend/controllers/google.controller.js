@@ -22,7 +22,7 @@ passport.deserializeUser(function (obj, done) {
 passport.use(new GoogleStrategy({
     clientID: '831162901965-7fhm18uter8glqava4t5htph2v5feik4.apps.googleusercontent.com',
     clientSecret: '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',
-    callbackURL: 'http://localhost:5000/auth/google/callback',
+    callbackURL: 'http://api.landshareindia.com:5000/auth/google/callback',
 },
 
     function (accessToken, refreshToken, profile, done) {

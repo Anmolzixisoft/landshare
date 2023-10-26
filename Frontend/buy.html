@@ -122,8 +122,8 @@
 
     <div class="container-xxl py-5">
         <div class="container  ">
-            <div id="property-listings"  class="row g-5 align-items-start">
-             
+            <div id="property-listings" class="row g-5 align-items-start">
+
             </div>
         </div>
     </div>
@@ -278,6 +278,7 @@
         }
         const propertyListingsContainer = document.getElementById('property-listings');
         function createPropertyListing(property) {
+            const mapURL = `https://maps.google.com/maps?q=${property.city},${property.state}&t=&z=13&ie=UTF8&iwloc=&output=embed`;
 
 
             const container = document.createElement('div');
@@ -338,14 +339,12 @@
                 <div class="product-cnt col-lg-4   ">
                             
                     <div class="mapouter mb-4">
-                        <div class="gmap_canvas">
-                            <iframe src="https://maps.google.com/maps?q=bangalore&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=&amp;output=embed" frameborder="0" scrolling="no" >
-                            </iframe>
-                            <style>.mapouter{position:relative;width:100%;}.gmap_canvas{overflow:hidden;width:100%;}.gmap_canvas iframe{position:relative;z-index:2}.gmap_canvas a{top:0;z-index:0}
-                            </style>
-                            <a href="https://www.eireportingonline.com"></a>
-                        </div>
-                    </div>
+                <div class="gmap_canvas">
+                    <iframe src="${mapURL}" frameborder="0" scrolling="no"></iframe>
+                    <style>.mapouter{position:relative;width:100%;}.gmap_canvas{overflow:hidden;width:100%;}.gmap_canvas iframe{position:relative;z-index:2}.gmap_canvas a{top:0;z-index:0}</style>
+                    <a href="https://www.eireportingonline.com"></a>
+                </div>
+            </div>
                     ${property.sold == 1
                     ? '<h3> Sold Out </h3>'
                     : (property.user_id == userId

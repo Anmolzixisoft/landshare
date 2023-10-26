@@ -274,7 +274,37 @@ landsharein_db.tbl_sell_property.user_id = ${user_id} AND landsharein_db.tbl_buy
 
 }
 
+function getallproperty(req, res) {
+    connection.query('select * from landsharein_db.tbl_sell_property ', (err, result) => {
+        if (err) {
+            return res.send({ error: err }
+            )
+        }
+        else {
+            return res.send({ message: result })
+        }
+    })
+}
 
+function updatestatus(req, res) {
+    const { propertyId, status } = req.body
+    connection.query('select * from landsharein_db.tbl_sell_property where id="' + propertyId + '" ', (err, result) => {
+        if (err) {
+            return res.send({ error: 'property not found ' }
+            )
+        }
+        else {
+            connection.query('UPDATE landsharein_db.tbl_sell_property SET property_status="' + status + '"  where id="' + propertyId + '"', (err, result) => {
+                if (err) {
+                    return res.send({ error: err })
+                }
+                else {
+                    return res.send({ message: "succesfully" })
+                }
+            })
 
-module.exports = { sellProperty, getProperty, getPropertyById, sortlist, getsortlist, buyInfo, getsortlistByID, updateProperty, deleteProperty, sold_property, enquire }
+        }
+    })
+}
+module.exports = { sellProperty, getProperty, getPropertyById, sortlist, getsortlist, buyInfo, getsortlistByID, updateProperty, deleteProperty, sold_property, enquire, getallproperty,updatestatus }
 
