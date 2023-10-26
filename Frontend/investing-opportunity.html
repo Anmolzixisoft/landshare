@@ -320,7 +320,7 @@
             })
                 .then(data => {
                     console.log(data.data, 'data');
-                    const showData = data.data.filter(item => item.user_id != userId);
+                    const showData = data.data.filter(item => item.	property_status == '1');
                     // console.log(showData,'showData');
                     const radioButtons = document.querySelectorAll('input[name="propertyCategory"]');
 
@@ -330,10 +330,10 @@
 
                         if (selectedCategory == "all") {
                             // If "all" is selected, show all data
-                            filteredData = data.data;
+                            filteredData = showData;
                         } else {
                             // Filter data based on selected category
-                            filteredData = data.data.filter((item) => item.property_category_select == selectedCategory);
+                            filteredData = showData.filter((item) => item.property_category_select == selectedCategory);
                         }
 
                         clearPropertyContainer();
@@ -351,7 +351,7 @@
                     }
 
                     // Initially, populate with all data
-                    populatePropertyContainer(data.data);
+                    populatePropertyContainer(showData);
                 })
                 .catch(error => {
                     console.error('There was a problem with the fetch operation:', error);
