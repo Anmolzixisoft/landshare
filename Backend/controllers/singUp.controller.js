@@ -69,7 +69,7 @@ function signUp(req, res) {
                     }
                     connection.query(
                         `UPDATE landsharein_db.tbl_user SET name=?, mobile_number=?,password_bcrypt=?, password=? WHERE otp=?`,
-                        [name, mobile_number,password, hashedPassword, otp],
+                        [name, mobile_number, password, hashedPassword, otp],
                         (err, result1) => {
                             if (err) {
                                 console.error('Update error:', err);
@@ -162,7 +162,7 @@ function sendVerificationMail(req, res) {
 
                         connection.query(
                             'INSERT INTO landsharein_db.tbl_user (User_ID, name, email, mobile_number,password_bcrypt, password, otp) VALUES (?, ?, ?, ?,?, ?, ?)',
-                            [newUser_ID, "", email, "","", "", otp],
+                            [newUser_ID, "", email, "", "", "", otp],
                             (insertErr, insertResult) => {
                                 if (insertErr) {
                                     console.error('Error inserting data: ' + insertErr);
@@ -276,6 +276,51 @@ function getalluser(req, res) {
     })
 }
 
-module.exports = { signUp, getuser, sendVerificationMail, getuserbyid, updateuser ,getalluser}
+function deleteuser(req, res) {
+    const { userid } = req.body
+    connection.query('select * from landsharein_db.tbl_user WHERE id = "' + userid + '"', (err, result) => {
+        if (err) {
+            return res.send({ error: err })
+        }
+        if (result.length == 0) {
+            return res.send({ error: "user not found " })
+        }
+        else {
+            connection.query('DELETE FROM landsharein_db.tbl_user WHERE id = "' + userid + '"', (err, result) => {
+                if (err) {
+                    return res.send({ error: err })
+                }
+                else {
+                    return res.send({ message: "delete " })
+                }
+            })
+        }
+    })
+
+}
+function blockuser(req, res) {
+    const { userid, status } = req.body
+    connection.query('select * from landsharein_db.tbl_user WHERE id="' + userid + '" ', (err, result) => {
+        if (err) {
+            return res.send({ error: err }
+            )
+        }
+        if (result.length == 0) {
+            return res.send({ error: "not found " })
+        }
+        else {
+            connection.query('UPDATE landsharein_db.tbl_user SET status="' + status + '"  where id="' + userid + '"', (err, result) => {
+                if (err) {
+                    return res.send({ error: err })
+                }
+                else {
+                    return res.send({ message: "succesfully" })
+                }
+            })
+
+        }
+    })
+}
+module.exports = { signUp, getuser, sendVerificationMail, getuserbyid, updateuser, getalluser, deleteuser, blockuser }
 
 

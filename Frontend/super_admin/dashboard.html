@@ -34,6 +34,12 @@
 </head>
 
 <body>
+  <script>
+    let checkAdmintoken = localStorage.getItem('admintoken')
+  if(checkAdmintoken == null){
+    location = "http://127.0.0.1:5500/Frontend/super_admin/"
+  }
+  </script>
   <!--wrapper-->
   <div class="wrapper">
     <!--sidebar wrapper -->

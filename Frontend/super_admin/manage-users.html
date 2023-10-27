@@ -6,6 +6,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <!--favicon-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+
   <link rel="icon" href="../assets/images/favicon-32x32.png" type="image/png" />
   <!--plugins-->
   <link href="../assets/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
@@ -514,7 +516,7 @@
               <h4>Users</h4>
               <div class="manage-flex">
                 <h5>Manage your Users</h5>
-              
+
               </div>
             </div>
           </div>
@@ -600,6 +602,7 @@
   <!-- Bootstrap JS -->
   <script src="../assets/js/bootstrap.bundle.min.js"></script>
   <!--plugins-->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   <script src="../assets/js/jquery.min.js"></script>
   <script src="../assets/plugins/simplebar/js/simplebar.min.js"></script>
   <script src="../assets/plugins/metismenu/js/metisMenu.min.js"></script>
@@ -616,6 +619,87 @@
   </script>
   <script>
     const propertyList = document.getElementById('property-list');
+    function deleteuser(id) {
+      let userid = id
+      const userData = {
+        userid: userid
+      };
+
+      fetch(apiUrl + '/deleteuser', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.message) {
+            Swal.fire({
+              icon: 'success',
+              title: 'Success',
+              text: data.message,
+            }).then(() => {
+              window.location.href = "manage-users.html"
+            })
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: data.error,
+            });
+          }
+        })
+        .catch(error => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: error,
+          });
+        });
+    }
+
+    function blockuser(id, status) {
+      let userid = id
+      let statusdata = status
+      const userData = {
+        userid: userid,
+        status: statusdata
+      };
+
+      fetch(apiUrl + '/blockuser', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.message) {
+            Swal.fire({
+              icon: 'success',
+              title: 'Success',
+              text: data.message,
+            }).then(() => {
+              window.location.href = "manage-users.html"
+            })
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: data.error,
+            });
+          }
+        })
+        .catch(error => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: error,
+          });
+        });
+    }
     function fetchData() {
 
       const api = apiUrl + '/getalluser';
@@ -655,6 +739,9 @@
       const formattedDate = `${day}-${month}-${year}`;
 
       const tableRow = document.createElement('tr'); // Create a table row
+      const blockButtonHTML = property.status == 1
+        ? '<button class="blockbtn" onclick="blockuser(' + property.id + ', 0)">Block</button>'
+        : '<button class="blockbtn" onclick="blockuser(' + property.id + ', 1)">Unblock</button>';
       tableRow.innerHTML = `
      
         
@@ -671,8 +758,9 @@
                         </td>
                         <td>
                           <div>
-                            <button class="blockbtn">Block</button>
-                            <button class="nondelvr-button">Delete</button>
+                            ${blockButtonHTML}
+
+                            <button class="nondelvr-button"   onclick="deleteuser(${property.id})">Delete</button>
                           </div>
                         </td>
     `;

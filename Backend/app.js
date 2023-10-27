@@ -9,10 +9,16 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 // app.use(cookieParser());
+// app.use(require('express-session')({
+//     secret: '0ef2e6264ea26ff957af201d634481de',
+//     resave: true,
+//     saveUninitialized: true
+// }));
 require('dotenv').config({
     path: path.join(__dirname, `.env.${process.env.NODE_ENV || 'development'}`)
 });
 
+const adminRouter = require('./routes/auth/admin.route');
 const signUpRouter = require('./routes/auth/singUp.route')
 const loginRouter = require('./routes/auth/login.route')
 const sellRouter = require('./routes/auth/sell.route')
@@ -23,6 +29,7 @@ const serviceRouter = require('./routes/auth/service.route')
 const resetpass = require('./routes/auth/resetPass.route')
 const googleRouter = require('./routes/auth/google.route')
 
+app.use('/api', adminRouter);
 app.use('/api', signUpRouter);
 app.use('/api', loginRouter)
 app.use('/api', sellRouter)

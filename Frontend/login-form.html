@@ -141,8 +141,8 @@
                         <button class="btn  btn-primary btn-lg-square" onclick="performGoogleLogin()"><i
                                 class='fab fa-google'></i>
                         </button>&nbsp;&nbsp;
-                        <button class="btn  btn-primary btn-lg-square" onclick="performFacebookLogin()"><i
-                                class="fab fa-facebook-f"></i>
+                        <button id="login-button" class="btn  btn-primary btn-lg-square"
+                            onclick="performFacebookLogin()"><i class="fab fa-facebook-f"></i>
                         </button>&nbsp;&nbsp;
 
                         <button class="btn  btn-primary btn-lg-square"><i class='fab fa-instagram'></i>
@@ -323,7 +323,17 @@
     <script src="js/login-script.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '1351807122090160',
+                autoLogAppEvents: true,
+                xfbml: true,
+                version: 'v13.0' // Use the latest available version
+            });
+        };
+    </script>
+    <script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
     <script>
         var circle = document.getElementById('circle')
         function validateForm() {
@@ -366,11 +376,11 @@
     <script>
 
         function performGoogleLogin() {
-            window.open('http://localhost:5001/auth/google');
+            window.open('http://localhost:5000/auth/google');
 
         }
         function performFacebookLogin() {
-            window.open('http://localhost:5001/api/auth/facebook');
+            window.open('http://localhost:5000/api/auth/facebook');
 
         }
 
@@ -582,6 +592,38 @@
                     errorMessage.text('Passwords not match');
                 }
             }
+        });
+        function sendDataToServer(userData) {
+           console.log(userData);
+            $.ajax({
+                type: 'POST',
+                url: '/storeUserData', // Replace with your server endpoint
+                data: JSON.stringify(userData),
+                contentType: 'application/json',
+                success: function (response) {
+                    // Handle the response from the server (e.g., success message or error handling)
+                    console.log(response);
+                },
+                error: function (xhr, status, error) {
+                    // Handle errors, e.g., display an error message to the user
+                    console.error(error);
+                }
+            });
+        }
+
+        document.getElementById('login-button').addEventListener('click', function () {
+            FB.login(function (response) {
+                if (response.status === 'connected') {
+                    // User is logged in and has granted permissions
+                    const accessToken = response.authResponse.accessToken;
+
+                    // Use the access token to fetch user data
+                    FB.api('/me', { fields: 'id, name, email' }, function (userData) {
+                        // Send userData to your server for database storage
+                        sendDataToServer(userData);
+                    });
+                }
+            }, { scope: 'email' }); // Specify the required permissions
         });
 
     </script>

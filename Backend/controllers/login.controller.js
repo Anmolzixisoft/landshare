@@ -103,7 +103,10 @@ function login(req, res) {
             else {
                 const user = results[0];
 
-
+                if (user.status == 0) {
+                    // User status is 0 (blocked)
+                    return res.send({ error: 'Contact admin for assistance.' });
+                }
                 bcrypt.compare(password, user.password, (bcryptErr, bcryptResult) => {
                     if (bcryptErr) {
                         console.error('Password comparison failed: ' + bcryptErr);
@@ -145,7 +148,7 @@ function login(req, res) {
     );
 
 }
- 
+
 
 function facebookOAuth(req, res) {
     if (req.user.email !== null && req.user.id !== null) {

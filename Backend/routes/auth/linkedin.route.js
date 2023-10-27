@@ -13,7 +13,7 @@ const linkedin = require('../../controllers/linkedin.controller')
 
 linkedinRouter.get(
     "/auth/linkedin",
-    passport.authenticate("linkedin", { state: "SOME STATE" })
+    passport.authenticate("linkedin")
 );
 
 

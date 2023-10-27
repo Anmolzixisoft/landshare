@@ -290,8 +290,11 @@ function updatestatus(req, res) {
     const { propertyId, status } = req.body
     connection.query('select * from landsharein_db.tbl_sell_property where id="' + propertyId + '" ', (err, result) => {
         if (err) {
-            return res.send({ error: 'property not found ' }
+            return res.send({ error: err }
             )
+        }
+        if (result.length == 0) {
+            return res.send({ error: "not found " })
         }
         else {
             connection.query('UPDATE landsharein_db.tbl_sell_property SET property_status="' + status + '"  where id="' + propertyId + '"', (err, result) => {
@@ -306,5 +309,5 @@ function updatestatus(req, res) {
         }
     })
 }
-module.exports = { sellProperty, getProperty, getPropertyById, sortlist, getsortlist, buyInfo, getsortlistByID, updateProperty, deleteProperty, sold_property, enquire, getallproperty,updatestatus }
+module.exports = { sellProperty, getProperty, getPropertyById, sortlist, getsortlist, buyInfo, getsortlistByID, updateProperty, deleteProperty, sold_property, enquire, getallproperty, updatestatus }
 

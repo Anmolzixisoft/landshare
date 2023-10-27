@@ -420,7 +420,34 @@
 .nondelvr-button:hover {
   background-color: #2a2828;
 }
+.delvr-button1,
+.nondelvr-button1,
+.blockbtn {
+  display: inline-block;
+  padding: 4px;
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  cursor: default;
 
+}
+
+.delvr-button1 {
+  background-color: #0085ff;
+}
+
+.delvr-button1:hover {
+  pointer-events: none;
+}
+
+.nondelvr-button1 {
+  background-color: grey;
+}
+.nondelvr-button1:hover {
+  pointer-events: none;
+}
 .blockbtn {
   background-color: rgb(235, 23, 23);
 }
