@@ -22,7 +22,6 @@ passport.use(new LinkedInStrategy({
     scope: ['r_liteprofile']
 
 },
-
     function (accessToken, refreshToken, profile, done) {
         process.nextTick(function () {
             connection.query("SELECT * FROM  landsharein_db.tbl_user WHERE socialid = '" + profile.id + "'",

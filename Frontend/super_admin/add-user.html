@@ -56,6 +56,12 @@
   </head>
 
   <body>
+    <script>
+      let checkAdmintoken = localStorage.getItem('admintoken')
+  if(checkAdmintoken == null){
+    location = "http://127.0.0.1:5500/Frontend/super_admin/"
+  }
+    </script>
     <!--wrapper-->
     <div class="wrapper">
       <!--sidebar wrapper -->
@@ -726,101 +732,6 @@
     <!--end wrapper-->
 
     <!-- modal edit batches -->
-
-    <!-- <div
-      class="modal fade"
-      id="l3_modal"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <div class="row">
-              <div class="col-md-4 col-sm-6">
-                <div class="label-font mb-3">
-                  <label for="" class="form-label">Institute Name </label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id=""
-                    aria-describedby=""
-                  />
-                </div>
-              </div>
-              <div class="col-md-4 col-sm-6">
-                <div class="label-font mb-3">
-                  <label for="" class="form-label">Email </label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id=""
-                    aria-describedby=""
-                  />
-                </div>
-              </div>
-              <div class="col-md-4 col-sm-6">
-                <div class="label-font mb-3">
-                  <label for="" class="form-label">Contact No. </label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id=""
-                    aria-describedby=""
-                  />
-                </div>
-              </div>
-              <div class="col-md-4 col-sm-6">
-                <div class="label-font mb-3">
-                  <label for="" class="form-label">Create Password </label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id=""
-                    aria-describedby=""
-                  />
-                </div>
-              </div>
-              <div class="col-md-4 col-sm-6">
-                <div class="label-font mb-3">
-                  <label for="" class="form-label">Confirm Password </label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id=""
-                    aria-describedby=""
-                  />
-                </div>
-              </div>
-              <div class="col-md-4 col-sm-6">
-                <div class="label-font mb-3">
-                  <label for="" class="form-label">Student Limit </label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id=""
-                    aria-describedby=""
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="text-center mb-4">
-            <button type="button" class="addpr-btn">Submit</button>
-          </div>
-        </div>
-      </div>
-    </div> -->
 
     <!-- Bootstrap JS -->
     <script src="../assets/js/bootstrap.bundle.min.js"></script>
