@@ -719,10 +719,10 @@
 
 
     function changestatus(id, status) {
-      let propertyId = id
+      let userid= id
       let statusdata = status
       const userData = {
-        propertyId: propertyId,
+        propertyId: userid,
         status: statusdata
 
       };
@@ -787,12 +787,12 @@
         <td>${property.property_category_select}</td>
         <td>${property.city}</td>
         <td><a href="#" onclick="viewPropertyDetails(${property.id})">Details</a></td>
-        <td>
-          <div>
-        ${approveButtonHTML}
-        ${disapproveButtonHTML}
-      </div>
-        </td>
+          <td>
+            <div>
+          ${approveButtonHTML}
+          ${disapproveButtonHTML}
+        </div>
+          </td>
     `;
 
       return tableRow; // Return the table row element

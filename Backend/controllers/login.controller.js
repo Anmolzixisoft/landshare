@@ -125,7 +125,6 @@ function login(req, res) {
                                 }
                                 else {
 
-
                                     transporter.sendMail(mailOptions, function (error, info) {
                                         if (error) {
                                             return res.send({ error: error })
