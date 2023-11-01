@@ -15,7 +15,7 @@ app.use(session({ secret: "SESSION_SECRET" }));
 app.use(passport.initialize());
 app.use(passport.session());
 console.log('inter linkein');
-passport.use(new LinkedInStrategy({
+passport.use(new T({
     clientID: '77tqj0gysqnedq',
     clientSecret: 'o0b31if5e3FsB1EM',
     callbackURL: "http://localhost:5000/api/auth/linkedin/callback",
@@ -48,3 +48,4 @@ passport.use(new LinkedInStrategy({
                 });
         });
     }));
+

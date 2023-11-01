@@ -24,9 +24,9 @@ passport.deserializeUser(function (obj, done) {
 });
 
 passport.use(new FacebookStrategy({
-    clientID: "715088993801425",
-    clientSecret: "0ef2e6264ea26ff957af201d634481de",
-    callbackURL: "http://localhost:5000/api/auth/facebook/callback",
+    clientID: "1023394168971960",
+    clientSecret: "37ae69dca87e50e1b8e04815f10ca93f",
+    callbackURL: "http://api.landshareindia.com:5000/api/auth/facebook/callback",
 }, async function (accessToken, refreshToken, profile, done) {
     try {
         console.log("profile =>", profile);

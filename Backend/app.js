@@ -28,7 +28,7 @@ const instgramRouter = require('./routes/auth/instagram.route')
 const serviceRouter = require('./routes/auth/service.route')
 const resetpass = require('./routes/auth/resetPass.route')
 const googleRouter = require('./routes/auth/google.route')
-
+const twitterRouter = require('./routes/auth/twitter.route')
 app.use('/api', adminRouter);
 app.use('/api', signUpRouter);
 app.use('/api', loginRouter)
@@ -40,7 +40,7 @@ app.use('/', googleRouter)
 
 app.use('/api', linkedinRouter)
 app.use('/api', instgramRouter)
-
+app.use('/api', twitterRouter)
 
 app.listen(process.env.PORT,
     async () => {
