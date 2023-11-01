@@ -46,6 +46,7 @@
 
   <!-- Template Stylesheet -->
   <link href="css/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/myresponsive.css">
 </head>
 
 <body>
@@ -61,7 +62,7 @@
           <img src="img/landshare-logo.png">
         </a>
       </div>
-      <div style="display: inline-flex;">
+      <div class="btnloginflex">
         <a href="" id="circle"></a>
 
         <a href="#" id="loginLogoutButton" class="nav-item nav-link"><b></b>&nbsp;&nbsp;<i
@@ -567,7 +568,6 @@
       const form = $('#property')[0];
       const landPrice = $('#landPrice').val();
       var selectedLandType = $(`input[name="landType"]:checked`);
-      console.log(form,'formform');
 
       const formData = new FormData(form);
 

@@ -37,6 +37,7 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/myresponsive.css">
 </head>
 
 <body>
@@ -56,7 +57,7 @@
                     <img src="img/landshare-logo.png">
                 </a>
             </div>
-            <div style="display: inline-flex;">
+            <div class="btnloginflex">
                 <a href="" id="circle"></a>
 
                 <a href="#" id="loginLogoutButton" class="nav-item nav-link"><b></b>&nbsp;&nbsp;<i
@@ -120,10 +121,8 @@
         </div>
     </div>
     <div class="container-xxl ">
-        <div class="container">
-
-            <div class="row  mx-auto py-5">
-                <div class="d-flex justify-content-center  align-items-center">
+            <!-- <div class="row  mx-auto py-5">
+                <div class="d-flex justify-content-center  align-items-center flex-wrap gap-2">
                     <div class="inputpdg">
                         <input type="radio" name="propertyCategory" id="agriculturalLand" value="all">&nbsp;&nbsp; All
                     </div>
@@ -144,21 +143,40 @@
                         <input type="radio" name="propertyCategory" id="residentialLand"
                             value="Residential Land">&nbsp;&nbsp;Residential Land
                     </div>
-
                 </div>
-
-
+            </div> -->
+            <div class="row  align-items-start col-md-9 mx-auto py-5">
+                <div class="col-lg-1">
+                    <input type="radio" name="propertyCategory" id="agriculturalLand" value="all">&nbsp;&nbsp; All 
+                </div>
+                <div class="col-lg-3">
+                    <input type="radio" name="propertyCategory" id="agriculturalLand"
+                            value="Agricultural Land">&nbsp;&nbsp;Agricultural Land
+                </div>
+                <div class="col-lg-3">     
+                    <input type="radio" name="propertyCategory" id="commercialLand"
+                            value="Commercial Land">&nbsp;&nbsp;Commercial Land
+                </div>
+                <div class="col-lg-3">
+                    <input type="radio" name="propertyCategory" id="commercialBuilding"
+                            value="Commercial Building">&nbsp;&nbsp;Commercial Building
+                </div> 
+                <div class="col-lg-2">
+                    <input type="radio" name="propertyCategory" id="residentialLand"
+                    value="Residential Land">&nbsp;&nbsp;Residential Land  
+                </div>
             </div>
 
         </div>
-    </div>
+    
 
     <!-- About Start -->
     <div id="propertyContainer" style="display: flex; flex-wrap: wrap; justify-content: center;">
         <!-- Content will be dynamically added here by JavaScript -->
     </div>
-    <div class="row align-items-start" id="property-listings">
-
+    <div class="row align-items-start mx-2"  id="property-listings">        
+        
+     
     </div>
     <!-- Contact End -->
 
@@ -366,6 +384,7 @@
             const container = document.createElement('div');
             container.classList.add('product-inner', 'mb-5', 'col-md-7', 'mx-auto', 'g-5');
             container.innerHTML = `
+           
             <div class="product-im col-md-3-1 position-relative">
                 <div class="image-container">
                     <img src="${property.images[0]}" style="width: 100% !important; border-radius: 10px;" class="${property.sold == 1 ? 'blurred-image' : ''}">
@@ -373,7 +392,7 @@
                 </div>
             </div>
 
-        <div class="product-cnt col-md-8">
+        <div class="product-cnt col-md-8 col-12">
             <p style="font-size:18px;">${property.landmark}</p>
             <p style="font-size:14px;">
                 Residential Plots - ${property.cost_per_squre_fit
@@ -387,6 +406,7 @@
                 </span>
             
         </div>
+   
     `;
 
             return container;
