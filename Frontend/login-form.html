@@ -166,9 +166,8 @@
 
                     <label for="phone">Your Phone Number <span class="required">*</span> </label>
                     <div class="pass-reset" onclick="activeInput(this)">
-                        <input type="text" name="phone" class="phone" id="phoneInput"
-                            placeholder="Enter Your Phone Number" onkeypress="return isNumberKey(event)" required
-                            pattern="[0-9]+" maxlength="10">
+                        <input type="number" name="phone" class="phone" id="phoneInput"
+                            placeholder="Enter Your Phone Number"  min="0">
                     </div>
                     <label for="email">Email Address <span class="required">*</span> </label>
                     <div class="pass-reset" onclick="activeInput(this)">
@@ -543,18 +542,7 @@
                 });
             });
 
-            function isNumberKey(evt) {
-                var charCode = (evt.which) ? evt.which : evt.keyCode;
-                var inputValue = evt.target.value + String.fromCharCode(charCode);
-
-                if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-                    return false;
-                }
-                if (inputValue.length === 1 && (charCode === 48 || charCode === 49 || charCode === 50 || charCode === 51 || charCode === 52 || charCode === 53)) {
-                    return false; // Disallow starting with 0, 1, 2, 3, 4, or 5
-                }
-                return true;
-            }
+          
 
             $('#emailInput1').on('input', validateEmail);
 

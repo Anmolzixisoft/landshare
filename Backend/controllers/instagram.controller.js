@@ -13,8 +13,12 @@ passport.deserializeUser((user, done) => {
     done(null, user);
 });
 
-app.use(session({ secret: "SESSION_SECRET" }));
-app.use(passport.initialize());
+app.use(session({
+    secret: '05d6bebac87c48e3e5e4ece64ff357d49637586c00ee38aa5f531a0fc2918eb7',
+    resave: false,
+    saveUninitialized: false,
+    // Other session configuration options...
+  }));app.use(passport.initialize());
 app.use(passport.session());
 passport.use(
     new InstagramStrategy(

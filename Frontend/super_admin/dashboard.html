@@ -40,6 +40,7 @@
     location = "http://127.0.0.1:5500/Frontend/super_admin/"
   }
   </script>
+  <!-- admintoken -->
   <!--wrapper-->
   <div class="wrapper">
     <!--sidebar wrapper -->
@@ -493,9 +494,11 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
               <li>
-                <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
+                <a class="dropdown-item d-flex align-items-center" href="#" id="logoutLink" ><i
                     class="bx bx-log-out-circle"></i><span>Logout</span></a>
               </li>
+            
+              
             </ul>
           </div>
         </nav>
@@ -629,6 +632,15 @@
     }
     fetchproduct()
     window.onload = fetchData;
+function logout() {
+  localStorage.removeItem('admintoken');
+  window.location.href = 'https://landshareindia.com/web/super_admin'; // Redirect example
+}
+document.getElementById('logoutLink').addEventListener('click', function(event) {
+  event.preventDefault(); 
+  logout();
+});
+
   </script>
 </body>
 

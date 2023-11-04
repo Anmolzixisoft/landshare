@@ -7,18 +7,21 @@ const passport = require("passport");
 passport.serializeUser((user, done) => {
     done(null, user);
 });
-
 passport.deserializeUser((user, done) => {
     done(null, user);
 });
-app.use(session({ secret: "SESSION_SECRET" }));
+app.use(session({
+    secret: '05d6bebac87c48e3e5e4ece64ff357d49637586c00ee38aa5f531a0fc2918eb7',
+    resave: false,
+    saveUninitialized: false,
+    // Other session configuration options...
+  }));
 app.use(passport.initialize());
 app.use(passport.session());
-console.log('inter linkein');
 passport.use(new LinkedInStrategy({
-    clientID: '77tqj0gysqnedq',
-    clientSecret: 'o0b31if5e3FsB1EM',
-    callbackURL: "http://localhost:5000/api/auth/linkedin/callback",
+    clientID: '77bqfuts6sx7vz',
+    clientSecret: 'pFafmexY0XhfyTwy',
+    callbackURL: "https://localhost:5000/api/auth/linkedin/callback",
     scope: ['r_liteprofile']
 
 },

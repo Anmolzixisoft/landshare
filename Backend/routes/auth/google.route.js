@@ -5,6 +5,7 @@ const googleRouter = express.Router();
 const passport = require('passport');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
+
 const connection = require('../../database/mysqldb')
 const session = require('express-session');
 const cookieParser = require('cookie-parser')
@@ -17,16 +18,13 @@ app.set('view engine', 'ejs');
 const start = require('../../controllers/google.controller')
 
 googleRouter.get('/', (req, res) => {
-    console.log('User Profile:', req.user); 
+    console.log('User Profile:', req.user);
     res.redirect('http://127.0.0.1:5500/Frontend/index.html', req.user);
 
 
 });
 
-googleRouter.use(session({
-    secret: 'jsonworldplaceforjsdemos',
-    saveUninitialized: false,
-}));
+
 googleRouter.get('/auth/google',
     passport.authenticate('google', {
         scope: ['profile', 'email']

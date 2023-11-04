@@ -6,11 +6,11 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 const connection = require('../database/mysqldb')
 const app = express()
 
-app.use(require('express-session')({ 
+app.use(require('express-session')({
     secret: '0ef2e6264ea26ff957af201d634481de',
     resave: true,
     saveUninitialized: true
-  }));
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.set('view engine', 'ejs');
@@ -24,9 +24,10 @@ passport.deserializeUser(function (obj, done) {
 });
 
 passport.use(new FacebookStrategy({
-    clientID: "1023394168971960",
-    clientSecret: "37ae69dca87e50e1b8e04815f10ca93f",
-    callbackURL: "http://api.landshareindia.com:5000/api/auth/facebook/callback",
+    clientID: '24770065999258473',
+    clientSecret: '88c8f4127eb694348581c50d7f83260e',
+    callbackURL: "http://192.168.29.179:5000/auth/facebook/callback",
+    enableProof: true
 }, async function (accessToken, refreshToken, profile, done) {
     try {
         console.log("profile =>", profile);

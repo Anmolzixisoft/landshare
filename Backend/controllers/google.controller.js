@@ -10,7 +10,11 @@ const app = express()
 app.use(passport.initialize());
 app.use(passport.session());
 app.set('view engine', 'ejs');
-
+app.use(session({
+    secret: '05d6bebac87c48e3e5e4ece64ff357d49637586c00ee38aa5f531a0fc2918eb7',
+    resave: false,
+    saveUninitialized: false,
+  }));
 passport.serializeUser(function (user, done) {
     done(null, user);
 });

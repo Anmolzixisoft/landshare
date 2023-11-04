@@ -2,21 +2,19 @@ require('./database/mysqldb');
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
-// const cookieParser = require('cookie-parser')
-// const bodyParser = require('body-parser');
+const fs = require('fs');
+const https = require('https');
 const app = express();
 
 app.use(express.json());
 app.use(cors());
-// app.use(cookieParser());
-// app.use(require('express-session')({
-//     secret: '0ef2e6264ea26ff957af201d634481de',
-//     resave: true,
-//     saveUninitialized: true
-// }));
 require('dotenv').config({
     path: path.join(__dirname, `.env.${process.env.NODE_ENV || 'development'}`)
 });
+const options = {
+    key: fs.readFileSync('./sslKey/privatekey.key'), // Replace with your private key file path
+    cert: fs.readFileSync('./sslKey/certificate.crt'), // Replace with your certificate file path
+};
 
 const adminRouter = require('./routes/auth/admin.route');
 const signUpRouter = require('./routes/auth/singUp.route')
@@ -42,8 +40,15 @@ app.use('/api', linkedinRouter)
 app.use('/api', instgramRouter)
 app.use('/api', twitterRouter)
 
-app.listen(process.env.PORT,
-    async () => {
-        console.log("Server is up and listening on port : " + process.env.PORT);
-    }
-);
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+})
+app.get('/',(req,res)=>{
+    return res.send({data:"runnning"})
+})
+const server = https.createServer(options, app);
+
+server.listen(process.env.PORT, () => {
+    console.log("Server is up and listening on port : " + process.env.PORT);
+});

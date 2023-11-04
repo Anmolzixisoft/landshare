@@ -41,7 +41,10 @@ facebookRouter.get('/auth/facebook/callback',
                         }
                         const token = jwt.sign(userData, 'secret-key');
 
-                        res.redirect(`http://127.0.0.1:5500/Frontend/index.html?token=${token}&userId=${result[0].id}`);
+
+
+                        console.log('--------');
+                        // res.redirect(`http://127.0.0.1:5500/Frontend/index.html?token=${token}&userId=${result[0].id}`);
 
                     }
                 }
