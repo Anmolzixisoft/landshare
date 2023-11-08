@@ -290,7 +290,9 @@
             </div>
         </div>
     </div>
+    <div id="fb-root"></div>
 
+    <div class="fb-login-button" data-width="" data-size="" data-button-type="" data-layout="" data-auto-logout-link="false" data-use-continue-as="false"></div>
     <div class="container-fluid copyright">
         <div class="container">
             <div class="row">
@@ -329,6 +331,35 @@
     <script src="js/login-script.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0&appId=889033206179671" nonce="9Q492KQK"></script>
+<script src="https://connect.facebook.net/en_US/all.js"></script>
+<script>
+    var facebookAppId = 'XXXXXX';
+    var _fBAccessToken = '';
+
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: facebookAppId,
+            xfbml: true,
+            version: 'v2.0',
+            status: true,
+            cookie: true,
+            oauth: true
+        });
+
+        FB.getLoginStatus(function (response) {
+            if (response.status === 'connected') {
+                userId = response.authResponse.userID;
+                _fBAccessToken = response.authResponse.accessToken;
+
+                FB.api('/me', { fields: 'id,name,email' }, function (responsed) {
+                    alert(JSON.stringify(responsed));
+                });
+            }
+        });
+    };
+</script>
+
     <script>
         window.fbAsyncInit = function () {
             FB.init({

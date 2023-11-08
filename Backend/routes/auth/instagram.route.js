@@ -1,5 +1,4 @@
 
-
 const express = require('express');
 const instgramRouter = express.Router();
 const passport = require('passport');
@@ -18,8 +17,6 @@ instgramRouter.get('/auth/instagram/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   (req, res) => {
     var userData = {}
-    console.log('77777777777777', req.user);
-    // IGQWRQaVBtd1hxNk1weHY5SGY2RXRQZAlByU2JpNTVLcFc0MmlOSjdhZAE1YZADlYdDRFd2JHUzN2XzlRQmtNOUtQNW5aR0xseFdFdGgtUWNlTWZAKaDl3WmFuNER3VEw3NHU1NmY2YWtXQ2s1TXplYzgyMVRpdlJSMEUZD
     return
     if (req.user[0] == undefined) {
       connection.query(

@@ -44,11 +44,21 @@ app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something broke!');
 })
-app.get('/',(req,res)=>{
-    return res.send({data:"runnning"})
+app.get('/', (req, res) => {
+    return res.send({ data: "runnning" })
 })
-const server = https.createServer(options, app);
+// app.use(stormpath.init(app, {
+//     application: 'https://api.stormpath.com/v1/applications/xxx',
+//     secretKey: '0e48affa657030f6b1579ce75d0a30fe85fb14cc',
+//     enableFacebook: true,
+//     social: {
+//         facebook: {
+//             appId: '889033206179671',
+//             appSecret: 'a1296ac680f772062a5ccdcd03ee1baf',
+//         }
+//     },
+// }));
 
-server.listen(process.env.PORT, () => {
+app.listen(process.env.PORT, () => {
     console.log("Server is up and listening on port : " + process.env.PORT);
 });

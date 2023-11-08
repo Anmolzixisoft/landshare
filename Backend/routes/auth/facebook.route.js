@@ -1,67 +1,48 @@
-const jwt = require('jsonwebtoken');
-
-
 const express = require('express');
+const axios = require('axios');
+
 const facebookRouter = express.Router();
-const passport = require('passport');
-const cors = require('cors');
-const connection = require('../../database/mysqldb')
-const cookieParser = require('cookie-parser')
-const app = express()
-app.use(express.json());
-app.use(cors());
-app.use(cookieParser());
-app.set('view engine', 'ejs');
 
-const start = require('../../controllers/facebook')
 facebookRouter.get('/', (req, res) => {
-    res.redirect('http://127.0.0.1:5500/Frontend/index.html', req.user);
-});
+    res.send(`
+      <html>
+        <body>
+          <a href="https://www.facebook.com/v6.0/dialog/oauth?client_id=${357895676712791}&r
+  edirect_uri=${encodeURIComponent('http://127.0.0.1:5500/Frontend/facebooklogin.html')}">
+            Log In With Facebook
+          </a>
+        </body>
+      </html>
+    `);
+  });
 
-facebookRouter.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email' }));
-
-facebookRouter.get('/auth/facebook/callback',
-    passport.authenticate('facebook', { failureRedirect: '/login' }),
-    (req, res) => {
-        var userData = {}
-
-        if (req.user[0] == undefined) {
-            connection.query(
-                `SELECT * FROM landsharein_db.tbl_user WHERE provider = 'facebook' ORDER BY id DESC LIMIT 1`,
-                (err, result) => {
-                    if (err) {
-                        return res.send({ error: err });
-                    } else {
-                        if (result.length > 0) {
-
-                            userData = {
-                                'userId': result[0].id,
-                                'username': result[0].email
-                            };
-                        }
-                        const token = jwt.sign(userData, 'secret-key');
-
-
-
-                        console.log('--------');
-                        // res.redirect(`http://127.0.0.1:5500/Frontend/index.html?token=${token}&userId=${result[0].id}`);
-
-                    }
-                }
-            );
-        } else {
-
-            userData = {
-                'userId': req.user[0].id,
-                'username': req.user[0].email
-            };
-            const token = jwt.sign(userData, 'secret-key');
-
-            res.redirect(`http://127.0.0.1:5500/Frontend/index.html?token=${token}&userId=${req.user[0].id}`);
-        }
-
-    });
-
-
-
+  const accessTokens = new Set();
+  
+  // Route 2: Exchange auth code for access token
+  facebookRouter.get('/oauth-redirect', async (req, res) => {
+    try {
+      const authCode = req.query.code;
+  
+      // Build up the URL for the API request. `client_id`, `client_secret`,
+      // `code`, **and** `redirect_uri` are all required. And `redirect_uri`
+      // must match the `redirect_uri` in the dialog URL from Route 1.
+      const accessTokenUrl = 'https://graph.facebook.com/v6.0/oauth/access_token?' +
+        `client_id=${appId}&` +
+        `client_secret=${appSecret}&` +
+        `redirect_uri=${encodeURIComponent('http://localhost:3000/oauth-redirect')}&` +
+        `code=${encodeURIComponent(authCode)}`;
+  
+      // Make an API request to exchange `authCode` for an access token
+      const accessToken = await axios.get(accessTokenUrl).then(res => res.data['access_token']);
+      // Store the token in memory for now. Later we'll store it in the database.
+      console.log('Access token is', accessToken);
+      accessTokens.add(accessToken);
+  
+      res.redirect(`/me?accessToken=${encodeURIComponent(accessToken)}`);
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({ message: err.response.data || err.message });
+    }
+  });
+  
 module.exports = facebookRouter;
