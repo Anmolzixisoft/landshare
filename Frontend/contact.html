@@ -71,17 +71,17 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto p-4 p-lg-0">
-                        <a href="index.html" class="nav-item nav-link ">Home</a>
+                        <a id="Home"></a>
                         <a id="profile"></a>
-
-                        <a href="investing-opportunity.html" class="nav-item nav-link ">Opportunity</a>
-                        <a href="shortlisted-properties.html" class="nav-item nav-link">Sortlist Property</a>
-                        <a href="my-uploads.html" class="nav-item nav-link ">My Property</a>
-
-                        <a href="enquire.html" class="nav-item nav-link">Enquiries My Property</a>
-
-                        <a href="contact.html" class="nav-item nav-link">Connect</a>
-
+                        <a id="Opportunity"></a>
+                        <a id="Sortlist"></a>
+                        <a id="My-Property"></a>
+                        <a id="Enquiries"></a>
+                        <a id="Know"></a>
+                        <a id="Support"></a>
+                        <a id="press-room"></a>
+                        <a id="blog"></a>
+                        <a id="Connect"></a>
                     </div>
                 </div>
             </div>
@@ -268,7 +268,20 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
     <script>
+        var userId = localStorage.getItem('userId');
+        var token = localStorage.getItem('token');
+        var loginLogoutButton = $('#loginLogoutButton');
+        var circle = $('#circle')
         var profile = $('#profile')
+        var Opportunity = $('#Opportunity')
+        var Sortlist = $('#Sortlist')
+        var sellproperty = $('#My-Property')
+        var home = $('#Home')
+        var Support = $('#Support')
+        var Know = $('#Know')
+        var press = $('#press-room')
+        var blog = $('#blog')
+        var Connect = $('#Connect')
         function validateEmail() {
             var emailInput = document.getElementById('email');
             var email = emailInput.value;
@@ -348,24 +361,29 @@
             return true;
         }
 
-        const userId = localStorage.getItem('userId');
-        const token = localStorage.getItem('token');
+        if (token) {
+            loginLogoutButton.html('<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
 
-        const loginLogoutButton = document.getElementById('loginLogoutButton');
-        var circle = $('#circle')
-        if (userId && token) {
-            loginLogoutButton.innerHTML = '<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
-            loginLogoutButton.addEventListener('click', () => {
+            loginLogoutButton.click(function () {
                 localStorage.removeItem('userId');
                 localStorage.removeItem('token');
-                window.location.href = 'index.html'
+                window.location.href = 'index.html';
             });
-            profile.html('<a href="my-profile.html" class="nav-item nav-link">Profile </a>')
-
-            circle.html('<a href="" id="circle" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2"></a>')
-        } else {
-            loginLogoutButton.innerHTML = '<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>';
-            loginLogoutButton.href = 'login-form.html';
+            profile.html('<a href="my-profile.html" class="nav-item nav-link"> My Profile </a>')
+            Opportunity.html('<a href="my-uploads.html" class="nav-item nav-link "> My Listings</a>')
+            Sortlist.html('<a href="shortlisted-properties.html" class="nav-item nav-link "> My Shortlists</a>')
+            Support.html('<a href="my-profile.html" class="nav-item nav-link"> Support</a>')
+            sellproperty.html('<a href="investing-opportunity.html" class="nav-item nav-link ">Sell Property</a>')
+            circle.html('<a href="my-profile.html" id="circle" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2"></a>')
+        } 
+        else {
+            loginLogoutButton.html('<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
+            loginLogoutButton.attr('href', 'login-form.html');
+            home.html(' <a href="index.html" class="nav-item nav-link ">Home</a>')
+            Know.html('<a href="about.html" class="nav-item nav-link ">Know Us</a>')
+            press.html('<a href="media.html" class="nav-item nav-link ">press-room</a>')
+            blog.html(' <a href="contact.html" class="nav-item nav-link">Blog</a>')
+            Connect.html(' <a href="contact.html" class="nav-item nav-link">Connect</a>')
         }
         function getname() {
             const userData = {

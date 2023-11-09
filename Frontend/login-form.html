@@ -80,15 +80,17 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto p-4 p-lg-0">
-                        <a href="index.html" class="nav-item nav-link ">Home</a>
-                        <a href="investing-opportunity.html" class="nav-item nav-link ">Opportunity</a>
-                        <a href="contact.html" class="nav-item nav-link">Connect</a>
-                        <a href="" class="nav-item nav-link">Press-Room</a>
-                        <a href="press-room.html" class="nav-item nav-link ">Blog</a>
-
-                        <a href="enquire.html" class="nav-item nav-link">Enquiries My Property</a>
-
-
+                        <a id="Home"></a>
+                        <a id="profile"></a>
+                        <a id="Opportunity"></a>
+                        <a id="Sortlist"></a>
+                        <a id="My-Property"></a>
+                        <a id="Enquiries"></a>
+                        <a id="Know"></a>
+                        <a id="Support"></a>
+                        <a id="press-room"></a>
+                        <a id="blog"></a>
+                        <a id="Connect"></a>
                     </div>
                 </div>
             </div>
@@ -157,9 +159,9 @@
                 <form class="form" id="register" action="authentication.php" onsubmit="return validateForm()"
                     method="POST">
                     <h2 class="login-h2">Register</h2>
-                    <label for="name">Your Name <span class="required">*</span></label>
+                    <label for="name"> Name <span class="required">*</span></label>
                     <div class="pass-reset">
-                        <input type="text" name="name" class="name" id="nameInput" placeholder="Your Name"
+                        <input type="text" name="name" class="name" id="nameInput" placeholder=" Name"
                             onkeypress="return isCharacterKey(event)" required pattern="[A-Za-z  ]+" maxlength="80">
                     </div>
 
@@ -372,11 +374,24 @@
     </script>
     <script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
     <script>
-        var circle = document.getElementById('circle')
+    
         function validateForm() {
             var nameInput = document.getElementById("nameInput").value;
 
         }
+        var token = localStorage.getItem('token');
+        var loginLogoutButton = $('#loginLogoutButton');
+        var circle = $('#circle')
+        var profile = $('#profile')
+        var Opportunity = $('#Opportunity')
+        var Sortlist = $('#Sortlist')
+        var sellproperty = $('#My-Property')
+        var home = $('#Home')
+        var Support = $('#Support')
+        var Know = $('#Know')
+        var press = $('#press-room')
+        var blog = $('#blog')
+        var Connect = $('#Connect')
         $(document).ready(function () {
             $("#contact-form").on("submit", function (e) {
                 e.preventDefault();
@@ -409,8 +424,7 @@
                 }
             });
         });
-    </script>
-    <script>
+  
 
         function performGoogleLogin() {
             window.open('http://localhost:5000/auth/google');
@@ -637,20 +651,30 @@
             });
         }
 
-        document.getElementById('login-button').addEventListener('click', function () {
-            FB.login(function (response) {
-                if (response.status === 'connected') {
-                    // User is logged in and has granted permissions
-                    const accessToken = response.authResponse.accessToken;
+        if (token) {
+            loginLogoutButton.html('<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
 
-                    // Use the access token to fetch user data
-                    FB.api('/me', { fields: 'id, name, email' }, function (userData) {
-                        // Send userData to your server for database storage
-                        sendDataToServer(userData);
-                    });
-                }
-            }, { scope: 'email' }); // Specify the required permissions
-        });
+            loginLogoutButton.click(function () {
+                localStorage.removeItem('userId');
+                localStorage.removeItem('token');
+                window.location.href = 'index.html';
+            });
+            profile.html('<a href="my-profile.html" class="nav-item nav-link"> My Profile </a>')
+            Opportunity.html('<a href="my-uploads.html" class="nav-item nav-link "> My Listings</a>')
+            Sortlist.html('<a href="shortlisted-properties.html" class="nav-item nav-link "> My Shortlists</a>')
+            Support.html('<a href="my-profile.html" class="nav-item nav-link"> Support</a>')
+            sellproperty.html('<a href="investing-opportunity.html" class="nav-item nav-link ">Sell Property</a>')
+            circle.html('<a href="my-profile.html" id="circle" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2"></a>')
+        } 
+        else {
+            loginLogoutButton.html('<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
+            loginLogoutButton.attr('href', 'login-form.html');
+            home.html(' <a href="index.html" class="nav-item nav-link ">Home</a>')
+            Know.html('<a href="about.html" class="nav-item nav-link ">Know Us</a>')
+            press.html('<a href="media.html" class="nav-item nav-link ">press-room</a>')
+            blog.html(' <a href="contact.html" class="nav-item nav-link">Blog</a>')
+            Connect.html(' <a href="contact.html" class="nav-item nav-link">Connect</a>')
+        }
 
     </script>
 </body>
