@@ -192,8 +192,6 @@ function sendVerificationMail(req, res) {
 
 function getuserbyid(req, res) {
     try {
-
-
         const { userid } = req.body
         connection.query('select * from landsharein_db.tbl_user where id= "' + userid + '" ', (err, result) => {
             if (err) {
@@ -208,7 +206,7 @@ function getuserbyid(req, res) {
 }
 function updateuser(req, res) {
     try {
-        const { name, email, mobile_number, password, userid } = req.body;
+        const { name, email, mobile_number, password, userid ,request_update} = req.body;
 
         if (!isValidEmail(email)) {
             return res.status(400).json({ error: 'Invalid email format', status: false });
@@ -240,10 +238,10 @@ function updateuser(req, res) {
                         }
                         hashedPassword = newHashedPassword;
 
-                        updateProfile(name, email, mobile_number, hashedPassword, userid, res);
+                        updateProfile(name, email, mobile_number, hashedPassword, password, userid,request_update, res);
                     });
                 } else {
-                    updateProfile(name, email, mobile_number, hashedPassword, userid, res);
+                    updateProfile(name, email, mobile_number, hashedPassword, password, userid, request_update,res);
                 }
             });
     } catch (err) {
@@ -251,16 +249,16 @@ function updateuser(req, res) {
     }
 }
 
-function updateProfile(name, email, mobile_number, hashedPassword, userid, res) {
+function updateProfile(name, email, mobile_number, hashedPassword, password, userid, request_update,res) {
     connection.query(
-        'UPDATE landsharein_db.tbl_user SET name="' + name + '", mobile_number="' + mobile_number + '", password="' + hashedPassword + '", email="' + email + '" WHERE id="' + userid + '"',
+        'UPDATE landsharein_db.tbl_user SET name="' + name + '", mobile_number="' + mobile_number + '", password="' + hashedPassword + '", password_bcrypt="' + password + '",request_update="0",email="' + email + '" WHERE id="' + userid + '"',
         (err, result1) => {
             if (err) {
                 console.error('Update error:', err);
                 return res.status(500).json({ error: 'Update error' });
             }
 
-            return res.status(200).json({ success: true, message: 'Profile updated successfully' });
+            return res.status(200).json({ success: true, message: 'Profile updated success' });
         }
     );
 }
@@ -321,6 +319,100 @@ function blockuser(req, res) {
         }
     })
 }
-module.exports = { signUp, getuser, sendVerificationMail, getuserbyid, updateuser, getalluser, deleteuser, blockuser }
+
+
+function createuserbyadmin(req, res) {
+    try {
+
+        const { name, email, mobile_number, password } = req.body
+
+        if (!isValidEmail(email)) {
+            return res.status(400).json({ error: 'Invalid email format', status: false });
+        }
+
+        if (!isValidMobileNumber(mobile_number)) {
+            return res.status(400).json({ error: 'Invalid mobile number format', status: false });
+        }
+        connection.query('SELECT MAX(User_ID) as latestUser FROM landsharein_db.tbl_user', (err, result) => {
+            if (err) {
+                console.error('Error fetching latest User_ID: ' + err);
+                return res.status(500).json({ error: 'Error fetching latest User_ID', status: false });
+            } else {
+
+                var latestUser = result[0].latestUser || 'LS1000';
+                connection.query(
+                    'SELECT otp  FROM landsharein_db.tbl_user WHERE email = ? ',
+                    [email],
+                    (err, result) => {
+                        if (err) {
+                            console.error('Database error:', err);
+                            return res.status(500).json({ error: 'Database error' });
+                        }
+                        const user = result[0]
+                        if (user) {
+                            return res.send({ message: "already exist email" })
+                        }
+
+                        bcrypt.hash(password, 10, (hashErr, hashedPassword) => {
+                            if (hashErr) {
+                                console.error('Password hashing failed: ' + hashErr);
+                                return res.status(500).json({ error: 'Internal server error', status: false });
+                            }
+
+
+
+
+                            const numericPart = parseInt(latestUser.substring(2));
+                            const incrementedNumericPart = numericPart + 1;
+
+                            const newUser_ID = 'LS' + incrementedNumericPart.toString().padStart(4, '0');
+                            connection.query(
+                                `INSERT INTO landsharein_db.tbl_user (User_ID,name, mobile_number, password_bcrypt, password, email,provider) VALUES (?,?, ?, ?, ?, ?,'admin')`,
+                                [newUser_ID, name, mobile_number, password, hashedPassword, email],
+                                (err, result) => {
+                                    if (err) {
+                                        console.error('Insert error:', err);
+                                        return res.status(500).json({ error: 'Insert error' });
+                                    }
+
+                                    return res.status(200).json({ success: true, message: 'User Added successfully' });
+                                }
+                            );
+
+                        }
+
+                        );
+                    });
+            }
+        });
+    }
+    catch (error) {
+        return res.send({ error: error })
+    }
+}
+
+
+function requestupdatenumber(req, res) {
+    try {
+        const { userid } = req.body
+
+        connection.query(
+            'UPDATE landsharein_db.tbl_user SET request_update="1" WHERE id="' + userid + '"',
+            (err, result1) => {
+                if (err) {
+                    console.error('Update error:', err);
+                    return res.status(500).json({ error: 'Update error' });
+                }
+
+                return res.status(200).json({ success: true, message: 'req.. successfully send' });
+            }
+        );
+    } catch (error) {
+        return res.send({ error: error })
+    }
+
+}
+
+module.exports = { signUp, getuser, sendVerificationMail, getuserbyid, updateuser, getalluser, deleteuser, blockuser, createuserbyadmin, requestupdatenumber }
 
 

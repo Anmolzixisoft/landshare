@@ -1059,7 +1059,7 @@ body.is-menu-visible #menu .close {
 
 .details .thumb .small-images {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   gap: 10px;
   padding-top: 16px;
   flex-wrap: wrap;

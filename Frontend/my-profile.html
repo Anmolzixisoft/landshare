@@ -104,7 +104,17 @@
                 <div class="col-lg-7  mx-auto wow fadeIn" data-wow-delay="0.1s">
 
                     <form id="update">
+                        <!-- <div id="userAvatarContainer" class="col-md-6 text-end">
+                            <img id="userAvatar" src="path_to_default_avatar_image.jpg" alt="User Avatar"
+                                class="img-fluid rounded-circle" style="width: 80px; height: 80px;">
+                        </div> -->
+
                         <div class="row g-3 ">
+                            <!-- <div class="col-md-6 mb-3">
+                                <label for="" class="col-form-label"></label>
+                                <input class="form-control" type="file" id="formFileMultiple" accept=".png, .pdf, .Jpeg"
+                                    multiple required>
+                            </div> -->
                             <!-- <div class="col-md-6">
                                 <p>Customer Id</p>
                                 <div class="form-floating">
@@ -113,6 +123,8 @@
 
                                 </div>
                             </div> -->
+                            <!-- Add this inside the form or wherever you want the image to appear -->
+
                             <div class="col-md-6">
                                 <p>Customer Id</p>
                                 <div class="form-floating">
@@ -125,7 +137,8 @@
                                 <p>Mobile Number</p>
                                 <div class="form-floating">
                                     <input type="text" class="form-control" id="phone" placeholder="Your Phone Number"
-                                        onkeypress="return isNumberKey(event)" required pattern="[0-9]+" maxlength="10">
+                                        onkeypress="return isNumberKey(event)" required pattern="[0-9]+" maxlength="10"
+                                        readonly>
                                     <label for="phone">Contact Number</label>
                                 </div>
                             </div>
@@ -142,7 +155,7 @@
                             <div class="col-md-6">
                                 <p>Email Id</p>
                                 <div class="form-floating">
-                                    <input type="email" class="form-control" id="email" placeholder="Email">
+                                    <input type="email" class="form-control" id="email" placeholder="Email" readonly>
                                     <label for="subject">Email Id</label>
                                 </div>
                             </div>
@@ -172,8 +185,29 @@
                                 </button>
 
                             </div>
+                            <div style="display:inline-flex;" class="mx-auto">
+                                <button class="btn  btn-primary btn-lg-square"><i class="fab fa-facebook-f"></i>
+                                </button>&nbsp;&nbsp;
+                                <!-- <button class="btn  btn-primary btn-lg-square"><i class='fab fa-google'></i>
+                                </button>&nbsp;&nbsp;
+                                <button class="btn  btn-primary btn-lg-square"><i class='fab fa-instagram'></i>
+                                </button>&nbsp;&nbsp;
+                                <button class="btn  btn-primary btn-lg-square"><i class='fab fa-twitter'></i>
+                                </button>&nbsp;&nbsp; -->
+                                <button class="btn  btn-primary btn-lg-square"><i class='fab fa-linkedin'></i>
+                                </button>
+                            </div>
                         </div>
                     </form>
+                    <button class="btn btn-primary py-2 px-3 me-3" id="updateButton1">
+                        <span id="buttonText">
+                            Request for update email and phone
+                        </span>
+                        <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
+                            <i class="fa fa-arrow-right"></i>
+                        </div>
+                    </button>
+
                 </div>
 
             </div>
@@ -306,7 +340,7 @@
             }
             return false;
         }
-       
+
         var loginLogoutButton = $('#loginLogoutButton');
 
         var userId = localStorage.getItem('userId');
@@ -337,7 +371,7 @@
             Support.html('<a href="my-profile.html" class="nav-item nav-link"> Support</a>')
             sellproperty.html('<a href="investing-opportunity.html" class="nav-item nav-link ">Sell Property</a>')
             circle.html('<a href="my-profile.html" id="circle" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2"></a>')
-        } 
+        }
         else {
             loginLogoutButton.html('<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
             loginLogoutButton.attr('href', 'login-form.html');
@@ -386,6 +420,17 @@
                     $('#nameInput').val(data.message[0].name);
                     $('#email').val(data.message[0].email);
                     $('#userid').val(data.message[0].User_ID)
+
+
+                    // Get the button element
+                    var button = document.getElementById("updateButton1");
+
+                    // Get the span element inside the button
+                    var buttonText = document.getElementById("buttonText");
+                    if (data.message[0].request_update == 1) {
+                        buttonText.textContent = "Requested";
+                        button.disabled = true;
+                    }
                 }
             });
         }
@@ -460,6 +505,49 @@
                 }
             });
         }
+
+        $(document).ready(function () {
+            // Attach a click event handler to the buttons
+            $("#updateButton1").click(function () {
+
+                var userData1 = {
+                    userid: userId
+                }
+                $.ajax({
+                    url: apiUrl + '/updatereq',
+                    method: "POST",
+                    contentType: 'application/json',
+                    data: JSON.stringify(userData1),
+                    success: function (response) {
+
+                        if (response.success == true) {
+                            Swal.fire({
+                                title: 'Success!',
+                                text: response.message,
+                                icon: 'success'
+                            }).then(function () {
+                                location.reload();
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: data.error,
+                                icon: 'error'
+                            });
+                        }
+                    },
+                    error: function (error) {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: error,
+                            icon: 'error'
+                        });
+
+                    },
+
+                });
+            });
+        });
     </script>
 </body>
 

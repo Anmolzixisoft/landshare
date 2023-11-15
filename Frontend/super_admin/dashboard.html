@@ -36,9 +36,9 @@
 <body>
   <script>
     let checkAdmintoken = localStorage.getItem('admintoken')
-  if(checkAdmintoken == null){
-    location = "http://127.0.0.1:5500/Frontend/super_admin/"
-  }
+    if (checkAdmintoken == null) {
+      location = "http://127.0.0.1:5500/Frontend/super_admin/"
+    }
   </script>
   <!-- admintoken -->
   <!--wrapper-->
@@ -76,12 +76,79 @@
         </li>
 
         <li class="menu-label">Property</li>
-        <li>
-          <a href="manage-property.html">
+        <!-- <li>
+          <a href="new-enquiries.html">
             <div class="parent-icon">
               <img src="../assets/images/stocktrnsfericon.png" alt="" />
             </div>
             <div class="menu-title">Manage Property</div>
+          </a>
+        </li> -->
+        <li>
+          <a href="new-property.html">
+            <div class="parent-icon">
+              <img src="../assets/images/stocktrnsfericon.png" alt="" />
+            </div>
+            <div class="menu-title">New Property</div>
+          </a>
+        </li>
+        <li>
+          <a href="appreov-property.html">
+              <div class="parent-icon">
+                  <img src="../assets/images/stocktrnsfericon.png" alt="" />
+              </div>
+              <div class="menu-title">Approved Property</div>
+          </a>
+      </li>
+        <li>
+          <a href="reject-propert.html">
+            <div class="parent-icon">
+              <img src="../assets/images/stocktrnsfericon.png" alt="" />
+            </div>
+            <div class="menu-title">Rejected Property</div>
+          </a>
+        </li>
+        <li>
+          <a href="sold-propert.html">
+            <div class="parent-icon">
+              <img src="../assets/images/stocktrnsfericon.png" alt="" />
+            </div>
+            <div class="menu-title">Sold Property</div>
+          </a>
+        </li>
+        <li>
+          <a href="new-enquiries.html">
+            <div class="parent-icon">
+              <img src="../assets/images/stocktrnsfericon.png" alt="" />
+            </div>
+            <div class="menu-title">New Enquiries</div>
+          </a>
+        </li>
+        <li>
+          <a href="new-enquiries.html">
+            <div class="parent-icon">
+              <img src="../assets/images/stocktrnsfericon.png" alt="" />
+            </div>
+            <div class="menu-title">New Logins</div>
+          </a>
+        </li>
+        <li>
+          <a href="new-enquiries.html">
+            <div class="parent-icon">
+              <img src="../assets/images/stocktrnsfericon.png" alt="" />
+            </div>
+            <div class="menu-title">New Uploads</div>
+          </a>
+        </li>
+
+
+        
+        <li>
+          <a href="new-enquiries.html">
+            <div class="parent-icon">
+              <img src="../assets/images/stocktrnsfericon.png" alt="" />
+            </div>
+            <div class="menu-title">IN Review Property</div>
           </a>
         </li>
       </ul>
@@ -494,11 +561,11 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
               <li>
-                <a class="dropdown-item d-flex align-items-center" href="#" id="logoutLink" ><i
+                <a class="dropdown-item d-flex align-items-center" href="#" id="logoutLink"><i
                     class="bx bx-log-out-circle"></i><span>Logout</span></a>
               </li>
-            
-              
+
+
             </ul>
           </div>
         </nav>
@@ -528,7 +595,7 @@
           </div>
 
           <div class="col">
-            <a href="manage-property.html">
+            <a href="new-enquiries.html">
               <div class="card radius-10 border-start border-0 border-4 batchcard-ht">
                 <div class="card-body">
                   <div class="d-flexcard">
@@ -632,14 +699,14 @@
     }
     fetchproduct()
     window.onload = fetchData;
-function logout() {
-  localStorage.removeItem('admintoken');
-  window.location.href = 'https://landshareindia.com/web/super_admin'; // Redirect example
-}
-document.getElementById('logoutLink').addEventListener('click', function(event) {
-  event.preventDefault(); 
-  logout();
-});
+    function logout() {
+      localStorage.removeItem('admintoken');
+      window.location.href = 'https://landshareindia.com/web/super_admin'; // Redirect example
+    }
+    document.getElementById('logoutLink').addEventListener('click', function (event) {
+      event.preventDefault();
+      logout();
+    });
 
   </script>
 </body>

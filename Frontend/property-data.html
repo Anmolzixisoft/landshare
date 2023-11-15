@@ -80,7 +80,7 @@
             <a id="press-room"></a>
             <a id="blog"></a>
             <a id="Connect"></a>
-        </div>
+          </div>
         </div>
       </div>
 
@@ -137,7 +137,7 @@
       <div class="col-md-6 mb-3">
         <div class="row">
           <div class="col-4">
-            <label for="" class="col-form-label">Land Owner Name <span class="required">*</span></label>
+            <label for="" class="col-form-label">Owner Name:<span class="required">*</span></label>
           </div>
           <div class="col-8">
             <input type="text" id="landmarkOwnername" class="form-control" aria-describedby="passwordHelpInline"
@@ -149,7 +149,7 @@
       <div class="col-md-6 mb-3">
         <div class="row">
           <div class="col-3">
-            <label for="" class="col-form-label">Contact No. <span class="required">*</span> </label>
+            <label for="" class="col-form-label">Contact No: <span class="required">*</span> </label>
           </div>
           <div class="col-9">
             <input type="text" id="phone" class="form-control" aria-describedby="passwordHelpInline"
@@ -164,7 +164,7 @@
       <div class="col-md-6 mb-3">
         <div class="row g-3 align-items-center">
           <div class="col-4">
-            <label for="" class="col-form-label" id="sizeoflandmark">Size of the Land <span class="required">*</span>
+            <label for="" class="col-form-label" id="sizeoflandmark">Size:<span class="required">*</span>
             </label>
           </div>
 
@@ -173,21 +173,21 @@
 
               <input type="number" class="form-control" id="acre" placeholder="Enter acres" oninput="calculateTotal()"
                 min="0">
-              <label for="acre">Acres</label>
+              <label for="acre">Acres:</label>
             </div>
           </div>
           <div class="col-md-2">
             <div class="form-floating">
               <input type="number" class="form-control" id="guntas" placeholder="Enter guntas"
                 oninput="calculateTotal()" min="0">
-              <label for="guntas">Guntas</label>
+              <label for="guntas">Guntas:</label>
             </div>
           </div>
           <div class="col-md-2">
             <div class="form-floating">
               <input type="number" class="form-control" id="cents" placeholder="Enter Cents" oninput="calculateTotal()"
                 min="0">
-              <label for="cents">Cents</label>
+              <label for="cents">Cents:</label>
             </div>
           </div>
           <div class="col-md-5">
@@ -205,7 +205,7 @@
       <div class="col-md-6 mb-3">
         <div class="row">
           <div class="col-3">
-            <label for="" class="col-form-label">Land Facing <span class="required">*</span> </label>
+            <label for="" class="col-form-label">Plot Facing:<span class="required">*</span> </label>
           </div>
           <div class="col-9">
             <input type="text" id="landFacing" class="form-control" aria-describedby="passwordHelpInline" required>
@@ -217,7 +217,7 @@
       <div class="col-md-6 mb-3">
         <div class="row">
           <div class="col-3">
-            <label for="" class="col-form-label">Survey No. <span class="required">*</span></label>
+            <label for="" class="col-form-label">Survey No: <span class="required">*</span></label>
           </div>
           <div class="col-9">
             <input type="text" id="SurveyNo" class="form-control" aria-describedby="passwordHelpInline" required>
@@ -228,7 +228,7 @@
       <div class="col-md-6 mb-3">
         <div class="row">
           <div class="col-3">
-            <label for="" class="col-form-label">Landmark <span class="required">*</span></label>
+            <label for="" class="col-form-label">Landmark:<span class="required">*</span></label>
           </div>
           <div class="col-9">
             <input type="text" id="landmark" class="form-control" aria-describedby="passwordHelpInline" required>
@@ -239,7 +239,7 @@
       <div class="col-md-6 mb-3">
         <div class="row">
           <div class="col-3">
-            <label for="" class="col-form-label">Full Address <span class="required">*</span></label>
+            <label for="" class="col-form-label">Full Address:<span class="required">*</span></label>
           </div>
           <div class="col-9">
             <input type="text" id="Address" class="form-control" aria-describedby="passwordHelpInline" required>
@@ -251,7 +251,7 @@
         <div class="row">
 
           <div class="col-3">
-            <label for="" class="col-form-label">Type of Ownership <span class="required">*</span> </label>
+            <label for="" class="col-form-label">Type of Ownership:<span class="required">*</span> </label>
           </div>
           <div class="col-9">
             <select class="form-select" id="ownership" aria-label="Default select example">
@@ -267,10 +267,10 @@
       <div class="col-md-6 mb-3">
         <div class="row">
           <div class="col-3">
-            <label for="" class="col-form-label">Cost Per Sqft <span class="required">*</span></label>
+            <label for="" class="col-form-label">Price per Sq.Ft. (Rs):<span class="required">*</span></label>
           </div>
           <div class="col-9">
-            <input type="text" id="cost" class="form-control" aria-describedby="passwordHelpInline" required
+            <input type="number" min="0" id="cost" class="form-control" aria-describedby="passwordHelpInline" required
               oninput="calculateTotal()">
             <div id="" class="form-text">*Please do not add if you do not know</div>
           </div>
@@ -280,17 +280,18 @@
       <div class="col-md-6 mb-3">
         <div class="row">
           <div class="col-3">
-            <label for="" class="col-form-label">Land price <span class="required">*</span> </label>
+            <label for="" class="col-form-label">Land price:<span class="required">*</span> </label>
           </div>
           <div class="col-9">
-            <input type="text" id="landPrice" class="form-control" aria-describedby="passwordHelpInline" required>
+            <input type="number" min="0" id="landPrice" class="form-control" aria-describedby="passwordHelpInline"
+              required>
           </div>
         </div>
       </div>
       <div class="col-md-6 mb-3">
         <div class="row">
           <div class="col-3">
-            <label for="" class="col-form-label">State <span class="required">*</span> </label>
+            <label for="" class="col-form-label">State:<span class="required">*</span> </label>
           </div>
           <div class="col-9">
             <input type="text" id="state" class="form-control" aria-describedby="passwordHelpInline" required>
@@ -300,7 +301,7 @@
       <div class="col-md-6 mb-3">
         <div class="row">
           <div class="col-3">
-            <label for="" class="col-form-label">City <span class="required">*</span> </label>
+            <label for="" class="col-form-label">City:<span class="required">*</span> </label>
           </div>
           <div class="col-9">
             <input type="text" id="city" class="form-control" aria-describedby="passwordHelpInline" required>
@@ -310,32 +311,43 @@
       <div class="col-md-6 mb-3">
         <div class="row">
           <div class="col-3">
-            <label for="" class="col-form-label">Pincode <span class="required">*</span> </label>
+            <label for="" class="col-form-label">Pincode:<span class="required">*</span> </label>
           </div>
           <div class="col-9">
-            <input type="text" id="pincode" class="form-control" aria-describedby="passwordHelpInline" maxlength="6"
-              onkeypress="return isNumberKey(event)" required pattern="[0-9]+">
+            <input type="number" min="0" id="pincode" class="form-control" aria-describedby="passwordHelpInline"
+              maxlength="6" onkeypress="return isNumberKey(event)" required pattern="[0-9]+">
           </div>
         </div>
       </div>
-      <div class="col-md-6 mb-3">
+      <!-- <div class="col-md-6 mb-3">
         <div class="row">
           <div class="col-3">
-            <label for="" class="col-form-label">Description <span class="required">*</span></label>
+            <label for="" class="col-form-label">Description:<span class="required">*</span></label>
           </div>
           <div class="col-9">
             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
           </div>
         </div>
-      </div>
+      </div> -->
       <div class="col-md-6 mb-3">
-        <label for="" class="col-form-label">upload images <span class="required">*</span></label>
-        <input class="form-control" type="file" id="formFileMultiple" multiple required>
+        <label for="" class="col-form-label">upload images:<span class="required">*</span></label>
+        <input class="form-control" type="file" id="formFileMultiple" accept=".png, .pdf, .Jpeg" multiple required>
+      </div>
 
+      <div class="col-md-6 mb-3">
+        <label for="" class="col-form-label">Latest Encumbrance Certificate (Pdf/Jpeg):<span
+            class="required">*</span></label>
+        <input class="form-control" type="file" id="formFileMultiple" accept=".png, .pdf, .Jpeg" required>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label for="" class="col-form-label">Pahani / Khata Extract (PDF/Jpeg only):<span
+            class="required">*</span></label>
+        <input class="form-control" type="file" id="formFileMultiple" accept=".png, .pdf, .Jpeg" required>
       </div>
 
       <div class="col-md-6">
-        <label for="exampleFormControlInput1" class="form-label">Location</label>
+        <label for="exampleFormControlInput1" class="form-label">Location:</label>
         <!-- <div class="" id="map">
        
         </div> -->
@@ -458,20 +470,20 @@
   <script src="js/main.js"></script>
   <!-- Add this script at the bottom of your HTML file -->
   <script>
-   var userId = localStorage.getItem('userId');
-        var token = localStorage.getItem('token');
-        var loginLogoutButton = $('#loginLogoutButton');
-        var circle = $('#circle')
-        var profile = $('#profile')
-        var Opportunity = $('#Opportunity')
-        var Sortlist = $('#Sortlist')
-        var sellproperty = $('#My-Property')
-        var home = $('#Home')
-        var Support = $('#Support')
-        var Know = $('#Know')
-        var press = $('#press-room')
-        var blog = $('#blog')
-        var Connect = $('#Connect')
+    var userId = localStorage.getItem('userId');
+    var token = localStorage.getItem('token');
+    var loginLogoutButton = $('#loginLogoutButton');
+    var circle = $('#circle')
+    var profile = $('#profile')
+    var Opportunity = $('#Opportunity')
+    var Sortlist = $('#Sortlist')
+    var sellproperty = $('#My-Property')
+    var home = $('#Home')
+    var Support = $('#Support')
+    var Know = $('#Know')
+    var press = $('#press-room')
+    var blog = $('#blog')
+    var Connect = $('#Connect')
     function calculateTotal() {
       var acre = parseFloat(document.getElementById('acre').value) || 0;
       var gunta = parseFloat(document.getElementById('guntas').value) || 0;
@@ -684,34 +696,34 @@
       e.preventDefault();
       addProperty();
     });
-;
+    ;
 
 
 
     if (token) {
-            loginLogoutButton.html('<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
+      loginLogoutButton.html('<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
 
-            loginLogoutButton.click(function () {
-                localStorage.removeItem('userId');
-                localStorage.removeItem('token');
-                window.location.href = 'index.html';
-            });
-            profile.html('<a href="my-profile.html" class="nav-item nav-link"> My Profile </a>')
-            Opportunity.html('<a href="my-uploads.html" class="nav-item nav-link "> My Listings</a>')
-            Sortlist.html('<a href="shortlisted-properties.html" class="nav-item nav-link "> My Shortlists</a>')
-            Support.html('<a href="my-profile.html" class="nav-item nav-link"> Support</a>')
-            sellproperty.html('<a href="investing-opportunity.html" class="nav-item nav-link ">Sell Property</a>')
-            circle.html('<a href="my-profile.html" id="circle" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2"></a>')
-        } 
-        else {
-            loginLogoutButton.html('<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
-            loginLogoutButton.attr('href', 'login-form.html');
-            home.html(' <a href="index.html" class="nav-item nav-link ">Home</a>')
-            Know.html('<a href="about.html" class="nav-item nav-link ">Know Us</a>')
-            press.html('<a href="media.html" class="nav-item nav-link ">press-room</a>')
-            blog.html(' <a href="contact.html" class="nav-item nav-link">Blog</a>')
-            Connect.html(' <a href="contact.html" class="nav-item nav-link">Connect</a>')
-        }
+      loginLogoutButton.click(function () {
+        localStorage.removeItem('userId');
+        localStorage.removeItem('token');
+        window.location.href = 'index.html';
+      });
+      profile.html('<a href="my-profile.html" class="nav-item nav-link"> My Profile </a>')
+      Opportunity.html('<a href="my-uploads.html" class="nav-item nav-link "> My Listings</a>')
+      Sortlist.html('<a href="shortlisted-properties.html" class="nav-item nav-link "> My Shortlists</a>')
+      Support.html('<a href="my-profile.html" class="nav-item nav-link"> Support</a>')
+      sellproperty.html('<a href="investing-opportunity.html" class="nav-item nav-link ">Sell Property</a>')
+      circle.html('<a href="my-profile.html" id="circle" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2"></a>')
+    }
+    else {
+      loginLogoutButton.html('<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
+      loginLogoutButton.attr('href', 'login-form.html');
+      home.html(' <a href="index.html" class="nav-item nav-link ">Home</a>')
+      Know.html('<a href="about.html" class="nav-item nav-link ">Know Us</a>')
+      press.html('<a href="media.html" class="nav-item nav-link ">press-room</a>')
+      blog.html(' <a href="contact.html" class="nav-item nav-link">Blog</a>')
+      Connect.html(' <a href="contact.html" class="nav-item nav-link">Connect</a>')
+    }
     function getname() {
       const userData = {
         userid: userId

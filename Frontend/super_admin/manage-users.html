@@ -77,12 +77,79 @@
         </li>
 
         <li class="menu-label">Property</li>
-        <li>
-          <a href="manage-property.html">
+        <!-- <li>
+          <a href="new-enquiries.html">
             <div class="parent-icon">
               <img src="../assets/images/stocktrnsfericon.png" alt="" />
             </div>
             <div class="menu-title">Manage Property</div>
+          </a>
+        </li> -->
+        <li>
+          <a href="new-property.html">
+            <div class="parent-icon">
+              <img src="../assets/images/stocktrnsfericon.png" alt="" />
+            </div>
+            <div class="menu-title">New Property</div>
+          </a>
+        </li>
+
+        <li>
+          <a href="appreov-property.html">
+            <div class="parent-icon">
+              <img src="../assets/images/stocktrnsfericon.png" alt="" />
+            </div>
+            <div class="menu-title">Approved Property</div>
+          </a>
+        </li>
+        <li>
+          <a href="reject-propert.html">
+            <div class="parent-icon">
+              <img src="../assets/images/stocktrnsfericon.png" alt="" />
+            </div>
+            <div class="menu-title">Rejected Property</div>
+          </a>
+        </li>
+        <li>
+          <a href="sold-propert.html">
+            <div class="parent-icon">
+              <img src="../assets/images/stocktrnsfericon.png" alt="" />
+            </div>
+            <div class="menu-title">Sold Property</div>
+          </a>
+        </li>
+        <li>
+          <a href="new-enquiries.html">
+            <div class="parent-icon">
+              <img src="../assets/images/stocktrnsfericon.png" alt="" />
+            </div>
+            <div class="menu-title">New Enquiries</div>
+          </a>
+        </li>
+        <li>
+          <a href="new-enquiries.html">
+            <div class="parent-icon">
+              <img src="../assets/images/stocktrnsfericon.png" alt="" />
+            </div>
+            <div class="menu-title">New Logins</div>
+          </a>
+        </li>
+        <li>
+          <a href="new-enquiries.html">
+            <div class="parent-icon">
+              <img src="../assets/images/stocktrnsfericon.png" alt="" />
+            </div>
+            <div class="menu-title">New Uploads</div>
+          </a>
+        </li>
+
+
+        <li>
+          <a href="new-enquiries.html">
+            <div class="parent-icon">
+              <img src="../assets/images/stocktrnsfericon.png" alt="" />
+            </div>
+            <div class="menu-title">IN Review Property</div>
           </a>
         </li>
       </ul>
@@ -537,8 +604,13 @@
                       <div id="" class="">
                         <label>
                           <input type="search" class="form-control form-control-sm" placeholder="Search..."
-                            aria-controls="DataTables_Table_0" /></label>
+                            aria-controls="DataTables_Table_0" />
+                        </label>
                       </div>
+                    </div>
+                    <div>
+                      <button type="submit" class="btn btn-primary text-light" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">Add new User</button>
                     </div>
                   </div>
                 </div>
@@ -554,6 +626,7 @@
                           <th>Contact No.</th>
                           <th>Password</th>
                           <th>Action</th>
+                          <th>Edit User</th>
                         </tr>
                       </thead>
 
@@ -589,6 +662,8 @@
         </div>
       </div>
     </div>
+
+
     <!--end page wrapper -->
     <!--start overlay-->
     <div class="overlay toggle-icon"></div>
@@ -600,12 +675,91 @@
       <p class="mb-0">Copyright © 2023. All right reserved.</p>
     </footer>
   </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="login" method="POST">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="text" class="form-control" name="email" id="email">
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="number" class="form-label">Contact No.</label>
+                <input type="text" class="form-control" id="number" name="number">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="Password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="Password" name="Password">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Add User</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
   <!--end wrapper-->
 
   <!-- modal edit batches -->
+  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="editUser" method="POST">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name1" name="name">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="text" class="form-control" name="email1" id="email1">
+              </div>
 
+              <div class="col-md-6 mb-3">
+                <label for="number" class="form-label">Contact No.</label>
+                <input type="text" class="form-control" id="number1" name="number">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="Password" class="form-label">Password</label>
+                <input type="text" class="form-control" id="Password1" name="Password">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Update User</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
 
   <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.7.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../assets/js/bootstrap.bundle.min.js"></script>
   <!--plugins-->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -617,6 +771,8 @@
   <script src="../assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js"></script>
   <script src="../assets/plugins/chartjs/js/chart.js"></script>
   <script src="../assets/js/index.js"></script>
+  <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+
   <!--app JS-->
   <script src="../utils.js"></script>
   <script src="../assets/js/app.js"></script>
@@ -729,13 +885,13 @@
             propertyList.appendChild(newRow);
 
           });
-          document.getElementById('spinner').style.display = 'none';
+          // document.getElementById('spinner').style.display = 'none';
         })
         .catch(error => {
           console.error('There was a problem with the fetch operation:', error);
         });
     }
-
+    var count = 1
     function createPropertyListing(property) {
       const originalDateTime = new Date(property.enquire_create_at);
       const day = originalDateTime.getUTCDate();
@@ -751,7 +907,7 @@
       tableRow.innerHTML = `
      
         
-        <td>${property.id}</td>
+        <td>${count}</td>
                         <td>${property.name}</td>
                         <td>${property.email}</td>
                         <td>${property.mobile_number}</td>
@@ -769,12 +925,200 @@
                             <button class="nondelvr-button"   onclick="deleteuser(${property.id})">Delete</button>
                           </div>
                         </td>
-    `;
+                        <td>
+  
 
+
+  <div>
+    <i class="fa-regular fa-pen-to-square" data-bs-toggle="modal" data-bs-target="#editModal" data-id="${property.id}"></i>
+${property.request_update == 1 ? ' <p >Request</p>' : ''}
+  
+ </div>
+</td>
+
+
+    `;
+      count++
       return tableRow; // Return the table row element
     }
 
     window.onload = fetchData;
+
+    $(document).ready(function () {
+      $('#editModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var id = button.data('id');
+
+        const userData = {
+          userid: id
+        };
+        fetch(apiUrl + '/getuser', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(userData)
+        })
+          .then(response => response.json())
+          .then(data => {
+            var user = data.message[0];
+            console.log(data.message[0], '---', user.mobile_number);
+            console.log("user", user);
+            $('#name1').val(user.name);
+            $('#email1').val(user.email);
+            $('#number1').val(user.mobile_number);
+
+            $('#Password1').val(user.password_bcrypt);
+            $(document).on('submit', '#editUser', function (e) {
+              e.preventDefault();
+              const name = $('#name1').val();
+              const email = $('#email1').val();
+              const contact_no = $('#number1').val();
+              const password = $('#Password1').val();
+
+              const userCredentials = {
+                name: name,
+                email: email,
+                mobile_number: contact_no,
+                password: password,
+                userid: id,
+                
+              };
+
+              $.ajax({
+                url: apiUrl + '/updateuser',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(userCredentials),
+                success: function (data) {
+                  if (data.success) {
+                    Swal.fire({
+                      icon: 'success',
+                      title: 'Success',
+                      text: data.message
+                    });
+                    setTimeout(() => {
+                      location.reload();
+                    }, 1000);
+                  } else {
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Error',
+                      text: data.error
+                    });
+                  }
+                },
+                error: function () {
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'please fill input '
+                  });
+                }
+              });
+
+
+
+            });
+
+          })
+          .catch(error => {
+            console.log(error, '--');
+          });
+
+      });
+    });
+
+
+
+
+    $(document).on('submit', '#login', function (e) {
+      e.preventDefault();
+      const name = $('#name').val();
+      const email = $('#email').val();
+      const contact_no = $('#number').val();
+      const password = $('#Password').val();
+
+      const userCredentials = {
+        name: name,
+        email: email,
+        mobile_number: contact_no,
+        password: password
+      };
+
+      $.ajax({
+        url: apiUrl + '/createuserbyadmin',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(userCredentials),
+        success: function (data) {
+          if (data.success) {
+            Swal.fire({
+              icon: 'success',
+              title: 'Success',
+              text: data.message
+            });
+            setTimeout(() => {
+              location.reload();
+            }, 1000);
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: data.error
+            });
+          }
+        },
+        error: function () {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'please fill input '
+          });
+        }
+      });
+
+    });
+
+
+    jQuery(document).ready(function () {
+      jQuery("#login").validate({
+        rules: {
+          name: {
+            required: true
+          },
+          email: {
+            required: true
+          },
+          Password: {
+            required: true
+          },
+          number: {
+            required: true
+          }
+
+        },
+        messages: {
+          name: {
+            required: "Please enter Name"
+          },
+          email: {
+            required: "Please enter Email"
+          },
+          Password: {
+            required: "Please enter Password"
+          }
+          ,
+          number: {
+            required: "Please enter Contact Number"
+          }
+        },
+
+        errorClass: "error",
+        errorElement: "div",
+      });
+
+    });
   </script>
 </body>
 

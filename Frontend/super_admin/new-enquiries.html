@@ -38,9 +38,9 @@
 <body>
   <script>
     let checkAdmintoken = localStorage.getItem('admintoken')
-  if(checkAdmintoken == null){
-    location = "http://127.0.0.1:5500/Frontend/super_admin/"
-  }
+    if (checkAdmintoken == null) {
+      location = "http://127.0.0.1:5500/Frontend/super_admin/"
+    }
   </script>
   <!--wrapper-->
   <div class="wrapper">
@@ -77,12 +77,79 @@
         </li>
 
         <li class="menu-label">Property</li>
-        <li>
-          <a href="manage-property.html">
+        <!-- <li>
+          <a href="new-enquiries.html">
             <div class="parent-icon">
               <img src="../assets/images/stocktrnsfericon.png" alt="" />
             </div>
             <div class="menu-title">Manage Property</div>
+          </a>
+        </li> -->
+        <li>
+          <a href="new-property.html">
+            <div class="parent-icon">
+              <img src="../assets/images/stocktrnsfericon.png" alt="" />
+            </div>
+            <div class="menu-title">New Property</div>
+          </a>
+        </li>
+        <li>
+          <a href="appreov-property.html">
+              <div class="parent-icon">
+                  <img src="../assets/images/stocktrnsfericon.png" alt="" />
+              </div>
+              <div class="menu-title">Approved Property</div>
+          </a>
+      </li>
+         <li>
+          <a href="reject-propert.html">
+            <div class="parent-icon">
+              <img src="../assets/images/stocktrnsfericon.png" alt="" />
+            </div>
+            <div class="menu-title">Rejected Property</div>
+          </a>
+        </li>
+        
+        <li>
+          <a href="sold-propert.html">
+            <div class="parent-icon">
+              <img src="../assets/images/stocktrnsfericon.png" alt="" />
+            </div>
+            <div class="menu-title">Sold Property</div>
+          </a>
+        </li>
+        <li>
+          <a href="new-enquiries.html">
+            <div class="parent-icon">
+              <img src="../assets/images/stocktrnsfericon.png" alt="" />
+            </div>
+            <div class="menu-title">New Enquiries</div>
+          </a>
+        </li>
+        <li>
+          <a href="new-enquiries.html">
+            <div class="parent-icon">
+              <img src="../assets/images/stocktrnsfericon.png" alt="" />
+            </div>
+            <div class="menu-title">New Logins</div>
+          </a>
+        </li>
+        <li>
+          <a href="new-enquiries.html">
+            <div class="parent-icon">
+              <img src="../assets/images/stocktrnsfericon.png" alt="" />
+            </div>
+            <div class="menu-title">New Uploads</div>
+          </a>
+        </li>
+   
+       
+        <li>
+          <a href="new-enquiries.html">
+            <div class="parent-icon">
+              <img src="../assets/images/stocktrnsfericon.png" alt="" />
+            </div>
+            <div class="menu-title">IN Review Property</div>
           </a>
         </li>
       </ul>
@@ -706,8 +773,12 @@
         })
         .then(data => {
           data.message.forEach(property => {
-            const newRow = createPropertyListing(property);
-            propertyList.appendChild(newRow);
+            if(property.property_status==2)
+            {
+
+              const newRow = createPropertyListing(property);
+              propertyList.appendChild(newRow);
+            }
 
           });
           document.getElementById('spinner').style.display = 'none';
@@ -741,8 +812,8 @@
               icon: 'success',
               title: 'Success',
               text: data.message,
-            }).then(()=>{
-              window.location.href="manage-property.html"
+            }).then(() => {
+              window.location.href = "new-enquiries.html"
             })
           } else {
             Swal.fire({
@@ -762,7 +833,7 @@
 
 
     }
-
+    var count = 1
     function createPropertyListing(property) {
 
       const tableRow = document.createElement('tr'); // Create a table row
@@ -782,7 +853,7 @@
       }
       tableRow.innerHTML = `
      
-        <td>${property.id}</td>
+        <td>${count}</td>
         <td>${property.ownerName}</td>
         <td>${property.property_category_select}</td>
         <td>${property.city}</td>
@@ -794,7 +865,7 @@
       </div>
         </td>
     `;
-
+      count++
       return tableRow; // Return the table row element
     }
 

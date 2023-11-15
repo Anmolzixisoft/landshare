@@ -1,53 +1,35 @@
-const LinkedInStrategy = require("passport-linkedin-oauth2").Strategy;
-const express = require('express')
-const app = express()
-const session = require('express-session')
-const passport = require("passport");
+const qs = require('querystring');
+const axios = require('axios');
 
-passport.serializeUser((user, done) => {
-    done(null, user);
-});
-passport.deserializeUser((user, done) => {
-    done(null, user);
-});
-app.use(session({
-    secret: '05d6bebac87c48e3e5e4ece64ff357d49637586c00ee38aa5f531a0fc2918eb7',
-    resave: false,
-    saveUninitialized: false,
-    // Other session configuration options...
-  }));
-app.use(passport.initialize());
-app.use(passport.session());
-passport.use(new LinkedInStrategy({
-    clientID: '77bqfuts6sx7vz',
-    clientSecret: 'pFafmexY0XhfyTwy',
-    callbackURL: "https://localhost:5000/api/auth/linkedin/callback",
-    scope: ['r_liteprofile']
+const CLIENT_ID = '86lii75mdkg1xg'
+const CLIENT_SECRET = 'beii6iVECN6CsFE8'
+const REDIRECT_URI = 'http://localhost:5000/api/auth/linkedin/callback'
+const SCOPE = 'email profile openid w_member_social'
 
-},
-    function (accessToken, refreshToken, profile, done) {
-        process.nextTick(function () {
-            connection.query("SELECT * FROM  landsharein_db.tbl_user WHERE socialid = '" + profile.id + "'",
-                function (err, rows, fields) {
-                    if (err) throw err;
-                    if (rows.length == 0) {
-                        connection.query("INSERT INTO  landsharein_db.tbl_user(name, email,mobile_number,provider,socialid) VALUES('" + profile.displayName + "', '" + profile.emails[0].value + "','8985744525','" + profile.provider + "','" + profile.id + "')");
-                        const payload = {
-                            userId: profile.id,
-                            email: profile.emails[0].value
-                        };
-                        const token = jwt.sign(payload, 'secret-key');
-                        return done(null, profile, token);
-                    }
-                    else {
-                        const payload = {
-                            userId: rows.id,
-                            email: rows.email
-                        };
-                        const token = jwt.sign(payload, 'secret-key');
-                        return done(null, rows, token);
+const Authorization = () => {
+    return encodeURI(`https://www.linkedin.com/oauth/v2/authorization?client_id=${CLIENT_ID}&response_type=code&scope=${SCOPE}&redirect_uri=${REDIRECT_URI}`);
+}
 
-                    }
-                });
-        });
-    }));
+const Redirect = async (code) => {
+    const payload = {
+        client_id: CLIENT_ID,
+        client_secret: CLIENT_SECRET,
+        redirect_uri: REDIRECT_URI,
+        grant_type: 'authorization_code',
+        code,
+    };
+    const { data } = await axios({
+        url: `https://www.linkedin.com/oauth/v2/accessToken?${qs.stringify(payload)}`,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'x-www-form-urlencoded'
+        }
+    }).then(response => {
+        return response;
+    }).catch(error => {
+        return error
+    })
+    return data;
+}
+
+module.exports = { Authorization, Redirect };

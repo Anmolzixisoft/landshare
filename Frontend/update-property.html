@@ -85,7 +85,7 @@
             <a id="press-room"></a>
             <a id="blog"></a>
             <a id="Connect"></a>
-        </div>
+          </div>
         </div>
       </div>
 
@@ -169,15 +169,40 @@
       <div class="col-md-6 mb-3">
         <div class="row g-3 align-items-center">
           <div class="col-4">
-            <label for="" class="col-form-label">Size of the Land <span class="required">*</span> </label>
-          </div>
-          <div class="col-4">
-            <label for="" class="form-label">No. of acres <span class="required">*</span></label>
-            <input type="text" id="sizeoflandmark" class="form-control" aria-describedby="" required>
-
+            <label for="" class="col-form-label" id="sizeoflandmark">Size:<span class="required">*</span>
+            </label>
           </div>
 
+          <div class="col-md-3">
+            <div class="form-floating">
 
+              <input type="number" class="form-control" id="acre" placeholder="Enter acres" oninput="calculateTotal()"
+                min="0">
+              <label for="acre">Acres:</label>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-floating">
+              <input type="number" class="form-control" id="guntas" placeholder="Enter guntas"
+                oninput="calculateTotal()" min="0">
+              <label for="guntas">Guntas:</label>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-floating">
+              <input type="number" class="form-control" id="cents" placeholder="Enter Cents" oninput="calculateTotal()"
+                min="0">
+              <label for="cents">Cents:</label>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div class="form-floating">
+
+              <p class="text-primary form-control" id="total-sqft"></p>
+              <p class="error-message" id="error-message"></p>
+
+            </div>
+          </div>
 
         </div>
       </div>
@@ -185,7 +210,7 @@
       <div class="col-md-6 mb-3">
         <div class="row">
           <div class="col-3">
-            <label for="" class="col-form-label">Land Facing <span class="required">*</span> </label>
+            <label for="" class="col-form-label">Plot Facing:<span class="required">*</span> </label>
           </div>
           <div class="col-9">
             <input type="text" id="landFacing" class="form-control" aria-describedby="passwordHelpInline" required>
@@ -283,7 +308,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6 mb-3">
+      <!-- <div class="col-md-6 mb-3">
         <div class="row">
           <div class="col-3">
             <label for="" class="col-form-label">Description <span class="required">*</span></label>
@@ -292,7 +317,7 @@
             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
           </div>
         </div>
-      </div>
+      </div> -->
       <div class="col-md-6 mb-3">
         <label for="" class="col-form-label">upload images <span class="required">*</span></label>
         <input class="form-control" type="file" id="formFileMultiple" multiple required>
@@ -431,19 +456,40 @@
     const urlParams = new URLSearchParams(window.location.search);
     var pageId = urlParams.get('id');
     var userId = localStorage.getItem('userId');
-        var token = localStorage.getItem('token');
-        var loginLogoutButton = $('#loginLogoutButton');
-        var circle = $('#circle')
-        var profile = $('#profile')
-        var Opportunity = $('#Opportunity')
-        var Sortlist = $('#Sortlist')
-        var sellproperty = $('#My-Property')
-        var home = $('#Home')
-        var Support = $('#Support')
-        var Know = $('#Know')
-        var press = $('#press-room')
-        var blog = $('#blog')
-        var Connect = $('#Connect')
+    var token = localStorage.getItem('token');
+    var loginLogoutButton = $('#loginLogoutButton');
+    var circle = $('#circle')
+    var profile = $('#profile')
+    var Opportunity = $('#Opportunity')
+    var Sortlist = $('#Sortlist')
+    var sellproperty = $('#My-Property')
+    var home = $('#Home')
+    var Support = $('#Support')
+    var Know = $('#Know')
+    var press = $('#press-room')
+    var blog = $('#blog')
+    var Connect = $('#Connect')
+
+
+    function calculateTotal() {
+      var acre = parseFloat(document.getElementById('acre').value) || 0;
+      var gunta = parseFloat(document.getElementById('guntas').value) || 0;
+      var cent = parseFloat(document.getElementById('cents').value) || 0;
+      var cost = parseFloat(document.getElementById('cost').value) || 0;
+      var totalLandInSqft = (acre * 43560) + (gunta * 1089) + (cent * 435.6);
+
+      document.getElementById('error-message').textContent = '';
+
+      if (isNaN(totalLandInSqft) || totalLandInSqft < 0) {
+        document.getElementById('error-message').textContent = 'Invalid input. Please enter positive numbers.';
+        document.getElementById('total-sqft').textContent = '';
+        return;
+      }
+      var landPrice = totalLandInSqft * cost;
+      document.getElementById('landPrice').value = landPrice;
+      document.getElementById('total-sqft').textContent = 'Total: ' + totalLandInSqft + ' sqft.';
+      return totalLandInSqft;
+    }
     function initMap() {
       var input = document.getElementById('Address');
       var autocomplete = new google.maps.places.Autocomplete(input);
@@ -453,10 +499,6 @@
 
       autocomplete.addListener('place_changed', function () {
         var place = autocomplete.getPlace();
-
-        console.log('Place Name:', place.name);
-        console.log('Place Address:', place.formatted_address);
-        console.log('Place Coordinates (Lat, Lng):', place.geometry.location.lat(), place.geometry.location.lng());
 
         // Extract address components
         var addressComponents = place.address_components;
@@ -517,11 +559,23 @@
         $('#pincode').val(data.message[0].pincode);
         $('#exampleFormControlTextarea1').val(data.message[0].desciption);
         $('#cost').val(data.message[0].cost_per_squre_fit);
-        $('#sizeoflandmark').val(data.message[0].size_of_land);
         $('#landmark').val(data.message[0].landmark);
+
+
+        var sizeOfLand = data.message[0].size_of_land;
+
         $('#landFacing').val(data.message[0].Land_Facing);
         $('#landPrice').val(data.message[0].landPrice);
         $('#SurveyNo').val(data.message[0].Survey_no);
+        var acres = parseFloat(sizeOfLand.match(/(\d+) acre/)[1]) || 0;
+        var guntas = parseFloat(sizeOfLand.match(/(\d+) guntas/)[1]) || 0;
+        var cents = parseFloat(sizeOfLand.match(/(\d+) cents/)[1]) || 0;
+
+        // Set values to corresponding input fields
+        $('#acre').val(acres);
+        $('#guntas').val(guntas);
+        $('#cents').val(cents);
+
         var selectedLandType = $(`input[name="landType"][value="${data.message[0].property_category_select}"]`);
         selectedLandType.prop('checked', true);
         $('#propertyImage').attr('src', data.message[0].images[0]);
@@ -574,7 +628,15 @@
       const pincode = $('#pincode').val();
       const desciption = $('#exampleFormControlTextarea1').val();
       const cost = $('#cost').val();
-      const sizeoflandmark = $('#sizeoflandmark').val();
+      const acre = parseFloat($('#acre').val()) || 0;
+      const guntas = parseFloat($('#guntas').val()) || 0;
+      const cents = parseFloat($('#cents').val()) || 0;
+
+      // Create the sizeoflandmark string
+      const sizeoflandmark =
+        (acre ? acre + ' acre ' : '0 acre ') +
+        (guntas ? guntas + ' guntas ' : '0 guntas ') +
+        (cents ? cents + ' cents' : '0 cents');
       const landmark = $('#landmark').val();
       const imageInput = $('#formFileMultiple');
       const Survey_no = $('#SurveyNo').val();
@@ -646,32 +708,31 @@
       addProperty();
     });
 
-    const loginLogoutButton = $('#loginLogoutButton');
 
     if (token) {
-            loginLogoutButton.html('<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
+      loginLogoutButton.html('<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
 
-            loginLogoutButton.click(function () {
-                localStorage.removeItem('userId');
-                localStorage.removeItem('token');
-                window.location.href = 'index.html';
-            });
-            profile.html('<a href="my-profile.html" class="nav-item nav-link"> My Profile </a>')
-            Opportunity.html('<a href="my-uploads.html" class="nav-item nav-link "> My Listings</a>')
-            Sortlist.html('<a href="shortlisted-properties.html" class="nav-item nav-link "> My Shortlists</a>')
-            Support.html('<a href="my-profile.html" class="nav-item nav-link"> Support</a>')
-            sellproperty.html('<a href="investing-opportunity.html" class="nav-item nav-link ">Sell Property</a>')
-            circle.html('<a href="my-profile.html" id="circle" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2"></a>')
-        } 
-        else {
-            loginLogoutButton.html('<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
-            loginLogoutButton.attr('href', 'login-form.html');
-            home.html(' <a href="index.html" class="nav-item nav-link ">Home</a>')
-            Know.html('<a href="about.html" class="nav-item nav-link ">Know Us</a>')
-            press.html('<a href="media.html" class="nav-item nav-link ">press-room</a>')
-            blog.html(' <a href="contact.html" class="nav-item nav-link">Blog</a>')
-            Connect.html(' <a href="contact.html" class="nav-item nav-link">Connect</a>')
-        }
+      loginLogoutButton.click(function () {
+        localStorage.removeItem('userId');
+        localStorage.removeItem('token');
+        window.location.href = 'index.html';
+      });
+      profile.html('<a href="my-profile.html" class="nav-item nav-link"> My Profile </a>')
+      Opportunity.html('<a href="my-uploads.html" class="nav-item nav-link "> My Listings</a>')
+      Sortlist.html('<a href="shortlisted-properties.html" class="nav-item nav-link "> My Shortlists</a>')
+      Support.html('<a href="my-profile.html" class="nav-item nav-link"> Support</a>')
+      sellproperty.html('<a href="investing-opportunity.html" class="nav-item nav-link ">Sell Property</a>')
+      circle.html('<a href="my-profile.html" id="circle" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2"></a>')
+    }
+    else {
+      loginLogoutButton.html('<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
+      loginLogoutButton.attr('href', 'login-form.html');
+      home.html(' <a href="index.html" class="nav-item nav-link ">Home</a>')
+      Know.html('<a href="about.html" class="nav-item nav-link ">Know Us</a>')
+      press.html('<a href="media.html" class="nav-item nav-link ">press-room</a>')
+      blog.html(' <a href="contact.html" class="nav-item nav-link">Blog</a>')
+      Connect.html(' <a href="contact.html" class="nav-item nav-link">Connect</a>')
+    }
 
     function getname() {
       const userData = {
