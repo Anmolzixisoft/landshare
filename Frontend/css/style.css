@@ -32,7 +32,7 @@
 .btn {
   font-weight: 500;
   transition: 0.5s;
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .btn.btn-primary:hover {
@@ -724,6 +724,7 @@ body.is-menu-visible #menu .close {
   z-index: 1;
 }
 
+
 @media (min-width: 768px) {
   .testimonial-carousel::before,
   .testimonial-carousel::after {
@@ -1014,6 +1015,9 @@ body.is-menu-visible #menu .close {
   border-radius: 5px;
   padding: 8px;
   margin-right: 5px;
+      display: inline-flex;
+    justify-content: center;
+    align-items: center;
 }
 .sold_out {
   top: 83px;
@@ -1255,4 +1259,35 @@ body.is-menu-visible #menu .close {
 .navbar-brand {
   margin-left: 24px;
   margin-right: 0;
+}
+
+.agreeflex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    column-gap: 15px;
+}
+
+
+
+
+
+.eye-details{
+  display:inline-flex;
+  justify-content: center;
+  align-items: center;
+  background: #384119 ;
+  border-radius: 4px;
+  margin: 0 5px;
+  padding: 5px;
+  cursor: pointer;
+
+}
+/* .eye-details:hover{
+  background: #abc458 ;
+} */
+
+.eye-details i{
+color: white;
 }

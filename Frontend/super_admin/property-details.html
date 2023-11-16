@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+
   <!--favicon-->
   <link rel="icon" href="../assets/images/favicon-32x32.png" type="image/png" />
   <!--plugins-->
@@ -37,7 +40,7 @@
   <script>
     let checkAdmintoken = localStorage.getItem('admintoken')
     if (checkAdmintoken == null) {
-      location = "http://127.0.0.1:5500/Frontend/super_admin/"
+      location = "https://landshareindia.com/web/super_admin/"
     }
   </script>
   <!--wrapper-->
@@ -84,6 +87,14 @@
           </a>
         </li> -->
         <li>
+          <a href="list-property.html">
+            <div class="parent-icon">
+              <img src="../assets/images/stocktrnsfericon.png" alt="" />
+            </div>
+            <div class="menu-title">List Property</div>
+          </a>
+        </li>
+        <li>
           <a href="new-property.html">
             <div class="parent-icon">
               <img src="../assets/images/stocktrnsfericon.png" alt="" />
@@ -91,14 +102,15 @@
             <div class="menu-title">New Property</div>
           </a>
         </li>
+
         <li>
           <a href="appreov-property.html">
-              <div class="parent-icon">
-                  <img src="../assets/images/stocktrnsfericon.png" alt="" />
-              </div>
-              <div class="menu-title">Approved Property</div>
+            <div class="parent-icon">
+              <img src="../assets/images/stocktrnsfericon.png" alt="" />
+            </div>
+            <div class="menu-title">Approved Property</div>
           </a>
-      </li>
+        </li>
         <li>
           <a href="reject-propert.html">
             <div class="parent-icon">
@@ -107,7 +119,6 @@
             <div class="menu-title">Rejected Property</div>
           </a>
         </li>
-        
         <li>
           <a href="sold-propert.html">
             <div class="parent-icon">
@@ -116,7 +127,7 @@
             <div class="menu-title">Sold Property</div>
           </a>
         </li>
-        <li>
+        <!-- <li>
           <a href="new-enquiries.html">
             <div class="parent-icon">
               <img src="../assets/images/stocktrnsfericon.png" alt="" />
@@ -149,7 +160,7 @@
             </div>
             <div class="menu-title">IN Review Property</div>
           </a>
-        </li>
+        </li> -->
       </ul>
       <!--end navigation-->
     </div>
@@ -192,153 +203,13 @@
                   <a href="javascript:;">
                     <div class="msg-header">
                       <!-- <p class="msg-header-title">Notifications</p>
-                        <p class="msg-header-badge">8 New</p> -->
+                      <p class="msg-header-badge">8 New</p> -->
                     </div>
                   </a>
                   <div class="header-notifications-list">
-                    <a class="dropdown-item" href="javascript:;">
-                      <div class="d-flex align-items-center">
-                        <div class="user-online">
-                          <img src="../assets/images/avatars/avatar-1.png" class="msg-avatar" alt="user avatar" />
-                        </div>
-                        <div class="flex-grow-1">
-                          <h6 class="msg-name">
-                            Daisy Anderson<span class="msg-time float-end">5 sec ago</span>
-                          </h6>
-                          <p class="msg-info">The standard chunk of lorem</p>
-                        </div>
-                      </div>
-                    </a>
-                    <a class="dropdown-item" href="javascript:;">
-                      <div class="d-flex align-items-center">
-                        <div class="notify bg-light-danger text-danger">
-                          dc
-                        </div>
-                        <div class="flex-grow-1">
-                          <h6 class="msg-name">
-                            New Orders
-                            <span class="msg-time float-end">2 min ago</span>
-                          </h6>
-                          <p class="msg-info">You have recived new orders</p>
-                        </div>
-                      </div>
-                    </a>
-                    <a class="dropdown-item" href="javascript:;">
-                      <div class="d-flex align-items-center">
-                        <div class="user-online">
-                          <img src="../assets/images/avatars/avatar-2.png" class="msg-avatar" alt="user avatar" />
-                        </div>
-                        <div class="flex-grow-1">
-                          <h6 class="msg-name">
-                            Althea Cabardo
-                            <span class="msg-time float-end">14 sec ago</span>
-                          </h6>
-                          <p class="msg-info">
-                            Many desktop publishing packages
-                          </p>
-                        </div>
-                      </div>
-                    </a>
-                    <a class="dropdown-item" href="javascript:;">
-                      <div class="d-flex align-items-center">
-                        <div class="notify bg-light-success text-success">
-                          <img src="../assets/images/app/outlook.png" width="25" alt="user avatar" />
-                        </div>
-                        <div class="flex-grow-1">
-                          <h6 class="msg-name">
-                            Account Created<span class="msg-time float-end">28 min ago</span>
-                          </h6>
-                          <p class="msg-info">
-                            Successfully created new email
-                          </p>
-                        </div>
-                      </div>
-                    </a>
-                    <a class="dropdown-item" href="javascript:;">
-                      <div class="d-flex align-items-center">
-                        <div class="notify bg-light-info text-info">Ss</div>
-                        <div class="flex-grow-1">
-                          <h6 class="msg-name">
-                            New Product Approved
-                            <span class="msg-time float-end">2 hrs ago</span>
-                          </h6>
-                          <p class="msg-info">
-                            Your new product has approved
-                          </p>
-                        </div>
-                      </div>
-                    </a>
-                    <a class="dropdown-item" href="javascript:;">
-                      <div class="d-flex align-items-center">
-                        <div class="user-online">
-                          <img src="../assets/images/avatars/avatar-4.png" class="msg-avatar" alt="user avatar" />
-                        </div>
-                        <div class="flex-grow-1">
-                          <h6 class="msg-name">
-                            Katherine Pechon
-                            <span class="msg-time float-end">15 min ago</span>
-                          </h6>
-                          <p class="msg-info">
-                            Making this the first true generator
-                          </p>
-                        </div>
-                      </div>
-                    </a>
-                    <a class="dropdown-item" href="javascript:;">
-                      <div class="d-flex align-items-center">
-                        <div class="notify bg-light-success text-success">
-                          <i class="bx bx-check-square"></i>
-                        </div>
-                        <div class="flex-grow-1">
-                          <h6 class="msg-name">
-                            Your item is shipped
-                            <span class="msg-time float-end">5 hrs ago</span>
-                          </h6>
-                          <p class="msg-info">
-                            Successfully shipped your item
-                          </p>
-                        </div>
-                      </div>
-                    </a>
-                    <a class="dropdown-item" href="javascript:;">
-                      <div class="d-flex align-items-center">
-                        <div class="notify bg-light-primary">
-                          <img src="../assets/images/app/github.png" width="25" alt="user avatar" />
-                        </div>
-                        <div class="flex-grow-1">
-                          <h6 class="msg-name">
-                            New 24 authors<span class="msg-time float-end">1 day ago</span>
-                          </h6>
-                          <p class="msg-info">
-                            24 new authors joined last week
-                          </p>
-                        </div>
-                      </div>
-                    </a>
-                    <a class="dropdown-item" href="javascript:;">
-                      <div class="d-flex align-items-center">
-                        <div class="user-online">
-                          <img src="../assets/images/avatars/avatar-8.png" class="msg-avatar" alt="user avatar" />
-                        </div>
-                        <div class="flex-grow-1">
-                          <h6 class="msg-name">
-                            Peter Costanzo
-                            <span class="msg-time float-end">6 hrs ago</span>
-                          </h6>
-                          <p class="msg-info">
-                            It was popularised in the 1960s
-                          </p>
-                        </div>
-                      </div>
-                    </a>
+
                   </div>
-                  <a href="javascript:;">
-                    <div class="text-center msg-footer">
-                      <button class="btn btn-primary w-100">
-                        View All Notifications
-                      </button>
-                    </div>
-                  </a>
+
                 </div>
               </li>
               <li class="nav-item dropdown dropdown-large">
@@ -348,12 +219,7 @@
                   <i class="bx bx-shopping-bag"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end">
-                  <a href="javascript:;">
-                    <div class="msg-header">
-                      <p class="msg-header-title">My Cart</p>
-                      <p class="msg-header-badge">10 Items</p>
-                    </div>
-                  </a>
+
                   <div class="header-message-list">
                     <a class="dropdown-item" href="javascript:;">
                       <div class="d-flex align-items-center gap-3">
@@ -376,184 +242,13 @@
                         </div>
                       </div>
                     </a>
-                    <a class="dropdown-item" href="javascript:;">
-                      <div class="d-flex align-items-center gap-3">
-                        <div class="position-relative">
-                          <div class="cart-product rounded-circle bg-light">
-                            <img src="../assets/images/products/02.png" class="" alt="product image" />
-                          </div>
-                        </div>
-                        <div class="flex-grow-1">
-                          <h6 class="cart-product-title mb-0">
-                            Men White T-Shirt
-                          </h6>
-                          <p class="cart-product-price mb-0">1 X $29.00</p>
-                        </div>
-                        <div class="">
-                          <p class="cart-price mb-0">$250</p>
-                        </div>
-                        <div class="cart-product-cancel">
-                          <i class="bx bx-x"></i>
-                        </div>
-                      </div>
-                    </a>
-                    <a class="dropdown-item" href="javascript:;">
-                      <div class="d-flex align-items-center gap-3">
-                        <div class="position-relative">
-                          <div class="cart-product rounded-circle bg-light">
-                            <img src="../assets/images/products/03.png" class="" alt="product image" />
-                          </div>
-                        </div>
-                        <div class="flex-grow-1">
-                          <h6 class="cart-product-title mb-0">
-                            Men White T-Shirt
-                          </h6>
-                          <p class="cart-product-price mb-0">1 X $29.00</p>
-                        </div>
-                        <div class="">
-                          <p class="cart-price mb-0">$250</p>
-                        </div>
-                        <div class="cart-product-cancel">
-                          <i class="bx bx-x"></i>
-                        </div>
-                      </div>
-                    </a>
-                    <a class="dropdown-item" href="javascript:;">
-                      <div class="d-flex align-items-center gap-3">
-                        <div class="position-relative">
-                          <div class="cart-product rounded-circle bg-light">
-                            <img src="../assets/images/products/04.png" class="" alt="product image" />
-                          </div>
-                        </div>
-                        <div class="flex-grow-1">
-                          <h6 class="cart-product-title mb-0">
-                            Men White T-Shirt
-                          </h6>
-                          <p class="cart-product-price mb-0">1 X $29.00</p>
-                        </div>
-                        <div class="">
-                          <p class="cart-price mb-0">$250</p>
-                        </div>
-                        <div class="cart-product-cancel">
-                          <i class="bx bx-x"></i>
-                        </div>
-                      </div>
-                    </a>
-                    <a class="dropdown-item" href="javascript:;">
-                      <div class="d-flex align-items-center gap-3">
-                        <div class="position-relative">
-                          <div class="cart-product rounded-circle bg-light">
-                            <img src="../assets/images/products/05.png" class="" alt="product image" />
-                          </div>
-                        </div>
-                        <div class="flex-grow-1">
-                          <h6 class="cart-product-title mb-0">
-                            Men White T-Shirt
-                          </h6>
-                          <p class="cart-product-price mb-0">1 X $29.00</p>
-                        </div>
-                        <div class="">
-                          <p class="cart-price mb-0">$250</p>
-                        </div>
-                        <div class="cart-product-cancel">
-                          <i class="bx bx-x"></i>
-                        </div>
-                      </div>
-                    </a>
-                    <a class="dropdown-item" href="javascript:;">
-                      <div class="d-flex align-items-center gap-3">
-                        <div class="position-relative">
-                          <div class="cart-product rounded-circle bg-light">
-                            <img src="../assets/images/products/06.png" class="" alt="product image" />
-                          </div>
-                        </div>
-                        <div class="flex-grow-1">
-                          <h6 class="cart-product-title mb-0">
-                            Men White T-Shirt
-                          </h6>
-                          <p class="cart-product-price mb-0">1 X $29.00</p>
-                        </div>
-                        <div class="">
-                          <p class="cart-price mb-0">$250</p>
-                        </div>
-                        <div class="cart-product-cancel">
-                          <i class="bx bx-x"></i>
-                        </div>
-                      </div>
-                    </a>
-                    <a class="dropdown-item" href="javascript:;">
-                      <div class="d-flex align-items-center gap-3">
-                        <div class="position-relative">
-                          <div class="cart-product rounded-circle bg-light">
-                            <img src="../assets/images/products/07.png" class="" alt="product image" />
-                          </div>
-                        </div>
-                        <div class="flex-grow-1">
-                          <h6 class="cart-product-title mb-0">
-                            Men White T-Shirt
-                          </h6>
-                          <p class="cart-product-price mb-0">1 X $29.00</p>
-                        </div>
-                        <div class="">
-                          <p class="cart-price mb-0">$250</p>
-                        </div>
-                        <div class="cart-product-cancel">
-                          <i class="bx bx-x"></i>
-                        </div>
-                      </div>
-                    </a>
-                    <a class="dropdown-item" href="javascript:;">
-                      <div class="d-flex align-items-center gap-3">
-                        <div class="position-relative">
-                          <div class="cart-product rounded-circle bg-light">
-                            <img src="../assets/images/products/08.png" class="" alt="product image" />
-                          </div>
-                        </div>
-                        <div class="flex-grow-1">
-                          <h6 class="cart-product-title mb-0">
-                            Men White T-Shirt
-                          </h6>
-                          <p class="cart-product-price mb-0">1 X $29.00</p>
-                        </div>
-                        <div class="">
-                          <p class="cart-price mb-0">$250</p>
-                        </div>
-                        <div class="cart-product-cancel">
-                          <i class="bx bx-x"></i>
-                        </div>
-                      </div>
-                    </a>
-                    <a class="dropdown-item" href="javascript:;">
-                      <div class="d-flex align-items-center gap-3">
-                        <div class="position-relative">
-                          <div class="cart-product rounded-circle bg-light">
-                            <img src="../assets/images/products/09.png" class="" alt="product image" />
-                          </div>
-                        </div>
-                        <div class="flex-grow-1">
-                          <h6 class="cart-product-title mb-0">
-                            Men White T-Shirt
-                          </h6>
-                          <p class="cart-product-price mb-0">1 X $29.00</p>
-                        </div>
-                        <div class="">
-                          <p class="cart-price mb-0">$250</p>
-                        </div>
-                        <div class="cart-product-cancel">
-                          <i class="bx bx-x"></i>
-                        </div>
-                      </div>
-                    </a>
+
+
+
+
+
                   </div>
-                  <a href="javascript:;">
-                    <div class="text-center msg-footer">
-                      <div class="d-flex align-items-center justify-content-between mb-3">
-                        <h5 class="mb-0">Total</h5>
-                        <h5 class="mb-0 ms-auto">$489.00</h5>
-                      </div>
-                      <button class="btn btn-primary w-100">Checkout</button>
-                    </div>
-                  </a>
+
                 </div>
               </li>
             </ul>
@@ -612,6 +307,7 @@
     <!--end overlay-->
     <!--Start Back To Top Button-->
     <a href="javaScript:;" class="back-to-top"><i class="bx bxs-up-arrow-alt"></i></a>
+    <!--End Back To Top Button-->
     <footer class="page-footer">
       <p class="mb-0">Copyright © 2023. All right reserved.</p>
     </footer>
@@ -627,6 +323,8 @@
   <script src="../assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js"></script>
   <script src="../assets/plugins/chartjs/js/chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
   <script src="../assets/js/index.js"></script>
   <!--app JS-->
   <script src="../../Frontend/utils.js"></script>
@@ -647,8 +345,8 @@
         zoom: {
           enabled: true,
 
-          duration: 300, // duration of the effect, in milliseconds
-          easing: "ease-in-out", // CSS transition easing function
+          duration: 300,
+          easing: "ease-in-out",
 
           opener: function (openerElement) {
             return openerElement.is("img")
@@ -658,8 +356,6 @@
         },
       });
     });
-  </script>
-  <script>
 
 
 
@@ -667,24 +363,8 @@
       const urlParams = new URLSearchParams(window.location.search);
       return urlParams.get(name);
     }
-    function createImageGallery(images) {
-      const imageGallery = document.createElement('div');
-      imageGallery.classList.add('img-gallery-magnific');
 
-      images.forEach((imageUrl, index) => {
-        const magnificImg = document.createElement('div');
-        magnificImg.classList.add('magnific-img');
 
-        const img = document.createElement('img');
-        img.src = imageUrl;
-        img.alt = `${index + 9}.jpg`;
-
-        magnificImg.appendChild(img);
-        imageGallery.appendChild(magnificImg);
-      });
-
-      return imageGallery;
-    }
     function displayPropertyDetails() {
       const propertyId = getQueryParameter("id");
       if (propertyId) {
@@ -703,13 +383,14 @@
           .then(response => response.json())
           .then(data => {
             let tableContent = '<table>';
-            data.message.forEach(property => {
-              const propertyListing = createPropertyListing(property);
-              propertyListingsContainer.appendChild(propertyListing);
-            });
+
+            const propertyListing = createPropertyListing(data.message[0]);
+            // propertyListingsContainer.appendChild(propertyListing);
+
           })
           .catch(error => {
-            alert(`${error}`);
+            console.log(error, '000');
+            // alert(`${error}`);
           });
 
       } else {
@@ -717,23 +398,90 @@
         console.error('No property ID provided in the query parameter.');
       }
     }
-    const propertyListingsContainer = document.getElementById('property-listings');
-    function createPropertyListing(property) {
-      const mapURL = `https://maps.google.com/maps?q=${property.city},${property.state}&t=&z=13&ie=UTF8&iwloc=&output=embed`;
-      const container = document.createElement('div');
-      const imageGallery = createImageGallery(property.images);
+    function changestatus(id, status) {
+      let propertyId = id
+      let statusdata = status
+      const userData = {
+        propertyId: propertyId,
+        status: statusdata
 
-      container.innerHTML = `
-         
-        
-      <div class="col-md-12 mb-3">
-        <h6>Property Images:</h6>
-    ${imageGallery.outerHTML}
-                        
-                      </div>
+      };
+
+      fetch(apiUrl + '/updatestatus', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.message) {
+            Swal.fire({
+              icon: 'success',
+              title: 'Success',
+              text: data.message,
+            }).then(() => {
+             location.reload()
+            })
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: data.error,
+            });
+          }
+        })
+        .catch(error => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: error,
+          });
+        });
+
+
+    }
+   
+   
+   
+    function createPropertyListing(property) {
+
+
+      let approveButtonHTML = '';
+      let disapproveButtonHTML = '';
+
+      if (property.property_status == 1) {
+        // Property is approved
+        approveButtonHTML = '<button class="delvr-button1" disabled>Approved</button>';
+      } else if (property.property_status == 0) {
+        // Property is disapproved
+        disapproveButtonHTML = '<button class="nondelvr-button1" disabled>Disapproved</button>';
+      } else {
+        // Neither approved nor disapproved
+        approveButtonHTML = '<button class="delvr-button" onclick="changestatus(' + property.id + ', 1)">Approve</button>';
+        disapproveButtonHTML = '<button class="nondelvr-button" onclick="changestatus(' + property.id + ', 0)">Disapprove</button>';
+      }
+      console.log(property.images[0], 'property');
+      const container = document.getElementById('property-listings')
+      const mapURL = `https://maps.google.com/maps?q=${property.city},${property.state}&t=&z=13&ie=UTF8&iwloc=&output=embed`;
+      let imageGalleryHTML = '<div class="col-md-12 mb-3"><h6>Property Images:</h6><div class="img-gallery-magnific">';
+      property.images.forEach((image, index) => {
+        imageGalleryHTML += `
+            <div class="magnific-img">
+                <a class="image-popup-vertical-fit" href=${image} title="${index + 1}.jpg">
+                    <img src=${image} alt="${index + 1}.jpg" />
+                </a>
+            </div>`;
+      });
+      imageGalleryHTML += '</div></div>';
+      container.innerHTML += imageGalleryHTML + `
+ 
 
                       <div class="col-md-12">
-                      
+                        <!-- <div class="pr-div">
+                          <h3>Priyansh Anjane</h3>
+                        </div> -->
 
                         <div class="reg">
                           <div class="table-responsive">
@@ -766,7 +514,7 @@
                                 <tr>
                                   <th scope="row">Full Address</th>
                                   <td>
-                                    ${property.full_address}
+                                    ${property.full_address}.
                                   </td>
                                 </tr>
                                 <tr>
@@ -775,7 +523,7 @@
                                 </tr>
                                 <tr>
                                   <th scope="row">Land Price</th>
-                                  <td>${property.landPrice}</td>
+                                  <td>Rs ${property.landPrice}</td>
                                 </tr>
                                 <tr>
                                   <th scope="row">State</th>
@@ -785,18 +533,13 @@
                                   <th scope="row">City</th>
                                   <td>${property.city}</td>
                                 </tr>
-                                <tr>
-                                  <th scope="row">Description</th>
-                                  <td>
-                                    ${property.desciption}
-                                  </td>
-                                </tr>
+                               
                                 <tr>
                                   <th scope="row">Pincode</th>
                                   <td>${property.pincode}</td>
                                 </tr>
 
-                                <tr>
+                              <tr>
                                   <th scope="row">Location in map</th>
                                   <td>
                                     <div style="width: 70%; padding: 10px">
@@ -809,14 +552,27 @@
                               </tbody>
                             </table>
                           </div>
-                        </div>
+                          </div>
+                          ${approveButtonHTML}
+        ${disapproveButtonHTML}
                       </div>
-                    `
 
+
+                   
+      `
+
+
+      $('.image-popup-vertical-fit').magnificPopup({
+        type: 'image',
+        gallery: {
+          enabled: true
+        }
+      });
       return container;
     }
 
     window.onload = displayPropertyDetails;
+
   </script>
 </body>
 

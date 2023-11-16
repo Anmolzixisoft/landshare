@@ -34,12 +34,12 @@
 </head>
 
 <body>
-  <script>
-    let checkAdmintoken = localStorage.getItem('admintoken')
-    if (checkAdmintoken == null) {
-      location = "http://127.0.0.1:5500/Frontend/super_admin/"
-    }
-  </script>
+   <script>
+      let checkAdmintoken = localStorage.getItem('admintoken')
+  if(checkAdmintoken == null){
+    location = "https://landshareindia.com/web/super_admin/"
+  }
+    </script>
   <!-- admintoken -->
   <!--wrapper-->
   <div class="wrapper">
@@ -85,6 +85,14 @@
           </a>
         </li> -->
         <li>
+          <a href="list-property.html">
+              <div class="parent-icon">
+                  <img src="../assets/images/stocktrnsfericon.png" alt="" />
+              </div>
+              <div class="menu-title">List Property</div>
+          </a>
+      </li>
+        <li>
           <a href="new-property.html">
             <div class="parent-icon">
               <img src="../assets/images/stocktrnsfericon.png" alt="" />
@@ -116,7 +124,7 @@
             <div class="menu-title">Sold Property</div>
           </a>
         </li>
-        <li>
+        <!-- <li>
           <a href="new-enquiries.html">
             <div class="parent-icon">
               <img src="../assets/images/stocktrnsfericon.png" alt="" />
@@ -150,7 +158,7 @@
             </div>
             <div class="menu-title">IN Review Property</div>
           </a>
-        </li>
+        </li> -->
       </ul>
       <!--end navigation-->
     </div>
@@ -595,7 +603,7 @@
           </div>
 
           <div class="col">
-            <a href="new-enquiries.html">
+            <a href="list-property.html">
               <div class="card radius-10 border-start border-0 border-4 batchcard-ht">
                 <div class="card-body">
                   <div class="d-flexcard">

@@ -86,13 +86,13 @@
           </a>
         </li> -->
         <li>
-          <a href="list-property.html">
-              <div class="parent-icon">
-                  <img src="../assets/images/stocktrnsfericon.png" alt="" />
-              </div>
-              <div class="menu-title">List Property</div>
-          </a>
-      </li>
+            <a href="list-property.html">
+                <div class="parent-icon">
+                    <img src="../assets/images/stocktrnsfericon.png" alt="" />
+                </div>
+                <div class="menu-title">List Property</div>
+            </a>
+        </li>
         <li>
           <a href="new-property.html">
             <div class="parent-icon">
@@ -125,8 +125,8 @@
             <div class="menu-title">Sold Property</div>
           </a>
         </li>
-       
-        <!-- <li>
+<!--        
+        <li>
           <a href="new-enquiries.html">
             <div class="parent-icon">
               <img src="../assets/images/stocktrnsfericon.png" alt="" />
@@ -782,12 +782,10 @@
         })
         .then(data => {
           data.message.forEach(property => {
-            if (property.property_status == 0) {
 
               const newRow = createPropertyListing(property);
               propertyList.appendChild(newRow);
-            }
-
+          
           });
           document.getElementById('spinner').style.display = 'none';
         })

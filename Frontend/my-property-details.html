@@ -2,11 +2,14 @@
 <html lang="en">
 
 <head>
+    <script src="utils.js"></script>
     <meta charset="utf-8">
     <title>Agrocorp- Landshare India (P) Limited.</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
@@ -32,6 +35,7 @@
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="css/myresponsive.css">
+
 </head>
 
 <body>
@@ -45,16 +49,22 @@
 
     <!-- Navbar Start -->
     <div class="container-fluid fixed-top px-0 wow fadeIn" data-wow-delay="0.1s">
-
-
         <nav class="navbar navbar-expand-lg navbar-dark py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
-            <a href="index.html" class="navbar-brand ms-4 ms-lg-0 py-6">
-                <img src="img/landshare-logo.png">
-            </a>
-            <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
-                data-bs-target="#navbarCollapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            <div style="padding-top: 15px;">
+                <a href="index.html" class="navbar-brand ms-4 ms-lg-0 py-6">
+                    <img src="img/landshare-logo.png">
+                </a>
+            </div>
+            <div class="btnloginflex">
+                <a href="" id="circle"></a>
+
+                <a href="#" id="loginLogoutButton" class="nav-item nav-link"><b></b>&nbsp;&nbsp;<i
+                        class="fa fa-arrow-right"></i></a>
+                <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto p-4 p-lg-0">
@@ -70,20 +80,23 @@
                         <a id="blog"></a>
                         <a id="Connect"></a>
                     </div>
-
                 </div>
-
             </div>
+
         </nav>
     </div>
-    <!-- Navbar End -->
+
+
+
+    <!-------------------Navigation end------------>
+
 
 
     <!-- Page Header Start -->
     <div class="container-fluid page-header  wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center">
-            <h1 class="display-4 text-white animated slideInDown mb-4">Investing Opportunity</h1>
-
+            <h1 class="display-4  animated slideInDown mb-4">Property Details</h1>
+            <!-- <p style="color:#898989;"><b>PID: LS100001</b></p> -->
         </div>
     </div>
     <!-- Page Header End -->
@@ -97,8 +110,9 @@
             <div class="row  align-items-start">
                 <div class="row  align-items-start mb-4 mt-4">
                     <div class="text-center">
-                        <h2><a href="Buy" style="padding:10px;border-bottom:4px solid #384119;">Buy</a>&nbsp; &nbsp;|
-                            &nbsp;&nbsp;<a href="Sell">Sell</a></h2>
+                        <h2><a href="investing-opportunity.html"
+                                style="padding:10px;border-bottom:4px solid #384119;">Buy</a>&nbsp;
+                            &nbsp;| &nbsp;&nbsp;<a href="property-data.html">Sell</a></h2>
                     </div>
 
                 </div>
@@ -109,118 +123,12 @@
     </div>
 
     <!-----------Buy Property--------->
+
     <div class="container-xxl py-5">
         <div class="container  ">
-            <div class="row  align-items-start">
-                <div class=" mb-5 col-md-12 mx-auto g-5" style="display:inline-flex;">
-                    <div class="product-im col-lg-5">
-                        <div class="details ">
-                            <div class="thumb ">
-                                <div class="big-image">
-                                    <img src="img/agricultural-land-investment.jpg" alt="">
-                                </div>
-                                <div class="small-images">
-                                    <img src="img/agricultural-land-investment.jpg" alt="">
-                                    <img src="img/agricultural-land-investment.jpg" alt="">
-                                    <img src="img/agricultural-land-investment.jpg" alt="">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-cnt col-lg-4  ">
-                        <h3>₹5.40 Cr</h3>
-                        <p>₹18,154 per sqft : 2-</p>
-                        <button class="btn  py-2 px-3 me-3">
-                            Send Message
-                            <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
-                                <i class="fa fa-arrow-right"></i>
-                            </div>
-                        </button>
+            <div id="property-listings" class="row g-5 align-items-start">
 
-                    </div>
-                    <div class="product-cnt col-lg-3  ">
-
-                        <div class="mapouter">
-                            <div class="gmap_canvas">
-                                <iframe
-                                    src="https://maps.google.com/maps?q=bangalore&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=&amp;output=embed"
-                                    frameborder="0" scrolling="no" style="width: 50%; height: auto;">
-                                </iframe>
-                                <style>
-                                    .mapouter {
-                                        position: relative;
-                                        height: auto;
-                                        width: 50%;
-                                    }
-
-                                    .gmap_canvas {
-                                        overflow: hidden;
-                                        height: 250px;
-                                        width: 460px
-                                    }
-
-                                    .gmap_canvas iframe {
-                                        position: relative;
-                                        z-index: 2
-                                    }
-
-                                    .gmap_canvas a {
-                                        top: 0;
-                                        z-index: 0
-                                    }
-                                </style>
-                                <a href="https://www.eireportingonline.com"></a>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
             </div>
-            <div class="col-lg-8">
-                <table>
-                    <tr>
-                        <td>Size of the Area</td>
-                        <td>: 1 Acre</td>
-                    </tr>
-                    <tr>
-                        <td>Address</td>
-                        <td>: 2-4-135, Sikh Village,
-
-                            Hyderabad, Andhra Pradesh - 500009, India
-
-                            04055574722
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Land Facing</td>
-                        <td>: East</td>
-                    </tr>
-                    <tr>
-                        <td>Survey No</td>
-                        <td>: 789945</td>
-                    </tr>
-                    <tr>
-                        <td>Landmark</td>
-                        <td>: Near LS Public School</td>
-                    </tr>
-                    <tr>
-                        <td>Description</td>
-                        <td>: Commercial showroom is available for sale. East facing, Right on Bull temple main road,
-                            Bus stop
-                            adjacent, nearby metro, centrally located.</td>
-                    </tr>
-                </table>
-            </div>
-            <div class="col-lg-3" style="float:right;">
-                <button class="btn btn-gogle-auth py-2 px-3 me-3">
-                    Mark As Sold
-                    <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
-                        <i class="fa fa-arrow-right"></i>
-                    </div>
-                </button>
-            </div>
-
         </div>
     </div>
     <!-------------Buy property end---------------->
@@ -313,9 +221,11 @@
     <!-- Footer End -->
 
 
+
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -325,11 +235,11 @@
     <script src="lib/waypoints/waypoints.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
     <script src="lib/parallax/parallax.min.js"></script>
+    <script src="js/main.js"></script>
 
     <!-- Template Javascript -->
-    <script src="js/main.js"></script>
     <script>
-       var userId = localStorage.getItem('userId');
+  var userId = localStorage.getItem('userId');
         var token = localStorage.getItem('token');
         var loginLogoutButton = $('#loginLogoutButton');
         var circle = $('#circle')
@@ -343,32 +253,187 @@
         var press = $('#press-room')
         var blog = $('#blog')
         var Connect = $('#Connect')
-        const loginLogoutButton = document.getElementById('loginLogoutButton');
 
-        if (token) {
-            loginLogoutButton.html('<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
-
-            loginLogoutButton.click(function () {
-                localStorage.removeItem('userId');
-                localStorage.removeItem('token');
-                window.location.href = 'index.html';
-            });
-            profile.html('<a href="my-profile.html" class="nav-item nav-link"> My Profile </a>')
-            Opportunity.html('<a href="my-uploads.html" class="nav-item nav-link "> My Listings</a>')
-            Sortlist.html('<a href="shortlisted-properties.html" class="nav-item nav-link "> My Shortlists</a>')
-            Support.html('<a href="my-profile.html" class="nav-item nav-link"> Support</a>')
-         sellproperty.html('<a href="property-data.html" class="nav-item nav-link ">Sell Property</a>')
-            circle.html('<a href="my-profile.html" id="circle" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2"></a>')
-        } 
-        else {
-            loginLogoutButton.html('<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
-            loginLogoutButton.attr('href', 'login-form.html');
-            home.html(' <a href="index.html" class="nav-item nav-link ">Home</a>')
-            Know.html('<a href="about.html" class="nav-item nav-link ">Know Us</a>')
-            press.html('<a href="media.html" class="nav-item nav-link ">press-room</a>')
-            blog.html(' <a href="contact.html" class="nav-item nav-link">Blog</a>')
-            Connect.html(' <a href="contact.html" class="nav-item nav-link">Connect</a>')
+        function getQueryParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
         }
+
+        function displayPropertyDetails() {
+            const propertyId = getQueryParameter("id");
+            if (propertyId) {
+
+                const userData = {
+                    id: propertyId
+                };
+
+                fetch(apiUrl + '/getPropertyById', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(userData)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        let tableContent = '<table>';
+                        data.message.forEach(property => {
+                            const propertyListing = createPropertyListing(property, userId);
+                            propertyListingsContainer.appendChild(propertyListing);
+                        });
+                    })
+                    .catch(error => {
+                        alert(`${error}`);
+                    });
+
+            } else {
+                // Handle the case where no property ID is provided
+                console.error('No property ID provided in the query parameter.');
+            }
+        }
+        const propertyListingsContainer = document.getElementById('property-listings');
+        function createPropertyListing(property) {
+            const mapURL = `https://maps.google.com/maps?q=${property.city},${property.state}&t=&z=13&ie=UTF8&iwloc=&output=embed`;
+
+
+            const container = document.createElement('div');
+
+            container.innerHTML = `
+         
+            <div class="row  mb-2 col-md-12 mx-auto"style="display:inline-flex;">
+                <div class="product-im col-lg-5">
+                    <div class="details ">
+                        <div class="thumb ">
+                        <div class="big-image">
+                            <img id="bigImage" src=${property.images[0]} onclick="change(this.src)"  alt="">
+                        </div>
+                        <div class="small-images">
+                            ${[0, 1, 2].map(index => `
+                            <img src=${property.images[index] || property.images[0]} onclick="change(this.src)" alt="">
+                            `).join('')}
+                        </div>
+
+
+                    </div>
+                    </div>
+                </div>
+                <div class="product-cnt col-lg-3  ">
+                    <h3>${property.landPrice}</h3>
+                    <p>${property.cost_per_squre_fit}</p>
+                    <table >
+                        <tr>
+                            <td><b>Size of the Area</b></td>
+                            <td>: ${property.size_of_land}</td>
+                        </tr>
+                      
+                        <tr>
+                            <td><b>Land Facing</b></td>
+                            <td>: ${property.Land_Facing}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Land Mark</b></td>
+                            <td>:${property.landmark}</td>
+                        </tr>
+                        <tr>
+                            <td><b>State</b></td>
+                            <td>: ${property.state}</td>
+                        </tr>
+                        <tr>
+                            <td><b>City</b></td>
+                            <td>: ${property.city}</td>
+                        </tr>
+
+                       
+                    </table>
+                         
+                </div>
+                <div class="product-cnt col-lg-4   ">
+                            
+                    <div class="mapouter mb-4">
+                <div class="gmap_canvas">
+                    <iframe src="${mapURL}" frameborder="0" scrolling="no"></iframe>
+                    <style>.mapouter{position:relative;width:100%;}.gmap_canvas{overflow:hidden;width:100%;}.gmap_canvas iframe{position:relative;z-index:2}.gmap_canvas a{top:0;z-index:0}</style>
+                    <a href="https://www.eireportingonline.com"></a>
+                </div>
+            </div>
+                   
+                </div>
+                        
+            </div>
+                    `
+
+            return container;
+        }
+
+        window.onload = displayPropertyDetails;
+        function changeImage(imageSrc) {
+            document.getElementById("bigImage").src = imageSrc;
+        }
+
+
+        function openSweetAlert(propertyId) {
+
+            if (userId) {
+
+                const postData = {
+                    property_id: propertyId,
+                    user_id: userId,
+
+                };
+
+                fetch(apiUrl + '/buy', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(postData),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.message) {
+                            Swal.fire({
+                                title: 'Thank You ',
+                                text: `For Showing Intrest,
+                 our team will get back to you within 24 hours`,
+                                icon: 'info', // You can use 'info', 'success', 'warning', 'error', etc.
+                                confirmButtonText: 'OK',
+                            }).then(() => {
+                                window.location.href = 'index.html'
+                            })
+                        }
+
+                    })
+                    .catch(error => {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: error,
+                        });
+                    });
+
+            }
+            else {
+                return Swal.fire({
+                    icon: 'info',
+                    title: 'message',
+                    text: "please  login",
+                }).then(() => {
+                    window.location.href = "login-form.html"
+                })
+            }
+        }
+
+        function toggleHeart(property_id, sortlist_status) {
+            var heartIcon = document.getElementById("heart-icon");
+
+            if (heartIcon) {
+
+
+            }
+
+
+        }
+
         function getname() {
             const userData = {
                 userid: userId
@@ -395,7 +460,40 @@
                 });
         }
         getname()
+
+
+
+        if (token) {
+            loginLogoutButton.html('<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
+
+            loginLogoutButton.click(function () {
+                localStorage.removeItem('userId');
+                localStorage.removeItem('token');
+                window.location.href = 'index.html';
+            });
+            profile.html('<a href="my-profile.html" class="nav-item nav-link"> My Profile </a>')
+            Opportunity.html('<a href="my-uploads.html" class="nav-item nav-link "> My Listings</a>')
+            Sortlist.html('<a href="shortlisted-properties.html" class="nav-item nav-link "> My Shortlists</a>')
+            Support.html('<a href="my-profile.html" class="nav-item nav-link"> Support</a>')
+         sellproperty.html('<a href="property-data.html" class="nav-item nav-link ">Sell Property</a>')
+            circle.html('<a href="my-profile.html" id="circle" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2"></a>')
+        } 
+        else {
+            loginLogoutButton.html('<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
+            loginLogoutButton.attr('href', 'login-form.html');
+            home.html(' <a href="index.html" class="nav-item nav-link ">Home</a>')
+            Know.html('<a href="about.html" class="nav-item nav-link ">Know Us</a>')
+            press.html('<a href="media.html" class="nav-item nav-link ">press-room</a>')
+            blog.html(' <a href="contact.html" class="nav-item nav-link">Blog</a>')
+            Connect.html(' <a href="contact.html" class="nav-item nav-link">Connect</a>')
+        }
+
+
+        const change = src => {
+            document.getElementById('bigImage').src = src
+        }
     </script>
+
 </body>
 
 </html>

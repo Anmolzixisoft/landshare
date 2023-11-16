@@ -3,6 +3,7 @@
 
 <head>
   <script src="utils.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
   <meta charset="utf-8">
   <title>My Shortlisting - Landshare India Private Limited </title>
@@ -79,7 +80,7 @@
             <a id="press-room"></a>
             <a id="blog"></a>
             <a id="Connect"></a>
-        </div>
+          </div>
         </div>
       </div>
 
@@ -98,7 +99,7 @@
     </div>
   </div>
 
-  <div class="row align-items-start" >
+  <div class="row align-items-start">
     <!-- Property listings will be dynamically added here -->
     <div class="col-md-12">
       <div class="mx-3" id="property-listings"></div>
@@ -228,19 +229,19 @@
 
   <script>
     var userId = localStorage.getItem('userId');
-        var token = localStorage.getItem('token');
-        var loginLogoutButton = $('#loginLogoutButton');
-        var circle = $('#circle')
-        var profile = $('#profile')
-        var Opportunity = $('#Opportunity')
-        var Sortlist = $('#Sortlist')
-        var sellproperty = $('#My-Property')
-        var home = $('#Home')
-        var Support = $('#Support')
-        var Know = $('#Know')
-        var press = $('#press-room')
-        var blog = $('#blog')
-        var Connect = $('#Connect')
+    var token = localStorage.getItem('token');
+    var loginLogoutButton = $('#loginLogoutButton');
+    var circle = $('#circle')
+    var profile = $('#profile')
+    var Opportunity = $('#Opportunity')
+    var Sortlist = $('#Sortlist')
+    var sellproperty = $('#My-Property')
+    var home = $('#Home')
+    var Support = $('#Support')
+    var Know = $('#Know')
+    var press = $('#press-room')
+    var blog = $('#blog')
+    var Connect = $('#Connect')
     function fetchData() {
       const api = apiUrl + '/getproperty';
       const requestData = {
@@ -265,6 +266,10 @@
       });
     }
 
+    function viewPropertyDetails(propertyId) {
+            const url = `my-property-details.html?id=${propertyId}`;
+            window.location.href = url;
+        }
     const propertyListingsContainer = $('#property-listings');
 
     function createPropertyListing(property) {
@@ -282,13 +287,18 @@
                     <i class="fas fa-pencil-alt"></i>
                   </span>
                 </p>
-                <p style="font-size:14px;">Residential Plots - ${property.cost_per_squre_fit} <br>
+                <p style="font-size:14px;">
+                 
+                  Residential Plots - ${property.cost_per_squre_fit} <br>
                   Property Size:${property.size_of_land}<br>
                   Type : ${property.property_category_select}<br>
                   <span class="product-but col-lg-4 but-sy">
                     <button class="btn btn-outline-primary" onclick="openModal('${property.id}','${property.user_id}','${property.sold}')">Change Status</button>
+                   
+                   <span  class="eye-details"> <i class="fas fa-eye"  onclick="viewPropertyDetails(${property.id})" ></i> </span>
                   </span>
                 </p>
+               
               </div>
             </div>
           `);
@@ -408,29 +418,29 @@
       const loginLogoutButton = $('#loginLogoutButton');
 
       if (token) {
-            loginLogoutButton.html('<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
+        loginLogoutButton.html('<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
 
-            loginLogoutButton.click(function () {
-                localStorage.removeItem('userId');
-                localStorage.removeItem('token');
-                window.location.href = 'index.html';
-            });
-            profile.html('<a href="my-profile.html" class="nav-item nav-link"> My Profile </a>')
-            Opportunity.html('<a href="my-uploads.html" class="nav-item nav-link "> My Listings</a>')
-            Sortlist.html('<a href="shortlisted-properties.html" class="nav-item nav-link "> My Shortlists</a>')
-            Support.html('<a href="my-profile.html" class="nav-item nav-link"> Support</a>')
-            sellproperty.html('<a href="investing-opportunity.html" class="nav-item nav-link ">Sell Property</a>')
-            circle.html('<a href="my-profile.html" id="circle" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2"></a>')
-        } 
-        else {
-            loginLogoutButton.html('<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
-            loginLogoutButton.attr('href', 'login-form.html');
-            home.html(' <a href="index.html" class="nav-item nav-link ">Home</a>')
-            Know.html('<a href="about.html" class="nav-item nav-link ">Know Us</a>')
-            press.html('<a href="media.html" class="nav-item nav-link ">press-room</a>')
-            blog.html(' <a href="contact.html" class="nav-item nav-link">Blog</a>')
-            Connect.html(' <a href="contact.html" class="nav-item nav-link">Connect</a>')
-        }
+        loginLogoutButton.click(function () {
+          localStorage.removeItem('userId');
+          localStorage.removeItem('token');
+          window.location.href = 'index.html';
+        });
+        profile.html('<a href="my-profile.html" class="nav-item nav-link"> My Profile </a>')
+        Opportunity.html('<a href="my-uploads.html" class="nav-item nav-link "> My Listings</a>')
+        Sortlist.html('<a href="shortlisted-properties.html" class="nav-item nav-link "> My Shortlists</a>')
+        Support.html('<a href="my-profile.html" class="nav-item nav-link"> Support</a>')
+        sellproperty.html('<a href="property-data.html" class="nav-item nav-link ">Sell Property</a>')
+        circle.html('<a href="my-profile.html" id="circle" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2"></a>')
+      }
+      else {
+        loginLogoutButton.html('<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
+        loginLogoutButton.attr('href', 'login-form.html');
+        home.html(' <a href="index.html" class="nav-item nav-link ">Home</a>')
+        Know.html('<a href="about.html" class="nav-item nav-link ">Know Us</a>')
+        press.html('<a href="media.html" class="nav-item nav-link ">press-room</a>')
+        blog.html(' <a href="contact.html" class="nav-item nav-link">Blog</a>')
+        Connect.html(' <a href="contact.html" class="nav-item nav-link">Connect</a>')
+      }
       function getname() {
         const userData = {
           userid: userId
