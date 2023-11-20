@@ -22,7 +22,7 @@ const upload = multer({
     storage: storage,
 });
 
-var singleUpload = upload.fields([{ name: 'image' }])
+var singleUpload = upload.fields([{ name: 'image' }, { name: 'profile_image' }])
 // var multiplepUload = upload.fields([{ name: 'pan_upload' }, { name: 'coi_upload' }, { name: 'moa_upload' }, { name: 'aoa_upload' }, { name: 'gst_upload' }, { name: 'cheque_upload' }])
 var multiplepUload = upload.fields([{ name: 'image', maxCount: 8 }]);
 

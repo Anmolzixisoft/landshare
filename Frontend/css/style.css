@@ -1270,9 +1270,6 @@ body.is-menu-visible #menu .close {
 }
 
 
-
-
-
 .eye-details{
   display:inline-flex;
   justify-content: center;
@@ -1290,4 +1287,83 @@ body.is-menu-visible #menu .close {
 
 .eye-details i{
 color: white;
+}
+
+.profile-set .profile-top {
+  align-items: center;
+}
+.profileupload a i {
+  color: white;
+  font-size: 16px;
+  padding: 9px;
+  cursor: pointer;
+}
+.profile-set {
+  margin-bottom: 30px;
+}
+.profile-set .profile-head {
+  height: 109px;
+  background: linear-gradient(90deg, #384119 0%, #5c6834 100%);
+  border-radius: 0 10px 0 0;
+}
+
+.profile-set .profile-top {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.profile-set .profile-top .profile-content {
+  display: flex;
+  align-items: center;
+}
+.profile-set .profile-top .profile-contentimg {
+  margin-top: -40px;
+
+  position: relative;
+  border: 10px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2509803922);
+}
+.profile-set .profile-top .profile-contentimg img {
+  border-radius: 50px;
+}
+.profile-set .profile-top .profileupload input[type="file"] {
+  opacity: 0;
+  width: 34px;
+  height: 34px;
+  display: block;
+  z-index: 9;
+  cursor: pointer;
+  position: absolute;
+  bottom: 10px;
+  left: 42px;
+}
+.profile-set .profile-top .profileupload a {
+  background: #ff9f43;
+  width: 34px;
+  height: 34px;
+  z-index: 1;
+  border-radius: 50px;
+  position: absolute;
+  bottom: 10px;
+  left: 41px;
+}
+.profile-set .profile-top .profile-contentimg img {
+  border-radius: 50px;
+  height: 115px;
+  width: 115px;
+}
+.profile-set .profile-top .profile-contentname {
+  padding-left: 20px;
+}
+.profile-set .profile-top .profile-contentname h2 {
+  font-size: 18px;
+  color: #212b36;
+  font-weight: 700;
+}
+.profile-set .profile-top .profile-contentname h4 {
+  color: #777;
+  font-size: 14px;
+  font-weight: 600;
 }

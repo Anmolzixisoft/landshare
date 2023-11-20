@@ -92,6 +92,8 @@
         <div class="container ">
 
             <div class="row  align-items-start" id="property-listings"></div>
+            <h1 class="row  align-items-start" id="noPropertyMessage">Not shortlist property </h1>
+
 
         </div>
     </div>
@@ -230,12 +232,23 @@
                     }
                 })
                 .then(data => {
-                    data.data.forEach(property => {
-                        if (property.status == 1) {
-                            const propertyListing = createPropertyListing(property);
-                            propertyListingsContainer.appendChild(propertyListing);
-                        }
-                    });
+                    console.log(data.data == 0, '-----------');
+
+                    if (data.data == 0) {
+                        // Show the message when no property is uploaded
+                        $('#noPropertyMessage').show();
+                        propertyListingsContainer.hide();
+                    } else {
+                        // Hide the message when there are properties
+                        $('#noPropertyMessage').hide();
+                        propertyListingsContainer.show();
+                        data.data.forEach(property => {
+                            if (property.status == 1) {
+                                const propertyListing = createPropertyListing(property);
+                                propertyListingsContainer.appendChild(propertyListing);
+                            }
+                        });
+                    }
                     document.getElementById('spinner').style.display = 'none';
                 })
                 .catch(error => {
@@ -246,7 +259,7 @@
         const propertyListingsContainer = document.getElementById('property-listings');
 
         function createPropertyListing(property) {
-            console.log(property);
+            console.log(property, '==========');
             const container = document.createElement('div');
             container.classList.add('product-inner', 'mb-5', 'col-md-8', 'mx-auto', 'g-5');
             container.innerHTML = `
@@ -333,9 +346,9 @@
             Opportunity.html('<a href="my-uploads.html" class="nav-item nav-link "> My Listings</a>')
             Sortlist.html('<a href="shortlisted-properties.html" class="nav-item nav-link "> My Shortlists</a>')
             Support.html('<a href="my-profile.html" class="nav-item nav-link"> Support</a>')
-         sellproperty.html('<a href="property-data.html" class="nav-item nav-link ">Sell Property</a>')
+            sellproperty.html('<a href="property-data.html" class="nav-item nav-link ">Sell Property</a>')
             circle.html('<a href="my-profile.html" id="circle" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2"></a>')
-        } 
+        }
         else {
             loginLogoutButton.html('<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
             loginLogoutButton.attr('href', 'login-form.html');

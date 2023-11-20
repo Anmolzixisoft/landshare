@@ -27,8 +27,15 @@ function isValidEmail(email) {
 function getuser(req, res) {
     try {
         connection.query("SELECT * FROM `tbl_user`", (err, result) => {
+            if (err) {
+                return res.send({ data: err, status: false })
+            } else {
+                result.forEach(element => {
+                    element.profile_image = `http://192.168.29.179:5501/Backend/public/${element.profile_image}`;
+                });
 
-            return res.send({ data: result, status: true })
+                return res.send({ data: result, status: true })
+            }
         })
     }
     catch (error) {
@@ -168,7 +175,6 @@ function sendVerificationMail(req, res) {
                                     console.error('Error inserting data: ' + insertErr);
                                     return res.status(500).json({ error: 'Error inserting data', status: false });
                                 } else {
-                                    console.log("success");
                                     transporter.sendMail(mailOptions, function (error, info) {
                                         if (error) {
                                             console.log('Email error: ' + error);
@@ -197,6 +203,9 @@ function getuserbyid(req, res) {
             if (err) {
                 return res.send({ error: err })
             } else {
+                result.forEach(element => {
+                    element.profile_image = `http://192.168.29.179:5500/Backend/public/${element.profile_image}`;
+                });
                 return res.send({ message: result })
             }
         })
@@ -206,7 +215,9 @@ function getuserbyid(req, res) {
 }
 function updateuser(req, res) {
     try {
-        const { name, email, mobile_number, password, userid ,request_update} = req.body;
+        const { name, email, mobile_number, password, id, request_update } = req.body;
+        const { profile_image } = req.files
+        console.log(req.body);
 
         if (!isValidEmail(email)) {
             return res.status(400).json({ error: 'Invalid email format', status: false });
@@ -217,10 +228,10 @@ function updateuser(req, res) {
         }
 
         connection.query(
-            'SELECT id, password FROM landsharein_db.tbl_user WHERE id = "' + userid + '" ',
+            'SELECT id, password FROM landsharein_db.tbl_user WHERE id = "' + id + '" ',
             (err, result) => {
+
                 if (err) {
-                    console.error('Database error:', err);
                     return res.status(500).json({ error: 'Database error' });
                 }
                 const user = result[0];
@@ -238,20 +249,28 @@ function updateuser(req, res) {
                         }
                         hashedPassword = newHashedPassword;
 
-                        updateProfile(name, email, mobile_number, hashedPassword, password, userid,request_update, res);
+                        updateProfile(name, email, mobile_number, hashedPassword, password, id, request_update, profile_image, res);
                     });
                 } else {
-                    updateProfile(name, email, mobile_number, hashedPassword, password, userid, request_update,res);
+                    updateProfile(name, email, mobile_number, hashedPassword, password, id, request_update, profile_image, res);
                 }
             });
     } catch (err) {
+        console.log(err, 'err');
         return res.send({ error: err });
     }
 }
 
-function updateProfile(name, email, mobile_number, hashedPassword, password, userid, request_update,res) {
+function updateProfile(name, email, mobile_number, hashedPassword, password, id, request_update, profile_image, res) {
+
+    if (profile_image == undefined) {
+        profile_image = ''
+    } else {
+
+        var image = profile_image[0].filename
+    }
     connection.query(
-        'UPDATE landsharein_db.tbl_user SET name="' + name + '", mobile_number="' + mobile_number + '", password="' + hashedPassword + '", password_bcrypt="' + password + '",request_update="0",email="' + email + '" WHERE id="' + userid + '"',
+        'UPDATE landsharein_db.tbl_user SET name="' + name + '", mobile_number="' + mobile_number + '", password="' + hashedPassword + '", password_bcrypt="' + password + '",request_update="0", profile_image="' + image + '" ,email="' + email + '" WHERE id="' + id + '"',
         (err, result1) => {
             if (err) {
                 console.error('Update error:', err);

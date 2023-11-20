@@ -103,6 +103,8 @@
     <!-- Property listings will be dynamically added here -->
     <div class="col-md-12">
       <div class="mx-3" id="property-listings"></div>
+      <h1 class="mx-3" id="noPropertyMessage">No property uploaded</h1>
+
     </div>
   </div>
 
@@ -254,12 +256,31 @@
         contentType: 'application/json',
         data: JSON.stringify(requestData)
       }).done(function (data) {
-        data.data.forEach(function (property) {
-          if (property.user_id == userId) {
-            var propertyListing = createPropertyListing(property);
-            $('#property-listings').append(propertyListing);
-          }
-        });
+        console.log(data.data == 0);
+        if (data.data == 0) {
+          // Show the message when no property is uploaded
+          console.log('truyiryeju');
+          $('#noPropertyMessage').show();
+          propertyListingsContainer.hide();
+        } else {
+          // Hide the message when there are properties
+          $('#noPropertyMessage').hide();
+          propertyListingsContainer.show();
+
+          data.data.forEach(function (property) {
+            if (property.user_id == userId) {
+              var propertyListing = createPropertyListing(property);
+              $('#property-listings').append(propertyListing);
+            }
+          });
+        }
+        // data.data.forEach(function (property) {
+        //   if (property.user_id == userId) {
+
+        //     var propertyListing = createPropertyListing(property);
+        //     $('#property-listings').append(propertyListing);
+        //   }
+        // });
         $('#spinner').hide();
       }).fail(function (error) {
         console.error('There was a problem with the fetch operation:', error);
@@ -267,12 +288,13 @@
     }
 
     function viewPropertyDetails(propertyId) {
-            const url = `my-property-details.html?id=${propertyId}`;
-            window.location.href = url;
-        }
+      const url = `my-property-details.html?id=${propertyId}`;
+      window.location.href = url;
+    }
     const propertyListingsContainer = $('#property-listings');
 
     function createPropertyListing(property) {
+      console.log(property);
       return $('<div class="row align-items-start">').html(`
             <div class="product-inner mb-5 col-md-8 mx-auto g-5">
               <div class="product-im col-md-3-1">

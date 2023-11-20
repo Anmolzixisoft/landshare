@@ -11,7 +11,9 @@
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -103,42 +105,48 @@
             <div class="row g-3">
                 <div class="col-lg-7  mx-auto wow fadeIn" data-wow-delay="0.1s">
 
-                    <form id="update">
-                        <!-- <div id="userAvatarContainer" class="col-md-6 text-end">
-                            <img id="userAvatar" src="path_to_default_avatar_image.jpg" alt="User Avatar"
-                                class="img-fluid rounded-circle" style="width: 80px; height: 80px;">
-                        </div> -->
+                    <form id="update" method="post">
 
                         <div class="row g-3 ">
-                            <!-- <div class="col-md-6 mb-3">
-                                <label for="" class="col-form-label"></label>
-                                <input class="form-control" type="file" id="formFileMultiple" accept=".png, .pdf, .Jpeg"
-                                    multiple required>
-                            </div> -->
-                            <!-- <div class="col-md-6">
-                                <p>Customer Id</p>
-                                <div class="form-floating">
 
-                                    <p class="form-control" id="userid"></p>
+                            <div class="col-md-12">
+                                <div class="profile-set">
+                                    <div class="profile-head"></div>
+                                    <div class="profile-top">
+                                        <div class="profile-content">
+                                            <div class="profile-contentimg">
+                                                <img id="blah" src="" alt="img" class="blahimg" />
+                                                <div class="profileupload">
+                                                    <input type="file" id="profile_image" name="profile_image" />
+                                                    <a href="javascript:void(0);"><i
+                                                            class="fa-regular fa-pen-to-square"></i></a>
+                                                </div>
+                                            </div>
 
+                                            <div class="profile-contentname">
+                                                <h2 id="nameshow"></h2>
+                                                <h4>Updates Your Photo and Personal Details.</h4>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
-                            </div> -->
-                            <!-- Add this inside the form or wherever you want the image to appear -->
-
+                            </div>
+                            <input type="hidden" name="id" id="id" />
                             <div class="col-md-6">
                                 <p>Customer Id</p>
                                 <div class="form-floating">
 
-                                    <input type="text" class="form-control" id="userid" name="userid" readonly>
+                                    <input type="text" class="form-control" id="userid" readonly>
 
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <p>Mobile Number</p>
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="phone" placeholder="Your Phone Number"
-                                        onkeypress="return isNumberKey(event)" required pattern="[0-9]+" maxlength="10"
-                                        readonly>
+                                    <input type="text" class="form-control" name="mobile_number" id="mobile_number"
+                                        placeholder="Your Phone Number" onkeypress="return isNumberKey(event)" required
+                                        pattern="[0-9]+" maxlength="10" readonly>
                                     <label for="phone">Contact Number</label>
                                 </div>
                             </div>
@@ -146,7 +154,7 @@
                             <div class="col-md-6">
                                 <p>Name</p>
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="nameInput" placeholder="Name"
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Name"
                                         onkeypress="return isCharacterKey(event)" required pattern="[A-Za-z  ]+"
                                         maxlength="80">
                                     <label for="subject">Name</label>
@@ -155,7 +163,8 @@
                             <div class="col-md-6">
                                 <p>Email Id</p>
                                 <div class="form-floating">
-                                    <input type="email" class="form-control" id="email" placeholder="Email" readonly>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Email"
+                                        readonly>
                                     <label for="subject">Email Id</label>
                                 </div>
                             </div>
@@ -163,7 +172,8 @@
 
                                 <p>Change Password</p>
                                 <div class="form-floating">
-                                    <input type="password" class="form-control" id="pass" placeholder="Email">
+                                    <input type="password" class="form-control" id="password" name="password"
+                                        placeholder="Email">
                                     <label for="subject">New Password</label>
                                 </div>
                             </div>
@@ -171,7 +181,8 @@
                             <div class="col-md-6">
                                 <p></p>Confirm Password
                                 <div class="form-floating">
-                                    <input type="password" class="form-control" id="pass1" placeholder="Email">
+                                    <input type="password" class="form-control" id="pass1" name="pass1"
+                                        placeholder="Email">
                                     <label for="subject">Confirm Password</label>
                                     <div id="error-message" style="color: red;"></div>
                                 </div>
@@ -186,16 +197,16 @@
 
                             </div>
                             <div style="display:inline-flex;" class="mx-auto">
-                                <button class="btn  btn-primary btn-lg-square"><i class="fab fa-facebook-f"></i>
+                                <!-- <button class="btn  btn-primary btn-lg-square"><i class="fab fa-facebook-f"></i>
                                 </button>&nbsp;&nbsp;
-                                <!-- <button class="btn  btn-primary btn-lg-square"><i class='fab fa-google'></i>
+                                <button class="btn  btn-primary btn-lg-square"><i class='fab fa-google'></i>
                                 </button>&nbsp;&nbsp;
                                 <button class="btn  btn-primary btn-lg-square"><i class='fab fa-instagram'></i>
                                 </button>&nbsp;&nbsp;
                                 <button class="btn  btn-primary btn-lg-square"><i class='fab fa-twitter'></i>
-                                </button>&nbsp;&nbsp; -->
+                                </button>&nbsp;&nbsp;
                                 <button class="btn  btn-primary btn-lg-square"><i class='fab fa-linkedin'></i>
-                                </button>
+                                </button> -->
                             </div>
                         </div>
                     </form>
@@ -369,7 +380,7 @@
             Opportunity.html('<a href="my-uploads.html" class="nav-item nav-link "> My Listings</a>')
             Sortlist.html('<a href="shortlisted-properties.html" class="nav-item nav-link "> My Shortlists</a>')
             Support.html('<a href="my-profile.html" class="nav-item nav-link"> Support</a>')
-         sellproperty.html('<a href="property-data.html" class="nav-item nav-link ">Sell Property</a>')
+            sellproperty.html('<a href="property-data.html" class="nav-item nav-link ">Sell Property</a>')
             circle.html('<a href="my-profile.html" id="circle" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2"></a>')
         }
         else {
@@ -416,13 +427,18 @@
                 contentType: 'application/json',
                 data: JSON.stringify(userData),
                 success: function (data) {
-                    $('#phone').val(data.message[0].mobile_number);
-                    $('#nameInput').val(data.message[0].name);
+                    console.log(data, 'data');
+                    $('#mobile_number').val(data.message[0].mobile_number);
+                    $('#nameshow').text(data.message[0].name);
+                    $('#name').val(data.message[0].name);
                     $('#email').val(data.message[0].email);
-                    $('#userid').val(data.message[0].User_ID)
-
-
+                    $('#userid').val(data.message[0].User_ID);
+                    $('#password').val(data.message[0].password_bcrypt);
+                    $('#pass1').val(data.message[0].password_bcrypt);
+                    var imgSrc = data.message[0].profile_image;
+                    $('#blah').attr('src', imgSrc); // Update the 'src' attribute of the image
                     // Get the button element
+                    $('#id').val(data.message[0].id);
                     var button = document.getElementById("updateButton1");
 
                     // Get the span element inside the button
@@ -436,7 +452,26 @@
         }
         getname();
         window.onload = fetchData;
-        const passwordInput = $('#pass');
+
+
+
+
+        $("#profile_image").change(function () {
+            readURL(this);
+        });
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#blah').attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        const passwordInput = $('#password');
         const rePasswordInput = $('#pass1');
 
         const errorMessage = $('#error-message');
@@ -456,38 +491,21 @@
 
         $('#update').submit(function (e) {
             e.preventDefault();
-            update();
-        });
-
-        function update(req, res) {
-            const name = $('#nameInput').val();
-            const email = $('#email').val();
-            const password = $('#pass').val();
-            const phone = $('#phone').val();
-
-
-            const userData = {
-                name: name,
-                email: email,
-                password: password,
-                mobile_number: phone,
-                userid: userId
-            };
 
             $.ajax({
                 url: apiUrl + '/updateuser',
                 type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify(userData),
+                contentType: false,  // Set to false when using FormData
+                processData: false,
+                data: new FormData(this),
                 success: function (data) {
                     if (data.success == true) {
                         Swal.fire({
                             title: 'Success!',
                             text: data.message,
                             icon: 'success'
-                        }).then(function () {
-                            window.location.href = 'index.html';
-                        });
+                        })
+                        location.reload()
                     } else {
                         Swal.fire({
                             title: 'Error!',
@@ -504,7 +522,7 @@
                     });
                 }
             });
-        }
+        });
 
         $(document).ready(function () {
             // Attach a click event handler to the buttons

@@ -36,12 +36,12 @@
 </head>
 
 <body>
-   <script>
-      let checkAdmintoken = localStorage.getItem('admintoken')
-  if(checkAdmintoken == null){
-    location = "https://landshareindia.com/web/super_admin/"
-  }
-    </script>
+  <script>
+    let checkAdmintoken = localStorage.getItem('admintoken')
+    if (checkAdmintoken == null) {
+      location = "https://landshareindia.com/web/super_admin/"
+    }
+  </script>
   <!--wrapper-->
   <div class="wrapper">
     <!--sidebar wrapper -->
@@ -87,12 +87,12 @@
         </li> -->
         <li>
           <a href="list-property.html">
-              <div class="parent-icon">
-                  <img src="../assets/images/stocktrnsfericon.png" alt="" />
-              </div>
-              <div class="menu-title">List Property</div>
+            <div class="parent-icon">
+              <img src="../assets/images/stocktrnsfericon.png" alt="" />
+            </div>
+            <div class="menu-title">List Property</div>
           </a>
-      </li>
+        </li>
         <li>
           <a href="new-property.html">
             <div class="parent-icon">
@@ -697,20 +697,20 @@
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="name" name="name">
+                <input type="text" class="form-control" id="name1" name="name1">
               </div>
               <div class="col-md-6 mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="text" class="form-control" name="email" id="email">
+                <input type="text" class="form-control" name="email1" id="email1">
               </div>
 
               <div class="col-md-6 mb-3">
                 <label for="number" class="form-label">Contact No.</label>
-                <input type="text" class="form-control" id="number" name="number">
+                <input type="text" class="form-control" id="number1" name="number1">
               </div>
               <div class="col-md-6 mb-3">
                 <label for="Password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="Password" name="Password">
+                <input type="password" class="form-control" id="Password1" name="Password1">
               </div>
             </div>
             <div class="modal-footer">
@@ -736,22 +736,24 @@
         <div class="modal-body">
           <form id="editUser" method="POST">
             <div class="row">
+              <input type="hidden" name="id" id="id" />
+              <input type="hidden" name="profile_image" id="profile_image" />
               <div class="col-md-6 mb-3">
                 <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="name1" name="name">
+                <input type="text" class="form-control" id="name" name="name">
               </div>
               <div class="col-md-6 mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="text" class="form-control" name="email1" id="email1">
+                <input type="text" class="form-control" id="email" name="email">
               </div>
 
               <div class="col-md-6 mb-3">
                 <label for="number" class="form-label">Contact No.</label>
-                <input type="text" class="form-control" id="number1" name="number">
+                <input type="text" class="form-control" name="mobile_number" id="mobile_number">
               </div>
               <div class="col-md-6 mb-3">
                 <label for="Password" class="form-label">Password</label>
-                <input type="text" class="form-control" id="Password1" name="Password">
+                <input type="text" class="form-control" id="password" name="password">
               </div>
             </div>
             <div class="modal-footer">
@@ -970,64 +972,14 @@ ${property.request_update == 1 ? ' <p >Request</p>' : ''}
           .then(response => response.json())
           .then(data => {
             var user = data.message[0];
-            console.log(data.message[0], '---', user.mobile_number);
+            console.log(user);
             console.log("user", user);
-            $('#name1').val(user.name);
-            $('#email1').val(user.email);
-            $('#number1').val(user.mobile_number);
-
-            $('#Password1').val(user.password_bcrypt);
-            $(document).on('submit', '#editUser', function (e) {
-              e.preventDefault();
-              const name = $('#name1').val();
-              const email = $('#email1').val();
-              const contact_no = $('#number1').val();
-              const password = $('#Password1').val();
-
-              const userCredentials = {
-                name: name,
-                email: email,
-                mobile_number: contact_no,
-                password: password,
-                userid: id,
-                
-              };
-
-              $.ajax({
-                url: apiUrl + '/updateuser',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify(userCredentials),
-                success: function (data) {
-                  if (data.success) {
-                    Swal.fire({
-                      icon: 'success',
-                      title: 'Success',
-                      text: data.message
-                    });
-                    setTimeout(() => {
-                      location.reload();
-                    }, 1000);
-                  } else {
-                    Swal.fire({
-                      icon: 'error',
-                      title: 'Error',
-                      text: data.error
-                    });
-                  }
-                },
-                error: function () {
-                  Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'please fill input '
-                  });
-                }
-              });
-
-
-
-            });
+            $('#name').val(user.name);
+            $('#email').val(user.email);
+            $('#mobile_number').val(user.mobile_number);
+            $('#id').val(user.id);
+            $('#password').val(user.password_bcrypt);
+            $('#profile_image').val(user.profile_image);
 
           })
           .catch(error => {
@@ -1037,15 +989,48 @@ ${property.request_update == 1 ? ' <p >Request</p>' : ''}
       });
     });
 
+    $('#editUser').submit(function (e) {
+      e.preventDefault();
 
+      $.ajax({
+        url: apiUrl + '/updateuser',
+        type: 'POST',
+        contentType: false,  // Set to false when using FormData
+        processData: false,
+        data: new FormData(this),
+        success: function (data) {
+          if (data.success == true) {
+            Swal.fire({
+              title: 'Success!',
+              text: data.message,
+              icon: 'success'
+            })
+            location.reload();
+          } else {
+            Swal.fire({
+              title: 'Error!',
+              text: data.error,
+              icon: 'error'
+            });
+          }
+        },
+        error: function (error) {
+          Swal.fire({
+            title: 'Error!',
+            text: error,
+            icon: 'error'
+          });
+        }
+      });
+    });
 
 
     $(document).on('submit', '#login', function (e) {
       e.preventDefault();
-      const name = $('#name').val();
-      const email = $('#email').val();
-      const contact_no = $('#number').val();
-      const password = $('#Password').val();
+      const name = $('#name1').val();
+      const email = $('#email1').val();
+      const contact_no = $('#number1').val();
+      const password = $('#Password1').val();
 
       const userCredentials = {
         name: name,

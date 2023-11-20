@@ -146,7 +146,6 @@
         email: document.getElementById('email').value.trim(),
         password: document.getElementById('password').value.trim(),
       };
-      console.log(item);
       $.ajax({
         url: apiUrl + "/admin-login",
         type: $(this).attr("method"),

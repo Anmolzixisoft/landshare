@@ -81,11 +81,11 @@
                         <a id="press-room"></a>
                         <a id="blog"></a>
                         <a id="Connect"></a>
-                    </div>
                 </div>
             </div>
+    </div>
 
-        </nav>
+    </nav>
     </div>
 
     <!-------------------Navigation end------------>
@@ -121,7 +121,7 @@
         </div>
     </div>
     <div class="container-xxl ">
-            <!-- <div class="row  mx-auto py-5">
+        <!-- <div class="row  mx-auto py-5">
                 <div class="d-flex justify-content-center  align-items-center flex-wrap gap-2">
                     <div class="inputpdg">
                         <input type="radio" name="propertyCategory" id="agriculturalLand" value="all">&nbsp;&nbsp; All
@@ -145,39 +145,39 @@
                     </div>
                 </div>
             </div> -->
-            <div class="row  align-items-start col-md-9 mx-auto py-5">
-                <div class="col-lg-1">
-                    <input type="radio" name="propertyCategory" id="agriculturalLand" value="all">&nbsp;&nbsp; All 
-                </div>
-                <div class="col-lg-3">
-                    <input type="radio" name="propertyCategory" id="agriculturalLand"
-                            value="Agricultural Land">&nbsp;&nbsp;Agricultural Land
-                </div>
-                <div class="col-lg-3">     
-                    <input type="radio" name="propertyCategory" id="commercialLand"
-                            value="Commercial Land">&nbsp;&nbsp;Commercial Land
-                </div>
-                <div class="col-lg-3">
-                    <input type="radio" name="propertyCategory" id="commercialBuilding"
-                            value="Commercial Building">&nbsp;&nbsp;Commercial Building
-                </div> 
-                <div class="col-lg-2">
-                    <input type="radio" name="propertyCategory" id="residentialLand"
-                    value="Residential Land">&nbsp;&nbsp;Residential Land  
-                </div>
+        <div class="row  align-items-start col-md-9 mx-auto py-5">
+            <div class="col-lg-1">
+                <input type="radio" name="propertyCategory" id="agriculturalLand" value="all">&nbsp;&nbsp; All
             </div>
-
+            <div class="col-lg-3">
+                <input type="radio" name="propertyCategory" id="agriculturalLand"
+                    value="Agricultural Land">&nbsp;&nbsp;Agricultural Land
+            </div>
+            <div class="col-lg-3">
+                <input type="radio" name="propertyCategory" id="commercialLand"
+                    value="Commercial Land">&nbsp;&nbsp;Commercial Land
+            </div>
+            <div class="col-lg-3">
+                <input type="radio" name="propertyCategory" id="commercialBuilding"
+                    value="Commercial Building">&nbsp;&nbsp;Commercial Building
+            </div>
+            <div class="col-lg-2">
+                <input type="radio" name="propertyCategory" id="residentialLand"
+                    value="Residential Land">&nbsp;&nbsp;Residential Land
+            </div>
         </div>
-    
+
+    </div>
+
 
     <!-- About Start -->
-    <div id="propertyContainer" style="display: flex; flex-wrap: wrap; justify-content: center;">
-        <!-- Content will be dynamically added here by JavaScript -->
-    </div>
-    <div class="row align-items-start mx-2"  id="property-listings">        
+    <!-- <div id="propertyContainer" style="display: flex; flex-wrap: wrap; justify-content: center;"> -->
+    <!-- Content will be dynamically added here by JavaScript -->
+    <!-- </div> -->
+    <div class="row align-items-start mx-2" id="property-listings">
         
-     
     </div>
+    <h1 class="row align-items-start mx-2" id="noPropertyMessage">No property uploaded</h1>
     <!-- Contact End -->
 
     <!-- Footer Start -->
@@ -288,7 +288,7 @@
     <script src="js/main.js"></script>
 
     <script>
-          var userId = localStorage.getItem('userId');
+        var userId = localStorage.getItem('userId');
         var token = localStorage.getItem('token');
         var loginLogoutButton = $('#loginLogoutButton');
         var circle = $('#circle')
@@ -311,11 +311,10 @@
 
         function populatePropertyContainer(data) {
 
-
             const propertyContainer = document.getElementById('property-listings');
             data.forEach((item) => {
                 const propertyListing = createPropertyListing(item);
-                propertyListingsContainer.appendChild(propertyListing);
+                propertyListingsContainer.append(propertyListing);
             });
         }
 
@@ -347,39 +346,47 @@
                 }
             })
                 .then(data => {
-                    console.log(data.data, 'data');
-                    const showData = data.data.filter(item => item.	property_status == '1');
-                    // console.log(showData,'showData');
-                    const radioButtons = document.querySelectorAll('input[name="propertyCategory"]');
 
-                    function updatePropertyData(selectedCategory) {
+                    const showData = data.data.filter(item => item.property_status == '1');
+                    console.log(showData == 0, 'showData');
+                    if (showData == 0) {
+                        $('#noPropertyMessage').show();
+                        propertyListingsContainer.hide();
+                    }
+                    else {
+                        $('#noPropertyMessage').hide();
+                        propertyListingsContainer.show();
+                        const radioButtons = document.querySelectorAll('input[name="propertyCategory"]');
 
-                        let filteredData;
+                        function updatePropertyData(selectedCategory) {
 
-                        if (selectedCategory == "all") {
-                            // If "all" is selected, show all data
-                            filteredData = showData;
-                        } else {
-                            // Filter data based on selected category
-                            filteredData = showData.filter((item) => item.property_category_select == selectedCategory);
+                            let filteredData;
+
+                            if (selectedCategory == "all") {
+                                // If "all" is selected, show all data
+                                filteredData = showData;
+                            } else {
+                                // Filter data based on selected category
+                                filteredData = showData.filter((item) => item.property_category_select == selectedCategory);
+                            }
+
+                            clearPropertyContainer();
+                            populatePropertyContainer(filteredData);
                         }
 
-                        clearPropertyContainer();
-                        populatePropertyContainer(filteredData);
-                    }
 
-
-                    if (radioButtons) {
-                        radioButtons.forEach((radioButton) => {
-                            radioButton.addEventListener('change', () => {
-                                const selectedCategory = radioButton.value;
-                                updatePropertyData(selectedCategory);
+                        if (radioButtons) {
+                            radioButtons.forEach((radioButton) => {
+                                radioButton.addEventListener('change', () => {
+                                    const selectedCategory = radioButton.value;
+                                    updatePropertyData(selectedCategory);
+                                });
                             });
-                        });
-                    }
+                        }
 
-                    // Initially, populate with all data
-                    populatePropertyContainer(showData);
+                        // Initially, populate with all data
+                        populatePropertyContainer(showData);
+                    }
                 })
                 .catch(error => {
                     console.error('There was a problem with the fetch operation:', error);
@@ -388,7 +395,7 @@
         }
 
 
-        const propertyListingsContainer = document.getElementById('property-listings');
+        var propertyListingsContainer = $('#property-listings');
 
         function createPropertyListing(property) {
             const container = document.createElement('div');
@@ -490,9 +497,9 @@
             Opportunity.html('<a href="my-uploads.html" class="nav-item nav-link "> My Listings</a>')
             Sortlist.html('<a href="shortlisted-properties.html" class="nav-item nav-link "> My Shortlists</a>')
             Support.html('<a href="my-profile.html" class="nav-item nav-link"> Support</a>')
-         sellproperty.html('<a href="property-data.html" class="nav-item nav-link ">Sell Property</a>')
+            sellproperty.html('<a href="property-data.html" class="nav-item nav-link ">Sell Property</a>')
             circle.html('<a href="my-profile.html" id="circle" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2"></a>')
-        } 
+        }
         else {
             loginLogoutButton.html('<b>Login</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
             loginLogoutButton.attr('href', 'login-form.html');
