@@ -2,12 +2,11 @@
 <html lang="en">
 
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--favicon-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
 
-    <!--favicon-->
     <link rel="icon" href="../assets/images/favicon-32x32.png" type="image/png" />
     <!--plugins-->
     <link href="../assets/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
@@ -31,28 +30,12 @@
     <link rel="stylesheet" href="../assets/css/semi-dark.css" />
     <link rel="stylesheet" href="../assets/css/style.css" />
     <link rel="stylesheet" href="../assets/css/header-colors.css" />
-    <link rel="stylesheet" href="../assets/css/responsive.css" />
+    <link rel="stylesheet" href="./../assets/css/responsive.css" />
     <title>Landshare -Admin Panel</title>
 </head>
 
 <body>
-    <script>
-        let checkAdmintoken = localStorage.getItem('admintoken')
-        if (checkAdmintoken == null) {
-            location = "http://127.0.0.1:5500/Frontend/super_admin/"
-        }
-
-        function Logout() {
-            const adminToken = localStorage.getItem('admintoken');
-            if (adminToken != null) {
-                localStorage.removeItem('admintoken');
-                window.location.href = 'http://localhost:5500/Frontend/super_admin'; // Redirect example
-            }
-        }
-    </script>
-    <!--wrapper-->
     <div class="wrapper">
-        <!--sidebar wrapper -->
         <div class="sidebar-wrapper" data-simplebar="true">
             <div class="sidebar-header">
                 <div>
@@ -91,16 +74,16 @@
                         <div class="menu-title">Request User Update </div>
                     </a>
                 </li>
+
                 <li class="menu-label">Property</li>
                 <!-- <li>
-          <a href="new-enquiries.html">
-            <div class="parent-icon">
-              <img src="../assets/images/stocktrnsfericon.png" alt="" />
-            </div>
-            <div class="menu-title">Manage Property</div>
-          </a>
-        </li> -->
-
+                <a href="new-enquiries.html">
+                  <div class="parent-icon">
+                    <img src="../assets/images/stocktrnsfericon.png" alt="" />
+                  </div>
+                  <div class="menu-title">Manage Property</div>
+                </a>
+              </li> -->
                 <li>
                     <a href="list-property.html">
                         <div class="parent-icon">
@@ -133,10 +116,7 @@
                         <div class="menu-title">Rejected Property</div>
                     </a>
                 </li>
-
-
                 <li>
-
                     <a href="sold-propert.html">
                         <div class="parent-icon">
                             <img src="../assets/images/stocktrnsfericon.png" alt="" />
@@ -144,53 +124,53 @@
                         <div class="menu-title">Sold Property</div>
                     </a>
                 </li>
+                
                 <li>
                     <a href="my-profile.html">
-                      <div class="parent-icon">
-                        <img src="../assets/images/stocktrnsfericon.png" alt="" />
-                      </div>
-                      <div class="menu-title">My Profile</div>
+                        <div class="parent-icon">
+                            <img src="../assets/images/stocktrnsfericon.png" alt="" />
+                        </div>
+                        <div class="menu-title">My Profile</div>
                     </a>
-                  </li>
+                </li>
                 <!-- <li>
-
-                    <a href="new-enquiries.html">
-                        <div class="parent-icon">
-                            <img src="../assets/images/stocktrnsfericon.png" alt="" />
-                        </div>
-                        <div class="menu-title">New Enquiries</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="new-enquiries.html">
-                        <div class="parent-icon">
-                            <img src="../assets/images/stocktrnsfericon.png" alt="" />
-                        </div>
-                        <div class="menu-title">New Logins</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="new-enquiries.html">
-                        <div class="parent-icon">
-                            <img src="../assets/images/stocktrnsfericon.png" alt="" />
-                        </div>
-                        <div class="menu-title">New Uploads</div>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="new-enquiries.html">
-                        <div class="parent-icon">
-                            <img src="../assets/images/stocktrnsfericon.png" alt="" />
-                        </div>
-                        <div class="menu-title">IN Review Property</div>
-                    </a>
-                </li> -->
+                <a href="new-enquiries.html">
+                  <div class="parent-icon">
+                    <img src="../assets/images/stocktrnsfericon.png" alt="" />
+                  </div>
+                  <div class="menu-title">New Enquiries</div>
+                </a>
+              </li>
+              <li>
+                <a href="new-enquiries.html">
+                  <div class="parent-icon">
+                    <img src="../assets/images/stocktrnsfericon.png" alt="" />
+                  </div>
+                  <div class="menu-title">New Logins</div>
+                </a>
+              </li>
+              <li>
+                <a href="new-enquiries.html">
+                  <div class="parent-icon">
+                    <img src="../assets/images/stocktrnsfericon.png" alt="" />
+                  </div>
+                  <div class="menu-title">New Uploads</div>
+                </a>
+              </li>
+      
+      
+              
+              <li>
+                <a href="new-enquiries.html">
+                  <div class="parent-icon">
+                    <img src="../assets/images/stocktrnsfericon.png" alt="" />
+                  </div>
+                  <div class="menu-title">IN Review Property</div>
+                </a>
+              </li> -->
             </ul>
             <!--end navigation-->
         </div>
-        <!--end sidebar wrapper -->
-        <!--start header -->
         <header>
             <div class="topbar d-flex align-items-center">
                 <nav class="navbar navbar-expand gap-3">
@@ -210,15 +190,6 @@
                                 <a class="nav-link" href="avascript:;"><i class="bx bx-search"></i>
                                 </a>
                             </li>
-                        </ul>
-                    </div>
-                    <div class="top-menu ms-auto">
-                        <ul class="navbar-nav align-items-center gap-1">
-                            <li class="nav-item mobile-search-icon d-flex d-lg-none" data-bs-toggle="modal"
-                                data-bs-target="#SearchModal">
-                                <a class="nav-link" href="avascript:;"><i class="bx bx-search"></i>
-                                </a>
-                            </li>
 
                             <li class="nav-item dropdown dropdown-large">
                                 <a class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative" href="#"
@@ -228,8 +199,8 @@
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <a href="javascript:;">
                                         <div class="msg-header">
-                                            <!-- <p class="msg-header-title">Notifications</p>
-                        <p class="msg-header-badge">8 New</p> -->
+                                            <p class="msg-header-title">Notifications</p>
+                                            <p class="msg-header-badge">8 New</p>
                                         </div>
                                     </a>
                                     <div class="header-notifications-list">
@@ -614,7 +585,7 @@
                     <div class="user-box dropdown px-3">
                         <a class="d-flex align-items-center nav-link dropdown-toggle gap-3 dropdown-toggle-nocaret"
                             href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                           <img id="blah1" src="" class="user-img" alt="user avatar" onclick="openMyProfile()" />
+                            <img id="blah1" src="" class="user-img" alt="user avatar" onclick="openMyProfile()" />
                             <div class="user-info">
                                 <p class="user-name mb-0">Admin</p>
                                 <!-- <p class="designattion mb-0">Web Designer</p> -->
@@ -622,7 +593,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>
-                                <a class="dropdown-item d-flex align-items-center" href="javascript:;"
+                                <a class="dropdown-item d-flex align-items-center" href="#" id="logoutLink"
                                     onclick="Logout()"><i class="bx bx-log-out-circle"></i><span>Logout</span></a>
                             </li>
                         </ul>
@@ -630,64 +601,90 @@
                 </nav>
             </div>
         </header>
-        <!--end header -->
-        <!--start page wrapper -->
-        <div class="page-wrapper">
-            <div class="page-content">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="inv-box">
-                            <h4>Property</h4>
-                            <div class="manage-flex">
-                                <h5>Manage your Property</h5>
+        <div class="container-fluid py-5">
+            <div class="container mb-5">
+                <div class="row g-5">
+                    <div class="col-lg-7  mx-auto wow fadeIn" data-wow-delay="0.1s">
 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="card mt-3">
-                            <div class="card-body">
-                                <div class="table-top">
-                                    <div class="search-set">
-                                        <div class="search-input-box">
-                                            <a class="btn-searchset"><i class="fa-solid fa-filter"></i>
-                                            </a>
-                                            <div id="" class="">
-                                                <label>
-                                                    <input type="search" class="form-control form-control-sm"
-                                                        placeholder="Search..."
-                                                        aria-controls="DataTables_Table_0" /></label>
+                        <form id="update" method="post">
+
+                            <div class="row g-3 ">
+
+                                <div class="col-md-12">
+                                    <div class="profile-set">
+                                        <div class="profile-head"></div>
+                                        <div class="profile-top">
+                                            <div class="profile-content">
+                                                <div class="profile-contentimg">
+                                                    <img id="blah" src="" alt="img" class="blahimg" />
+                                                    <div class="profileupload">
+                                                        <input type="file" id="profile_image" name="profile_image" />
+                                                        <a href="javascript:void(0);"><i
+                                                                class="fa-regular fa-pen-to-square"></i></a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="profile-contentname">
+                                                    <h2 id="nameshow"></h2>
+                                                    <h4>Updates Your Photo and Personal Details.</h4>
+                                                </div>
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="delverystatustable">
-                                    <div class="table-responsive">
-                                        <table class="table">
-                                            <thead>
-                                                <tr role="row">
-                                                    <th>S.No</th>
-                                                    <th>Land Owner Name</th>
-                                                    <th>Property Type</th>
-                                                    <th>City</th>
-                                                    <th>Details</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="property-list">
-                                                <!-- Dynamic data will be populated here -->
-                                            </tbody>
-                                        </table>
+                                <div class="col-md-6">
+                                    <p>Name</p>
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="Name"
+                                            onkeypress="return isCharacterKey(event)" required pattern="[A-Za-z  ]+"
+                                            maxlength="80">
+                                        <label for="subject">Name</label>
                                     </div>
                                 </div>
+                                <input type="hidden" name="id" id="id" />
+                                <div class="col-md-6">
+                                    <p>Email Id</p>
+                                    <div class="form-floating">
+                                        <input type="email" class="form-control" id="email" name="email"
+                                            placeholder="Email" readonly>
+                                        <label for="subject">Email Id</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>Chnage Password</p>
+                                    <div class="form-floating">
+                                        <input type="password" class="form-control" id="password" name="password"
+                                            placeholder="Email">
+                                        <label for="subject">New Password</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <p>Confirm Password</p>
+                                    <div class="form-floating">
+                                        <input type="password" class="form-control" id="pass1" name="pass1"
+                                            placeholder="Email">
+                                        <label for="subject">Confirm Password</label>
+                                        <div id="error-message" style="color: red;"></div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-primary py-2 px-3 me-3">
+                                        Update
+                                        <div
+                                            class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
+                                            <i class="fa fa-arrow-right"></i>
+                                        </div>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
+
                 </div>
             </div>
         </div>
-
         <!--end page wrapper -->
         <!--start overlay-->
         <div class="overlay toggle-icon"></div>
@@ -699,67 +696,9 @@
             <p class="mb-0">Copyright © 2023. All right reserved.</p>
         </footer>
     </div>
-    <!--end wrapper-->
-
-    <!-- modal edit batches -->
-
-    <div class="modal fade" id="l3_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-4 col-sm-6">
-                            <div class="label-font mb-3">
-                                <label for="" class="form-label">Institute Name </label>
-                                <input type="text" class="form-control" id="" aria-describedby="" />
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6">
-                            <div class="label-font mb-3">
-                                <label for="" class="form-label">Email </label>
-                                <input type="text" class="form-control" id="" aria-describedby="" />
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6">
-                            <div class="label-font mb-3">
-                                <label for="" class="form-label">Contact No. </label>
-                                <input type="text" class="form-control" id="" aria-describedby="" />
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6">
-                            <div class="label-font mb-3">
-                                <label for="" class="form-label">Create Password </label>
-                                <input type="text" class="form-control" id="" aria-describedby="" />
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6">
-                            <div class="label-font mb-3">
-                                <label for="" class="form-label">Confirm Password </label>
-                                <input type="text" class="form-control" id="" aria-describedby="" />
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6">
-                            <div class="label-font mb-3">
-                                <label for="" class="form-label">Student Limit </label>
-                                <input type="text" class="form-control" id="" aria-describedby="" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="text-center mb-4">
-                    <button type="button" class="addpr-btn">Submit</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bootstrap JS -->
     <script src="../assets/js/bootstrap.bundle.min.js"></script>
     <!--plugins-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="../assets/js/jquery.min.js"></script>
     <script src="../assets/plugins/simplebar/js/simplebar.min.js"></script>
     <script src="../assets/plugins/metismenu/js/metisMenu.min.js"></script>
@@ -768,179 +707,85 @@
     <script src="../assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js"></script>
     <script src="../assets/plugins/chartjs/js/chart.js"></script>
     <script src="../assets/js/index.js"></script>
+    <script src="../utils.js"></script>
     <!--app JS-->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
     <script src="../assets/js/app.js"></script>
     <script>
         new PerfectScrollbar(".app-container");
+
     </script>
     <script>
-        $(".fingsize")
-            .addClass("img-enlargable")
-            .click(function () {
-                var src = $(this).attr("src");
-                $("<div>")
-                    .css({
-                        background: "RGBA(0,0,0,.5) url(" + src + ") no-repeat center",
-                        backgroundSize: "contain",
-                        width: "100%",
-                        height: "100%",
-                        position: "fixed",
-                        zIndex: "10000",
-                        top: "0",
-                        left: "0",
-                        cursor: "zoom-out",
-                    })
-                    .click(function () {
-                        $(this).remove();
-                    })
-                    .appendTo("body");
-            });
-    </script>
-    <script src="../utils.js"></script>
-    <script>
-
-        const propertyList = document.getElementById('property-list');
-        function viewPropertyDetails(propertyId) {
-            const url = `property-details.html?id=${propertyId}`;
-            window.location.href = url;
-        }
-        function fetchData() {
-
-            const api = apiUrl + '/getallproperty';
-            fetch(api, {
-                method: 'get',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-
-            })
-                .then(response => {
-                    if (response.ok) {
-                        return response.json();
-                    } else {
-                        throw new Error('Failed to fetch data');
-                    }
-                })
-                .then(data => {
-                    data.message.forEach(property => {
-                        if (property.property_status == 1) {
-
-                            const newRow = createPropertyListing(property);
-                            propertyList.appendChild(newRow);
-                        }
-
-                    });
-                    document.getElementById('spinner').style.display = 'none';
-                })
-                .catch(error => {
-                    console.error('There was a problem with the fetch operation:', error);
-                });
-        }
-
-
-        function changestatus(id, status) {
-            let propertyId = id
-            let statusdata = status
-            const userData = {
-                propertyId: propertyId,
-                status: statusdata
-
-            };
-
-            fetch(apiUrl + '/updatestatus', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(userData)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.message) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Success',
-                            text: data.message,
-                        }).then(() => {
-                            window.location.href = "new-enquiries.html"
-                        })
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: data.error,
-                        });
-                    }
-                })
-                .catch(error => {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: error,
-                    });
-                });
-
-
-        }
-        var count = 1
-        function createPropertyListing(property) {
-
-            const tableRow = document.createElement('tr'); // Create a table row
-            let approveButtonHTML = '';
-            let disapproveButtonHTML = '';
-
-            if (property.property_status == 1) {
-                // Property is approved
-                approveButtonHTML = '<button class="delvr-button1" disabled>Approved</button>';
-            } else if (property.property_status == 0) {
-                // Property is disapproved
-                disapproveButtonHTML = '<button class="nondelvr-button1" disabled>Disapproved</button>';
-            } else {
-                // Neither approved nor disapproved
-                approveButtonHTML = '<button class="delvr-button" onclick="changestatus(' + property.id + ', 1)">Approve</button>';
-                disapproveButtonHTML = '<button class="nondelvr-button" onclick="changestatus(' + property.id + ', 0)">Disapprove</button>';
-            }
-            tableRow.innerHTML = `
-     
-        <td>${count}</td>
-        <td>${property.ownerName}</td>
-        <td>${property.property_category_select}</td>
-        <td>${property.city}</td>
-        <td><a href="#" onclick="viewPropertyDetails(${property.id})">Details</a></td>
-        <td>
-          <div>
-        ${approveButtonHTML}
-        ${disapproveButtonHTML}
-      </div>
-        </td>
-    `;
-            count++
-            return tableRow; // Return the table row element
-        }
-
-        window.onload = fetchData;
         $.ajax({
             url: apiUrl + '/getadmin', // Replace with your API endpoint
             type: 'GET',
             dataType: 'json',
             success: function (data) {
-
-                // $('#nameshow').text(data.message.name);
-                // $('#name').val(data.message.name);
-                // $('#email').val(data.message.email);
-                // $('#userid').val(data.message.User_ID);
-                // $('#password').val(data.message.password);
-                // $('#pass1').val(data.message.password);
-                // $('#id').val(data.message.id);
+            
+                $('#nameshow').text(data.message.name);
+                $('#name').val(data.message.name);
+                $('#email').val(data.message.email);
+                $('#userid').val(data.message.User_ID);
+                $('#password').val(data.message.password);
+                $('#pass1').val(data.message.password);
+                $('#id').val(data.message.id);
                 var imgSrc = data.message.profile_image;
-                // $('#blah').attr('src', imgSrc);
+                $('#blah').attr('src', imgSrc);
                 $('#blah1').attr('src', imgSrc);
             },
             error: function (error) {
                 console.error('Error fetching data:', error);
             }
+        });
+
+        $("#profile_image").change(function () {
+            readURL(this);
+        });
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#blah').attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $('#update').submit(function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: apiUrl + '/updateprofile',
+                type: 'POST',
+                contentType: false,  // Set to false when using FormData
+                processData: false,
+                data: new FormData(this),
+                success: function (data) {
+                    if (data.success == true) {
+                        Swal.fire({
+                            title: 'Success!',
+                            text: data.message,
+                            icon: 'success'
+                        })
+                        location.reload()
+                    } else {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: data.error,
+                            icon: 'error'
+                        });
+                    }
+                },
+                error: function (error) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: error,
+                        icon: 'error'
+                    });
+                }
+            });
         });
 
         function openMyProfile() {

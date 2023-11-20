@@ -2,12 +2,18 @@
 <html lang="en">
 
 <head>
+  <style>
+    #profile_image {
+  display: none;  /* Hide the image */
+}
+
+  </style>
   <!-- Required meta tags -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!--favicon-->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
 
-  <!--favicon-->
   <link rel="icon" href="../assets/images/favicon-32x32.png" type="image/png" />
   <!--plugins-->
   <link href="../assets/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
@@ -36,19 +42,20 @@
 </head>
 
 <body>
-   <script>
-      let checkAdmintoken = localStorage.getItem('admintoken')
-  if(checkAdmintoken == null){
-    location = "https://landshareindia.com/web/super_admin/"
-  }
-  function Logout() {
+  <script>
+    let checkAdmintoken = localStorage.getItem('admintoken')
+    if (checkAdmintoken == null) {
+      location = "https://landshareindia.com/web/super_admin/"
+    }
+
+    function Logout() {
       const adminToken = localStorage.getItem('admintoken');
       if (adminToken != null) {
         localStorage.removeItem('admintoken');
         window.location.href = 'http://localhost:5500/Frontend/super_admin'; // Redirect example
       }
     }
-    </script>
+  </script>
   <!--wrapper-->
   <div class="wrapper">
     <!--sidebar wrapper -->
@@ -82,13 +89,12 @@
             <div class="menu-title">List Users</div>
           </a>
         </li>
-
         <li>
           <a href="request-user.html">
             <div class="parent-icon">
               <img src="../assets/images/tssicon.png" alt="" />
             </div>
-            <div class="menu-title">Request  User Update  </div>
+            <div class="menu-title">Request User Update </div>
           </a>
         </li>
         <li class="menu-label">Property</li>
@@ -102,12 +108,12 @@
         </li> -->
         <li>
           <a href="list-property.html">
-              <div class="parent-icon">
-                  <img src="../assets/images/stocktrnsfericon.png" alt="" />
-              </div>
-              <div class="menu-title">List Property</div>
+            <div class="parent-icon">
+              <img src="../assets/images/stocktrnsfericon.png" alt="" />
+            </div>
+            <div class="menu-title">List Property</div>
           </a>
-      </li>
+        </li>
         <li>
           <a href="new-property.html">
             <div class="parent-icon">
@@ -116,14 +122,15 @@
             <div class="menu-title">New Property</div>
           </a>
         </li>
+
         <li>
           <a href="appreov-property.html">
-              <div class="parent-icon">
-                  <img src="../assets/images/stocktrnsfericon.png" alt="" />
-              </div>
-              <div class="menu-title">Approved Property</div>
+            <div class="parent-icon">
+              <img src="../assets/images/stocktrnsfericon.png" alt="" />
+            </div>
+            <div class="menu-title">Approved Property</div>
           </a>
-      </li>
+        </li>
         <li>
           <a href="reject-propert.html">
             <div class="parent-icon">
@@ -148,8 +155,7 @@
             <div class="menu-title">My Profile</div>
           </a>
         </li>
-<!--        
-        <li>
+        <!-- <li>
           <a href="new-enquiries.html">
             <div class="parent-icon">
               <img src="../assets/images/stocktrnsfericon.png" alt="" />
@@ -175,7 +181,6 @@
         </li>
 
 
-      
         <li>
           <a href="new-enquiries.html">
             <div class="parent-icon">
@@ -618,9 +623,9 @@
         <div class="row">
           <div class="col-md-12">
             <div class="inv-box">
-              <h4>Property</h4>
+              <h4>Users</h4>
               <div class="manage-flex">
-                <h5>Manage your Property</h5>
+                <h5>Manage your Users</h5>
 
               </div>
             </div>
@@ -636,37 +641,65 @@
                       <div id="" class="">
                         <label>
                           <input type="search" class="form-control form-control-sm" placeholder="Search..."
-                            aria-controls="DataTables_Table_0" /></label>
+                            aria-controls="DataTables_Table_0" />
+                        </label>
                       </div>
                     </div>
+                    <!-- <div>
+                      <button type="submit" class="btn btn-primary text-light" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">Add new User</button>
+                    </div> -->
                   </div>
                 </div>
 
-                <div class="delverystatustable">
-                  <div class="table-responsive">
+                <div class="table-responsive">
+                  <div class="delverystatustable">
                     <table class="table">
                       <thead>
                         <tr role="row">
                           <th>S.No</th>
-                          <th>Land Owner Name</th>
-                          <th>Property Type</th>
-                          <th>City</th>
-                          <th>Details</th>
-                          <th>Action</th>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Contact No.</th>
+                          <th>Password</th>
+                          <!-- <th>Action</th> -->
+                          <th>Edit User</th>
                         </tr>
                       </thead>
+
                       <tbody id="property-list">
                         <!-- Dynamic data will be populated here -->
                       </tbody>
                     </table>
                   </div>
                 </div>
+
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination justify-content-end">
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">1</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">2</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">3</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">Next</a>
+                    </li>
+                  </ul>
+                </nav>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
 
     <!--end page wrapper -->
     <!--start overlay-->
@@ -679,11 +712,50 @@
       <p class="mb-0">Copyright © 2023. All right reserved.</p>
     </footer>
   </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="login" method="POST">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name1" name="name1">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="text" class="form-control" name="email1" id="email1">
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="number" class="form-label">Contact No.</label>
+                <input type="text" class="form-control" id="number1" name="number1">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="Password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="Password1" name="Password1">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Add User</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
   <!--end wrapper-->
 
   <!-- modal edit batches -->
-
-  <div class="modal fade" id="l3_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -691,55 +763,47 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <div class="row">
-            <div class="col-md-4 col-sm-6">
-              <div class="label-font mb-3">
-                <label for="" class="form-label">Institute Name </label>
-                <input type="text" class="form-control" id="" aria-describedby="" />
+          <form id="editUser" method="POST">
+            <div class="row">
+              <input type="hidden" name="id" id="id" />
+              <!-- <input type="hidden" name="profile_image" id="profile_image" /> -->
+              <img  type="hidden" name="profile_image"  id="profile_image" src="" alt="Profile Image">
+
+              <div class="col-md-6 mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="text" class="form-control" id="email" name="email">
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="number" class="form-label">Contact No.</label>
+                <input type="text" class="form-control" name="mobile_number" id="mobile_number">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="Password" class="form-label">Password</label>
+                <input type="text" class="form-control" id="password" name="password">
               </div>
             </div>
-            <div class="col-md-4 col-sm-6">
-              <div class="label-font mb-3">
-                <label for="" class="form-label">Email </label>
-                <input type="text" class="form-control" id="" aria-describedby="" />
-              </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Update User</button>
             </div>
-            <div class="col-md-4 col-sm-6">
-              <div class="label-font mb-3">
-                <label for="" class="form-label">Contact No. </label>
-                <input type="text" class="form-control" id="" aria-describedby="" />
-              </div>
-            </div>
-            <div class="col-md-4 col-sm-6">
-              <div class="label-font mb-3">
-                <label for="" class="form-label">Create Password </label>
-                <input type="text" class="form-control" id="" aria-describedby="" />
-              </div>
-            </div>
-            <div class="col-md-4 col-sm-6">
-              <div class="label-font mb-3">
-                <label for="" class="form-label">Confirm Password </label>
-                <input type="text" class="form-control" id="" aria-describedby="" />
-              </div>
-            </div>
-            <div class="col-md-4 col-sm-6">
-              <div class="label-font mb-3">
-                <label for="" class="form-label">Student Limit </label>
-                <input type="text" class="form-control" id="" aria-describedby="" />
-              </div>
-            </div>
-          </div>
+          </form>
         </div>
-        <div class="text-center mb-4">
-          <button type="button" class="addpr-btn">Submit</button>
-        </div>
+
       </div>
     </div>
   </div>
 
   <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.7.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../assets/js/bootstrap.bundle.min.js"></script>
   <!--plugins-->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   <script src="../assets/js/jquery.min.js"></script>
   <script src="../assets/plugins/simplebar/js/simplebar.min.js"></script>
   <script src="../assets/plugins/metismenu/js/metisMenu.min.js"></script>
@@ -748,88 +812,23 @@
   <script src="../assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js"></script>
   <script src="../assets/plugins/chartjs/js/chart.js"></script>
   <script src="../assets/js/index.js"></script>
-  <!--app JS-->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 
+  <!--app JS-->
+  <script src="../utils.js"></script>
   <script src="../assets/js/app.js"></script>
   <script>
     new PerfectScrollbar(".app-container");
   </script>
   <script>
-    $(".fingsize")
-      .addClass("img-enlargable")
-      .click(function () {
-        var src = $(this).attr("src");
-        $("<div>")
-          .css({
-            background: "RGBA(0,0,0,.5) url(" + src + ") no-repeat center",
-            backgroundSize: "contain",
-            width: "100%",
-            height: "100%",
-            position: "fixed",
-            zIndex: "10000",
-            top: "0",
-            left: "0",
-            cursor: "zoom-out",
-          })
-          .click(function () {
-            $(this).remove();
-          })
-          .appendTo("body");
-      });
-  </script>
-  <script src="../utils.js"></script>
-  <script>
-
     const propertyList = document.getElementById('property-list');
-    function viewPropertyDetails(propertyId) {
-      const url = `property-details.html?id=${propertyId}`;
-      window.location.href = url;
-    }
-    function fetchData() {
-
-      const api = apiUrl + '/getallproperty';
-      fetch(api, {
-        method: 'get',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-
-      })
-        .then(response => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            throw new Error('Failed to fetch data');
-          }
-        })
-        .then(data => {
-          data.message.forEach(property => {
-            if (property.sold == 1) {
-
-              const newRow = createPropertyListing(property);
-              propertyList.appendChild(newRow);
-            }
-
-          });
-          document.getElementById('spinner').style.display = 'none';
-        })
-        .catch(error => {
-          console.error('There was a problem with the fetch operation:', error);
-        });
-    }
-
-
-    function changestatus(id, status) {
-      let propertyId = id
-      let statusdata = status
+    function deleteuser(id) {
+      let userid = id
       const userData = {
-        propertyId: propertyId,
-        status: statusdata
-
+        userid: userid
       };
 
-      fetch(apiUrl + '/updatestatus', {
+      fetch(apiUrl + '/deleteuser', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -844,7 +843,7 @@
               title: 'Success',
               text: data.message,
             }).then(() => {
-              window.location.href = "new-enquiries.html"
+              window.location.href = "manage-users.html"
             })
           } else {
             Swal.fire({
@@ -861,46 +860,294 @@
             text: error,
           });
         });
+    }
 
+    function blockuser(id, status) {
+      let userid = id
+      let statusdata = status
+      const userData = {
+        userid: userid,
+        status: statusdata
+      };
 
+      fetch(apiUrl + '/blockuser', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.message) {
+            Swal.fire({
+              icon: 'success',
+              title: 'Success',
+              text: data.message,
+            }).then(() => {
+              window.location.href = "manage-users.html"
+            })
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: data.error,
+            });
+          }
+        })
+        .catch(error => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: error,
+          });
+        });
+    }
+    function fetchData() {
+
+      const api = apiUrl + '/getalluser';
+      fetch(api, {
+        method: 'get',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+
+      })
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error('Failed to fetch data');
+          }
+        })
+        .then(data => {
+          console.log(data.message[0].request_update);
+          data.message.forEach(property => {
+            if (property.request_update == '1') {
+              const newRow = createPropertyListing(property);
+              propertyList.appendChild(newRow);
+
+            }
+
+          });
+          // document.getElementById('spinner').style.display = 'none';
+        })
+        .catch(error => {
+          console.error('There was a problem with the fetch operation:', error);
+        });
     }
     var count = 1
     function createPropertyListing(property) {
+      const originalDateTime = new Date(property.enquire_create_at);
+      const day = originalDateTime.getUTCDate();
+      const month = originalDateTime.getUTCMonth() + 1;
+      const year = originalDateTime.getUTCFullYear();
+
+      const formattedDate = `${day}-${month}-${year}`;
 
       const tableRow = document.createElement('tr'); // Create a table row
-      let approveButtonHTML = '';
-      let disapproveButtonHTML = '';
-
-      if (property.property_status == 1) {
-        // Property is approved
-        approveButtonHTML = '<button class="delvr-button1" disabled>Approved</button>';
-      } else if (property.property_status == 0) {
-        // Property is disapproved
-        disapproveButtonHTML = '<button class="nondelvr-button1" disabled>Disapproved</button>';
-      } else {
-        // Neither approved nor disapproved
-        approveButtonHTML = '<button class="delvr-button" onclick="changestatus(' + property.id + ', 1)">Approve</button>';
-        disapproveButtonHTML = '<button class="nondelvr-button" onclick="changestatus(' + property.id + ', 0)">Disapprove</button>';
-      }
+      const blockButtonHTML = property.status == 1
+        ? '<button class="blockbtn" onclick="blockuser(' + property.id + ', 0)">Block</button>'
+        : '<button class="blockbtn" onclick="blockuser(' + property.id + ', 1)">Unblock</button>';
       tableRow.innerHTML = `
      
+        
         <td>${count}</td>
-        <td>${property.ownerName}</td>
-        <td>${property.property_category_select}</td>
-        <td>${property.city}</td>
-        <td><a href="#" onclick="viewPropertyDetails(${property.id})">Details</a></td>
-        <td>
-          <div>
-        ${approveButtonHTML}
-        ${disapproveButtonHTML}
-      </div>
-        </td>
+                        <td>${property.name}</td>
+                        <td>${property.email}</td>
+                        <td>${property.mobile_number}</td>
+                        <td>
+                          <p class="pwd-ch">${property.password_bcrypt}</p>
+                          <!-- <button class="change-btn">
+                                Change Password
+                              </button> -->
+                          <!-- <a href="#"> Change Password</a> -->
+                        </td>
+                        <!--        <td>
+                      <div>
+                            ${blockButtonHTML}
+
+                            <button class="nondelvr-button"   onclick="deleteuser(${property.id})">Delete</button>
+                          </div>
+                      
+                        </td>     -->
+                        <td>
+  
+
+
+  <div>
+    <i class="fa-regular fa-pen-to-square" data-bs-toggle="modal" data-bs-target="#editModal" data-id="${property.id}"></i>
+${property.request_update == 1 ? ' <p >Request</p>' : ''}
+  
+ </div>
+</td>
+
+
     `;
       count++
       return tableRow; // Return the table row element
     }
 
     window.onload = fetchData;
+
+    $(document).ready(function () {
+      $('#editModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var id = button.data('id');
+
+        const userData = {
+          userid: id
+        };
+        fetch(apiUrl + '/getuser', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(userData)
+        })
+          .then(response => response.json())
+          .then(data => {
+            var user = data.message[0];
+            console.log(user);
+            console.log("user", user);
+            $('#name').val(user.name);
+            $('#email').val(user.email);
+            $('#mobile_number').val(user.mobile_number);
+            $('#id').val(user.id);
+            $('#password').val(user.password_bcrypt);
+            $('#profile_image').val('src', user.profile_image);
+
+          })
+          .catch(error => {
+            console.log(error, '--');
+          });
+
+      });
+    });
+
+    $('#editUser').submit(function (e) {
+      e.preventDefault();
+
+      $.ajax({
+        url: apiUrl + '/adminupdateuser',
+        type: 'POST',
+        contentType: false,  // Set to false when using FormData
+        processData: false,
+        data: new FormData(this),
+        success: function (data) {
+          if (data.success == true) {
+            Swal.fire({
+              title: 'Success!',
+              text: data.message,
+              icon: 'success'
+            })
+            location.reload();
+          } else {
+            Swal.fire({
+              title: 'Error!',
+              text: data.error,
+              icon: 'error'
+            });
+          }
+        },
+        error: function (error) {
+          Swal.fire({
+            title: 'Error!',
+            text: error,
+            icon: 'error'
+          });
+        }
+      });
+    });
+
+
+    $(document).on('submit', '#login', function (e) {
+      e.preventDefault();
+      const name = $('#name1').val();
+      const email = $('#email1').val();
+      const contact_no = $('#number1').val();
+      const password = $('#Password1').val();
+
+      const userCredentials = {
+        name: name,
+        email: email,
+        mobile_number: contact_no,
+        password: password
+      };
+
+      $.ajax({
+        url: apiUrl + '/createuserbyadmin',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(userCredentials),
+        success: function (data) {
+          if (data.success) {
+            Swal.fire({
+              icon: 'success',
+              title: 'Success',
+              text: data.message
+            });
+            setTimeout(() => {
+              location.reload();
+            }, 1000);
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: data.error
+            });
+          }
+        },
+        error: function () {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'please fill input '
+          });
+        }
+      });
+
+    });
+
+
+    jQuery(document).ready(function () {
+      jQuery("#editUser").validate({
+        rules: {
+          // name: {
+          //   required: true
+          // },
+          email: {
+            required: true
+          },
+          password: {
+            required: true
+          },
+          mobile_number: {
+            required: true
+          }
+
+        },
+        messages: {
+          // name: {
+          //   required: "Please enter Name"
+          // },
+          email: {
+            required: "Please enter Email"
+          },
+          password: {
+            required: "Please enter Password"
+          }
+          ,
+          mobile_number: {
+            required: "Please enter Contact Number"
+          }
+        },
+
+        errorClass: "error",
+        errorElement: "div",
+      });
+
+    });
     $.ajax({
             url: apiUrl + '/getadmin', // Replace with your API endpoint
             type: 'GET',

@@ -45,6 +45,12 @@
 
 <body>
   <!-- Spinner Start -->
+  <script>
+    let checkAdmintoken = localStorage.getItem('token')
+    if (checkAdmintoken == null) {
+        location = "https://landshareindia.com/web/"
+    }
+</script>
   <div id="spinner"
     class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
     <div class="spinner-grow text-primary" role="status"></div>
@@ -270,7 +276,7 @@
             <label for="" class="col-form-label">Price per Sq.Ft. (Rs):</label>
           </div>
           <div class="col-9">
-            <input type="number" min="0" id="cost" class="form-control" aria-describedby="passwordHelpInline" 
+            <input type="number" min="0" id="cost" class="form-control" aria-describedby="passwordHelpInline"
               oninput="calculateTotal()">
             <div id="" class="form-text">*Please do not add if you do not know</div>
           </div>
@@ -283,8 +289,7 @@
             <label for="" class="col-form-label">Land price: </label>
           </div>
           <div class="col-9">
-            <input type="number" min="0" id="landPrice" class="form-control" aria-describedby="passwordHelpInline"
-              >
+            <input type="number" min="0" id="landPrice" class="form-control" aria-describedby="passwordHelpInline">
           </div>
         </div>
       </div>
@@ -414,19 +419,20 @@
         </div>
         <div class="col-lg-3 col-md-6">
           <h3 class="text-light mb-4">Quick Links</h3>
-          <p><a href="https://www.agrocorp.co.in" style="color:#fff !important;">Home</a><br>
-            <a href="about" style="color:#fff !important;">Know Us</a><br>
-            <a href="https://landshareindia.com/demo/what-we-offer.html" style="color:#fff !important;">What We
-              Do</a><br>
-            <a href="https://landshareindia.com/demo/investing-opportunity.html"
-              style="color:#fff !important;">Investment Opportunitiess</a><br>
-            <a href="https://landshareindia.com/demo/media.html" style="color:#fff !important;">Press Room</a><br>
-            <a href="https://landshareindia.com/demo/clients.html" style="color:#fff !important;">Our Clients</a><br>
-            <a href="contact" style="color:#fff !important;">Contact Us</a><br>
-            <a href="faq" style="color:#fff !important;">FAQ</a><br>
-            <a href="privacy-policy" style="color:#fff !important;">Privacy Policy</a><br>
-            <a href="disclaimer" style="color:#fff !important;">Disclaimer</a><br>
-            <a href="sitemap" style="color:#fff !important;">Sitemap</a>
+          <p><a href="index.html" style="color:#fff !important;">Home</a><br>
+            <a href="about.html" style="color:#fff !important;">Know Us</a><br>
+            <a href="what-we-offer.html" style="color:#fff !important;">What
+              We Do</a><br>
+            <a href="investing-opportunity.html" style="color:#fff !important;">Investment Opportunitiess</a><br>
+            <a href="media.html" style="color:#fff !important;">Press
+              Room</a><br>
+            <a href="clients.html" style="color:#fff !important;">Our
+              Clients</a><br>
+            <a href="contact.html" style="color:#fff !important;">Contact Us</a><br>
+            <a href="#" style="color:#fff !important;">FAQ</a><br>
+            <a href="privacy-policy.html" style="color:#fff !important;">Privacy Policy</a><br>
+            <a href="disclaimer.html" style="color:#fff !important;">Disclaimer</a><br>
+            <a href="#" style="color:#fff !important;">Sitemap</a>
           </p>
 
 
@@ -712,7 +718,7 @@
       Opportunity.html('<a href="my-uploads.html" class="nav-item nav-link "> My Listings</a>')
       Sortlist.html('<a href="shortlisted-properties.html" class="nav-item nav-link "> My Shortlists</a>')
       Support.html('<a href="my-profile.html" class="nav-item nav-link"> Support</a>')
-   sellproperty.html('<a href="property-data.html" class="nav-item nav-link ">Sell Property</a>')
+      sellproperty.html('<a href="property-data.html" class="nav-item nav-link ">Sell Property</a>')
       circle.html('<a href="my-profile.html" id="circle" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2"></a>')
     }
     else {

@@ -217,7 +217,6 @@ function updateuser(req, res) {
     try {
         const { name, email, mobile_number, password, id, request_update } = req.body;
         const { profile_image } = req.files
-        console.log(req.body);
 
         if (!isValidEmail(email)) {
             return res.status(400).json({ error: 'Invalid email format', status: false });
@@ -263,23 +262,98 @@ function updateuser(req, res) {
 
 function updateProfile(name, email, mobile_number, hashedPassword, password, id, request_update, profile_image, res) {
 
-    if (profile_image == undefined) {
-        profile_image = ''
-    } else {
 
-        var image = profile_image[0].filename
+    var image = '';
+    if (typeof profile_image !== 'undefined') {
+        image = '`Image` = "' + profile_image[0].filename + '" ';
     }
-    connection.query(
-        'UPDATE landsharein_db.tbl_user SET name="' + name + '", mobile_number="' + mobile_number + '", password="' + hashedPassword + '", password_bcrypt="' + password + '",request_update="0", profile_image="' + image + '" ,email="' + email + '" WHERE id="' + id + '"',
-        (err, result1) => {
-            if (err) {
-                console.error('Update error:', err);
-                return res.status(500).json({ error: 'Update error' });
-            }
 
-            return res.status(200).json({ success: true, message: 'Profile updated success' });
+    if (profile_image) {
+
+        image = profile_image[0].filename
+        const sql = 'UPDATE landsharein_db.tbl_user SET name=?, mobile_number=?, password=?, password_bcrypt=?, email=? , profile_image=? WHERE id= ?'
+
+        connection.query(
+            sql, [name, mobile_number, hashedPassword, password, email, image, id],
+            (err, result1) => {
+                if (err) {
+                    console.error('Update error:', err);
+                    return res.status(500).json({ error: 'Update error' });
+                }
+
+                return res.status(200).json({ success: true, message: 'Profile updated success' });
+            }
+        );
+    }
+    else {
+
+        const sql = 'UPDATE landsharein_db.tbl_user SET name=?, mobile_number=?, password=?, password_bcrypt=?, email=? ' + image + ' WHERE id= ?'
+
+        connection.query(
+            sql, [name, mobile_number, hashedPassword, password, email, id],
+            (err, result1) => {
+                if (err) {
+                    console.error('Update error:', err);
+                    return res.status(500).json({ error: 'Update error' });
+                }
+
+                return res.status(200).json({ success: true, message: 'Profile updated success' });
+            }
+        );
+    }
+
+}
+
+function adminupdateuser(req, res) {
+    try {
+        const { name, email, mobile_number, password, id, request_update } = req.body;
+
+        console.log(email);
+        if (!isValidEmail(email)) {
+            return res.status(400).json({ error: 'Invalid email format', status: false });
         }
-    );
+
+        if (!isValidMobileNumber(mobile_number)) {
+            return res.status(400).json({ error: 'Invalid mobile number format', status: false });
+        }
+
+        connection.query(
+            'SELECT id, password FROM landsharein_db.tbl_user WHERE id = "' + id + '" ',
+            (err, result) => {
+
+                if (err) {
+                    return res.status(500).json({ error: 'Database error' });
+                }
+                const user = result[0];
+                if (!user) {
+                    return res.send({ error: "User not found" });
+                }
+                var image = '';
+                if (typeof profile_image !== 'undefined') {
+                    image = ', `Image` = "' + profile_image[0].filename + '" ';
+                }
+                var hashedPassword = user.password;
+
+                const sql = 'UPDATE landsharein_db.tbl_user SET  mobile_number=?, password=?, password_bcrypt=?,request_update="0", email=? ' + image + ' WHERE id= ?'
+
+                connection.query(
+                    sql, [mobile_number, hashedPassword, password, email, id],
+                    (err, result1) => {
+                        if (err) {
+                            console.error('Update error:', err);
+                            return res.status(500).json({ error: 'Update error' });
+                        }
+
+                        return res.status(200).json({ success: true, message: 'Profile updated success' });
+                    }
+                );
+
+
+            });
+    } catch (err) {
+        console.log(err, 'err');
+        return res.send({ error: err });
+    }
 }
 
 function getalluser(req, res) {
@@ -315,6 +389,7 @@ function deleteuser(req, res) {
     })
 
 }
+
 function blockuser(req, res) {
     const { userid, status } = req.body
     connection.query('select * from landsharein_db.tbl_user WHERE id="' + userid + '" ', (err, result) => {
@@ -432,6 +507,6 @@ function requestupdatenumber(req, res) {
 
 }
 
-module.exports = { signUp, getuser, sendVerificationMail, getuserbyid, updateuser, getalluser, deleteuser, blockuser, createuserbyadmin, requestupdatenumber }
+module.exports = { signUp, getuser, sendVerificationMail, getuserbyid, updateuser, getalluser, deleteuser, blockuser, createuserbyadmin, requestupdatenumber, adminupdateuser }
 
 

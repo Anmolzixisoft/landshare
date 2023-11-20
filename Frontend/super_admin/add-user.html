@@ -39,6 +39,14 @@
   if(checkAdmintoken == null){
     location = "https://landshareindia.com/web/super_admin/"
   }
+
+  function Logout() {
+      const adminToken = localStorage.getItem('admintoken');
+      if (adminToken != null) {
+        localStorage.removeItem('admintoken');
+        window.location.href = 'http://localhost:5500/Frontend/super_admin'; // Redirect example
+      }
+    }
     </script>
   <!--wrapper-->
   <div class="wrapper">
@@ -70,7 +78,15 @@
             <div class="parent-icon">
               <img src="../assets/images/tssicon.png" alt="" />
             </div>
-            <div class="menu-title">Manage Users</div>
+            <div class="menu-title">List Users</div>
+          </a>
+        </li>
+        <li>
+          <a href="request-user.html">
+            <div class="parent-icon">
+              <img src="../assets/images/tssicon.png" alt="" />
+            </div>
+            <div class="menu-title">Request  User Update  </div>
           </a>
         </li>
 
@@ -552,7 +568,7 @@
           <div class="user-box dropdown px-3">
             <a class="d-flex align-items-center nav-link dropdown-toggle gap-3 dropdown-toggle-nocaret" href="#"
               role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <img src="../assets/images/avatars/avatar-4.png" class="user-img" alt="user avatar" />
+             <img id="blah1" src="" class="user-img" alt="user avatar" onclick="openMyProfile()" />
               <div class="user-info">
                 <p class="user-name mb-0">Admin</p>
                 <!-- <p class="designattion mb-0">Web Designer</p> -->
@@ -560,7 +576,7 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
               <li>
-                <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
+                <a class="dropdown-item d-flex align-items-center" href="javascript:;" onclick="Logout()"><i
                     class="bx bx-log-out-circle"></i><span>Logout</span></a>
               </li>
             </ul>
