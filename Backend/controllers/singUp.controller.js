@@ -306,7 +306,7 @@ function updateProfile(name, email, mobile_number, hashedPassword, password, id,
 
 function adminupdateuser(req, res) {
     try {
-        const { name, email, mobile_number, password, id, request_update } = req.body;
+        const {  email, mobile_number, id, request_update } = req.body;
 
         console.log(email);
         if (!isValidEmail(email)) {
@@ -334,7 +334,7 @@ function adminupdateuser(req, res) {
                 }
                 var hashedPassword = user.password;
 
-                const sql = 'UPDATE landsharein_db.tbl_user SET  mobile_number=?, password=?, password_bcrypt=?,request_update="0", email=? ' + image + ' WHERE id= ?'
+                const sql = 'UPDATE landsharein_db.tbl_user SET  mobile_number=?,request_update="0", email=? ' + image + ' WHERE id= ?'
 
                 connection.query(
                     sql, [mobile_number, hashedPassword, password, email, id],

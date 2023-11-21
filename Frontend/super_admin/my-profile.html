@@ -124,7 +124,7 @@
                         <div class="menu-title">Sold Property</div>
                     </a>
                 </li>
-                
+
                 <li>
                     <a href="my-profile.html">
                         <div class="parent-icon">
@@ -133,15 +133,15 @@
                         <div class="menu-title">My Profile</div>
                     </a>
                 </li>
-                <!-- <li>
-                <a href="new-enquiries.html">
-                  <div class="parent-icon">
-                    <img src="../assets/images/stocktrnsfericon.png" alt="" />
-                  </div>
-                  <div class="menu-title">New Enquiries</div>
-                </a>
-              </li>
-              <li>
+                <li>
+                    <a href="new-enquiries.html">
+                        <div class="parent-icon">
+                            <img src="../assets/images/stocktrnsfericon.png" alt="" />
+                        </div>
+                        <div class="menu-title">New Enquiries</div>
+                    </a>
+                </li>
+                <!--  <li>
                 <a href="new-enquiries.html">
                   <div class="parent-icon">
                     <img src="../assets/images/stocktrnsfericon.png" alt="" />
@@ -720,7 +720,7 @@
             type: 'GET',
             dataType: 'json',
             success: function (data) {
-            
+
                 $('#nameshow').text(data.message.name);
                 $('#name').val(data.message.name);
                 $('#email').val(data.message.email);
@@ -789,9 +789,9 @@
         });
 
         function openMyProfile() {
-        // You can use window.location.href to navigate to a new page
-        window.location.href = "my-profile.html";
-    }
+            // You can use window.location.href to navigate to a new page
+            window.location.href = "my-profile.html";
+        }
     </script>
 </body>
 

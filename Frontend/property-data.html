@@ -48,9 +48,9 @@
   <script>
     let checkAdmintoken = localStorage.getItem('token')
     if (checkAdmintoken == null) {
-        location = "https://landshareindia.com/web/"
+      location = "https://landshareindia.com/web/"
     }
-</script>
+  </script>
   <div id="spinner"
     class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
     <div class="spinner-grow text-primary" role="status"></div>
@@ -342,13 +342,15 @@
       <div class="col-md-6 mb-3">
         <label for="" class="col-form-label">Latest Encumbrance Certificate (Pdf/Jpeg):<span
             class="required">*</span></label>
-        <input class="form-control" type="file" id="formFileMultiple" accept=".png, .pdf, .Jpeg" required>
+        <input class="form-control" type="file" id="latest_encumbrance" name="latest_encumbrance"
+          accept=".png, .pdf, .Jpeg" >
       </div>
 
       <div class="col-md-6 mb-3">
         <label for="" class="col-form-label">Pahani / Khata Extract (PDF/Jpeg only):<span
             class="required">*</span></label>
-        <input class="form-control" type="file" id="formFileMultiple" accept=".png, .pdf, .Jpeg" required>
+        <input class="form-control" type="file" id="khata_extract" name="khata_extract" accept=".png, .pdf, .Jpeg"
+          >
       </div>
 
       <div class="col-md-6">
@@ -614,6 +616,8 @@
       const acre = $('#acre').val();
       const cents = $('#cents').val();
       const guntas = $('#guntas').val();
+      const latestEncumbrance = $('#latest_encumbrance');
+      const khataExtract = $('#khata_extract');
       // const sizeoflandmark = acre + ' acre ' + guntas + ' guntas ' + cents + ' cents';
       const sizeoflandmark =
         (acre ? acre + ' acre ' : '0 acre ') +
@@ -664,6 +668,8 @@
       formData.append('Survey_no', Survey_no);
       formData.append('Land_Facing', Land_Facing);
       formData.append('landPrice', landPrice);
+      formData.append('latest_encumbrance', latestEncumbrance);
+      formData.append('khata_extract', khataExtract);
 
       $.ajax({
         url: apiUrl + '/sellProperty',

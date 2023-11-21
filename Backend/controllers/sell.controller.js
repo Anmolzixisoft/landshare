@@ -3,7 +3,9 @@ const connection = require('../database/mysqldb')
 function sellProperty(req, res) {
 
     const { user_id, property_category_select, landPrice, mobile_number, full_address, state, city, pincode, landmark, owenership, cost_per_squre_fit, size_of_land, desciption, ownerName, Survey_no, Land_Facing } = req.body
-    const { image } = req.files
+
+    const { image, latest_encumbrance,
+        khata_extract, } = req.files
     // const file = image[0].filename
     if (!image) {
         return res.send({ error: "inter image" })
@@ -12,8 +14,13 @@ function sellProperty(req, res) {
     image.forEach((element) => {
         imageArray.push(element.filename)
     })
-
-    const sql = `INSERT INTO landsharein_db.tbl_sell_property (user_id, property_category_select, mobile_number, full_address, state, city, pincode, landmark, owenership, cost_per_squre_fit,landPrice, size_of_land, desciption,ownerName,Survey_no,Land_Facing,images) VALUES (?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,? ,?)`;
+    if (latest_encumbrance != undefined) {
+        var Latest_Encumbrance = latest_encumbrance[0].filename;
+    }
+    if (khata_extract != undefined) {
+        var Khata_Extract = khata_extract[0].filename;
+    }
+    const sql = `INSERT INTO landsharein_db.tbl_sell_property (user_id, property_category_select, mobile_number, full_address, state, city, pincode, landmark, owenership, cost_per_squre_fit,landPrice, size_of_land, desciption,ownerName,Survey_no,Land_Facing,images,Latest_Encumbrance,Khata_Extract) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     const values = [
         user_id,
         property_category_select,
@@ -32,8 +39,9 @@ function sellProperty(req, res) {
         Survey_no,
         Land_Facing,
         JSON.stringify(imageArray),
+        Latest_Encumbrance,
+        Khata_Extract,
     ];
-
     connection.query(sql, values, (err, result) => {
         if (err) {
             console.error('Database insertion error: ' + err.message);
@@ -90,13 +98,18 @@ function getPropertyById(req, res) {
         }
         else {
             result.forEach(element => {
-
                 if (typeof element.images == 'string') {
                     element.images = element.images.split(',').map(image => {
                         return `http://192.168.29.179:5500/Backend/public/${image.trim().replace(/["[\]]/g, '')}`;
                     });
                 } else if (Array.isArray(element.images)) {
                     element.images = element.images.map(image => `http://192.168.29.179:5500/Backend/public/${image}`);
+                }
+                if (typeof element.Latest_Encumbrance == 'string') {
+                    element.Latest_Encumbrance = `http://192.168.29.179:5500/Backend/public/${element.Latest_Encumbrance}`
+                }
+                if (typeof element.Khata_Extract == 'string') {
+                    element.Khata_Extract = `http://192.168.29.179:5500/Backend/public/${element.Khata_Extract}`
                 }
 
                 if (element.status == null) {
@@ -111,6 +124,10 @@ function getPropertyById(req, res) {
 function updateProperty(req, res) {
     const { id, user_id, property_category_select, landPrice, mobile_number, full_address, state, city, pincode, landmark, cost_per_squre_fit, size_of_land, desciption, ownerName, Survey_no, Land_Facing } = req.body;
     const { image } = req.files
+    var image1 = '';
+    if (typeof latest_encumbrance !== 'undefined') {
+        image1 = '`Image` = "' + latest_encumbrance[0].filename + '" ';
+    }
 
     const imageArray = []
     image.forEach((element) => {
@@ -223,17 +240,26 @@ function getsortlist(req, res) {
 
 function buyInfo(req, res) {
     const { user_id, property_id } = req.body
-    const sql = 'INSERT INTO landsharein_db.tbl_buy (user_id, property_id) VALUES (?,?)';
-    const values = [user_id, property_id];
-    connection.query(sql, values, (err, result) => {
-        if (err) {
-            console.log(err, 'err');
-            return res.send({ err: err })
+    connection.query('SELECT * FROM landsharein_db.tbl_buy WHERE user_id = "' + user_id + '" AND property_id = "' + property_id + '"', (error, findBuyer) => {
+        if (error) {
+            return res.send({ err: error })
         }
-        else {
-            return res.send({ message: " added" })
+        if (findBuyer[0] = undefined) {
+            const sql = 'INSERT INTO landsharein_db.tbl_buy (user_id, property_id) VALUES (?,?)';
+            const values = [user_id, property_id];
+            connection.query(sql, values, (err, result) => {
+                if (err) {
+                    return res.send({ err: err })
+                }
+                else {
+                    return res.send({ message: " added" })
+                }
+            })
+        } else {
+            return res.send({ err: "your are already enquire this property" })
         }
     })
+
 }
 
 function getsortlistByID(req, res) {
@@ -274,6 +300,23 @@ landsharein_db.tbl_sell_property.user_id = ${user_id} AND landsharein_db.tbl_buy
 
 }
 
+const enquireproperty = (req, res) => {
+    try {
+        connection.query('SELECT landsharein_db.tbl_sell_property.id AS sell_property_id, landsharein_db.tbl_sell_property.*, landsharein_db.tbl_user.*, owner_user.name AS owner_name, owner_user.mobile_number AS owner_number FROM landsharein_db.tbl_buy LEFT JOIN landsharein_db.tbl_sell_property ON landsharein_db.tbl_buy.property_id = landsharein_db.tbl_sell_property.id LEFT JOIN landsharein_db.tbl_user ON landsharein_db.tbl_buy.user_id = landsharein_db.tbl_user.id LEFT JOIN landsharein_db.tbl_user AS owner_user ON landsharein_db.tbl_sell_property.user_id = owner_user.id', (error, findEnquiry) => {
+            if (error) {
+                return res.send({ error: error });
+            }
+            if (findEnquiry[0] == undefined) {
+                return res.send({ error: "not any enquires" });
+            } else {
+                return res.send({ message: findEnquiry })
+            }
+        })
+    } catch (error) {
+        return res.send({ error: error });
+    }
+}
+
 function getallproperty(req, res) {
     connection.query('select * from landsharein_db.tbl_sell_property ', (err, result) => {
         if (err) {
@@ -309,5 +352,5 @@ function updatestatus(req, res) {
         }
     })
 }
-module.exports = { sellProperty, getProperty, getPropertyById, sortlist, getsortlist, buyInfo, getsortlistByID, updateProperty, deleteProperty, sold_property, enquire, getallproperty, updatestatus }
+module.exports = { sellProperty, getProperty, getPropertyById, sortlist, getsortlist, buyInfo, getsortlistByID, updateProperty, deleteProperty, sold_property, enquire, getallproperty, updatestatus, enquireproperty }
 

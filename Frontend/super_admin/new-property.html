@@ -36,19 +36,19 @@
 </head>
 
 <body>
-   <script>
-      let checkAdmintoken = localStorage.getItem('admintoken')
-  if(checkAdmintoken == null){
-    location = "https://landshareindia.com/web/super_admin/"
-  }
-  function Logout() {
+  <script>
+    let checkAdmintoken = localStorage.getItem('admintoken')
+    if (checkAdmintoken == null) {
+      location = "https://landshareindia.com/web/super_admin/"
+    }
+    function Logout() {
       const adminToken = localStorage.getItem('admintoken');
       if (adminToken != null) {
         localStorage.removeItem('admintoken');
         window.location.href = 'http://localhost:5500/Frontend/super_admin'; // Redirect example
       }
     }
-    </script>
+  </script>
   <!--wrapper-->
   <div class="wrapper">
     <!--sidebar wrapper -->
@@ -87,7 +87,7 @@
             <div class="parent-icon">
               <img src="../assets/images/tssicon.png" alt="" />
             </div>
-            <div class="menu-title">Request  User Update  </div>
+            <div class="menu-title">Request User Update </div>
           </a>
         </li>
 
@@ -102,12 +102,12 @@
         </li> -->
         <li>
           <a href="list-property.html">
-              <div class="parent-icon">
-                  <img src="../assets/images/stocktrnsfericon.png" alt="" />
-              </div>
-              <div class="menu-title">List Property</div>
+            <div class="parent-icon">
+              <img src="../assets/images/stocktrnsfericon.png" alt="" />
+            </div>
+            <div class="menu-title">List Property</div>
           </a>
-      </li>
+        </li>
         <li>
           <a href="new-property.html">
             <div class="parent-icon">
@@ -118,49 +118,49 @@
         </li>
         <li>
           <a href="appreov-property.html">
-              <div class="parent-icon">
-                  <img src="../assets/images/stocktrnsfericon.png" alt="" />
-              </div>
-              <div class="menu-title">Approved Property</div>
+            <div class="parent-icon">
+              <img src="../assets/images/stocktrnsfericon.png" alt="" />
+            </div>
+            <div class="menu-title">Approved Property</div>
           </a>
-      </li>
-      <li>
+        </li>
+        <li>
           <a href="reject-propert.html">
-              <div class="parent-icon">
-                  <img src="../assets/images/stocktrnsfericon.png" alt="" />
-              </div>
-              <div class="menu-title">Rejected Property</div>
+            <div class="parent-icon">
+              <img src="../assets/images/stocktrnsfericon.png" alt="" />
+            </div>
+            <div class="menu-title">Rejected Property</div>
           </a>
-      </li>
+        </li>
 
 
-      <li>
+        <li>
 
           <a href="sold-propert.html">
-              <div class="parent-icon">
-                  <img src="../assets/images/stocktrnsfericon.png" alt="" />
-              </div>
-              <div class="menu-title">Sold Property</div>
+            <div class="parent-icon">
+              <img src="../assets/images/stocktrnsfericon.png" alt="" />
+            </div>
+            <div class="menu-title">Sold Property</div>
           </a>
-      </li>
-      <li>
-        <a href="my-profile.html">
-          <div class="parent-icon">
-            <img src="../assets/images/stocktrnsfericon.png" alt="" />
-          </div>
-          <div class="menu-title">My Profile</div>
-        </a>
-      </li>
-      <!-- <li>
+        </li>
+        <li>
+          <a href="my-profile.html">
+            <div class="parent-icon">
+              <img src="../assets/images/stocktrnsfericon.png" alt="" />
+            </div>
+            <div class="menu-title">My Profile</div>
+          </a>
+        </li>
+        <li>
 
           <a href="new-enquiries.html">
-              <div class="parent-icon">
-                  <img src="../assets/images/stocktrnsfericon.png" alt="" />
-              </div>
-              <div class="menu-title">New Enquiries</div>
+            <div class="parent-icon">
+              <img src="../assets/images/stocktrnsfericon.png" alt="" />
+            </div>
+            <div class="menu-title">New Enquiries</div>
           </a>
-      </li>
-      <li>
+        </li>
+        <!--<li>
           <a href="new-enquiries.html">
               <div class="parent-icon">
                   <img src="../assets/images/stocktrnsfericon.png" alt="" />
@@ -597,7 +597,7 @@
           <div class="user-box dropdown px-3">
             <a class="d-flex align-items-center nav-link dropdown-toggle gap-3 dropdown-toggle-nocaret" href="#"
               role="button" data-bs-toggle="dropdown" aria-expanded="false">
-             <img id="blah1" src="" class="user-img" alt="user avatar" onclick="openMyProfile()" />
+              <img id="blah1" src="" class="user-img" alt="user avatar" onclick="openMyProfile()" />
               <div class="user-info">
                 <p class="user-name mb-0">Admin</p>
                 <!-- <p class="designattion mb-0">Web Designer</p> -->
@@ -904,30 +904,30 @@
 
     window.onload = fetchData;
     $.ajax({
-            url: apiUrl + '/getadmin', // Replace with your API endpoint
-            type: 'GET',
-            dataType: 'json',
-            success: function (data) {
-            
-                $('#nameshow').text(data.message.name);
-                $('#name').val(data.message.name);
-                $('#email').val(data.message.email);
-                $('#userid').val(data.message.User_ID);
-                $('#password').val(data.message.password);
-                $('#pass1').val(data.message.password);
-                $('#id').val(data.message.id);
-                var imgSrc = data.message.profile_image;
-                $('#blah').attr('src', imgSrc);
-                $('#blah1').attr('src', imgSrc);
-            },
-            error: function (error) {
-                console.error('Error fetching data:', error);
-            }
-        });
+      url: apiUrl + '/getadmin', // Replace with your API endpoint
+      type: 'GET',
+      dataType: 'json',
+      success: function (data) {
 
-        function openMyProfile() {
-        // You can use window.location.href to navigate to a new page
-        window.location.href = "my-profile.html";
+        $('#nameshow').text(data.message.name);
+        $('#name').val(data.message.name);
+        $('#email').val(data.message.email);
+        $('#userid').val(data.message.User_ID);
+        $('#password').val(data.message.password);
+        $('#pass1').val(data.message.password);
+        $('#id').val(data.message.id);
+        var imgSrc = data.message.profile_image;
+        $('#blah').attr('src', imgSrc);
+        $('#blah1').attr('src', imgSrc);
+      },
+      error: function (error) {
+        console.error('Error fetching data:', error);
+      }
+    });
+
+    function openMyProfile() {
+      // You can use window.location.href to navigate to a new page
+      window.location.href = "my-profile.html";
     }
   </script>
 </body>

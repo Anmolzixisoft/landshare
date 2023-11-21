@@ -164,23 +164,28 @@
                         <input type="text" name="name" class="name" id="nameInput" placeholder=" Name"
                             onkeypress="return isCharacterKey(event)" required pattern="[A-Za-z  ]+" maxlength="80">
                     </div>
-
-
+                    <!-- 
+                    <div class="col-9">
+                        <input type="text" id="phone" class="form-control" aria-describedby="passwordHelpInline"
+                          onkeypress="return isNumberKey(event)" required pattern="[0-9]+" maxlength="10">
+                        <span class="error-message" id="phone-error"></span>
+            
+                      </div> -->
                     <label for="phone">Your Phone Number: <span class="required">*</span> </label>
                     <div class="pass-reset" onclick="activeInput(this)">
-                        <input type="number" name="phone" class="phone" id="phoneInput"
-                            placeholder="Enter Your Phone Number" min="0">
+                        <input type="number" name="phoneInput" class="phone" id="phoneInput"
+                            placeholder="Enter Your Phone Number" required maxlength="10">
                     </div>
                     <label for="email">Email Address: <span class="required">*</span> </label>
                     <div class="pass-reset" onclick="activeInput(this)">
-                        <input type="email" name="email" class="email" id="emailInput1" placeholder="name@mail.com"
+                        <input type="email" name="emailInput1" class="email" id="emailInput1" placeholder="name@mail.com"
                             required oninput="validateEmail()">
                         <div class="error-message"></div>
 
                     </div>
                     <label for="password">Password: <span class="required">*</span> </label>
                     <div class="pass-reset" onclick="activeInput(this)">
-                        <input type="password" class="password" name="password" id="password1" placeholder="**********"
+                        <input type="password" class="password" name="password1" id="password1" placeholder="**********"
                             required>
                     </div>
                     <label for="re-password">Re-Password: <span class="required">*</span> </label>
@@ -270,26 +275,27 @@
                     </p>
 
                 </div>
-          <div class="col-lg-3 col-md-6">
-          <h3 class="text-light mb-4">Quick Links</h3>
-          <p><a href="index.html" style="color:#fff !important;">Home</a><br>
-            <a href="about.html" style="color:#fff !important;">Know Us</a><br>
-            <a href="what-we-offer.html" style="color:#fff !important;">What
-              We Do</a><br>
-            <a href="investing-opportunity.html" style="color:#fff !important;">Investment Opportunitiess</a><br>
-            <a href="media.html" style="color:#fff !important;">Press
-              Room</a><br>
-            <a href="clients.html" style="color:#fff !important;">Our
-              Clients</a><br>
-            <a href="contact.html" style="color:#fff !important;">Contact Us</a><br>
-            <a href="#" style="color:#fff !important;">FAQ</a><br>
-            <a href="privacy-policy.html" style="color:#fff !important;">Privacy Policy</a><br>
-            <a href="disclaimer.html" style="color:#fff !important;">Disclaimer</a><br>
-            <a href="#" style="color:#fff !important;">Sitemap</a>
-          </p>
+                <div class="col-lg-3 col-md-6">
+                    <h3 class="text-light mb-4">Quick Links</h3>
+                    <p><a href="index.html" style="color:#fff !important;">Home</a><br>
+                        <a href="about.html" style="color:#fff !important;">Know Us</a><br>
+                        <a href="what-we-offer.html" style="color:#fff !important;">What
+                            We Do</a><br>
+                        <a href="investing-opportunity.html" style="color:#fff !important;">Investment
+                            Opportunitiess</a><br>
+                        <a href="media.html" style="color:#fff !important;">Press
+                            Room</a><br>
+                        <a href="clients.html" style="color:#fff !important;">Our
+                            Clients</a><br>
+                        <a href="contact.html" style="color:#fff !important;">Contact Us</a><br>
+                        <a href="#" style="color:#fff !important;">FAQ</a><br>
+                        <a href="privacy-policy.html" style="color:#fff !important;">Privacy Policy</a><br>
+                        <a href="disclaimer.html" style="color:#fff !important;">Disclaimer</a><br>
+                        <a href="#" style="color:#fff !important;">Sitemap</a>
+                    </p>
 
 
-        </div>
+                </div>
             </div>
         </div>
         <div id="fb-root"></div>
@@ -537,7 +543,14 @@
                         });
                     }
                 });
+            } function isNumberKey(evt) {
+                var charCode = (evt.which) ? evt.which : evt.keyCode;
+                if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                    return false;
+                }
+                return true;
             }
+
 
             $('#sendotpbutton').click(function (e) {
                 e.preventDefault();
@@ -665,7 +678,7 @@
             Opportunity.html('<a href="my-uploads.html" class="nav-item nav-link "> My Listings</a>')
             Sortlist.html('<a href="shortlisted-properties.html" class="nav-item nav-link "> My Shortlists</a>')
             Support.html('<a href="my-profile.html" class="nav-item nav-link"> Support</a>')
-         sellproperty.html('<a href="property-data.html" class="nav-item nav-link ">Sell Property</a>')
+            sellproperty.html('<a href="property-data.html" class="nav-item nav-link ">Sell Property</a>')
             circle.html('<a href="my-profile.html" id="circle" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2"></a>')
         }
         else {
@@ -678,6 +691,46 @@
             Connect.html(' <a href="contact.html" class="nav-item nav-link">Connect</a>')
         }
 
+
+
+        jQuery(document).ready(function () {
+      jQuery("#register").validate({
+        rules: {
+            phoneInput: {
+            required: true
+          },
+          emailInput1: {
+            required: true
+          },
+          password1: {
+            required: true
+          },
+          number1: {
+            required: true
+          }
+
+        },
+        messages: {
+            phoneInput: {
+            required: "Please enter Name"
+          },
+          emailInput1: {
+            required: "Please enter Email"
+          },
+          password1: {
+            required: "Please enter Password"
+          }
+          ,
+          number1: {
+            required: "Please enter Contact Number"
+          }
+        },
+
+        errorClass: "error",
+        errorElement: "div",
+      });
+
+    });
     </script>
 </body>
 

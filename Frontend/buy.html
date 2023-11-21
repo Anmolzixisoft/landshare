@@ -269,6 +269,31 @@
             return urlParams.get(name);
         }
 
+
+        function formatNumberToIndianFormat(number) {
+            var croreValue, formattedValue;
+
+            // Check if the number is in Crores or Lakhs range
+            if (number >= 10000000) {
+                // Convert to Crores
+                croreValue = (number / 10000000).toFixed(2);
+                formattedValue = "₹" + croreValue + " Cr.";
+            } else if (number >= 100000) {
+                // Convert to Lakhs
+                var lakhValue = (number / 100000).toFixed(2);
+                formattedValue = "₹" + lakhValue + " Lakh";
+            } else {
+                // Display the number as is
+                formattedValue = "₹" + number;
+            }
+
+            return formattedValue;
+        }
+
+
+
+
+
         function displayPropertyDetails() {
             const propertyId = getQueryParameter("id");
             if (propertyId) {
@@ -303,6 +328,15 @@
         }
         const propertyListingsContainer = document.getElementById('property-listings');
         function createPropertyListing(property) {
+
+
+
+            var formattedResult = formatNumberToIndianFormat(property.landPrice);
+
+
+
+
+
             const mapURL = `https://maps.google.com/maps?q=${property.city},${property.state}&t=&z=13&ie=UTF8&iwloc=&output=embed`;
 
 
@@ -328,7 +362,7 @@
                     </div>
                 </div>
                 <div class="product-cnt col-lg-3  ">
-                    <h3>${property.landPrice}</h3>
+                    <h3>${formattedResult}</h3>
                     <p>${property.cost_per_squre_fit}</p>
                     <table >
                         <tr>
@@ -416,6 +450,15 @@
                                 text: `For Showing Intrest,
                  our team will get back to you within 24 hours`,
                                 icon: 'info', // You can use 'info', 'success', 'warning', 'error', etc.
+                                confirmButtonText: 'OK',
+                            }).then(() => {
+                                window.location.href = 'index.html'
+                            })
+                        }
+                        else {
+                            Swal.fire({
+                                text: `${data.err}`,
+                                icon: 'warning', // You can use 'info', 'success', 'warning', 'error', etc.
                                 confirmButtonText: 'OK',
                             }).then(() => {
                                 window.location.href = 'index.html'

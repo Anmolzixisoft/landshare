@@ -88,7 +88,7 @@
             <div class="parent-icon">
               <img src="../assets/images/tssicon.png" alt="" />
             </div>
-            <div class="menu-title">Request  User Update  </div>
+            <div class="menu-title">Request User Update </div>
           </a>
         </li>
         <li class="menu-label">Property</li>
@@ -149,7 +149,7 @@
             <div class="menu-title">My Profile</div>
           </a>
         </li>
-        <!-- <li>
+        <li>
           <a href="new-enquiries.html">
             <div class="parent-icon">
               <img src="../assets/images/stocktrnsfericon.png" alt="" />
@@ -157,7 +157,7 @@
             <div class="menu-title">New Enquiries</div>
           </a>
         </li>
-        <li>
+        <!-- <li>
           <a href="new-enquiries.html">
             <div class="parent-icon">
               <img src="../assets/images/stocktrnsfericon.png" alt="" />
@@ -278,7 +278,7 @@
           <div class="user-box dropdown px-3">
             <a class="d-flex align-items-center nav-link dropdown-toggle gap-3 dropdown-toggle-nocaret" href="#"
               role="button" data-bs-toggle="dropdown" aria-expanded="false">
-             <img id="blah1" src="" class="user-img" alt="user avatar" onclick="openMyProfile()" />
+              <img id="blah1" src="" class="user-img" alt="user avatar" onclick="openMyProfile()" />
               <div class="user-info">
                 <p class="user-name mb-0">Admin</p>
                 <!-- <p class="designattion mb-0">Web Designer</p> -->
@@ -444,7 +444,7 @@
               title: 'Success',
               text: data.message,
             }).then(() => {
-             location.reload()
+              location.reload()
             })
           } else {
             Swal.fire({
@@ -464,27 +464,96 @@
 
 
     }
-   
-   
-   
+
+
+    function deleteElement(propertyId, userId) {
+      var api = apiUrl + '/delete_proprty';
+
+      var data = {
+        propertyId: propertyId,
+        user_id: userId
+      };
+
+      $.ajax({
+        type: 'POST',
+        url: api,
+        contentType: 'application/json',
+        data: JSON.stringify(data)
+      }).done(function (responseData) {
+        if (responseData.message) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: responseData.message
+          }).then(function () {
+            location.reload();
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: responseData.error
+          });
+        }
+      }).fail(function (error) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: error
+        });
+      });
+    }
     function createPropertyListing(property) {
 
-
+      console.log(property);
       let approveButtonHTML = '';
       let disapproveButtonHTML = '';
+      let latestEncumbranceHtml = '';
+      let latestKhata_Extract = '';
 
-      if (property.property_status == 1) {
+      if (property.Latest_Encumbrance != null) {
+        const partsLatest_Encumbrance = property.Latest_Encumbrance.split(".");
+        // Get the last part of the URL (after the last dot), which is the file extension
+        const extension_Latest_Encumbrance = partsLatest_Encumbrance[partsLatest_Encumbrance.length - 1];
+
+        if (extension_Latest_Encumbrance === 'pdf') {
+          latestEncumbranceHtml = `<embed src="${property.Latest_Encumbrance}" type="application/pdf" width="100%" height="300px" />`
+        } else {
+          latestEncumbranceHtml = `<a class="image-popup-vertical-fit" href=${property.Latest_Encumbrance}>
+                      <img src=${property.Latest_Encumbrance}  />
+                  </a>`
+        }
+      } else {
+        latestEncumbranceHtml = "Not Uploaded"
+      }
+
+      if (property.Khata_Extract != null) {
+        const partsKhata_Extract = property.Khata_Extract.split(".");
+        // Get the last part of the URL (after the last dot), which is the file extension
+        const extension_Khata_Extract = partsKhata_Extract[partsKhata_Extract.length - 1];
+
+        if (extension_Khata_Extract === 'pdf') {
+          latestKhata_Extract = `<embed src="${property.Khata_Extract}" type="application/pdf" width="100%" height="300px" />`
+        } else {
+          latestKhata_Extract = `<a class="image-popup-vertical-fit" href=${property.Khata_Extract}>
+                      <img src=${property.Khata_Extract} />
+                  </a>`
+        }
+      } else {
+        latestKhata_Extract = "Not Uploaded"
+      }
+
+      if (property.property_status == 0) {
         // Property is approved
-        approveButtonHTML = '<button class="delvr-button1" disabled>Approved</button>';
-      } else if (property.property_status == 0) {
+        approveButtonHTML = '<button class="delvr-button" onclick="changestatus(' + property.id + ', 1)">Approve</button>';
+      } else if (property.property_status == 1) {
         // Property is disapproved
-        disapproveButtonHTML = '<button class="nondelvr-button1" disabled>Disapproved</button>';
+        disapproveButtonHTML = '<button class="nondelvr-button" onclick="changestatus(' + property.id + ', 0)">Disapprove</button>';
       } else {
         // Neither approved nor disapproved
         approveButtonHTML = '<button class="delvr-button" onclick="changestatus(' + property.id + ', 1)">Approve</button>';
         disapproveButtonHTML = '<button class="nondelvr-button" onclick="changestatus(' + property.id + ', 0)">Disapprove</button>';
       }
-      console.log(property.images[0], 'property');
       const container = document.getElementById('property-listings')
       const mapURL = `https://maps.google.com/maps?q=${property.city},${property.state}&t=&z=13&ie=UTF8&iwloc=&output=embed`;
       let imageGalleryHTML = '<div class="col-md-12 mb-3"><h6>Property Images:</h6><div class="img-gallery-magnific">';
@@ -560,7 +629,14 @@
                                   <th scope="row">Pincode</th>
                                   <td>${property.pincode}</td>
                                 </tr>
-
+                                <tr>
+                                  <th scope="row">Latest Encumbrance</th>
+                                  <td>${latestEncumbranceHtml}</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Khata Extract</th>
+                                  <td>${latestKhata_Extract}</td>
+                                </tr>
                               <tr>
                                   <th scope="row">Location in map</th>
                                   <td>
@@ -577,12 +653,12 @@
                           </div>
                           ${approveButtonHTML}
         ${disapproveButtonHTML}
+      
+                  <button class="nondelvr-button" onclick="deleteElement(${property.id},${property.user_id})" style="background-color: red;">Delete</button>
                       </div>
-
 
                    
       `
-
 
       $('.image-popup-vertical-fit').magnificPopup({
         type: 'image',
@@ -595,33 +671,33 @@
 
     window.onload = displayPropertyDetails;
     $.ajax({
-            url: apiUrl + '/getadmin', // Replace with your API endpoint
-            type: 'GET',
-            dataType: 'json',
-            success: function (data) {
-            
-                $('#nameshow').text(data.message.name);
-                $('#name').val(data.message.name);
-                $('#email').val(data.message.email);
-                $('#userid').val(data.message.User_ID);
-                $('#password').val(data.message.password);
-                $('#pass1').val(data.message.password);
-                $('#id').val(data.message.id);
-                var imgSrc = data.message.profile_image;
-                $('#blah').attr('src', imgSrc);
-                $('#blah1').attr('src', imgSrc);
-            },
-            error: function (error) {
-                console.error('Error fetching data:', error);
-            }
-        });
+      url: apiUrl + '/getadmin', // Replace with your API endpoint
+      type: 'GET',
+      dataType: 'json',
+      success: function (data) {
 
-        function openMyProfile() {
-        // You can use window.location.href to navigate to a new page
-        window.location.href = "my-profile.html";
+        $('#nameshow').text(data.message.name);
+        $('#name').val(data.message.name);
+        $('#email').val(data.message.email);
+        $('#userid').val(data.message.User_ID);
+        $('#password').val(data.message.password);
+        $('#pass1').val(data.message.password);
+        $('#id').val(data.message.id);
+        var imgSrc = data.message.profile_image;
+        $('#blah').attr('src', imgSrc);
+        $('#blah1').attr('src', imgSrc);
+      },
+      error: function (error) {
+        console.error('Error fetching data:', error);
+      }
+    });
+
+    function openMyProfile() {
+      // You can use window.location.href to navigate to a new page
+      window.location.href = "my-profile.html";
     }
   </script>
-  
+
 </body>
 
 </html>
