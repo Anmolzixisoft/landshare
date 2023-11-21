@@ -503,6 +503,50 @@
         });
       });
     }
+
+    function updatePropertyStatus(currentPropertyId, currentUserId) {
+
+      const data = {
+        propertyId: currentPropertyId,
+        user_id: currentUserId,
+        sold_status: '1'
+      };
+
+      const api = apiUrl + '/sold_property';
+      $.ajax({
+        type: 'POST',
+        url: api,
+        contentType: 'application/json',
+        data: JSON.stringify(data)
+      }).done(function (responseData) {
+        if (responseData.message) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: responseData.message
+          }).then(function () {
+            closeModal();
+            location.reload();
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: responseData.error
+          });
+        }
+      }).fail(function (error) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: error
+        });
+      });
+    }
+
+
+
+
     function createPropertyListing(property) {
 
       console.log(property);
@@ -510,7 +554,17 @@
       let disapproveButtonHTML = '';
       let latestEncumbranceHtml = '';
       let latestKhata_Extract = '';
+      let soldproperty = ''
 
+      console.log(property.sold == 1, 'property.sold');
+      if (property.sold == 1) {
+        // Property is disapproved
+        soldproperty = '<button class="nondelvr-button1" disabled style="background-color: #ca8442">Sold Out property</button>';
+      } else {
+        // Neither approved nor disapproved
+        soldproperty = `<button class="nondelvr-button" onclick="updatePropertyStatus(${property.id},${property.user_id})" style="background-color: #384119;">Mark Sold Out</button> </div>`
+
+      }
       if (property.Latest_Encumbrance != null) {
         const partsLatest_Encumbrance = property.Latest_Encumbrance.split(".");
         // Get the last part of the URL (after the last dot), which is the file extension
@@ -655,7 +709,9 @@
         ${disapproveButtonHTML}
       
                   <button class="nondelvr-button" onclick="deleteElement(${property.id},${property.user_id})" style="background-color: red;">Delete</button>
-                      </div>
+                  
+                 
+                      ${soldproperty}
 
                    
       `

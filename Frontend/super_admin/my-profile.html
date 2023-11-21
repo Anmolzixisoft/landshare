@@ -637,7 +637,7 @@
                                     <p>Name</p>
                                     <div class="form-floating">
                                         <input type="text" class="form-control" id="name" name="name" placeholder="Name"
-                                            onkeypress="return isCharacterKey(event)" required pattern="[A-Za-z  ]+"
+                                            onkeypress="return isCharacterKey(event)" pattern="[A-Za-z  ]+"
                                             maxlength="80">
                                         <label for="subject">Name</label>
                                     </div>
@@ -652,7 +652,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <p>Chnage Password</p>
+                                    <p>Change Password</p>
                                     <div class="form-floating">
                                         <input type="password" class="form-control" id="password" name="password"
                                             placeholder="Email">
@@ -710,6 +710,8 @@
     <script src="../utils.js"></script>
     <!--app JS-->
     <script src="../assets/js/app.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+
     <script>
         new PerfectScrollbar(".app-container");
 
@@ -753,7 +755,64 @@
             }
         }
 
-        $('#update').submit(function (e) {
+        jQuery.validator.addMethod("passwordPattern", function (value, element) {
+            return this.optional(element) || /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-])/.test(value);
+        }, "Password must contain at least one uppercase letter and one special character.");
+
+        jQuery(document).ready(function () {
+            jQuery("#update").validate({
+                rules: {
+                    name: {
+                        required: true
+                    },
+                    email: {
+                        required: true
+                    },
+                    password: {
+                        required: true,
+                        minlength: 6,
+                        maxlength: 12,
+                        passwordPattern: true,
+                    },
+                    pass1: {
+                        required: true,
+                        equalTo: "#password"
+                    }
+
+                },
+                messages: {
+                    name: {
+                        required: "Please enter Name"
+                    },
+                    email: {
+                        required: "Please enter Email"
+                    },
+                    password: {
+                        required: "Please Enter Password",
+                        minlength: "Password must be at least 6 characters long",
+                        maxlength: "Password cannot exceed 12 characters",
+                        passwordPattern: "Password must contain at least one uppercase letter and one special character.",
+                    },
+                    pass1: {
+                        required: "Please enter Confirm Password",
+                        equalTo: "Passwords do not match"
+                    }
+
+                },
+
+                errorClass: "error",
+                errorElement: "div",
+            });
+
+        });
+
+
+
+
+
+
+        // $('#update').submit(function (e) {
+        $(document).on('submit', '#update', function (e) {
             e.preventDefault();
 
             $.ajax({

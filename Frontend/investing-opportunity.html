@@ -3,12 +3,12 @@
 
 <head>
     <script src="utils.js"></script>
-    <script>
+    <!-- <script>
         let checkAdmintoken = localStorage.getItem('token')
         if (checkAdmintoken == null) {
             location = "https://landshareindia.com/web/"
         }
-    </script>
+    </script> -->
     <meta charset="utf-8">
     <title>Agrocorp- Landshare India (P) Limited.</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -397,11 +397,31 @@
                 });
 
         }
+        function formatNumberToIndianFormat(number) {
+            var croreValue, formattedValue;
 
+            // Check if the number is in Crores or Lakhs range
+            if (number >= 10000000) {
+                // Convert to Crores
+                croreValue = (number / 10000000).toFixed(2);
+                formattedValue = "₹" + croreValue + " Cr.";
+            } else if (number >= 100000) {
+                // Convert to Lakhs
+                var lakhValue = (number / 100000).toFixed(2);
+                formattedValue = "₹" + lakhValue + " Lakh";
+            } else {
+                // Display the number as is
+                formattedValue = "₹" + number;
+            }
+
+            return formattedValue;
+        }
 
         var propertyListingsContainer = $('#property-listings');
 
         function createPropertyListing(property) {
+            var formattedResult = formatNumberToIndianFormat(property.landPrice);
+            console.log(property);
             const container = document.createElement('div');
             container.classList.add('product-inner', 'mb-5', 'col-md-7', 'mx-auto', 'g-5');
             container.innerHTML = `
@@ -414,9 +434,9 @@
             </div>
 
         <div class="product-cnt col-md-8 col-12">
-            <p style="font-size:18px;">${property.landmark}</p>
+            <p style="font-size:18px;">${property.total_landsqft}  Sq-ft ${property.property_category_select}  For Sale in ${property.city} , ${property.state}</p>
             <p style="font-size:14px;">
-                Residential Plots - ${property.cost_per_squre_fit
+                Residential Plots - ${formattedResult
                 } <br>
                 Property Size: ${property.size_of_land}<br>
                 Type: ${property.property_category_select}

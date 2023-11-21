@@ -53,9 +53,9 @@
   <script>
     let checkAdmintoken = localStorage.getItem('token')
     if (checkAdmintoken == null) {
-        location = "https://landshareindia.com/web/"
+      location = "https://landshareindia.com/web/"
     }
-</script>
+  </script>
   <div id="spinner"
     class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
     <div class="spinner-grow text-primary" role="status"></div>
@@ -416,7 +416,7 @@
             <a href="clients.html" style="color:#fff !important;">Our
               Clients</a><br>
             <a href="contact.html" style="color:#fff !important;">Contact Us</a><br>
-            <a href="#" style="color:#fff !important;">FAQ</a><br>
+            <a href="about.html" style="color:#fff !important;">FAQ</a><br>
             <a href="privacy-policy.html" style="color:#fff !important;">Privacy Policy</a><br>
             <a href="disclaimer.html" style="color:#fff !important;">Disclaimer</a><br>
             <a href="#" style="color:#fff !important;">Sitemap</a>
@@ -641,9 +641,9 @@
 
       // Create the sizeoflandmark string
       const sizeoflandmark =
-        (acre ? acre + ' acre ' : '0 acre ') +
-        (guntas ? guntas + ' guntas ' : '0 guntas ') +
-        (cents ? cents + ' cents' : '0 cents');
+        (acre ? acre + ' acre ' : ' ') +
+        (guntas ? guntas + ' guntas ' : '') +
+        (cents ? cents + ' cents' : '');
       const landmark = $('#landmark').val();
       const imageInput = $('#formFileMultiple');
       const Survey_no = $('#SurveyNo').val();
@@ -728,7 +728,7 @@
       Opportunity.html('<a href="my-uploads.html" class="nav-item nav-link "> My Listings</a>')
       Sortlist.html('<a href="shortlisted-properties.html" class="nav-item nav-link "> My Shortlists</a>')
       Support.html('<a href="my-profile.html" class="nav-item nav-link"> Support</a>')
-   sellproperty.html('<a href="property-data.html" class="nav-item nav-link ">Sell Property</a>')
+      sellproperty.html('<a href="property-data.html" class="nav-item nav-link ">Sell Property</a>')
       circle.html('<a href="my-profile.html" id="circle" class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2"></a>')
     }
     else {

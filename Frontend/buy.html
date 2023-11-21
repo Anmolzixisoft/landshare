@@ -42,7 +42,7 @@
     <script>
         let checkAdmintoken = localStorage.getItem('token')
         if (checkAdmintoken == null) {
-            location = "https://landshareindia.com/web/"
+            location = "https://landshareindia.com/web/login-form.html"
         }
     </script>
     <!-- Spinner Start -->
@@ -332,8 +332,10 @@
 
 
             var formattedResult = formatNumberToIndianFormat(property.landPrice);
+            console.log(property);
 
 
+            const sqft = formatNumberToIndianFormat(property.cost_per_squre_fit);
 
 
 
@@ -363,7 +365,7 @@
                 </div>
                 <div class="product-cnt col-lg-3  ">
                     <h3>${formattedResult}</h3>
-                    <p>${property.cost_per_squre_fit}</p>
+                    <p>${sqft} per sqft</p>
                     <table >
                         <tr>
                             <td><b>Size of the Area</b></td>

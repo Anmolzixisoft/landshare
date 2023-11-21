@@ -1025,8 +1025,48 @@ ${property.request_update == 1 ? ' <p >Request</p>' : ''}
       });
     });
 
-    $('#editUser').submit(function (e) {
+
+
+
+    jQuery(document).ready(function () {
+      jQuery("#editUser").validate({
+        rules: {
+          // name: {
+          //   required: true
+          // },
+          email: {
+            required: true
+          },
+
+          mobile_number: {
+            required: true
+          }
+
+        },
+        messages: {
+          // name: {
+          //   required: "Please enter Name"
+          // },
+          email: {
+            required: "Please enter Email"
+          },
+
+          mobile_number: {
+            required: "Please enter Contact Number"
+          }
+        },
+
+        errorClass: "error",
+        errorElement: "div",
+      });
+
+    });
+
+
+    $(document).on('submit', '#editUser', function (e) {
       e.preventDefault();
+      // $('#editUser').submit(function (e) {
+      // e.preventDefault();
 
       $.ajax({
         url: apiUrl + '/adminupdateuser',
@@ -1110,44 +1150,6 @@ ${property.request_update == 1 ? ' <p >Request</p>' : ''}
     });
 
 
-    jQuery(document).ready(function () {
-      jQuery("#editUser").validate({
-        rules: {
-          // name: {
-          //   required: true
-          // },
-          email: {
-            required: true
-          },
-          password: {
-            required: true
-          },
-          mobile_number: {
-            required: true
-          }
-
-        },
-        messages: {
-          // name: {
-          //   required: "Please enter Name"
-          // },
-          email: {
-            required: "Please enter Email"
-          },
-          password: {
-            required: "Please enter Password"
-          }
-          ,
-          mobile_number: {
-            required: "Please enter Contact Number"
-          }
-        },
-
-        errorClass: "error",
-        errorElement: "div",
-      });
-
-    });
     $.ajax({
       url: apiUrl + '/getadmin', // Replace with your API endpoint
       type: 'GET',

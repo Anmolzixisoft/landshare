@@ -2,8 +2,8 @@ const connection = require('../database/mysqldb')
 
 function sellProperty(req, res) {
 
-    const { user_id, property_category_select, landPrice, mobile_number, full_address, state, city, pincode, landmark, owenership, cost_per_squre_fit, size_of_land, desciption, ownerName, Survey_no, Land_Facing } = req.body
-
+    const { user_id, property_category_select, landPrice, mobile_number, full_address, state, city, pincode, landmark, owenership, cost_per_squre_fit, size_of_land, total_landsqft, desciption, ownerName, Survey_no, Land_Facing } = req.body
+    console.log(req.body);
     const { image, latest_encumbrance,
         khata_extract, } = req.files
     // const file = image[0].filename
@@ -20,7 +20,7 @@ function sellProperty(req, res) {
     if (khata_extract != undefined) {
         var Khata_Extract = khata_extract[0].filename;
     }
-    const sql = `INSERT INTO landsharein_db.tbl_sell_property (user_id, property_category_select, mobile_number, full_address, state, city, pincode, landmark, owenership, cost_per_squre_fit,landPrice, size_of_land, desciption,ownerName,Survey_no,Land_Facing,images,Latest_Encumbrance,Khata_Extract) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    const sql = `INSERT INTO landsharein_db.tbl_sell_property (user_id, property_category_select, mobile_number, full_address, state, city, pincode, landmark, owenership, cost_per_squre_fit,landPrice, size_of_land, total_landsqft, desciption,ownerName,Survey_no,Land_Facing,images,Latest_Encumbrance,Khata_Extract) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     const values = [
         user_id,
         property_category_select,
@@ -34,6 +34,7 @@ function sellProperty(req, res) {
         cost_per_squre_fit,
         landPrice,
         size_of_land,
+        total_landsqft,
         desciption,
         ownerName,
         Survey_no,
@@ -123,10 +124,14 @@ function getPropertyById(req, res) {
 
 function updateProperty(req, res) {
     const { id, user_id, property_category_select, landPrice, mobile_number, full_address, state, city, pincode, landmark, cost_per_squre_fit, size_of_land, desciption, ownerName, Survey_no, Land_Facing } = req.body;
-    const { image } = req.files
-    var image1 = '';
+    const { latest_encumbrance, khata_extract, image } = req.files
+    var latest_encumbranceimage1 = '';
     if (typeof latest_encumbrance !== 'undefined') {
-        image1 = '`Image` = "' + latest_encumbrance[0].filename + '" ';
+        latest_encumbranceimage1 = '`Image` = "' + latest_encumbrance[0].filename + '" ';
+    }
+    var khata_extractimage1 = '';
+    if (typeof khata_extract !== 'undefined') {
+        khata_extractimage1 = '`Image` = "' + khata_extract[0].filename + '" ';
     }
 
     const imageArray = []
@@ -136,8 +141,7 @@ function updateProperty(req, res) {
 
     const imagedata = JSON.stringify(imageArray)
 
-    const sql = `UPDATE landsharein_db.tbl_sell_property SET  property_category_select= '${property_category_select}', mobile_number= ${mobile_number}, full_address='${full_address}', state= '${state}', city='${city}', pincode=${pincode}, landmark='${landmark}',cost_per_squre_fit='${cost_per_squre_fit}', landPrice='${landPrice}', size_of_land='${size_of_land}', desciption='${desciption}', ownerName='${ownerName}', Survey_no='${Survey_no}', Land_Facing='${Land_Facing}', images='${JSON.stringify(imageArray)}' WHERE id= ${id} AND  user_id='${user_id}'`
-
+    const sql = `UPDATE landsharein_db.tbl_sell_property SET  property_category_select= '${property_category_select}', mobile_number= ${mobile_number}, full_address='${full_address}', state= '${state}', city='${city}', pincode=${pincode}, landmark='${landmark}',cost_per_squre_fit='${cost_per_squre_fit}', landPrice='${landPrice}', size_of_land='${size_of_land}', desciption='${desciption}', ownerName='${ownerName}', Survey_no='${Survey_no}', Land_Facing='${Land_Facing}', images='${JSON.stringify(imageArray)}' ${latest_encumbranceimage1} ${khata_extractimage1} WHERE id= ${id} AND  user_id='${user_id}'`
 
     connection.query(sql, (err, result) => {
         if (err) {
