@@ -34,12 +34,12 @@
 </head>
 
 <body>
-  <script>
+  <!-- <script>
     let checkAdmintoken = localStorage.getItem('admintoken')
     if (checkAdmintoken == null) {
       location = "https://landshareindia.com/web/super_admin/"
-    }
-  </script>
+    } 
+  </script> -->
   <!-- admintoken -->
   <!--wrapper-->
   <div class="wrapper">
@@ -577,19 +577,74 @@
           <div class="user-box dropdown px-3">
             <a class="d-flex align-items-center nav-link dropdown-toggle gap-3 dropdown-toggle-nocaret" href="#"
               role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <div class="notification-wrapper">
+                <span class="notification-count" id="notification-count"></span>
+                <i class="fa-regular fa-bell fa-2x"></i>
+              </div>
               <img id="blah1" src="" class="user-img" alt="user avatar" onclick="openMyProfile()" />
               <div class="user-info">
                 <p class="user-name mb-0">Admin</p>
-                <!-- <p class="designattion mb-0">Web Designer</p> -->
               </div>
             </a>
-            <ul class="dropdown-menu dropdown-menu-end">
+
+            <!-- Notifications Dropdown -->
+            <ul class="dropdown-menu dropdown-menu-end" id="notificationDropdown">
+              <!-- Replace the content of this list with your dynamic notifications -->
+              <!-- ... Notification items go here ... -->
+
+
+            </ul>
+
+            <!-- Profile Dropdown -->
+            <ul class="dropdown-menu dropdown-menu-end" id="profileDropdown">
               <li>
-                <a class="dropdown-item d-flex align-items-center" href="#" id="logoutLink" onclick="Logout()"><i
-                    class="bx bx-log-out-circle"></i><span>Logout</span></a>
+                <a class="dropdown-item d-flex align-items-center" href="#" onclick="openMyProfile()">
+                  <span>Profile </span>
+                </a>
+              </li>
+            </ul>
+
+            <!-- Logout Dropdown -->
+            <ul class="dropdown-menu dropdown-menu-end" id="logoutDropdown">
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="#" id="logoutLink" onclick="Logout()">
+                  <i class="bx bx-log-out-circle"></i><span>Logout</span>
+                </a>
               </li>
             </ul>
           </div>
+        </nav>
+
+        <style>
+          .notification-wrapper {
+            position: relative;
+          }
+
+          .notification-count {
+            position: absolute;
+            top: -10px;
+            /* Adjust this value to position the count above the bell icon */
+            right: 0;
+            background-color: red;
+            /* Add background color or other styling as needed */
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+          }
+
+
+          .notification-count1 {
+
+            right: 0;
+            position: absolute;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+          }
+        </style>
         </nav>
       </div>
     </header>
@@ -693,10 +748,117 @@
           console.error('There was a problem with the fetch operation:', error);
         });
     }
+
+
+
+
+
+    function getnotificationdata() {
+      const api = apiUrl + '/getnotification';
+      fetch(api, {
+        method: 'get',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error('Failed to fetch data');
+          }
+        })
+        .then(data => {
+          // Check if data.message is an array
+          if (Array.isArray(data.message)) {
+            updateNotificationDropdown(data.message);
+            // Assuming data.message is an array of objects with 'notifications' property
+            notifications = data.message.map(item => item.notification_count).flat();
+            // Calculate the total notification_count
+            const totalNotificationCount = notifications.reduce((sum, count) => sum + count, 0);
+
+            // Update each notification with the total count
+            notifications.forEach(notification => {
+              notification.notification_count = totalNotificationCount;
+            });
+
+            document.getElementById('notification-count').innerHTML = totalNotificationCount
+          } else {
+            console.error('Data.message is not an array:', data.message);
+          }
+        })
+        .catch(error => {
+          console.error('There was a problem with the fetch operation:', error);
+        });
+    }
+
     function openMyProfile() {
       // You can use window.location.href to navigate to a new page
       window.location.href = "my-profile.html";
     }
+
+
+
+
+
+
+    function updateNotificationDropdown(notifications) {
+
+      const notificationDropdown = document.getElementById('notificationDropdown');
+
+
+      notificationDropdown.innerHTML = '';
+
+      if (notifications.length > 0) {
+
+        notifications.forEach(notification => {
+          const notificationItem = document.createElement('li');
+          notificationItem.innerHTML = `
+        <a class="dropdown-item d-flex align-items-center" href="#">
+          <span class="notification-count1" > ${notification.notification_count}</span>
+          <i class="bx bx-bell"></i><span>${notification.notification_message} 
+ 
+            </span>
+        </a>
+      `;
+          notificationDropdown.appendChild(notificationItem);
+        });
+
+
+        document.getElementById('notification-count').innerHTML = notifications.length;
+      } else {
+
+        const noNotificationItem = document.createElement('li');
+        noNotificationItem.innerHTML = `
+      <a class="dropdown-item d-flex align-items-center" href="#">
+        <span>No new notifications</span>
+      </a>
+    `;
+        notificationDropdown.appendChild(noNotificationItem);
+
+        document.getElementById('notification-count').innerHTML = '0';
+      }
+
+      // Add the "Clear" option
+      const clearItem = document.createElement('li');
+      clearItem.innerHTML = `
+    <a class="dropdown-item d-flex align-items-center" href="#" onclick="clearNotifications()">
+      <span>Clear</span>
+    </a>
+  `;
+      notificationDropdown.appendChild(clearItem);
+    }
+
+
+
+
+
+
+
+
+
+
+
     function fetchproduct() {
 
       const api = apiUrl + '/getallproperty';
@@ -723,6 +885,9 @@
         });
     }
     fetchproduct()
+
+
+    getnotificationdata()
     window.onload = fetchData;
 
     function Logout() {
@@ -753,6 +918,40 @@
         console.error('Error fetching data:', error);
       }
     });
+  </script>
+  <script>
+
+
+    function openNotificationDropdown() {
+      $('#notificationDropdown').toggleClass('show');
+    }
+
+    // Function to open the profile dropdown
+    function openProfileDropdown() {
+      $('#profileDropdown').toggleClass('show');
+    }
+
+    // Function to open the logout dropdown
+    function openLogoutDropdown() {
+      $('#logoutDropdown').toggleClass('show');
+    }
+
+    function clearNotifications() {
+      // Clear notifications and update the count
+      $('.notification-count').text('0');
+      // Add your logic to clear notifications here
+      $('.dropdown-menu').empty(); // Remove all notifications
+    }
+
+
+
+    // Close dropdowns when clicking outside
+    $(document).on('click', function (e) {
+      if (!$(e.target).closest('.dropdown-toggle').length) {
+        $('.dropdown-menu').removeClass('show');
+      }
+    });
+
   </script>
 </body>
 

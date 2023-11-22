@@ -123,7 +123,7 @@ function getPropertyById(req, res) {
 }
 
 function updateProperty(req, res) {
-    const { id, user_id, property_category_select, landPrice, mobile_number, full_address, state, city, pincode, landmark, cost_per_squre_fit, size_of_land, desciption, ownerName, Survey_no, Land_Facing } = req.body;
+    const { id, user_id, property_category_select, landPrice, mobile_number, full_address, state, city, pincode, landmark, cost_per_squre_fit, size_of_land, total_landsqft, desciption, ownerName, Survey_no, Land_Facing } = req.body;
     const { latest_encumbrance, khata_extract, image } = req.files
     var latest_encumbranceimage1 = '';
     if (typeof latest_encumbrance !== 'undefined') {
@@ -135,13 +135,16 @@ function updateProperty(req, res) {
     }
 
     const imageArray = []
-    image.forEach((element) => {
-        imageArray.push(element.filename)
-    })
+    if (image !== undefined) {
+        image.forEach((element) => {
+            imageArray.push(element.filename)
+        })
+    }
+
 
     const imagedata = JSON.stringify(imageArray)
 
-    const sql = `UPDATE landsharein_db.tbl_sell_property SET  property_category_select= '${property_category_select}', mobile_number= ${mobile_number}, full_address='${full_address}', state= '${state}', city='${city}', pincode=${pincode}, landmark='${landmark}',cost_per_squre_fit='${cost_per_squre_fit}', landPrice='${landPrice}', size_of_land='${size_of_land}', desciption='${desciption}', ownerName='${ownerName}', Survey_no='${Survey_no}', Land_Facing='${Land_Facing}', images='${JSON.stringify(imageArray)}' ${latest_encumbranceimage1} ${khata_extractimage1} WHERE id= ${id} AND  user_id='${user_id}'`
+    const sql = `UPDATE landsharein_db.tbl_sell_property SET  property_category_select= '${property_category_select}', mobile_number= ${mobile_number}, full_address='${full_address}', state= '${state}', city='${city}', pincode=${pincode}, landmark='${landmark}',cost_per_squre_fit='${cost_per_squre_fit}', landPrice='${landPrice}', size_of_land='${size_of_land}',total_landsqft = '${total_landsqft}' , desciption='${desciption}', ownerName='${ownerName}', Survey_no='${Survey_no}', Land_Facing='${Land_Facing}', images='${JSON.stringify(imageArray)}' ${latest_encumbranceimage1} ${khata_extractimage1} WHERE id= ${id} AND  user_id='${user_id}'`
 
     connection.query(sql, (err, result) => {
         if (err) {
@@ -248,7 +251,7 @@ function buyInfo(req, res) {
         if (error) {
             return res.send({ err: error })
         }
-        if (findBuyer[0] = undefined) {
+        if (findBuyer[0] == undefined) {
             const sql = 'INSERT INTO landsharein_db.tbl_buy (user_id, property_id) VALUES (?,?)';
             const values = [user_id, property_id];
             connection.query(sql, values, (err, result) => {
@@ -356,5 +359,24 @@ function updatestatus(req, res) {
         }
     })
 }
-module.exports = { sellProperty, getProperty, getPropertyById, sortlist, getsortlist, buyInfo, getsortlistByID, updateProperty, deleteProperty, sold_property, enquire, getallproperty, updatestatus, enquireproperty }
+
+
+const notification = (req, res) => {
+    try {
+        connection.query('SELECT * FROM landsharein_db.tbl_notificatin WHERE 1', (err, notificationdata) => {
+            if (err) {
+                return res.send({ error: err })
+
+            }
+            else {
+                return res.send({ message: notificationdata })
+            }
+        })
+    } catch (error) {
+        return res.send({ error: error })
+
+    }
+}
+
+module.exports = { sellProperty, getProperty, getPropertyById, sortlist, getsortlist, buyInfo, getsortlistByID, updateProperty, deleteProperty, sold_property, enquire, getallproperty, updatestatus, enquireproperty, notification }
 

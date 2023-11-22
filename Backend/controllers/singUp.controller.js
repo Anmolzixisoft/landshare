@@ -306,7 +306,7 @@ function updateProfile(name, email, mobile_number, hashedPassword, password, id,
 
 function adminupdateuser(req, res) {
     try {
-        const {  email, mobile_number, id, request_update } = req.body;
+        const { email, mobile_number, id } = req.body;
 
         console.log(email);
         if (!isValidEmail(email)) {

@@ -97,7 +97,7 @@
         <div class="container ">
 
             <div class="row  align-items-start" id="property-listings"></div>
-            <h1 class="row  align-items-start" id="noPropertyMessage">Not shortlist property </h1>
+            <h1 class="row  align-items-start" id="noPropertyMessage"> </h1>
 
 
         </div>
@@ -152,26 +152,27 @@
                     </p>
 
                 </div>
-          <div class="col-lg-3 col-md-6">
-          <h3 class="text-light mb-4">Quick Links</h3>
-          <p><a href="index.html" style="color:#fff !important;">Home</a><br>
-            <a href="about.html" style="color:#fff !important;">Know Us</a><br>
-            <a href="what-we-offer.html" style="color:#fff !important;">What
-              We Do</a><br>
-            <a href="investing-opportunity.html" style="color:#fff !important;">Investment Opportunitiess</a><br>
-            <a href="media.html" style="color:#fff !important;">Press
-              Room</a><br>
-            <a href="clients.html" style="color:#fff !important;">Our
-              Clients</a><br>
-            <a href="contact.html" style="color:#fff !important;">Contact Us</a><br>
-            <a href="#" style="color:#fff !important;">FAQ</a><br>
-            <a href="privacy-policy.html" style="color:#fff !important;">Privacy Policy</a><br>
-            <a href="disclaimer.html" style="color:#fff !important;">Disclaimer</a><br>
-            <a href="#" style="color:#fff !important;">Sitemap</a>
-          </p>
+                <div class="col-lg-3 col-md-6">
+                    <h3 class="text-light mb-4">Quick Links</h3>
+                    <p><a href="index.html" style="color:#fff !important;">Home</a><br>
+                        <a href="about.html" style="color:#fff !important;">Know Us</a><br>
+                        <a href="what-we-offer.html" style="color:#fff !important;">What
+                            We Do</a><br>
+                        <a href="investing-opportunity.html" style="color:#fff !important;">Investment
+                            Opportunitiess</a><br>
+                        <a href="media.html" style="color:#fff !important;">Press
+                            Room</a><br>
+                        <a href="clients.html" style="color:#fff !important;">Our
+                            Clients</a><br>
+                        <a href="contact.html" style="color:#fff !important;">Contact Us</a><br>
+                        <a href="#" style="color:#fff !important;">FAQ</a><br>
+                        <a href="privacy-policy.html" style="color:#fff !important;">Privacy Policy</a><br>
+                        <a href="disclaimer.html" style="color:#fff !important;">Disclaimer</a><br>
+                        <a href="#" style="color:#fff !important;">Sitemap</a>
+                    </p>
 
 
-        </div>
+                </div>
             </div>
         </div>
 
@@ -201,6 +202,8 @@
     <script src="js/main.js"></script>
     <script src="js/login-script.js"></script>
     <script>
+        var userId = localStorage.getItem('userId')
+
         var token = localStorage.getItem('token');
         var loginLogoutButton = $('#loginLogoutButton');
         var circle = $('#circle')
@@ -215,7 +218,6 @@
         var blog = $('#blog')
         var Connect = $('#Connect')
 
-        const userId = localStorage.getItem('userId')
         function fetchData() {
             const postData = {
                 user_id: userId,
@@ -236,23 +238,20 @@
                     }
                 })
                 .then(data => {
-                    console.log(data.data == 0, '-----------');
-
+                    console.log(data.data == 0);
                     if (data.data == 0) {
-                        // Show the message when no property is uploaded
-                        $('#noPropertyMessage').show();
-                        propertyListingsContainer.hide();
-                    } else {
-                        // Hide the message when there are properties
-                        $('#noPropertyMessage').hide();
-                        propertyListingsContainer.show();
-                        data.data.forEach(property => {
-                            if (property.status == 1) {
-                                const propertyListing = createPropertyListing(property);
-                                propertyListingsContainer.appendChild(propertyListing);
-                            }
-                        });
+                        document.getElementById('noPropertyMessage').innerHTML = "Not shortlisted property";
+
                     }
+                   
+                    data.data.forEach(property => {
+                        console.log(property.status==1);
+                        if (property.status == 1) {
+                            const propertyListing = createPropertyListing(property);
+                            propertyListingsContainer.appendChild(propertyListing);
+                        }
+                    });
+
                     document.getElementById('spinner').style.display = 'none';
                 })
                 .catch(error => {
@@ -263,7 +262,7 @@
         const propertyListingsContainer = document.getElementById('property-listings');
 
         function createPropertyListing(property) {
-            console.log(property, '==========');
+
             const container = document.createElement('div');
             container.classList.add('product-inner', 'mb-5', 'col-md-8', 'mx-auto', 'g-5');
             container.innerHTML = `
@@ -283,7 +282,7 @@
                 Type: ${property.property_category_select}
             </p>
             <span class="product-but col-lg-5 but-sy">
-                    <span class="short"><i  class="${property.status == 0 ? 'fa-regular fa-heart' : 'fa fa-heart'}" id="heart-icon" onclick="toggleHeart(${property.property_id},${property.status == 0 ? 1 : 0})"></i></span>
+                    <span class="short"><i  class="${property.status == 0 ? 'fa-regular fa-heart' : 'fa fa-heart'}" id="heart-icon" onclick="toggleHeart(${property.property_id},${property.user_id},${property.status == 0 ? 1 : 0})"></i></span>
                     <button class="btn btn-primary view-details-button" data-property-id="${property.id}" onclick="viewPropertyDetails(${property.property_id})">View Property Details</button>
                 </span>
             
@@ -303,7 +302,7 @@
             window.location.href = url;
         }
 
-        function toggleHeart(property_id, sortlist_status) {
+        function toggleHeart(property_id, user_id, sortlist_status) {
             var heartIcon = document.getElementById("heart-icon");
 
             if (heartIcon) {

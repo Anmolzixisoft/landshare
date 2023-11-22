@@ -13,7 +13,8 @@
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.theme.default.min.css">
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -236,7 +237,8 @@
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/owl.carousel.min.js"></script>
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -326,7 +328,28 @@
                 console.error('No property ID provided in the query parameter.');
             }
         }
+
         const propertyListingsContainer = document.getElementById('property-listings');
+        
+        $(".owl-carousel").owlCarousel({
+            items: 3,
+            loop: true,
+            margin: 10,
+
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 3
+                },
+                1000: {
+                    items: 5
+                }
+            }
+        });
+
+
         function createPropertyListing(property) {
 
 
@@ -353,11 +376,14 @@
                         <div class="big-image">
                             <img id="bigImage" src=${property.images[0]} onclick="change(this.src)"  alt="">
                         </div>
-                        <div class="small-images">
+                    
+<div class="owl-carousel">
+    <div class="small-images">
                             ${[0, 1, 2].map(index => `
                             <img src=${property.images[index] || property.images[0]} onclick="change(this.src)" alt="">
                             `).join('')}
                         </div>
+</div>
 
 
                     </div>
@@ -557,6 +583,11 @@
         const change = src => {
             document.getElementById('bigImage').src = src
         }
+
+
+        $(document).ready(function () {
+            $(".owl-carousel").owlCarousel();
+        });
     </script>
 
 </body>

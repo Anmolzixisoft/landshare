@@ -570,18 +570,25 @@
 
 
         var sizeOfLand = data.message[0].size_of_land;
-
+        document.getElementById('total-sqft').textContent = 'Total: ' + data.message[0].total_landsqft + ' sqft.';
         $('#landFacing').val(data.message[0].Land_Facing);
         $('#landPrice').val(data.message[0].landPrice);
         $('#SurveyNo').val(data.message[0].Survey_no);
-        var acres = parseFloat(sizeOfLand.match(/(\d+) acre/)[1]) || 0;
-        var guntas = parseFloat(sizeOfLand.match(/(\d+) guntas/)[1]) || 0;
-        var cents = parseFloat(sizeOfLand.match(/(\d+) cents/)[1]) || 0;
 
-        // Set values to corresponding input fields
+        var acresMatch = sizeOfLand.match(/(\d+) acre/);
+        var guntasMatch = sizeOfLand.match(/(\d+) guntas/);
+        var centsMatch = sizeOfLand.match(/(\d+) cents/);
+
+        // Initialize variables with default values
+        var acres = acresMatch ? parseFloat(acresMatch[1]) : 0;
+        var guntas = guntasMatch ? parseFloat(guntasMatch[1]) : 0;
+        var cents = centsMatch ? parseFloat(centsMatch[1]) : 0;
+
+
         $('#acre').val(acres);
         $('#guntas').val(guntas);
         $('#cents').val(cents);
+
 
         var selectedLandType = $(`input[name="landType"][value="${data.message[0].property_category_select}"]`);
         selectedLandType.prop('checked', true);
@@ -627,6 +634,14 @@
     }
 
     function addProperty() {
+
+      const size = document.getElementById('total-sqft').innerText
+      // Use a regular expression to match digits
+      let digitsOnly = size.replace(/\D/g, '');
+
+      // Convert the extracted digits to a number
+      var result = parseInt(digitsOnly);
+
       const name = $('#landmarkOwnername').val();
       const state = $('#state').val();
       const Address = $('#Address').val();
@@ -673,6 +688,7 @@
       formData.append("landmark", landmark);
       formData.append("cost_per_squre_fit", cost);
       formData.append("size_of_land", sizeoflandmark);
+      formData.append('total_landsqft', result);
       formData.append("desciption", desciption);
       formData.append("Survey_no", Survey_no);
       formData.append("Land_Facing", Land_Facing);
