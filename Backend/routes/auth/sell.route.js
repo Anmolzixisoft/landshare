@@ -3,7 +3,7 @@ const sellRouter = express.Router();
 
 const { singleUpload, multiplepUload } = require('../../middleware/multer');
 
-const { sellProperty, getProperty, getallproperty, updatestatus,notification, enquireproperty, getsortlist, getsortlistByID, deleteProperty, getPropertyById, sortlist, buyInfo, updateProperty, sold_property, enquire } = require("../../controllers/sell.controller")
+const { sellProperty, getProperty, updatenotification,getallproperty, updatestatus,notification, enquireproperty, getsortlist, getsortlistByID, deleteProperty, getPropertyById, sortlist, buyInfo, updateProperty, sold_property, enquire } = require("../../controllers/sell.controller")
 sellRouter.post('/sellProperty', multiplepUload, sellProperty);
 sellRouter.post('/getproperty', getProperty)
 sellRouter.post('/getPropertyById', getPropertyById)
@@ -19,4 +19,6 @@ sellRouter.get('/getallproperty', getallproperty)
 sellRouter.post('/updatestatus', updatestatus)
 sellRouter.get('/enquireproperty', enquireproperty);
 sellRouter.get('/getnotification',notification)
+sellRouter.get('/updatenotification',updatenotification)
+
 module.exports = sellRouter;

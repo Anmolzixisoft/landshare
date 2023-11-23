@@ -318,7 +318,7 @@ function adminupdateuser(req, res) {
         }
 
         connection.query(
-            'SELECT id, password FROM landsharein_db.tbl_user WHERE id = "' + id + '" ',
+            'SELECT id FROM landsharein_db.tbl_user WHERE id = "' + id + '" ',
             (err, result) => {
 
                 if (err) {
@@ -332,12 +332,24 @@ function adminupdateuser(req, res) {
                 if (typeof profile_image !== 'undefined') {
                     image = ', `Image` = "' + profile_image[0].filename + '" ';
                 }
-                var hashedPassword = user.password;
+
 
                 const sql = 'UPDATE landsharein_db.tbl_user SET  mobile_number=?,request_update="0", email=? ' + image + ' WHERE id= ?'
 
+
+                const notification = `UPDATE landsharein_db.tbl_notificatin
+                SET notification_count = 0
+                WHERE id = 1;`
+                connection.query(notification, (err, notificationdata) => {
+                    console.log(notification);
+                    if (err) {
+                        console.error('Update error:', err);
+                        return res.status(500).json({ error: 'Update error' });
+                    } 
+                })
+
                 connection.query(
-                    sql, [mobile_number, hashedPassword, password, email, id],
+                    sql, [mobile_number, email, id],
                     (err, result1) => {
                         if (err) {
                             console.error('Update error:', err);
@@ -489,7 +501,16 @@ function createuserbyadmin(req, res) {
 function requestupdatenumber(req, res) {
     try {
         const { userid } = req.body
-
+        const notification = `UPDATE landsharein_db.tbl_notificatin
+        SET notification_count = notification_count + 1
+        WHERE id = 1;`
+        connection.query(notification, (err, notificationdata) => {
+            console.log(notification);
+            if (err) {
+                console.error('Update error:', err);
+                return res.status(500).json({ error: 'Update error' });
+            }
+        })
         connection.query(
             'UPDATE landsharein_db.tbl_user SET request_update="1" WHERE id="' + userid + '"',
             (err, result1) => {

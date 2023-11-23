@@ -40,9 +40,9 @@
     <!-- Navbar Start -->
     <div class="container-fluid fixed-top px-0 wow fadeIn" data-wow-delay="0.1s">
         <nav class="navbar navbar-expand-lg navbar-dark py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
-            <a href="index.html" class="navbar-brand ms-4 ms-lg-0 py-6">
-                <img src="img/landshare-logo.png">
-            </a>
+            <a id="circle"></a>
+            <a href="#" id="loginLogoutButton" class="nav-item nav-link"><b></b>&nbsp;&nbsp;<i
+                class="fa fa-arrow-right"></i></a>
             <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -238,6 +238,7 @@
     <script src="lib/parallax/parallax.min.js"></script>
 
     <!-- Template Javascript -->
+    <script src="utils.js"></script>
     <script src="js/main.js"></script>
     <script>
        var userId = localStorage.getItem('userId');
@@ -255,7 +256,6 @@
         var blog = $('#blog')
         var Connect = $('#Connect')
     
-        const loginLogoutButton = document.getElementById('loginLogoutButton');
         if (token) {
             loginLogoutButton.html('<b>Logout</b>&nbsp;&nbsp;<i class="fa fa-arrow-right"></i>');
 

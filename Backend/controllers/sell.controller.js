@@ -254,6 +254,18 @@ function buyInfo(req, res) {
         if (findBuyer[0] == undefined) {
             const sql = 'INSERT INTO landsharein_db.tbl_buy (user_id, property_id) VALUES (?,?)';
             const values = [user_id, property_id];
+
+
+            const notification = `UPDATE landsharein_db.tbl_notificatin
+            SET notification_count = notification_count + 1
+            WHERE id = 2`
+            connection.query(notification, (err, notificationdata) => {
+                console.log(notification);
+                if (err) {
+                    console.error('Update error:', err);
+                    return res.status(500).json({ error: 'Update error' });
+                }
+            })
             connection.query(sql, values, (err, result) => {
                 if (err) {
                     return res.send({ err: err })
@@ -378,5 +390,23 @@ const notification = (req, res) => {
     }
 }
 
-module.exports = { sellProperty, getProperty, getPropertyById, sortlist, getsortlist, buyInfo, getsortlistByID, updateProperty, deleteProperty, sold_property, enquire, getallproperty, updatestatus, enquireproperty, notification }
+
+
+const updatenotification = (req, res) => {
+    const notification = `UPDATE landsharein_db.tbl_notificatin
+    SET notification_count = 0
+    WHERE id = 2`
+    connection.query(notification, (err, notificationdata) => {
+        console.log(notification);
+        if (err) {
+            console.error('Update error:', err);
+            return res.status(500).json({ error: 'Update error' });
+        }
+        else {
+            return res.send({ message: "update" })
+        }
+    })
+}
+
+module.exports = { sellProperty, getProperty, getPropertyById, sortlist, getsortlist, buyInfo, getsortlistByID, updateProperty, deleteProperty, sold_property, enquire, getallproperty, updatestatus, enquireproperty, notification, updatenotification }
 

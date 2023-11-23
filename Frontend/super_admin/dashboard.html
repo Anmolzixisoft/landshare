@@ -816,9 +816,9 @@
           notificationItem.innerHTML = `
         <a class="dropdown-item d-flex align-items-center" href="#">
           <span class="notification-count1" > ${notification.notification_count}</span>
-          <i class="bx bx-bell"></i><span>${notification.notification_message} 
- 
-            </span>
+          <i class="bx bx-bell"></i>
+          <span onclick="notificationMessage('${notification.notification_message}')" >${notification.notification_message}</span>
+
         </a>
       `;
           notificationDropdown.appendChild(notificationItem);
@@ -853,6 +853,36 @@
 
 
 
+    // Assuming you have a function for making the API call, replace it with your actual function
+    function makeAPICall() {
+      // Your API call logic here
+      const api = apiUrl + '/updatenotification';
+      fetch(api, {
+        method: 'get',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error('Failed to fetch data');
+          }
+        })
+        .then(data => {
+          window.location.href = 'new-enquiries.html';
+
+        })
+        .catch(error => {
+          console.error('There was a problem with the fetch operation:', error);
+        });
+    }
+
+    // Get the notification message element by its ID
+    // const notificationMessage = document.getElementById('notificationMessage');
+
+    // Add a click event listener to the notification message
 
 
 
@@ -918,8 +948,30 @@
         console.error('Error fetching data:', error);
       }
     });
-  </script>
-  <script>
+
+
+
+
+
+
+
+
+
+    // window.addEventListener('load', (event) => {
+    //   // Your code here
+    //   const notificationMessage = document.getElementById('notificationMessage');
+
+    //   notificationMessage.addEventListener('click', function () {
+    //     // Call the function to make the API call
+    //     makeAPICall();
+    //   });
+    // });
+
+
+    function notificationMessage(name) {
+      console.log(name=='Request Update user', '---------------------');
+    }
+
 
 
     function openNotificationDropdown() {
